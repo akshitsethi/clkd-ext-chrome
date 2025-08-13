@@ -1,0 +1,42 @@
+{
+	"name": "CLKD",
+	"description": "Supercharged Links.",
+	"version": "0.0.1",
+	"manifest_version": 3,
+	"homepage_url": "https://clkd.in",
+	"author": {
+		"email": "akshitsethi@gmail.com"
+	},
+	"side_panel": {
+		"default_path": "main.html"
+	},
+	"background": {
+		"service_worker": "service-worker.js"
+	},
+	"permissions": [
+		"tabs",
+		"storage",
+		"identity",
+		"sidePanel",
+		"downloads",
+		"unlimitedStorage"
+	],
+	"icons": {
+		"16": "assets/images/icon-16.png",
+		"32": "assets/images/icon-32.png",
+		"48": "assets/images/icon-48.png",
+		"128": "assets/images/icon-128.png"
+	},
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self';"
+	},
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmWlePTxPZR3LBe5WOXmGDbh/4Mp+jZwlWiwyA6RbmbQHy9qmuo4gqI+kQq8gNF/0h4BDz1oW9ek1XQNJU7rBwcNclUblJymmFfX/bK3YcmC+B+gwDo7z6AVemEP8HKcp/c5So7F2ZiQWsqkdMECTxNdYbbuouPtA7ESPRgo6NsTAcsdrw03ze+x/Mb4e4BcDl4KVo4YzwfVpbQt6MzVUCCnansWGpuXlwjkmEuKS9Ng932ykZ4fACuyXDAj+Ax2Bv1jLfYZlQMgfeBSfIbCpRiuTqOBz1QTOAIh9Czg+TIQsGXF1xFsckY8hpNip2jKoJ2IJ0eZyRHdI/QKN0S+VlwIDAQAB",
+	"oauth2": {
+		"client_id": "485256031642-tlda5lpocaivq9qoqtk62lev62382gv9.apps.googleusercontent.com",
+		"scopes": [
+			"https://www.googleapis.com/auth/userinfo.email",
+			"https://www.googleapis.com/auth/userinfo.profile",
+			"openid"
+		]
+	}
+}
