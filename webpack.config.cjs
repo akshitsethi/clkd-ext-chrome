@@ -4,8 +4,7 @@ const path = require("path");
 module.exports = (env) => ({
 	mode: env.mode,
 	entry: {
-		main: ['./assets/js/main.js'],
-		notification: ['./bin/notification.js']
+		main: ['./assets/js/main.js']
 	},
 	output: {
 		path: path.resolve(__dirname, 'assets/dist'),

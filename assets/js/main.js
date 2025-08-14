@@ -40,10 +40,9 @@ const CLKD = {
 		// Tooltip.events();
 		// Help.events();
 
-        Notification.events();
-
-        Notification.show('Working??');
-        Notification.show('Working??');
+		document.addEventListener('click', e => {
+			Notification.show(e.timeStamp, 'success');
+		});
 	}
 };
 
