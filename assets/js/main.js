@@ -42,8 +42,8 @@ const CLKD = {
 		// Help.events();
 
 		document.addEventListener('click', e => {
-			Processing.show(document.getElementById('links'));
-			// Notification.show(e.timeStamp, 'success');
+			// Processing.show(document.getElementById('links'));
+			Notification.show(e.timeStamp, 'error');
 		});
 	}
 };

@@ -12,14 +12,14 @@ import { apiBase } from "./constants.js";
 export const Auth = {
 	selectors: {
 		BODY: document.querySelector('body'),
-	    GOOGLE_LOGIN_BUTTON: document.querySelector('.social-buttons .google'),
+	    GOOGLE_OAUTH_BUTTON: document.querySelector('.social-buttons .google-oauth'),
 	},
 	authenticate: function () {
-		if (!this.selectors.GOOGLE_LOGIN_BUTTON) {
+		if (!this.selectors.GOOGLE_OAUTH_BUTTON) {
 			return;
 		}
 
-		this.selectors.GOOGLE_LOGIN_BUTTON.addEventListener('click', async e => {
+		this.selectors.GOOGLE_OAUTH_BUTTON.addEventListener('click', async e => {
             e.preventDefault();
 
             // TODO
