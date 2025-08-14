@@ -1,5 +1,5 @@
 // auth.js
-// import { Notification } from "./notification.js";
+import { Notification } from "./notification.js";
 // import { Screen } from "./screen.js";
 // import { Processing } from "./processing.js";
 // import { MESSAGES } from "./i18n.js";
@@ -158,19 +158,6 @@ export const Auth = {
 			this.authenticate();
 			Notification.show(MESSAGES.USER_CHECK_ERROR);
 		}
-	},
-	checkSubscription: function() {
-		if (!this.selectors.SUBHEADER_CTA) {
-			return;
-		}
-
-		let displayStyle = 'block';
-
-		if (Storage.USER_DATA && Storage.USER_DATA['is_premium']) {
-			displayStyle = 'none';
-		}
-
-		this.selectors.SUBHEADER_CTA.style.display = displayStyle;
 	},
 	logout: async function() {
 		await Storage.clear();

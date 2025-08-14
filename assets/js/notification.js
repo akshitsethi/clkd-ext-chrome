@@ -7,7 +7,7 @@ export const Notification = {
         el.classList.add('toast', type);
         el.appendChild(document.createTextNode(message));
 
-        // Before inserting, check for existing childs
+        // Before inserting, check for existing children
         const children = document.body.querySelectorAll('.toast');
 
         // Prepend to DOM
