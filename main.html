@@ -11,6 +11,24 @@
 </head>
 <body>
 	<div class="app">
+		<header class="header">
+			<h1 class="logo">clkd</h1>
+			<div class="username"></div>
+
+			<div class="profile">
+				<a href="#" class="profile-link">
+					<img src="./assets/images/gravatar.png" alt="Profile Image" />
+				</a>
+
+				<ul class="profile-menu">
+					<li><a href="#" data-screen="account" data-display="block" data-callback="true">Account</a></li>
+					<li><a href="#" data-screen="settings" data-display="block" data-callback="true">Settings</a></li>
+					<li><a href="#" data-screen="help" data-display="block" data-callback="true">Help</a></li>
+					<li><a href="#" data-screen="logout" data-display="flex" data-callback="true">Logout</a></li>
+				</ul>
+			</div>
+		</header><!-- .header -->
+
 		<div id="unlogged" class="screen">
 			<div class="logo">
 				<img src="./assets/images/icon.svg" alt="CLKD" />
@@ -35,7 +53,9 @@
 		</div><!-- #unlogged -->
 
 		<div id="dashboard" class="screen">
-			<p>Welcome to Dashboard!!</p>
+			<div class="wrapper">
+				<p>Welcome to Dashboard!!</p>
+			</div>
 		</div><!-- #dashboard -->
 	</div>
 

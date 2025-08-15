@@ -9,7 +9,7 @@ import { i18n } from "./i18n.js";
 import { apiBase } from "./constants.js";
 
 export const Auth = {
-	login: async function() {
+	login: async function () {
 		try {
 			// Show processing to prevent accidental clicks
 			Processing.show(document.body);
@@ -53,13 +53,13 @@ export const Auth = {
 			Processing.hide();
 		}
 	},
-	googleLoginEvent: function() {
+	googleLoginEvent: function () {
 		if (!Selectors.GOOGLE_OAUTH_BUTTON) {
 			throw new Error(i18n.SELECTOR_NOT_FOUND);
 		}
 
 		Selectors.GOOGLE_OAUTH_BUTTON.addEventListener('click', async e => {
-            e.preventDefault();
+			e.preventDefault();
 
 			try {
 				// Show processing to prevent accidental clicks

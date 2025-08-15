@@ -1,6 +1,6 @@
 // dashboard.js
 export const Dashboard = {
-    init: function() {
+    init: function () {
         console.log('Init triggered!');
     }
 };

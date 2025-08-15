@@ -26,5 +26,5 @@ const CLKD = {
 
 // Load extension on DOM ready
 window.addEventListener('DOMContentLoaded', () => {
-    CLKD.init();
+	CLKD.init();
 });

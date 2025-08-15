@@ -5,7 +5,7 @@ export const Notification = {
     constants: {
         TOAST_CLASSNAME: '.toast'
     },
-    show: function(message, type = 'normal') {
+    show: function (message, type = 'normal') {
         const el = document.createElement('div');
         el.classList.add('toast', type);
         el.appendChild(document.createTextNode(message));
@@ -50,16 +50,16 @@ export const Notification = {
             }
         }
     },
-    success: function(message) {
+    success: function (message) {
         this.show(message, 'success');
     },
-    error: function(message) {
+    error: function (message) {
         this.show(message, 'error');
     },
-    info: function(message) {
+    info: function (message) {
         this.show(message, 'info');
     },
-    warning: function(message) {
+    warning: function (message) {
         this.show(message, 'warning');
     }
 };

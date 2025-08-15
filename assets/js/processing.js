@@ -7,7 +7,7 @@ export const Processing = {
         PROCESSING_CLASSNAME: '.processing'
     },
     SELECTOR: null,
-    show: function(selector) {
+    show: function (selector) {
         if (!selector) {
             throw new Error(i18n.SELECTOR_NOT_FOUND);
         }
@@ -29,7 +29,7 @@ export const Processing = {
             this.SELECTOR.append(content);
         }
     },
-    hide: function() {
+    hide: function () {
         if (!this.SELECTOR) {
             return;
         }
