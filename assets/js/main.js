@@ -13,7 +13,6 @@
 // import { Archives } from "./archives.js";
 // import { Dashboard } from "./dashboard.js";
 import { Notification } from "./notification.js";
-import { Processing } from "./processing.js";
 
 // Main application
 const CLKD = {
@@ -43,7 +42,7 @@ const CLKD = {
 
 		document.addEventListener('click', e => {
 			// Processing.show(document.getElementById('links'));
-			Notification.show(e.timeStamp, 'error');
+			// Notification.show(e.timeStamp, 'error');
 		});
 	}
 };

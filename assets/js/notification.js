@@ -2,13 +2,16 @@
 import { animate } from "motion";
 
 export const Notification = {
+    constants: {
+        TOAST_CLASSNAME: '.toast'
+    },
     show: function(message, type = 'normal') {
         const el = document.createElement('div');
         el.classList.add('toast', type);
         el.appendChild(document.createTextNode(message));
 
         // Before inserting, check for existing children
-        const children = document.body.querySelectorAll('.toast');
+        const children = document.body.querySelectorAll(this.constants.TOAST_CLASSNAME);
 
         // Prepend to DOM
         document.body.prepend(el);

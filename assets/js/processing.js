@@ -1,11 +1,9 @@
 // processing.js
 import { Notification } from "./notification.js";
+import { Selectors } from "./selectors.js";
 import { i18n } from "./i18n.js";
 
 export const Processing = {
-    selectors: {
-        TEMPLATE: document.getElementById('processing'),
-    },
     constants: {
         PROCESSING_CLASSNAME: '.processing'
     },
@@ -23,7 +21,7 @@ export const Processing = {
         // If not, `processing` to selector
         const existing = this.SELECTOR.querySelector(this.constants.PROCESSING_CLASSNAME);
         if (!existing) {
-            const template = this.selectors.TEMPLATE.content;
+            const template = Selectors.PROCESSING_TEMPLATE.content;
             const content = template.cloneNode(true);
 
             // Change display to flex
