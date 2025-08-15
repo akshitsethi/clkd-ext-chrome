@@ -35,6 +35,7 @@ export const Notification = {
             for (const el of children) {
                 ++count;
 
+                // Remove all children but first 2 children
                 if (count > 2) {
                     --zIndex;
                     animate(el, { opacity: 0, y: [0, -35], zIndex: zIndex }, { ease: "easeInOut", duration: 0.25 });
@@ -48,5 +49,17 @@ export const Notification = {
                 y -= 15;
             }
         }
+    },
+    success: function(message) {
+        this.show(message, 'success');
+    },
+    error: function(message) {
+        this.show(message, 'error');
+    },
+    info: function(message) {
+        this.show(message, 'info');
+    },
+    warning: function(message) {
+        this.show(message, 'warning');
     }
 };

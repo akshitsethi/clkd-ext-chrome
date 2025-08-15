@@ -1,5 +1,4 @@
 // processing.js
-import { Notification } from "./notification.js";
 import { Selectors } from "./selectors.js";
 import { i18n } from "./i18n.js";
 
@@ -10,8 +9,7 @@ export const Processing = {
     SELECTOR: null,
     show: function(selector) {
         if (!selector) {
-            Notification.show(i18n.DEFAULT_ERROR);
-            return;
+            throw new Error(i18n.SELECTOR_NOT_FOUND);
         }
 
         // This needs to be used later for hiding it
@@ -38,9 +36,7 @@ export const Processing = {
 
         // Remove injected processing `div`
         const el = this.SELECTOR.querySelector(this.constants.PROCESSING_CLASSNAME);
-        if (el) {
-            el.remove();
-        }
+        if (el) el.remove();
 
         // Set to null
         this.SELECTOR = null;

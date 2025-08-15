@@ -1,10 +1,13 @@
 // screen.js
-import { Selectors } from "./selectors";
+import { Selectors } from "./selectors.js";
+import { i18n } from "./i18n.js";
+import { Notification } from "./notification.js";
 
 export const Screen = {
     constants: {
         PREVIOUS_SCREEN: null,
         CURRENT_SCREEN: null,
+        DEFAULT_DISPLAY: 'block'
     },
     screens: [
         'dashboard',
@@ -21,41 +24,60 @@ export const Screen = {
         'subscription-success',
         'subscription-exists',
     ],
-    show: function (screen,) {
+    show: function (screen, display = this.constants.DEFAULT_DISPLAY, callback = null) {
+        if (!this.screens.includes(screen)) {
+            throw new Error(i18n.NO_SCREEN_ERROR);
+        }
 
+        // Display the desired screen
+        const el = document.getElementById(screen);
+        if (!el) {
+            throw new Error(i18n.NO_SCREEN_ERROR);
+        }
+
+        // Update current and previous screen
+        this.constants.PREVIOUS_SCREEN = this.constants.CURRENT_SCREEN;
+        this.constants.CURRENT_SCREEN = screen;
+
+        // Bring the screen to viewport
+        Selectors.SCREENS.forEach(screen => screen.style.display = 'none');
+        el.style.display = display;
+
+        if (callback === 'true') {
+            this[screen]();
+        }
     },
     switchEvent: function () {
         if (Selectors.SCREEN_SWITCH_LINKS.length === 0) {
             return;
         }
 
-        this.selectors.LINKS.forEach(link => {
+        Selectors.SCREEN_SWITCH_LINKS.forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
 
-                let target = e.target;
-                if (e.target.nodeName === 'IMG') {
-                    target = e.target.parentElement;
-                }
+                try {
+                    let target = e.target;
+                    if (e.target.nodeName === 'IMG') {
+                        target = e.target.parentElement;
+                    }
 
-                const screen = target.dataset.screen;
-                if (!screen) {
-                    return;
-                }
+                    const id = target.getAttribute('data-screen');
+                    if (!id) {
+                        throw new Error(i18n.NO_SCREEN_ERROR);
+                    }
 
-                const [screenId, style, callback] = screen.split('|');
-                if (!screenId || !style || !callback) {
-                    return;
-                }
+                    // If display attribute is not set, it defaults to `block`
+                    const display = target.getAttribute('data-display') ?? this.constants.DEFAULT_DISPLAY;
 
-                // Update current and previous screen
-                this.PREVIOUS_SCREEN = this.CURRENT_SCREEN;
-                this.CURRENT_SCREEN = screen;
+                    // Set callback to null if not required
+                    const callback = target.getAttribute('data-callback') ?? null;
 
-                if (callback === 'true') {
-                    this[screenId]();
-                } else {
-                    this.switch(screenId, style);
+                    // Switch screen
+                    this.show(id, display, callback);
+                } catch (error) {
+                    console.error(error);
+                    Notification.error(error.message ?? i18n.DEFAULT_ERROR);
                 }
             });
         });
