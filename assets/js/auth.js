@@ -1,11 +1,58 @@
 // auth.js
 import { Selectors } from "./selectors.js";
+import { Store } from "./store.js";
 import { Notification } from "./notification.js";
+import { Processing } from "./processing.js";
+import { Screen } from "./screen.js";
+import { User } from "./user.js";
 import { i18n } from "./i18n.js";
 import { apiBase } from "./constants.js";
-import { Processing } from "./processing.js";
 
 export const Auth = {
+	login: async function() {
+		try {
+			// Show processing to prevent accidental clicks
+			Processing.show(document.body);
+
+			const request = await fetch(`${apiBase}/login`, {
+				method: 'POST',
+				async: true,
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				contentType: 'json',
+				body: JSON.stringify({
+					user_id: Store.USER.ID,
+					token: Store.USER.token
+				})
+			});
+
+			// Get JSON data
+			const response = await request.json();
+
+			// Check for `message` property in the response returned from API
+			if (!response.hasOwnProperty('message')) {
+				throw new Error(i18n.API_INVALID_RESPONSE);
+			}
+			if (request.status !== 200) {
+				throw new Error(response.message);
+			}
+
+			// Store entire user data
+			await User.setData(response.message);
+
+			// Steps to take care of post authentication
+			User.loginSuccess();
+		} catch (error) {
+			console.error(error);
+
+			// Switch to login screen and show error message
+			Screen.show('unlogged', 'flex');
+			Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+		} finally {
+			Processing.hide();
+		}
+	},
 	googleLoginEvent: function() {
 		if (!Selectors.GOOGLE_OAUTH_BUTTON) {
 			throw new Error(i18n.SELECTOR_NOT_FOUND);
@@ -56,14 +103,22 @@ export const Auth = {
 
 				// Check for `message` property in the response returned from API
 				if (!apiResponse.hasOwnProperty('message')) {
-					throw new Error('')
+					throw new Error(i18n.API_INVALID_RESPONSE);
+				}
+				if (!apiResponse.message.hasOwnProperty('email') || !apiResponse.message.hasOwnProperty('token')) {
+					throw new Error(i18n.API_INVALID_RESPONSE);
 				}
 
-				if (!data['message']['email'] || !data['message']['token']) {
-					throw new Error('');
-				}
+				// Set user data
+				await User.setData(apiResponse.message);
+
+				// Steps to take care of post authentication
+				User.loginSuccess();
 			} catch (error) {
-				console.log(error);
+				console.error(error);
+
+				// Switch to login screen and show error message
+				Screen.show('unlogged', 'flex');
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
 			} finally {
 				Processing.hide();
@@ -73,7 +128,11 @@ export const Auth = {
 	events: function () {
 		this.googleLoginEvent();
 	},
-	init: function () {
-
+	init: async function () {
+		if (Store.USER.ID && Store.USER.token) {
+			await this.login();
+		} else {
+			Screen.show('unlogged', 'flex');
+		}
 	}
 };
