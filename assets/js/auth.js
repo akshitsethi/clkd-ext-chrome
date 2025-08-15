@@ -125,8 +125,41 @@ export const Auth = {
 			}
 		});
 	},
+	logoutEvent: function () {
+		if (!Selectors.LOGOUT_LINK) {
+			return;
+		}
+
+		Selectors.LOGOUT_LINK.addEventListener('click', async e => {
+			e.preventDefault();
+
+			try {
+				Processing.show(document.body);
+
+				// Clear user data
+				await User.clearData();
+
+				// Hide header and reload screen
+				User.hideHeader();
+				Screen.hideAll();
+
+				setTimeout(() => {
+					location.reload();
+					Processing.hide();
+				}, 1000);
+			} catch (error) {
+				console.error(error);
+				Notification.error(error.message || i18n.DEFAULT_ERROR);
+
+				// Exception: we're removing processing on setTimeout, so we need another one here
+				// In case anything goes wrong, screen should not get stuck on processing overlay
+				Processing.hide();
+			}
+		});
+	},
 	events: function () {
 		this.googleLoginEvent();
+		this.logoutEvent();
 	},
 	init: async function () {
 		if (Store.USER.ID && Store.USER.token) {

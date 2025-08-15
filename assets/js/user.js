@@ -17,11 +17,15 @@ export const User = {
         // Also, set data for the user store object
         Store.USER = data;
     },
+    clearData: async function () {
+        // Clear both local and synced storage
+        await Store.clear('local');
+        await Store.clear('sync');
+    },
     updateDataInHeader: function () {
         if (!Selectors.HEADER) {
             return;
         }
-
         if (Store.USER['picture']) {
             Selectors.HEADER.querySelector(this.constants.PROFILE_IMAGE_CLASSNAME).src = Store.USER['picture'];
         }
@@ -30,7 +34,16 @@ export const User = {
         }
     },
     showHeader: function () {
+        if (!Selectors.HEADER) {
+            return;
+        }
         Selectors.HEADER.style.display = 'flex';
+    },
+    hideHeader: function () {
+        if (!Selectors.HEADER) {
+            return;
+        }
+        Selectors.HEADER.style.display = 'none';
     },
     loginSuccess: function () {
         // TODO

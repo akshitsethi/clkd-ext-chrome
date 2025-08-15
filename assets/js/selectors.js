@@ -5,4 +5,5 @@ export const Selectors = {
     SCREEN_SWITCH_LINKS: document.querySelectorAll('a[data-screen]'),
     SCREENS: document.querySelectorAll('.screen'),
     GOOGLE_OAUTH_BUTTON: document.querySelector('.social-buttons .google-oauth'),
+    LOGOUT_LINK: document.getElementById('logout'),
 };

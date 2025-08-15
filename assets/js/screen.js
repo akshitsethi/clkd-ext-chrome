@@ -47,6 +47,9 @@ export const Screen = {
             this[screen]();
         }
     },
+    hideAll: function () {
+        Selectors.SCREENS.forEach(screen => screen.style.display = 'none');
+    },
     switchEvent: function () {
         if (Selectors.SCREEN_SWITCH_LINKS.length === 0) {
             return;
