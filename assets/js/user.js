@@ -8,7 +8,9 @@ export const User = {
         PROFILE_IMAGE_CLASSNAME: '.profile-link img',
         USERNAME_CLASSNAME: '.username',
         PROFILE_MENU_LINK_CLASSNAME: '.profile-link',
-        PROFILE_MENU_CLASSNAME: '.profile-menu'
+        PROFILE_MENU_CLASSNAME: '.profile-menu',
+        PAGE_SELECTOR_CLASSNAME: '.page-selector',
+        NAVIGATION_CLASSNAME: '.navigation'
     },
     setData: async function (data) {
         // Store entire user data
@@ -73,7 +75,18 @@ export const User = {
 
         menu.querySelectorAll('li').forEach(li => li.addEventListener('click', e => menu.classList.remove('show')));
     },
+    userNavigationEvent: function () {
+        if (!Selectors.NAVIGATION_BUTTON || !Selectors.PAGE_SELECTOR) {
+            return;
+        }
+
+        Selectors.NAVIGATION_BUTTON.addEventListener('click', e => {
+            e.preventDefault();
+            Selectors.PAGE_SELECTOR.classList.toggle('show');
+        });
+    },
     events: function () {
         this.userHeaderMenuEvent();
+        this.userNavigationEvent();
     }
 };
