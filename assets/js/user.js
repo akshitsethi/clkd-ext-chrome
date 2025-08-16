@@ -2,6 +2,8 @@
 import { Store } from "./store.js";
 import { Screen } from "./screen.js";
 import { Selectors } from "./selectors.js";
+import { Notification } from "./notification.js";
+import { i18n } from "./i18n.js";
 
 export const User = {
     constants: {
@@ -36,16 +38,18 @@ export const User = {
         }
     },
     showHeader: function () {
-        if (!Selectors.HEADER) {
+        if (!Selectors.HEADER || !Selectors.SECONDARY_HEADER) {
             return;
         }
         Selectors.HEADER.style.display = 'flex';
+        Selectors.SECONDARY_HEADER.style.display = 'flex';
     },
     hideHeader: function () {
-        if (!Selectors.HEADER) {
+        if (!Selectors.HEADER || !Selectors.SECONDARY_HEADER) {
             return;
         }
         Selectors.HEADER.style.display = 'none';
+        Selectors.SECONDARY_HEADER.style.display = 'none';
     },
     loginSuccess: function () {
         // TODO
@@ -76,13 +80,40 @@ export const User = {
         menu.querySelectorAll('li').forEach(li => li.addEventListener('click', e => menu.classList.remove('show')));
     },
     userNavigationEvent: function () {
-        if (!Selectors.NAVIGATION_BUTTON || !Selectors.PAGE_SELECTOR) {
+        if (!Selectors.NAVIGATION || !Selectors.PAGE_SELECTOR) {
             return;
         }
 
-        Selectors.NAVIGATION_BUTTON.addEventListener('click', e => {
+        // 1. Toggle for `page-selector` dropdown
+        // 2. Screen switch once the page is selected
+        Selectors.NAVIGATION.addEventListener('click', e => {
             e.preventDefault();
             Selectors.PAGE_SELECTOR.classList.toggle('show');
+        });
+        Selectors.PAGE_SELECTOR.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                const section = e.target.getAttribute('data-section');
+
+                // Switch screen
+                Screen.show(section.toLowerCase(), 'block', 'false');
+
+                // Remove `selected` from all and add it to the current target
+                const anchors = Selectors.PAGE_SELECTOR.querySelectorAll('a');
+                console.log(anchors);
+
+                if (anchors.length !== 0) {
+                    anchors.forEach(anchor => anchor.classList.remove('selected'));
+                }
+                e.target.classList.add('selected');
+
+                // If the screen switched just fine, update `page-selector` value
+                Selectors.NAVIGATION.querySelector('.current-page').innerText = section;
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
         });
     },
     events: function () {

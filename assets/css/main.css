@@ -243,9 +243,9 @@ h2 {
         }
 
         & .page-selector {
-            left: 0;
+            left: -0.325rem;
             right: auto;
-            top: 0;
+            top: -0.0625rem;
             padding: 0;
 
             & li {
@@ -253,10 +253,10 @@ h2 {
 
                 & a {
                     padding: 0.25rem 0.5rem;
-                }
 
-                &.selected a {
-                    background-color: rgba(119, 148, 182, 0.0925);
+                    &.selected {
+                        background-color: rgba(119, 148, 182, 0.0925);
+                    }
                 }
             }
         }

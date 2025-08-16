@@ -38,10 +38,10 @@
 				<span class="current-page">Dashboard</span>
 
 				<ul class="page-selector">
-					<li class="selected"><a href="#" data-screen="dashboard">Dashboard</a></li>
-					<li><a href="#" data-screen="links">Links</a></li>
-					<li><a href="#" data-screen="analytics">Analytics</a></li>
-					<li><a href="#" data-screen="archives">Archives</a></li>
+					<li><a href="#" data-section="Dashboard" class="selected">Dashboard</a></li>
+					<li><a href="#" data-section="Links">Links</a></li>
+					<li><a href="#" data-section="Analytics">Analytics</a></li>
+					<li><a href="#" data-section="Archives">Archives</a></li>
 				</ul>
 			</div>
 		</div><!-- .secondary-header -->
@@ -139,13 +139,24 @@
 						<p>Design a tiny web site to share your big ideas with the world.</p>
 
 						<div class="cta">
-							<a href="#" data-screen="pages|block|true" class="button small pink border">Launching
-								Soon</a>
+							<a href="#" data-screen="pages" data-display="block" data-callback="true" class="button small pink border">Launching Soon</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div><!-- #dashboard -->
+
+		<div id="links" class="screen">
+			Links screen
+		</div><!-- #links -->
+
+		<div id="analytics" class="screen">
+			Analytics screen
+		</div><!-- #analytics -->
+
+		<div id="archives" class="screen">
+			Archives screen
+		</div><!-- #archives -->
 	</div>
 
 	<!-- Processing (dynamically injected to selectors) -->
