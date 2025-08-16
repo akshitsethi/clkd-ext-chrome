@@ -4,6 +4,7 @@ import { Auth } from "./auth.js";
 import { Store } from "./store.js";
 import { i18n } from "./i18n.js";
 import { Events } from "./events.js";
+import { Screen } from "./screen.js";
 
 // Main application
 const CLKD = {
@@ -16,7 +17,9 @@ const CLKD = {
 			await Store.init();
 
 			// Trigger user authentication
-			await Auth.init();
+			// await Auth.init();
+
+			Screen.show('help');
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);

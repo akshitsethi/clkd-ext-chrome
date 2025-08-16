@@ -57,6 +57,9 @@ h6 {
 /* Improve line wrapping */
 p {
     text-wrap: pretty;
+    font-size: 0.875rem;
+    line-height: 1.625;
+    color: #273144;
 }
 
 h1,
@@ -88,11 +91,26 @@ html {
     scrollbar-color: #eeeeee #ffffff;
 }
 
-input,
-select,
-textarea,
 button {
     font-family: 'Inter', 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+input,
+select,
+textarea {
+    font-family: 'Inter', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 0.875rem;
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+    background: #f9f9f9;
+    border-radius: 6px;
+    padding: 0.75rem 0.5rem;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
 }
 
 .app {
@@ -107,6 +125,11 @@ button {
 
 .wrapper {
     padding: 1rem;
+}
+
+h1 {
+    font-size: 1.125rem;
+    font-weight: 600;
 }
 
 h2 {
@@ -261,6 +284,25 @@ h2 {
             }
         }
     }
+
+    & .dynamic-section {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    & .upgrade-cta {
+        display: block;
+        text-decoration: none;
+        font-size: 0.750rem;
+        padding: 0.25rem 0.5rem;
+        background-color: #fd868c;
+        background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+        border-radius: 4px;
+        font-weight: 500;
+        letter-spacing: -0.25px;
+        color: #ffffff;
+    }
 }
 
 /* Dashboard */
@@ -342,8 +384,6 @@ h2 {
             margin-bottom: 1rem;
             text-align: center;
             background-color: #f3f9fe;
-
-            & img {}
         }
 
         & h2 {
@@ -357,14 +397,141 @@ h2 {
 
         & p {
             margin: 1rem 0;
-            font-size: 0.875rem;
-            line-height: 1.625;
-            color: #273144;
         }
 
         & .cta {
             margin-top: 1.25rem;
             padding-bottom: 0.5rem;
+        }
+    }
+}
+
+/* Help */
+#help {
+    & .help-section {
+        padding: 1rem;
+    }
+
+    & h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    & .help-section {
+        & .help-form {
+            display: block;
+            margin-top: 1.5rem;
+            padding-bottom: 0.25rem;
+
+            & .input {
+                margin-bottom: 1rem;
+
+                & label {
+                    display: block;
+                    font-weight: 500;
+                    font-size: 0.825rem;
+                    margin-bottom: 0.5rem;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    & .help-success {
+        display: none;
+        padding: 1rem;
+
+        & .help-success-header {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0 1.25rem;
+
+            & img {
+                max-height: 48px;
+            }
+        }
+
+        & p {
+            margin-bottom: 1rem;
+
+            & .semibold {
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+/* Upgrade */
+#upgrade {
+    .plans {
+        background-image: linear-gradient(180deg, rgba(119, 148, 182, 0.105) 43%, rgba(255, 255, 255, 0) 100%);
+
+        & .plan {
+            padding: 1rem;
+
+            & .plan-wrapper {
+                display: flex;
+                align-items: center;
+
+                & .plan-header {
+                    & .plan-title {
+                        font-size: 1.25rem;
+                        margin: 0.35rem 0;
+                        font-weight: 600;
+                        color: #303030;
+                    }
+
+                    & .plan-price {
+                        position: relative;
+                        font-size: 1.5rem;
+                        margin: 0.35rem 0;
+                        font-family: serif;
+                    }
+                }
+
+                & .link {
+                    padding: 1rem;
+                }
+            }
+
+            & .plan-features {
+                & .plan-pointers {
+                    margin: 1rem 0;
+                    padding: 0;
+                    list-style-type: none;
+
+                    & li {
+                        padding: 0.25rem 0;
+                        font-size: 0.875rem;
+                        line-height: 1.625;
+                        margin-left: 1.25rem;
+                        position: relative;
+
+                        &:last-child {
+                            border: 0;
+                        }
+
+                        &::before {
+                            content: '\2192';
+                            margin-right: 0.5rem;
+                            position: absolute;
+                            left: -1.25rem;
+                        }
+                    }
+                }
+            }
+
+            & .upgrade-now {
+                margin-left: auto;
+            }
+
+            & .yearly {
+                position: relative;
+                display: none;
+                align-items: center;
+            }
         }
     }
 }
@@ -551,6 +718,32 @@ h2 {
 
     &.block {
         width: 100%;
+    }
+}
+
+/* Switches */
+.switcher {
+    margin-left: 0.5rem;
+
+    & .stats-switcher {
+        display: flex;
+        align-items: center;
+
+        & img {
+            max-width: 18px;
+            display: block;
+        }
+
+        & a {
+            padding: 0.25rem;
+            font-weight: 600;
+            margin-left: 0.125rem;
+
+            &:hover {
+                background: #ffffff;
+                border-radius: 8px;
+            }
+        }
     }
 }
 

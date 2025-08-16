@@ -39,6 +39,9 @@ export const Screen = {
         this.constants.PREVIOUS_SCREEN = this.constants.CURRENT_SCREEN;
         this.constants.CURRENT_SCREEN = screen;
 
+        // Set current screen info on document body
+        document.body.setAttribute('data-current-screen', screen);
+
         // Bring the screen to viewport
         Selectors.SCREENS.forEach(screen => screen.style.display = 'none');
         el.style.display = display;
@@ -49,6 +52,18 @@ export const Screen = {
     },
     hideAll: function () {
         Selectors.SCREENS.forEach(screen => screen.style.display = 'none');
+    },
+    dashboard: function () {
+
+    },
+    links: function () {
+
+    },
+    analytics: function () {
+
+    },
+    archives: function () {
+
     },
     switchEvent: function () {
         if (Selectors.SCREEN_SWITCH_LINKS.length === 0) {

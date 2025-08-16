@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="./assets/css/main.css" type="text/css">
 </head>
 
-<body>
+<body data-current-screen="dashboard">
 	<div class="app">
 		<header class="header">
 			<h1 class="logo">clkd</h1>
@@ -43,6 +43,18 @@
 					<li><a href="#" data-section="Analytics">Analytics</a></li>
 					<li><a href="#" data-section="Archives">Archives</a></li>
 				</ul>
+			</div>
+
+			<div class="dynamic-section">
+				<a href="#" class="upgrade-cta" data-screen="upgrade" data-display="block"
+					data-callback="true">Upgrade</a>
+
+				<div class="switcher">
+					<div class="stats-switcher">
+						<span><img src="./assets/images/period.png" alt="Duration"></span> <a href="#"
+							data-switch="week">Today</a>
+					</div>
+				</div>
 			</div>
 		</div><!-- .secondary-header -->
 
@@ -139,7 +151,8 @@
 						<p>Design a tiny web site to share your big ideas with the world.</p>
 
 						<div class="cta">
-							<a href="#" data-screen="pages" data-display="block" data-callback="true" class="button small pink border">Launching Soon</a>
+							<a href="#" data-screen="pages" data-display="block" data-callback="true"
+								class="button small pink border">Launching Soon</a>
 						</div>
 					</div>
 				</div>
@@ -147,16 +160,126 @@
 		</div><!-- #dashboard -->
 
 		<div id="links" class="screen">
-			Links screen
+			<div class="wrapper">
+				Links screen
+			</div>
 		</div><!-- #links -->
 
 		<div id="analytics" class="screen">
-			Analytics screen
+			<div class="wrapper">
+				Analytics screen
+			</div>
 		</div><!-- #analytics -->
 
 		<div id="archives" class="screen">
-			Archives screen
+			<div class="wrapper">
+				Archives screen
+			</div>
 		</div><!-- #archives -->
+
+		<div id="account" class="screen">
+
+		</div><!-- #account -->
+
+		<div id="settings" class="screen">
+
+		</div><!-- #settings -->
+
+		<div id="help" class="screen">
+			<div class="help-section">
+				<h1>Help & Support</h1>
+				<p>Get in touch with our team by creating a support ticket. We do our best to reply at the earliest but
+					it can take up to 24 hours to get a response.</p>
+
+				<form class="help-form" method="POST">
+					<div class="input">
+						<label for="name">Name</label>
+						<input type="text" name="name" placeholder="First & last name" id="name" readonly required>
+					</div>
+
+					<div class="input">
+						<label for="email">Email</label>
+						<input type="email" name="email" placeholder="Valid email address" readonly id="email" required>
+					</div>
+
+					<div class="input">
+						<label for="subject">Subject</label>
+						<input type="text" name="subject" placeholder="What's this issue about?" id="subject" required>
+					</div>
+
+					<div class="input">
+						<label for="issue">Issue</label>
+						<textarea name="issue" rows="8" id="issue" placeholder="Describe the issue that you're facing"
+							required></textarea>
+					</div>
+
+					<div class="input">
+						<button class="button green" type="submit">Create Support Ticket</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="help-success">
+				<div class="help-success-header">
+					<img src="/assets/images/thumbs-up.png" alt="Thumbs up!" />
+					<h2> Ticket Created</h2>
+				</div>
+
+				<p><span class="semibold">Your support request has been created.</span> You'll also receive an email
+					confirming the same shortly. We'll do our best to get back to you at the earliest possible. However,
+					it may take upto 48 hours for us to respond.</p>
+				<button class="button silver border medium">Create a new support ticket</button>
+			</div>
+		</div><!-- #help -->
+
+		<div id="upgrade" class="screen">
+			<div class="plans">
+				<div class="plan">
+					<div class="plan-wrapper">
+						<div class="plan-header">
+							<div class="plan-title">Basic</div>
+							<div class="plan-price monthly">$5 / month</div>
+							<div class="plan-price yearly">$50 / year</div>
+						</div>
+
+						<button class="button upgrade-now link" data-plan="basic|monthly">Get started</button>
+					</div>
+
+					<div class="plan-features">
+						<ul class="plan-pointers">
+							<li>Up to 2000 Links & QR Codes</li>
+							<li>2 weeks of click & scan data</li>
+							<li>Custom back-halves</li>
+							<li>Modify redirects</li>
+							<li>QR Code design customisation</li>
+							<li>Upto 100 pages</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="plan">
+					<div class="plan-wrapper">
+						<div class="plan-header">
+							<div class="plan-title">Pro</div>
+							<div class="plan-price monthly">$15 / month</div>
+							<div class="plan-price yearly">$150 / year</div>
+						</div>
+
+						<button class="button upgrade-now green" data-plan="pro|monthly">Get started</button>
+					</div>
+
+					<div class="plan-features">
+						<div class="plan-includes">Everything in Basic, plus:</div>
+						<ul class="plan-pointers">
+							<li>Upto 10000 Links & QR Codes</li>
+							<li>Upto 500 pages</li>
+							<li>Embed brand logo in QR codes</li>
+							<li>1 month of click & scan data</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div><!-- #upgrade -->
 	</div>
 
 	<!-- Processing (dynamically injected to selectors) -->
