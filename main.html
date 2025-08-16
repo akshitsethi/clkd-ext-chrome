@@ -178,11 +178,65 @@
 		</div><!-- #archives -->
 
 		<div id="account" class="screen">
-
+			<div class="account-wrapper">
+				<div class="account-user"></div>
+				<div class="account-subscription"></div>
+			</div>
 		</div><!-- #account -->
 
 		<div id="settings" class="screen">
+			<div class="wrapper">
+				<h1>Settings</h1>
 
+				<form class="settings-form" method="POST">
+					<div class="option no-border">
+						<label for="analytics_duration">Analytics Duration</label>
+						<select id="analytics_duration" name="analytics_duration">
+							<option value="day">Today</option>
+							<option value="week">Week</option>
+							<option value="2weeks">2 weeks</option>
+							<option value="month">Month</option>
+						</select>
+					</div>
+
+					<h3>Links</h3>
+					<div class="option">
+						<label for="links_per_page">Links per page</label>
+						<select id="links_per_page" name="links_per_page">
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="25">25</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select>
+					</div>
+
+					<div class="option no-border">
+						<label for="default_domain">Default domain for short links</label>
+						<select id="default_domain" name="default_domain">
+							<option value="clkdin">clkd.in</option>
+							<option value="clkgg">clk.gg</option>
+							<option value="pgxes">pgx.es</option>
+							<option value="cdlk">cd.lk</option>
+							<option value="xxlk">xx.lk</option>
+						</select>
+					</div>
+
+					<h3>QR Code</h3>
+					<div class="option">
+						<label for="qr_background">Background color</label>
+						<input type="color" name="qr_background" id="qr_background" value="#ffffff">
+					</div>
+					<div class="option no-border">
+						<label for="qr_text">Text color</label>
+						<input type="color" name="qr_text" id="qr_text" value="#000000">
+					</div>
+
+					<div class="option">
+						<button type="submit" class="button red border medium">Save Settings</button>
+					</div>
+				</form>
+			</div>
 		</div><!-- #settings -->
 
 		<div id="help" class="screen">
@@ -280,6 +334,55 @@
 				</div>
 			</div>
 		</div><!-- #upgrade -->
+
+		<div id="subscription-verify" class="screen">
+			<div class="wrapper">
+				<img src="./assets/images/waiting.jpg" alt="Waiting..." />
+				<p>We're waiting for you to complete the payment and once it's done, please click on the button below to verify it.</p>
+
+				<button class="button green">Verify Subscription</button>
+			</div>
+		</div><!-- #subscription-verify -->
+
+		<div id="subscription-success" class="screen">
+			<div class="center block">
+				<img src="./assets/images/celebrate.png" alt="Celebrate" />
+			</div>
+
+			<div class="content">
+				<p><strong>Wohoo!</strong> Thank you for purchasing the subscription. We're excited to have you as a premium member.</p>
+				<p>For reference, here are your subscription details.</p>
+
+				<div class="subscription-details">
+					<p class="plan">
+						<label>Plan</label>
+						<span>--</span>
+					</p>
+
+					<p class="validity">
+						<label>Valid until</label>
+						<span>--</span>
+					</p>
+				</div>
+			</div>
+		</div><!-- #subscription-success -->
+
+		<div id="subscription-exists" class="screen">
+			<div class="wrapper">
+				<div class="center block">
+					<img src="./assets/images/question.png" alt="Subscription Exists" />
+				</div>
+
+				<p>It seems like you already have an existing <span class="semibold">premium subscription</span> with us. In case you're having trouble with it, please get in touch with us using the information below.</p>
+
+				<h3>Help & Support</h3>
+				<ul class="help-links">
+					<li><a href="#" data-screen="help" data-display="block" data-callback="true">Create a support ticket</a></li>
+					<li><a href="#" class="send-email">Send an email</a></li>
+					<li><a href="#" class="call-support">Call us at +1(415)-9231</a></li>
+				</ul>
+			</div>
+		</div><!-- #subscription-exists -->
 	</div>
 
 	<!-- Processing (dynamically injected to selectors) -->

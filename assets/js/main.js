@@ -19,7 +19,7 @@ const CLKD = {
 			// Trigger user authentication
 			// await Auth.init();
 
-			Screen.show('help');
+			Screen.show('settings');
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);
