@@ -439,9 +439,10 @@ h2 {
     }
     & .quick-create {
         & input[type="url"] {
-            padding: 0.938rem;
+            background: #ffffff;
+            padding: 1rem;
             margin-bottom: 0.5rem;
-            font-size: 1rem;
+            font-size: 0.938rem;
         }
         & .divider {
 			font-size: 0.750rem;
@@ -458,7 +459,7 @@ h2 {
 			padding: 0;
 			margin: 0.75rem 0 1.25rem;
 
-			& .reveal-url {
+			& #reveal-url {
 				cursor: help;
 				border-bottom: 2px dotted #303030;
 			}
@@ -502,6 +503,112 @@ h2 {
 				}
 			}
 		}
+    }
+    & .links {
+        padding: 2rem 0;
+
+        & .links-data {
+            width: 100%;
+
+            & .slug-domain {
+                margin-top: 0;
+
+                & .slug {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    word-break: break-all;
+                    line-height: 1.5;
+                }
+
+                & .domain {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    color: #909090;
+                    background: #ffffff;
+                    font-size: 0.683rem;
+                    padding: 0.25rem 0.35rem;
+                    border: 1px solid rgba(0,0,0,0.125);
+                    border-radius: 4px;
+                    box-shadow: 2px 2px 0 rgba(0,0,0,0.01);
+                    z-index: 2;
+                }
+            }
+
+            & .redirect {
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            & .target {
+                word-break: break-all;
+            }
+
+            & p {
+                font-size: 0.825rem;
+                color: #303030;
+                margin: 0.75rem 0 0.25rem;
+            }
+
+            & .time {
+                font-size: 0.750rem;
+                color: #606060;
+            }
+
+            & .flex {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                & .core {
+                    padding-right: 0.5rem;
+                }
+
+                & .actions {
+                    position: absolute;
+                    display: none;
+                    align-items: center;
+                    margin-left: auto;
+                    padding-left: 1rem;
+                    right: 0;
+                    bottom: 0;
+                    background: transparent;
+                    z-index: 5;
+
+                    & a {
+                        padding: 0.25rem;
+                        margin-right: 0.25rem;
+                        border-radius: 8px;
+
+                        &:hover {
+                            background: rgba(0,0,0, 0.04);
+                        }
+                        & img {
+                            display: block;
+                            max-width: 21px;
+                        }
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+                &:hover {
+                    & .actions {
+                        display: flex;
+                    }
+                }
+            }
+        }
+        & .no-links-data {
+            display: none;
+
+            & h3 {
+                font-weight: 500;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+        }
     }
 }
 .link-output {
@@ -601,6 +708,11 @@ h2 {
             color: #273144;
         }
 
+        & select {
+            border-radius: 6px;
+            margin-left: auto;
+            background: rgba(119, 148, 182, 0.105);
+        }
         & input[type="color"] {
             margin-left: auto;
             width: 2rem;

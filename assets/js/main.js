@@ -10,16 +10,18 @@ import { Screen } from "./screen.js";
 const CLKD = {
 	init: async function () {
 		try {
-			// Initialise events for all modules
-			Events.init();
-
 			// Initialise store
 			await Store.init();
+
+			// Initialise events for all modules
+			Events.init();
 
 			// Trigger user authentication
 			await Auth.init();
 
-			Screen.show('links');
+			// TEMPORARY
+			// To be removed once the work is complete
+			Screen.show('settings');
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);

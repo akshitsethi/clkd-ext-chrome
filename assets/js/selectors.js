@@ -8,5 +8,6 @@ export const Selectors = {
     GOOGLE_OAUTH_BUTTON: document.querySelector('.social-buttons .google-oauth'),
     LOGOUT_LINK: document.getElementById('logout'),
     NAVIGATION: document.querySelector('.navigation'),
-    PAGE_SELECTOR: document.querySelector('.page-selector')
+    PAGE_SELECTOR: document.querySelector('.page-selector'),
+    SETTINGS_FORM: document.querySelector('.settings-form')
 };
