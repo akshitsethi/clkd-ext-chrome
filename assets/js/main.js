@@ -17,9 +17,9 @@ const CLKD = {
 			await Store.init();
 
 			// Trigger user authentication
-			// await Auth.init();
+			await Auth.init();
 
-			Screen.show('settings');
+			Screen.show('links');
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);

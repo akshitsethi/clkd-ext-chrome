@@ -161,7 +161,56 @@
 
 		<div id="links" class="screen">
 			<div class="wrapper">
-				Links screen
+				<div class="quick-create">
+					<form class="link-form" method="POST">
+						<div class="input">
+							<input type="url" name="url" placeholder="https://example.com/my-long-url">
+							<input type="hidden" name="domain" value="clkdin">
+							<button class="button block green" type="submit">Create</button>
+						</div>
+					</form>
+
+					<span class="divider">or</span>
+					<span class="center block">
+						<button id="create-from-tab" class="button link">Shorten Current <span id="reveal-url">URL</span></button>
+					</span>
+
+					<div class="link-output">
+						<div class="short-link">
+							<a class="new-link" href="#">#</a>
+							<a class="copy" href="#">Copy</a>
+							<a class="qrcode" href="#">QR Code</a>
+						</div>
+					</div>
+
+					<div class="section-footer">
+						<div class="domains">
+							<select name="domain">
+								<option value="clkdin">clkd.in</option>
+								<option value="clkgg">clk.gg</option>
+								<option value="pgxes">pgx.es</option>
+								<option value="cdlk">cd.lk</option>
+								<option value="xxlk">xx.lk</option>
+							</select>
+						</div>
+
+						<div class="switcher">
+							<span><img src="./assets/images/power.png" alt="Mode"></span> <a href="#" data-mode="manual">Auto</a>
+						</div>
+
+						<div class="qr-settings">
+							<span><img src="./assets/images/wrench.png" alt="QR Settings"></span> <a href="#" data-screen="settings" data-display="block" data-callback="true">Customise QR</a>
+						</div>
+					</div>
+
+					<div class="inline-modal">
+						<div class="link-mode" data-type="inline-modal">
+							<div class="input">
+								<input type="text" name="custom-slug" class="custom-slug" placeholder="Type your unique slug">
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div><!-- #links -->
 
