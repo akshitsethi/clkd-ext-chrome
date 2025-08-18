@@ -52,6 +52,7 @@ export const Settings = {
 
         // Get JSON data
         const response = await request.json();
+
         // Check for `message` property in the response returned from API
         if (!response.hasOwnProperty('message')) {
             throw new Error(i18n.API_INVALID_RESPONSE);
