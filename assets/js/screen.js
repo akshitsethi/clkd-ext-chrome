@@ -42,12 +42,39 @@ export const Screen = {
         // Set current screen info on document body
         document.body.setAttribute('data-current-screen', screen);
 
+        // Update primary and dynamic sections
+        this.updateHeaderSections(screen);
+
         // Bring the screen to viewport
         Selectors.SCREENS.forEach(screen => screen.style.display = 'none');
         el.style.display = display;
 
         if (callback === 'true') {
             this[screen]();
+        }
+    },
+    updateHeaderSections: function(screen) {
+        if (Selectors.PRIMARY_SECTION.length == 0 || Selectors.DYNAMIC_SECTION.length == 0) {
+            return;
+        }
+
+        // Loop over primary section
+        this.showHideSections(Selectors.PRIMARY_SECTION, screen);
+        this.showHideSections(Selectors.DYNAMIC_SECTION, screen);
+    },
+    showHideSections: function(selector, screen) {
+        for (const section of selector) {
+            section.style.display = 'none';
+
+            let screens = section.getAttribute('data-screens');
+            if (!screens) {
+                continue;
+            }
+
+            screens = screens.split('|');
+            if (screens.includes(screen)) {
+                section.style.display = 'flex';
+            }
         }
     },
     hideAll: function () {

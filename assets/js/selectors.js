@@ -3,12 +3,11 @@ export const Selectors = {
     // Header (primary & secondary)
     HEADER: document.querySelector('.header'),
     SECONDARY_HEADER: document.querySelector('.secondary-header'),
+    PRIMARY_SECTION: document.querySelectorAll('.primary-section'),
+    DYNAMIC_SECTION: document.querySelectorAll('.dynamic-section'),
     LOGOUT_LINK: document.getElementById('logout'),
     NAVIGATION: document.querySelector('.navigation'),
     PAGE_SELECTOR: document.querySelector('.page-selector'),
-
-    // Processing
-    PROCESSING_TEMPLATE: document.getElementById('processing'),
 
     // Screen
     SCREEN_SWITCH_LINKS: document.querySelectorAll('a[data-screen]'),
@@ -20,8 +19,14 @@ export const Selectors = {
     // Settings
     SETTINGS_FORM: document.querySelector('.settings-form'),
 
+    // Upgrade
+    
+
     // Help
     HELP_FORM: document.querySelector('.help-form'),
     HELP_SECTION: document.querySelector('.help-section'),
     HELP_SECTION_SUCCESS: document.querySelector('.help-success'),
+
+    // Processing
+    PROCESSING_TEMPLATE: document.getElementById('processing'),
 };

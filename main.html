@@ -26,7 +26,7 @@
 
 				<ul class="profile-menu">
 					<li><a href="#" data-screen="account" data-display="block" data-callback="true">Account</a></li>
-					<li><a href="#" data-screen="settings" data-display="block" data-callback="true">Settings</a></li>
+					<li><a href="#" data-screen="settings">Settings</a></li>
 					<li><a href="#" data-screen="help">Help</a></li>
 					<li><a href="#" id="logout">Logout</a></li>
 				</ul>
@@ -34,26 +34,44 @@
 		</header><!-- .header -->
 
 		<div class="secondary-header">
-			<div class="navigation">
-				<span class="current-page">Dashboard</span>
+			<div class="primary-section" data-screens="dashboard|links|analytics|archives">
+				<div class="navigation">
+					<span class="current-page">Dashboard</span>
 
-				<ul class="page-selector">
-					<li><a href="#" data-section="Dashboard" class="selected">Dashboard</a></li>
-					<li><a href="#" data-section="Links">Links</a></li>
-					<li><a href="#" data-section="Analytics">Analytics</a></li>
-					<li><a href="#" data-section="Archives">Archives</a></li>
-				</ul>
+					<ul class="page-selector">
+						<li><a href="#" data-section="Dashboard" class="selected">Dashboard</a></li>
+						<li><a href="#" data-section="Links">Links</a></li>
+						<li><a href="#" data-section="Analytics">Analytics</a></li>
+						<li><a href="#" data-section="Archives">Archives</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="primary-section" data-screens="upgrade|account|help">
+				<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back to Dashboard</a></p>
+			</div>
+			<div class="primary-section" data-screens="subscription-verify|subscription-exists|subscription-success">
+				
 			</div>
 
-			<div class="dynamic-section">
-				<a href="#" class="upgrade-cta" data-screen="upgrade" data-display="block"
-					data-callback="true">Upgrade</a>
+			<div class="dynamic-section" data-screens="dashboard">
+				<a href="#" class="upgrade-cta" data-screen="upgrade">Upgrade</a>
 
 				<div class="switcher">
 					<div class="stats-switcher">
 						<span><img src="./assets/images/period.png" alt="Duration"></span> <a href="#"
 							data-switch="week">Today</a>
 					</div>
+				</div>
+			</div>
+			<div class="dynamic-section" data-screens="upgrade">
+				<div class="tenure-switcher">
+					<span class="month">Monthly</span>
+					<label class="switch">
+						<input type="checkbox" id="tenure">
+						<span class="toggle round"></span>
+					</label>
+					<span class="month">Annually</span>
+					<span class="saver">2 months free</span>
 				</div>
 			</div>
 		</div><!-- .secondary-header -->
@@ -202,7 +220,7 @@
 
 						<div class="qr-settings">
 							<span><img src="./assets/images/wrench.png" alt="QR Settings"></span> <a href="#"
-								data-screen="settings" data-display="block" data-callback="true">Customise QR</a>
+								data-screen="settings">Customise QR</a>
 						</div>
 					</div>
 
