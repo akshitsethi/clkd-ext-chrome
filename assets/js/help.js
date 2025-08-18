@@ -95,9 +95,32 @@ export const Help = {
             Selectors.HELP_SECTION.style.display = 'block';
         });
     },
+    actionLinksEvent: function () {
+        if (Selectors.HELP_LINKS.length === 0) {
+            return;
+        }
+
+        Selectors.HELP_LINKS.forEach(link => link.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                const action = e.target.getAttribute('data-action');
+                const input = e.target.getAttribute('data-input');
+                if (!action || !input) {
+                    throw new Error(i18n.MALFORMED_REQUEST);
+                }
+
+                chrome.tabs.create({ url: `${action}:${input}` });
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        }));
+    },
     events: function () {
         this.updateDOMEvent();
         this.formSubmitEvent();
         this.resetHelpScreenEvent();
+        this.actionLinksEvent();
     }
 };

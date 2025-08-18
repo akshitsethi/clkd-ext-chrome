@@ -55,7 +55,7 @@ export const Upgrade = {
                 // Exception for 210 status
                 // which means subscription already exists for the user
                 if (request.status === 210) {
-					Screen.show('subscription-exists');
+                    Screen.show('subscription-exists');
                     return;
                 }
 

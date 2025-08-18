@@ -53,7 +53,7 @@ export const Screen = {
             this[screen]();
         }
     },
-    updateHeaderSections: function(screen) {
+    updateHeaderSections: function (screen) {
         if (Selectors.PRIMARY_SECTION.length == 0 || Selectors.DYNAMIC_SECTION.length == 0) {
             return;
         }
@@ -62,7 +62,7 @@ export const Screen = {
         this.showHideSections(Selectors.PRIMARY_SECTION, screen);
         this.showHideSections(Selectors.DYNAMIC_SECTION, screen);
     },
-    showHideSections: function(selector, screen) {
+    showHideSections: function (selector, screen) {
         for (const section of selector) {
             section.style.display = 'none';
 
