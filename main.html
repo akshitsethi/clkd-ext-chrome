@@ -46,11 +46,11 @@
 					</ul>
 				</div>
 			</div>
-			<div class="primary-section" data-screens="upgrade|account|help">
+			<div class="primary-section" data-screens="upgrade|account|help|subscription-success">
 				<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back to Dashboard</a></p>
 			</div>
-			<div class="primary-section" data-screens="subscription-verify|subscription-exists|subscription-success">
-				
+			<div class="primary-section" data-screens="subscription-verify|subscription-exists">
+				<p>&larr; &nbsp;<a href="#" data-screen="upgrade">Back to Upgrade</a></p>
 			</div>
 
 			<div class="dynamic-section" data-screens="dashboard">
@@ -71,7 +71,7 @@
 						<span class="toggle round"></span>
 					</label>
 					<span class="month">Annually</span>
-					<span class="saver">2 months free</span>
+					<span class="saver-pill">2 months free</span>
 				</div>
 			</div>
 		</div><!-- .secondary-header -->
@@ -436,11 +436,11 @@
 					<div class="plan-wrapper">
 						<div class="plan-header">
 							<div class="plan-title">Basic</div>
-							<div class="plan-price monthly">$5 / month</div>
-							<div class="plan-price yearly">$50 / year</div>
+							<div class="plan-price plan-monthly">$5 / month</div>
+							<div class="plan-price plan-yearly">$50 / year</div>
 						</div>
 
-						<button class="button upgrade-now link" data-plan="basic|monthly">Get started</button>
+						<button class="button upgrade-now link" data-plan="basic" data-term="monthly">Get started</button>
 					</div>
 
 					<div class="plan-features">
@@ -459,11 +459,11 @@
 					<div class="plan-wrapper">
 						<div class="plan-header">
 							<div class="plan-title">Pro</div>
-							<div class="plan-price monthly">$15 / month</div>
-							<div class="plan-price yearly">$150 / year</div>
+							<div class="plan-price plan-monthly">$15 / month</div>
+							<div class="plan-price plan-yearly">$150 / year</div>
 						</div>
 
-						<button class="button upgrade-now green" data-plan="pro|monthly">Get started</button>
+						<button class="button upgrade-now green" data-plan="pro" data-term="monthly">Get started</button>
 					</div>
 
 					<div class="plan-features">
@@ -523,11 +523,11 @@
 					us. In case you're having trouble with it, please get in touch with us using the information below.
 				</p>
 
-				<h3>Help & Support</h3>
+				<h2>Help & Support</h2>
 				<ul class="help-links">
 					<li><a href="#" data-screen="help">Create a support ticket</a></li>
-					<li><a href="#" class="send-email">Send an email</a></li>
-					<li><a href="#" class="call-support">Call us at +1(415)-9231</a></li>
+					<li><a href="#" data-action="mail" data-input="hello@clkd.in">Send an email</a></li>
+					<li><a href="#" data-action="tel" data-input="+14159231">Call us at +1(415)-9231</a></li>
 				</ul>
 			</div>
 		</div><!-- #subscription-exists -->

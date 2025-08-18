@@ -20,7 +20,11 @@ export const Selectors = {
     SETTINGS_FORM: document.querySelector('.settings-form'),
 
     // Upgrade
-    
+    UPGRADE_BUTTONS: document.querySelectorAll('.upgrade-now'),
+    TENURE_SWITCHER: document.querySelector('#tenure'),
+    TENURE_MONTHLY: document.querySelectorAll('.plan-monthly'),
+    TENURE_YEARLY: document.querySelectorAll('.plan-yearly'),
+    UPGRADE_SAVER_PILL: document.querySelector('.saver-pill'),
 
     // Help
     HELP_FORM: document.querySelector('.help-form'),

@@ -5,5 +5,6 @@ export const i18n = {
     NO_SCREEN_ERROR: 'Unable to find the specified screen.',
     SELECTOR_NOT_FOUND: 'Specified selector does not exist.',
     API_INVALID_RESPONSE: 'Invalid API response.',
-    SETTINGS_UPDATED: 'Settings have been saved successfully.'
+    SETTINGS_UPDATED: 'Settings have been saved successfully.',
+    MALFORMED_REQUEST: 'Invalid request. Please check the source and try again.',
 };

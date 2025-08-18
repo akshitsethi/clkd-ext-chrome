@@ -200,7 +200,6 @@ h2 {
             border-radius: 8px 8px 0 0;
 
             & img {
-                display: block;
                 background-color: #fff;
                 max-width: 24px;
                 border-radius: 100%;
@@ -316,6 +315,7 @@ h2 {
         font-size: 0.8rem;
 
         & .tenure-switcher {
+            position: relative;
             display: flex;
             align-items: center;
             margin-left: auto;
@@ -343,10 +343,9 @@ h2 {
         color: #ffffff;
     }
 
-    & .saver {
+    & .saver-pill {
         display: none;
         position: absolute;
-        font-family: 'Inter', 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 0.750rem;
         background-color: #fd868c;
         background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
@@ -354,8 +353,9 @@ h2 {
         padding: 0.125rem 0.25rem;
         border-radius: 0 0 2px 2px;
         font-weight: 500;
-        right: 0;
-        top: 2.25rem;
+        right: -0.25rem;
+        border-radius: 4px;
+        top: 1.75rem;
     }
 }
 
@@ -519,7 +519,6 @@ h2 {
 
                 & img {
                     max-width: 18px;
-                    display: block;
                 }
 
                 & a {
@@ -622,7 +621,6 @@ h2 {
                         }
 
                         & img {
-                            display: block;
                             max-width: 21px;
                         }
 
@@ -851,6 +849,7 @@ h2 {
 /* Upgrade */
 #upgrade {
     .plans {
+        position: relative;
         background-image: linear-gradient(180deg, rgba(119, 148, 182, 0.105) 43%, rgba(255, 255, 255, 0) 100%);
 
         & .plan {
@@ -912,10 +911,45 @@ h2 {
                 margin-left: auto;
             }
 
-            & .yearly {
+            & .plan-yearly {
                 position: relative;
                 display: none;
                 align-items: center;
+            }
+        }
+    }
+}
+
+#subscription-exists {
+    & img {
+		max-width: 280px;
+        margin: 0 auto;
+	}
+
+    & h2 {
+        margin-top: 1.5rem;
+    }
+
+    & .help-links {
+        margin: 0.5rem 0 0;
+        padding: 0;
+
+        & li {
+            position: relative;
+            list-style-type: none;
+            font-size: 0.875rem;
+            margin-left: 1.25rem;
+            padding: 0.20rem 0;
+
+            & a {
+                text-decoration: underline;
+            }
+
+            &::before {
+                content: '\2192';
+                margin-right: 0.5rem;
+                position: absolute;
+                left: -1.25rem;
             }
         }
     }
@@ -1116,7 +1150,6 @@ h2 {
 
         & img {
             max-width: 18px;
-            display: block;
         }
 
         & a {
@@ -1210,7 +1243,6 @@ input:checked+.toggle:before {
         text-align: center;
 
         & img {
-            display: block;
             height: 36px;
             width: auto;
             margin: 0 auto;
