@@ -30,7 +30,7 @@ export const Selectors = {
     HELP_FORM: document.querySelector('.help-form'),
     HELP_SECTION: document.querySelector('.help-section'),
     HELP_SECTION_SUCCESS: document.querySelector('.help-success'),
-    HELP_LINKS: document.querySelectorAll('.help-links a'),
+    HELP_LINKS: document.querySelectorAll('.help-links a[data-action]'),
 
     // Processing
     PROCESSING_TEMPLATE: document.getElementById('processing'),
