@@ -2,7 +2,7 @@
 import { Auth } from "./auth.js";
 import { Screen } from "./screen.js";
 import { Settings } from "./settings.js";
-import { Help } from "./support.js";
+import { Help } from "./help.js";
 import { User } from "./user.js";
 
 export const Events = {

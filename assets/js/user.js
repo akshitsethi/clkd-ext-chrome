@@ -101,7 +101,6 @@ export const User = {
 
                 // Remove `selected` from all and add it to the current target
                 const anchors = Selectors.PAGE_SELECTOR.querySelectorAll('a');
-                console.log(anchors);
 
                 if (anchors.length !== 0) {
                     anchors.forEach(anchor => anchor.classList.remove('selected'));

@@ -23,7 +23,7 @@ export const Help = {
         }
     },
     formSubmitEvent: function () {
-        if (!Selectors.HELP_FORM) {
+        if (!Selectors.HELP_FORM || !Selectors.HELP_SECTION) {
             return;
         }
 
@@ -31,7 +31,7 @@ export const Help = {
             e.preventDefault();
 
             try {
-                Processing.show(Selectors.HELP_FORM);
+                Processing.show(Selectors.HELP_SECTION);
 
                 const data = new FormData(e.target);
                 const request = await fetch(`${apiBase}/support`, {
