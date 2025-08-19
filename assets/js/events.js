@@ -5,6 +5,7 @@ import { Settings } from "./settings.js";
 import { Help } from "./help.js";
 import { User } from "./user.js";
 import { Upgrade } from "./upgrade.js";
+import { Subscription } from "./subscription.js";
 
 export const Events = {
     init: function () {
@@ -14,5 +15,6 @@ export const Events = {
         Settings.events();
         Help.events();
         Upgrade.events();
+        Subscription.events();
     }
 };

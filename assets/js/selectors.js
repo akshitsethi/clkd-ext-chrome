@@ -26,6 +26,10 @@ export const Selectors = {
     TENURE_YEARLY: document.querySelectorAll('.plan-yearly'),
     UPGRADE_SAVER_PILL: document.querySelector('.saver-pill'),
 
+    // Subscription
+    VERIFY_SUBSCRIPTION_BUTTON: document.querySelector('.verify-subscription'),
+    SUBSCRIPTION_DETAILS_SECTION: document.querySelector('.subscription-details'),
+
     // Help
     HELP_FORM: document.querySelector('.help-form'),
     HELP_SECTION: document.querySelector('.help-section'),

@@ -53,6 +53,13 @@
 			<div class="primary-section" data-screens="subscription-verify|subscription-exists">
 				<p>&larr; &nbsp;<a href="#" data-screen="upgrade">Back to Upgrade</a></p>
 			</div>
+			<div class="primary-section" data-screens="settings">
+				<div class="dynamic-links">
+					<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back
+							to
+							Dashboard</a></p>
+				</div>
+			</div>
 
 			<div class="dynamic-section" data-screens="dashboard">
 				<a href="#" class="upgrade-cta" data-screen="upgrade">Upgrade</a>
@@ -74,6 +81,11 @@
 					<span class="month">Annually</span>
 					<span class="saver-pill">2 months free</span>
 				</div>
+			</div>
+			<div class="dynamic-section" data-screens="links|analytics">
+				<a href="#" data-screen="settings">
+					<img src="./assets/images/settings.png" alt="Settings" />
+				</a>
 			</div>
 		</div><!-- .secondary-header -->
 
@@ -185,7 +197,7 @@
 						<div class="input">
 							<input type="url" name="url" placeholder="https://example.com/my-long-url">
 							<input type="hidden" name="domain" value="clkdin">
-							<button class="button block green" type="submit">Create</button>
+							<button class="button green" type="submit">Create</button>
 						</div>
 					</form>
 
@@ -493,7 +505,7 @@
 						below to verify it.</p>
 				</div>
 
-				<button class="button green">Verify Subscription</button>
+				<button class="button verify-subscription green">Verify Subscription</button>
 			</div>
 		</div><!-- #subscription-verify -->
 

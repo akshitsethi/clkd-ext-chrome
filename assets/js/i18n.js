@@ -7,4 +7,5 @@ export const i18n = {
     API_INVALID_RESPONSE: 'Invalid API response.',
     SETTINGS_UPDATED: 'Settings have been saved successfully.',
     MALFORMED_REQUEST: 'Invalid request. Please check the source and try again.',
+    SUBSCRIPTION_DATA_NOT_AVAILABLE: 'Unable to fetch subscription details. Please try again later.'
 };

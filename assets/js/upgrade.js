@@ -1,5 +1,4 @@
 // upgrade.js
-import confetti from "canvas-confetti";
 import { apiBase } from "./constants.js";
 import { Screen } from "./screen.js";
 import { Selectors } from "./selectors.js";
@@ -67,7 +66,7 @@ export const Upgrade = {
                 chrome.tabs.create({ url: response.message });
 
                 // Show a new screen to verify subscription status
-                Screen.switch('subscription-verify');
+                Screen.show('subscription-verify');
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
