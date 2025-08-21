@@ -5,6 +5,7 @@ import { Store } from "./store.js";
 import { i18n } from "./i18n.js";
 import { Events } from "./events.js";
 import { Screen } from "./screen.js";
+import { Analytics } from "./analytics.js";
 
 // Main application
 const CLKD = {
@@ -21,7 +22,9 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			Screen.show('subscription-verify');
+			Screen.show('dashboard');
+
+			Analytics.getDataFromAPI();
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);
