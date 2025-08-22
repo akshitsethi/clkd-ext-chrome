@@ -3,6 +3,7 @@ import { Selectors } from "./selectors.js";
 import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
 import { Settings } from "./settings.js";
+import { Analytics } from "./analytics.js";
 
 export const Screen = {
     constants: {
@@ -14,7 +15,6 @@ export const Screen = {
         'dashboard',
         'links',
         'analytics',
-        'archives',
         'account',
         'settings',
         'help',
@@ -25,7 +25,7 @@ export const Screen = {
         'subscription-success',
         'subscription-exists',
     ],
-    show: function (screen, display = this.constants.DEFAULT_DISPLAY, callback = null) {
+    show: async function (screen, display = this.constants.DEFAULT_DISPLAY, callback = null, async = false) {
         if (!this.screens.includes(screen)) {
             throw new Error(i18n.NO_SCREEN_ERROR);
         }
@@ -51,7 +51,7 @@ export const Screen = {
         el.style.display = display;
 
         if (callback === 'true') {
-            this[screen]();
+            async === true ? await this[screen]() : this[screen];
         }
     },
     updateHeaderSections: function (screen) {
@@ -87,11 +87,8 @@ export const Screen = {
     links: function () {
 
     },
-    analytics: function () {
-
-    },
-    archives: function () {
-
+    analytics: async function () {
+        await Analytics.init();
     },
     settings: async function() {
         await Settings.init();
@@ -102,7 +99,7 @@ export const Screen = {
         }
 
         Selectors.SCREEN_SWITCH_LINKS.forEach(link => {
-            link.addEventListener('click', e => {
+            link.addEventListener('click', async  e => {
                 e.preventDefault();
 
                 try {
@@ -122,8 +119,11 @@ export const Screen = {
                     // Set callback to null if not required
                     const callback = target.getAttribute('data-callback') ?? null;
 
+                    // Check if the functions needs to be synchronous
+                    const sync = Boolean(target.getAttribute('data-async')) ?? false;
+
                     // Switch screen
-                    this.show(id, display, callback);
+                    await this.show(id, display, callback, sync);
                 } catch (error) {
                     console.error(error);
                     Notification.error(error.message ?? i18n.DEFAULT_ERROR);

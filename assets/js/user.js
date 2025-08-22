@@ -3,7 +3,9 @@ import { Store } from "./store.js";
 import { Screen } from "./screen.js";
 import { Selectors } from "./selectors.js";
 import { Notification } from "./notification.js";
+import { Analytics } from "./analytics.js";
 import { i18n } from "./i18n.js";
+import { Settings } from "./settings.js";
 
 export const User = {
     constants: {
@@ -27,6 +29,13 @@ export const User = {
 
         // Also, set data for the user store object
         Store.SETTINGS = data;
+    },
+    setAnalytics: async function (data) {
+        // Store analytics data to locally
+        await Store.set({ analytics: data });
+
+        // Also, set data for the user store object
+        Analytics.DATA = data;
     },
     clearData: async function () {
         // Clear both local and synced storage
@@ -58,17 +67,18 @@ export const User = {
         Selectors.HEADER.style.display = 'none';
         Selectors.SECONDARY_HEADER.style.display = 'none';
     },
-    loginSuccess: function () {
-        // TODO
-        // 1. Check for sub-header and change select input to correct value
-        // 2. Based on screen, modify input CTA's
-
+    loginSuccess: async function () {
         // Update user data in header & make it visible
         this.updateDataInHeader();
         this.showHeader();
 
+        // Fetch settings (because it'll be required by various modules)
+        if (Object.entries(Store.SETTINGS).length === 0) {
+            await Settings.fetchFromAPI();
+        }
+
         // Switch to dashboard
-        Screen.show('dashboard', 'block');
+        await Screen.show('dashboard', 'block', 'true', 'true');
     },
     userHeaderMenuEvent: function () {
         if (!Selectors.HEADER) {
@@ -97,14 +107,14 @@ export const User = {
             e.preventDefault();
             Selectors.PAGE_SELECTOR.classList.toggle('show');
         });
-        Selectors.PAGE_SELECTOR.addEventListener('click', e => {
+        Selectors.PAGE_SELECTOR.addEventListener('click', async e => {
             e.preventDefault();
 
             try {
                 const section = e.target.getAttribute('data-section');
 
                 // Switch screen
-                Screen.show(section.toLowerCase(), 'block', 'true');
+                await Screen.show(section.toLowerCase(), 'block', 'true', true);
 
                 // Remove `selected` from all and add it to the current target
                 const anchors = Selectors.PAGE_SELECTOR.querySelectorAll('a');

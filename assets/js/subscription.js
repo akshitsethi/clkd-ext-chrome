@@ -101,7 +101,7 @@ export const Subscription = {
                 this.successEvent(true);
 
                 // Show success screen
-                Screen.show('subscription-success');
+                await Screen.show('subscription-success');
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);

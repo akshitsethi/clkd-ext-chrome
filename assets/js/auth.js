@@ -42,12 +42,12 @@ export const Auth = {
 			await User.setData(response.message);
 
 			// Steps to take care of post authentication
-			User.loginSuccess();
+			await User.loginSuccess();
 		} catch (error) {
 			console.error(error);
 
 			// Switch to login screen and show error message
-			Screen.show('unlogged', 'flex');
+			await Screen.show('unlogged', 'flex');
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);
 		} finally {
 			Processing.hide();
@@ -113,12 +113,12 @@ export const Auth = {
 				await User.setData(apiResponse.message);
 
 				// Steps to take care of post authentication
-				User.loginSuccess();
+				await User.loginSuccess();
 			} catch (error) {
 				console.error(error);
 
 				// Switch to login screen and show error message
-				Screen.show('unlogged', 'flex');
+				await Screen.show('unlogged', 'flex');
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
 			} finally {
 				Processing.hide();
@@ -165,7 +165,7 @@ export const Auth = {
 		if (Store.USER.ID && Store.USER.token) {
 			await this.login();
 		} else {
-			Screen.show('unlogged', 'flex');
+			await Screen.show('unlogged', 'flex');
 		}
 	}
 };

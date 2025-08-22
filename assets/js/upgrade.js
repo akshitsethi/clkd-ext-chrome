@@ -54,7 +54,7 @@ export const Upgrade = {
                 // Exception for 210 status
                 // which means subscription already exists for the user
                 if (request.status === 210) {
-                    Screen.show('subscription-exists');
+                    await Screen.show('subscription-exists');
                     return;
                 }
                 if (request.status !== 200) {
@@ -65,7 +65,7 @@ export const Upgrade = {
                 chrome.tabs.create({ url: response.message });
 
                 // Show a new screen to verify subscription status
-                Screen.show('subscription-verify');
+                await Screen.show('subscription-verify');
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);

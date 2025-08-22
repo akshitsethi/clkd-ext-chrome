@@ -9,3 +9,14 @@ export const randomString = (length, chars = '0123456789abcdefghijklmnopqrstuvwx
 
   return result;
 };
+
+// Format date in `yyyy-mm-dd` format
+export const formatDate = (date) => {
+  const year = date.getFullYear();
+  // Months are 0-indexed, so add 1 and pad with a leading zero if necessary
+  const month = String(date.getMonth() + 1).padStart(2, '0'); 
+  // Pad day with a leading zero if necessary
+  const day = String(date.getDate()).padStart(2, '0'); 
+
+  return `${year}-${month}-${day}`;
+};

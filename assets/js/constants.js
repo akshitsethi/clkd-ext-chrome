@@ -506,12 +506,13 @@ export const continents = {
     "SA": "South America"
 };
 
-// Analytics duration definition
-export const daysFromAnalyticsDuration = {
+// Analytics duration
+export const analyticsDuration = {
     'day': 1,
     'week': 7,
     '2weeks': 14,
-    'month': 28
+    'month': 30,
+    '2months': 60
 };
 
 // Duration nice name
