@@ -42,7 +42,7 @@ export const Screen = {
         // Set current screen info on document body
         document.body.setAttribute('data-current-screen', screen);
 
-        // Update primary and dynamic sections
+        // Update header sections along with dynamic links
         this.updateHeaderSections(screen);
 
         // Bring the screen to viewport

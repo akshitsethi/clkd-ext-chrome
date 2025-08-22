@@ -14,81 +14,81 @@
 </head>
 
 <body data-current-screen="dashboard">
-	<div class="app">
-		<header class="header">
-			<h1 class="logo">clkd</h1>
-			<div class="username"></div>
+	<header class="header">
+		<h1 class="logo">clkd</h1>
+		<div class="username"></div>
 
-			<div class="profile">
-				<a href="#" class="profile-link">
-					<img src="./assets/images/gravatar.png" alt="Profile Image" />
-				</a>
+		<div class="profile">
+			<a href="#" class="profile-link">
+				<img src="./assets/images/gravatar.png" alt="Profile Image" />
+			</a>
 
-				<ul class="profile-menu">
-					<li><a href="#" data-screen="account" data-display="block" data-callback="true">Account</a></li>
-					<li><a href="#" data-screen="settings">Settings</a></li>
-					<li><a href="#" data-screen="help">Help</a></li>
-					<li><a href="#" id="logout">Logout</a></li>
+			<ul class="profile-menu">
+				<li><a href="#" data-screen="account" data-display="block" data-callback="true">Account</a></li>
+				<li><a href="#" data-screen="settings">Settings</a></li>
+				<li><a href="#" data-screen="help">Help</a></li>
+				<li><a href="#" id="logout">Logout</a></li>
+			</ul>
+		</div>
+	</header><!-- .header -->
+
+	<div class="secondary-header">
+		<div class="primary-section" data-screens="dashboard|links|analytics|archives">
+			<div class="navigation">
+				<span class="current-page">Dashboard</span>
+
+				<ul class="page-selector">
+					<li><a href="#" data-section="Dashboard" class="selected">Dashboard</a></li>
+					<li><a href="#" data-section="Links">Links</a></li>
+					<li><a href="#" data-section="Analytics">Analytics</a></li>
+					<li><a href="#" data-section="Archives">Archives</a></li>
 				</ul>
 			</div>
-		</header><!-- .header -->
-
-		<div class="secondary-header">
-			<div class="primary-section" data-screens="dashboard|links|analytics|archives">
-				<div class="navigation">
-					<span class="current-page">Dashboard</span>
-
-					<ul class="page-selector">
-						<li><a href="#" data-section="Dashboard" class="selected">Dashboard</a></li>
-						<li><a href="#" data-section="Links">Links</a></li>
-						<li><a href="#" data-section="Analytics">Analytics</a></li>
-						<li><a href="#" data-section="Archives">Archives</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="primary-section" data-screens="upgrade|account|help|subscription-success">
-				<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back to
+		</div>
+		<div class="primary-section" data-screens="upgrade|account|help|subscription-success">
+			<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back to
+					Dashboard</a></p>
+		</div>
+		<div class="primary-section" data-screens="subscription-verify|subscription-exists">
+			<p>&larr; &nbsp;<a href="#" data-screen="upgrade">Back to Upgrade</a></p>
+		</div>
+		<div class="primary-section" data-screens="settings">
+			<div class="dynamic-links">
+				<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back
+						to
 						Dashboard</a></p>
 			</div>
-			<div class="primary-section" data-screens="subscription-verify|subscription-exists">
-				<p>&larr; &nbsp;<a href="#" data-screen="upgrade">Back to Upgrade</a></p>
-			</div>
-			<div class="primary-section" data-screens="settings">
-				<div class="dynamic-links">
-					<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back
-							to
-							Dashboard</a></p>
+		</div>
+
+		<div class="dynamic-section" data-screens="dashboard">
+			<a href="#" class="upgrade-cta" data-screen="upgrade">Upgrade</a>
+
+			<div class="switcher">
+				<div class="stats-switcher">
+					<span><img src="./assets/images/period.png" alt="Duration"></span> <a href="#"
+						data-switch="week">Today</a>
 				</div>
 			</div>
-
-			<div class="dynamic-section" data-screens="dashboard">
-				<a href="#" class="upgrade-cta" data-screen="upgrade">Upgrade</a>
-
-				<div class="switcher">
-					<div class="stats-switcher">
-						<span><img src="./assets/images/period.png" alt="Duration"></span> <a href="#"
-							data-switch="week">Today</a>
-					</div>
-				</div>
+		</div>
+		<div class="dynamic-section" data-screens="upgrade">
+			<div class="tenure-switcher">
+				<span class="month">Monthly</span>
+				<label class="switch">
+					<input type="checkbox" id="tenure">
+					<span class="toggle round"></span>
+				</label>
+				<span class="month">Annually</span>
+				<span class="saver-pill">2 months free</span>
 			</div>
-			<div class="dynamic-section" data-screens="upgrade">
-				<div class="tenure-switcher">
-					<span class="month">Monthly</span>
-					<label class="switch">
-						<input type="checkbox" id="tenure">
-						<span class="toggle round"></span>
-					</label>
-					<span class="month">Annually</span>
-					<span class="saver-pill">2 months free</span>
-				</div>
-			</div>
-			<div class="dynamic-section" data-screens="links|analytics">
-				<a href="#" data-screen="settings">
-					<img src="./assets/images/settings.png" alt="Settings" />
-				</a>
-			</div>
-		</div><!-- .secondary-header -->
+		</div>
+		<div class="dynamic-section" data-screens="links|analytics">
+			<a href="#" data-screen="settings">
+				<img src="./assets/images/settings.png" alt="Settings" />
+			</a>
+		</div>
+	</div><!-- .secondary-header -->
 
+	<div class="app">
 		<div id="unlogged" class="screen">
 			<div class="logo">
 				<img src="./assets/images/icon.svg" alt="CLKD" />

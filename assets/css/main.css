@@ -178,16 +178,19 @@ h2 {
 /* Header */
 .header {
     width: 100%;
+    position: fixed;
     display: none;
     align-items: center;
     padding: 0.25rem 0;
+    z-index: 1;
     background-image: linear-gradient(45deg, #7794b6 0%, #dffaff 100%);
 
     & .logo {
         margin: 0;
         margin-left: 1rem;
         font-size: 1.125rem;
-        font-weight: 700;
+        font-weight: 600;
+        letter-spacing: -0.75px;
         color: #ffffff;
     }
 
@@ -267,7 +270,7 @@ h2 {
 .secondary-header {
     display: none;
     background: rgba(119, 148, 182, 0.105);
-    padding: 0.5rem 1rem;
+    padding: 3.5rem 1rem 0.5rem;
     align-items: center;
 
     & .navigation {
@@ -1315,7 +1318,7 @@ input:checked+.toggle:before {
 
 /* Processing */
 .processing {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     left: 0;

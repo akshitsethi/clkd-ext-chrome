@@ -7,6 +7,7 @@ import { Selectors } from "./selectors.js";
 import { Screen } from "./screen.js";
 import { Store } from "./store.js";
 import { apiBase } from "./constants.js";
+import { User } from "./user.js";
 
 export const Subscription = {
     successEvent: function (showConfetti = false) {
@@ -89,14 +90,12 @@ export const Subscription = {
                     throw new Error(response.message);
                 }
 
-                // Update subscription details
+                // Update subscription details and premium status
                 Store.USER.subscription = response.message;
-
-                // Update user's premium status
                 Store.USER.is_premium = data.message.status === 'active' ? true : false;
 
                 // Update locally stored subscription data
-                await Store.set({ user: Store.USER }, 'sync');
+                await User.setData(Store.USER);
 
                 // Success event
                 this.successEvent(true);
