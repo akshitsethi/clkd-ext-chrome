@@ -57,7 +57,6 @@ export const Upgrade = {
                     Screen.show('subscription-exists');
                     return;
                 }
-
                 if (request.status !== 200) {
                     throw new Error(response.message);
                 }

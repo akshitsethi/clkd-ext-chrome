@@ -21,6 +21,13 @@ export const User = {
         // Also, set data for the user store object
         Store.USER = data;
     },
+    setSettings: async function (data) {
+        // Store user settings data
+        await Store.set({ settings: data }, 'sync');
+
+        // Also, set data for the user store object
+        Store.SETTINGS = data;
+    },
     clearData: async function () {
         // Clear both local and synced storage
         await Store.clear('local');

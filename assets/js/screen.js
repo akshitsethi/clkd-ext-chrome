@@ -2,6 +2,7 @@
 import { Selectors } from "./selectors.js";
 import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
+import { Settings } from "./settings.js";
 
 export const Screen = {
     constants: {
@@ -91,6 +92,9 @@ export const Screen = {
     },
     archives: function () {
 
+    },
+    settings: async function() {
+        await Settings.init();
     },
     switchEvent: function () {
         if (Selectors.SCREEN_SWITCH_LINKS.length === 0) {

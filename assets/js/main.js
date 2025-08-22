@@ -6,7 +6,6 @@ import { i18n } from "./i18n.js";
 import { Events } from "./events.js";
 import { Screen } from "./screen.js";
 import { Analytics } from "./analytics.js";
-import { Processing } from "./processing.js";
 
 // Main application
 const CLKD = {
@@ -23,9 +22,9 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			Screen.show('dashboard');
+			// Screen.show('dashboard');
 
-			Analytics.getDataFromAPI();
+			await Analytics.getDataFromAPI('day');
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);

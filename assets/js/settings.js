@@ -5,6 +5,7 @@ import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
 import { Store } from "./store.js";
 import { apiBase } from "./constants.js";
+import { User } from "./user.js";
 
 export const Settings = {
     DEFAULT: {
@@ -23,6 +24,28 @@ export const Settings = {
         pages_per_page: ['5', '10', '25', '50', '100'],
         default_page_domain: ['clkdin', 'clkgg', 'pgxes', 'cdlk', 'xxlk']
     },
+    updateDOM: async function () {
+        try {
+            Processing.show(document.body);
+
+            // Fetch settings from API before updating DOM
+            // Before that, check if data exists in `Store.SETTINGS` object
+            if (Object.entries(Store.SETTINGS).length === 0) {
+                await this.fetchFromAPI();
+            }
+
+            for (const [key, value] of Object.entries(Store.SETTINGS)) {
+                const element = Selectors.SETTINGS_FORM.querySelector(`#${key}`);
+                if (element) {
+                    element.value = value;
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            Processing.hide();
+        }
+    },
     verifyData: function (data) {
         for (const option of Object.keys(this.OPTIONS)) {
             if (!data.hasOwnProperty(option) || !this.OPTIONS[option].includes(data[option])) {
@@ -34,6 +57,41 @@ export const Settings = {
         }
 
         return data;
+    },
+    fetchFromAPI: async function () {
+        const request = await fetch(`${apiBase}/settings?ID=${Store.USER.ID}`, {
+            method: 'GET',
+            async: true,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            contentType: 'json'
+        });
+
+        // Get JSON data
+        const response = await request.json();
+
+        // Check for `message` property in the response returned from API
+        if (!response.hasOwnProperty('message')) {
+            throw new Error(i18n.API_INVALID_RESPONSE);
+        }
+        if (request.status !== 200) {
+            throw new Error(response.message);
+        }
+
+        // Settings object
+        const settings = {
+            analytics_duration: response.message.setting_analytics_duration,
+            links_per_page: response.message.setting_links_per_page,
+            default_domain: response.message.setting_default_domain,
+            pages_per_page: response.message.setting_pages_per_page,
+            default_page_domain: response.message.setting_default_page_domain,
+            qr_background: response.message.setting_qr_background,
+            qr_text: response.message.setting_qr_text
+        };
+
+        // Store user settings
+        await User.setSettings(settings);
     },
     syncWithAPI: async function (settings) {
         const request = await fetch(`${apiBase}/settings`, {
@@ -107,16 +165,10 @@ export const Settings = {
             }
         });
     },
-    updateDOMEvent: function (settings) {
-        for (const [key, value] of Object.entries(settings)) {
-            const element = Selectors.SETTINGS_FORM.querySelector(`#${key}`);
-            if (element) {
-                element.value = value;
-            }
-        }
-    },
     events: function () {
         this.formSubmitEvent();
-        this.updateDOMEvent(Store.SETTINGS);
+    },
+    init: async function() {
+        await this.updateDOM();
     }
 };

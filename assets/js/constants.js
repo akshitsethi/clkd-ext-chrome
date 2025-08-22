@@ -524,3 +524,14 @@ export const analyticsDurationNiceName = {
 
 // API Endpoint
 export const apiBase = 'http://localhost:8788/api';
+
+// Data refresh window for API data
+const date = Date.now();
+export const refreshDuration = {
+    analytics: {
+        account: date + 60 * 60 * 1000, // 1 hour
+        slug: date + 60 * 60 * 1000
+    },
+    links: date + 60 * 60 * 1000 * 24 * 7, // 7 days
+    pages: date + 60 * 60 * 1000 * 24 * 7
+};
