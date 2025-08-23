@@ -10,6 +10,7 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
 		rel="stylesheet">
+	<link rel="stylesheet" href="./assets/css/datatables.css" type="text/css">
 	<link rel="stylesheet" href="./assets/css/main.css" type="text/css">
 </head>
 
@@ -322,7 +323,59 @@
 
 		<div id="analytics" class="screen">
 			<div class="wrapper">
-				Analytics screen
+				<div class="chart">
+					<h3>Clicks</h3>
+					<canvas id="clicks"></canvas>
+				</div>
+
+				<div class="chart">
+					<h3>Scans</h3>
+					<canvas id="scans"></canvas>
+				</div>
+
+				<div class="geolocation">
+					<h3>Countries</h3>
+					<table id="country">
+						<thead>
+							<tr>
+								<th data-dt-order="disable">Country</th>
+								<th>Visits</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+
+					<h3>Cities</h3>
+					<table id="city">
+						<thead>
+							<tr>
+								<th data-dt-order="disable">City</th>
+								<th>Visits</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+
+				<div class="chart">
+					<h3>Browser</h3>
+					<canvas id="browser"></canvas>
+				</div>
+
+				<div class="chart">
+					<h3>OS</h3>
+					<canvas id="os"></canvas>
+				</div>
+
+				<div class="chart">
+					<h3>Screen</h3>
+					<canvas id="screen"></canvas>
+				</div>
+
+				<div class="chart">
+					<h3>Language</h3>
+					<canvas id="lang"></canvas>
+				</div>
 			</div>
 		</div><!-- #analytics -->
 

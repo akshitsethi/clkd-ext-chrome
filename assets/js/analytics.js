@@ -1,13 +1,131 @@
 // analytics.js
+import DataTable from "datatables.net";
+import { Chart, registerables } from "chart.js";
 import { Store } from "./store.js";
 import { User } from "./user.js";
 import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
-import { country, apiBase, refreshDuration, analyticsDuration } from "./constants.js";
+import { country, language, apiBase, refreshDuration, analyticsDuration, blankSlate, variableChartTypes, variableChartColors, dataTableLanguage } from "./constants.js";
 import { formatDate } from "./helper.js";
 
 export const Analytics = {
     DATA: {},
+    DATA_KEYS: ['browser', 'os', 'screen', 'lang', 'country', 'city'],
+    VARIABLE_CHARTS: ['browser', 'os', 'screen', 'lang'],
+    VISIT_CHARTS: ['clicks', 'scans'],
+    TABLE_INSTANCES: {
+        country: null,
+        city: null
+    },
+    CHART_INSTANCES: {
+        clicks: null,
+        scans: null,
+        browser: null,
+        os: null,
+        screen: null,
+        lang: null
+    },
+    createClickAndScanChart: function(selector, label, data, colors) {
+        const el = document.querySelector(`#analytics #${selector}`);
+        if (!el) {
+            return;
+        }
+        if (this.CHART_INSTANCES[selector] instanceof Chart) {
+            this.CHART_INSTANCES[selector].destroy();
+        }
+
+        this.CHART_INSTANCES[selector] = new Chart(el, {
+            type: 'bar',
+			data: {
+				labels: data.labels,
+				datasets: [
+					{
+						label: label,
+						data: data.all,
+						backgroundColor: colors.all
+					},
+					{
+						label: 'Unique',
+						data: data.unique,
+						backgroundColor: colors.unique
+					}
+				]
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				}
+			}
+		});
+    },
+    createVariableChart: function(selector, type, data, colors) {
+        const el = document.querySelector(`#analytics #${selector}`);
+        if (!el) {
+            return;
+        }
+        if (this.CHART_INSTANCES[selector] instanceof Chart) {
+            this.CHART_INSTANCES[selector].destroy();
+        }
+
+        this.CHART_INSTANCES[selector] = new Chart(el, {
+			type: type,
+			data: {
+				labels: this.processVariableLabels(selector, Object.keys(data)),
+				datasets: [
+					{
+						label: 'Visits',
+						data: Object.values(data),
+						backgroundColor: colors,
+						hoverOffset: 4
+					},
+				]
+			}
+		});
+    },
+    createDataTable: function(selector, data) {
+        const el = document.querySelector(`#analytics #${selector}`);
+        if (!el) {
+            return;
+        }
+        if (DataTable.isDataTable(this.TABLE_INSTANCES[selector])) {
+			this.TABLE_INSTANCES[selector].destroy();
+		}
+
+		this.TABLE_INSTANCES[selector] = new DataTable(
+			el,
+			{
+				data: data,
+				language: dataTableLanguage[selector],
+				pageLength: 10,
+				lengthChange: false
+			}
+		);
+    },
+    processDataTableRecords: function(selector, data) {
+        const output = [];
+
+        if (selector === 'country') {
+            for (let [name, clicks] of Object.entries(data)) {
+                name = name.replace('_', '-');
+                output.push([`<span><img src="./assets/images/flags/${name}.svg"> ${country[name] ?? name}</span>`, clicks]);
+            }
+        } else if (selector === 'city') {
+            for (let [name, clicks] of Object.entries(data)) {
+                output.push([name.replace('_', ' '), clicks]);
+            }
+        }
+
+        return output;
+    },
+    processVariableLabels: function(selector, labels) {
+        if (selector === 'lang') {
+            return labels.map(label => language[label.replace('_', '-')] ?? label);
+        }
+
+        return labels
+    },
     getDataFromAPI: async function (duration) {
         const request = await fetch(`${apiBase}/analytics`, {
             method: 'POST',
@@ -51,36 +169,12 @@ export const Analytics = {
         // Store analytics data for the user
         User.setAnalytics(analytics);
     },
-    processVariableData: function(data) {
-        console.log(data);
-    },
-    processClickAndScanData: function(data) {
-        // Add an entry for zero data
-        if (data === null) {
+    processData: function () {
+        // Initial data
+        this.COMPUTATIONS = structuredClone(blankSlate);
 
-        }
-
-        // Add action and unique number for the given date
-        
-    },
-    processData: function() {
-        // Set initial data
-        this.COMPUTATIONS = {
-            clicks: {
-                all: [],
-    			unique: []
-            },
-            scans: {
-                all: [],
-                unique: []
-            },
-            browser: {},
-			os: {},
-			screen: {},
-			lang: {},
-			country: {},
-			city: {}
-        };
+        // Country codes array
+        const countryCodes = Object.keys(country);
 
         const data = this.DATA[Store.SETTINGS.analytics_duration]['data'];
         const date = new Date();
@@ -89,16 +183,72 @@ export const Analytics = {
             const query = formatDate(new Date(date.getTime() - (i * 24 * 60 * 60 * 1000)));
             const find = data.find(obj => obj.date === query);
 
-            if (find) {
-                this.processVariableData(find);
-                this.processClickAndScanData(find);
-            } else {
-                this.processClickAndScanData(null);
+            // Click and scan data
+            for (const type of ['clicks', 'scans']) {
+                this.COMPUTATIONS[type].labels.unshift(formatDate(new Date(query), 'chart'));
+
+                // Add an entry for zero data
+                if (!find) {
+                    this.COMPUTATIONS[type].all.unshift(0);
+                    this.COMPUTATIONS[type].unique.unshift(0);
+                } else {
+                    // Add action and unique number for the given date
+                    this.COMPUTATIONS[type].all.unshift(find[type]);
+                    this.COMPUTATIONS[type].unique.unshift(find[`u_${type}`]);
+                }
+            }
+
+            // We don't need to process variable data if data is not found for the specified date
+            if (!find) {
+                continue;
+            }
+
+            // Variable data such as country, browser, screen etc
+            for (const key of this.DATA_KEYS) {
+                if (Object.keys(find[key]).length !== 0) {
+                    for (let [name, clicks] of Object.entries(find[key])) {
+                        if (key === 'country' && !countryCodes.includes(name)) {
+                            name = 'XX';
+                        }
+
+                        if (this.COMPUTATIONS[key][name]) {
+                            this.COMPUTATIONS[key][name] = this.COMPUTATIONS[key][name] + clicks;
+                        } else {
+                            this.COMPUTATIONS[key][name] = clicks;
+                        }
+                    }
+                }
             }
         }
     },
     updateDOM: function () {
         this.processData();
+
+        // Register required components(or registrables)
+		Chart.register(...registerables);
+
+        // Initialise charts
+        for (const key of this.VISIT_CHARTS) {
+            this.createClickAndScanChart(
+                key,
+                key.charAt(0).toUpperCase() + key.substring(1),
+                this.COMPUTATIONS[key],
+                variableChartColors[key]
+            );
+        }
+
+        // Create country and city records table
+        this.createDataTable('country', this.processDataTableRecords('country', this.COMPUTATIONS['country']));
+        this.createDataTable('city', this.processDataTableRecords('city', this.COMPUTATIONS['city']));
+
+        for (const key of this.VARIABLE_CHARTS) {
+            this.createVariableChart(
+                key,
+                variableChartTypes[key],
+                this.COMPUTATIONS[key],
+                variableChartColors[key]
+            );
+        }
     },
     events: function () {
 
@@ -110,7 +260,6 @@ export const Analytics = {
             if (data.hasOwnProperty('analytics')) {
                 this.DATA = data['analytics'];
             }
-
             if (
                 Object.entries(this.DATA) === 0
                 || !this.DATA.hasOwnProperty(Store.SETTINGS.analytics_duration)

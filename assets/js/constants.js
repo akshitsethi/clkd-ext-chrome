@@ -1,4 +1,7 @@
 // constants.js
+
+import { m } from "motion/react";
+
 // Language codes
 export const language = {
     "af": "Afrikaans",
@@ -535,4 +538,98 @@ export const refreshDuration = {
     },
     links: date + 60 * 60 * 1000 * 24 * 7, // 7 days
     pages: date + 60 * 60 * 1000 * 24 * 7
+};
+
+// Blank slate for analytics computations
+export const blankSlate = {
+    clicks: {
+        labels: [],
+        all: [],
+        unique: []
+    },
+    scans: {
+        labels: [],
+        all: [],
+        unique: []
+    },
+    browser: {},
+    os: {},
+    screen: {},
+    lang: {},
+    country: {},
+    city: {}
+};
+
+// Chart types
+export const variableChartTypes = {
+    browser: 'doughnut',
+    os: 'pie',
+    screen: 'doughnut',
+    lang: 'pie'
+};
+
+// Chart colors
+export const variableChartColors = {
+    clicks: {
+        all: ['rgb(255, 201, 39)'],
+        unique: ['rgb(244, 109, 154)']
+    },
+    scans: {
+        all: ['rgb(99, 193, 247)'],
+        unique: ['rgb(46, 204, 113)']
+    },
+    browser: [
+        'rgb(255, 201, 39)',
+        'rgb(46, 204, 113)',
+        'rgb(244, 109, 154)',
+        'rgb(99, 193, 247)',
+        'rgb(231, 76, 60)',
+        'rgb(207, 217, 223)'
+    ],
+    os: [
+        'rgb(99, 193, 247)',
+        'rgb(244, 109, 154)',
+        'rgb(46, 204, 113)',
+        'rgb(255, 201, 39)',
+        'rgb(231, 76, 60)',
+        'rgb(207, 217, 223)'
+    ],
+    screen: [
+        'rgb(207, 217, 223)',
+        'rgb(99, 193, 247)',
+        'rgb(244, 109, 154)',
+        'rgb(46, 204, 113)',
+        'rgb(255, 201, 39)',
+        'rgb(231, 76, 60)'
+    ],
+    lang: [
+        'rgb(231, 76, 60)',
+        'rgb(99, 193, 247)',
+        'rgb(244, 109, 154)',
+        'rgb(46, 204, 113)',
+        'rgb(255, 201, 39)',
+        'rgb(207, 217, 223)'
+    ]
+};
+
+// DataTable language
+export const dataTableLanguage = {
+    country: {
+        search: 'Filter Countries',
+        entries: {
+            _: 'countries',
+            1: 'country'
+        },
+        zeroRecords: 'No matching countries found',
+        emptyTable: 'Country data is not available'
+    },
+    city: {
+        search: 'Filter Cities',
+        entries: {
+            _: 'cities',
+            1: 'city'
+        },
+        zeroRecords: 'No matching cities found',
+        emptyTable: 'City data is not available'
+    }
 };
