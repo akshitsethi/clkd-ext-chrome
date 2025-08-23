@@ -16,6 +16,10 @@ export const Selectors = {
     // Unlogged
     GOOGLE_OAUTH_BUTTON: document.querySelector('.social-buttons .google-oauth'),
 
+    // Analytics
+    ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
+    NO_ANALYTICS_SECTION: document.querySelector('#analytics .no-analytics-data'),
+
     // Settings
     SETTINGS_FORM: document.querySelector('.settings-form'),
 

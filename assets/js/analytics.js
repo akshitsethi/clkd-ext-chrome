@@ -7,6 +7,8 @@ import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
 import { country, language, apiBase, refreshDuration, analyticsDuration, blankSlate, variableChartTypes, variableChartColors, dataTableLanguage } from "./constants.js";
 import { formatDate } from "./helper.js";
+import { Processing } from "./processing.js";
+import { Selectors } from "./selectors.js";
 
 export const Analytics = {
     DATA: {},
@@ -256,6 +258,8 @@ export const Analytics = {
     init: async function () {
         // Get stored data and update DOM
         try {
+            Processing.show(document.body);
+
             const data = await Store.get('analytics');
             if (data.hasOwnProperty('analytics')) {
                 this.DATA = data['analytics'];
@@ -269,13 +273,19 @@ export const Analytics = {
 
             // Now that we have data, update DOM
             this.updateDOM();
+
+            // Show `analytics-data` div
+            Selectors.ANALYTICS_SECTION.style.display = 'block';
+            Selectors.NO_ANALYTICS_SECTION.style.display = 'none';
         } catch (error) {
-            // TODO
-            // Show `no data` screen here as either the data is not available or we encountered an error
-
-
             console.log(error);
             Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+
+            // Show screen display `data not found` message
+            Selectors.ANALYTICS_SECTION.style.display = 'none';
+            Selectors.NO_ANALYTICS_SECTION.style.display = 'block';
+        } finally {
+            Processing.hide();
         }
     }
 };

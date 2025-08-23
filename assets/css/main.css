@@ -120,7 +120,6 @@ textarea {
 .app {
     background-color: #ffffff;
     overflow: auto;
-    min-height: 100vh;
 }
 
 .screen {
@@ -769,6 +768,38 @@ h2 {
 
     & label {
         font-weight: 500;
+    }
+}
+
+/* Analytics */
+#analytics {
+    & .wrapper {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    & .analytics-data {
+        & h2 {
+            margin: 0 0 0.5rem;
+        }
+
+        & .chart,
+        & .geolocation {
+            padding-bottom: 2.25rem;
+        }
+        & .chart {
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    & .no-analytics-data {
+        display: none;
+
+        & a {
+            text-decoration: underline;
+        }
     }
 }
 

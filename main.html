@@ -322,59 +322,70 @@
 		</div><!-- #links -->
 
 		<div id="analytics" class="screen">
-			<div class="wrapper">
-				<div class="chart">
-					<h3>Clicks</h3>
-					<canvas id="clicks"></canvas>
+			<div class="analytics-data">
+				<div class="wrapper">
+					<div class="chart">
+						<h2>Clicks</h2>
+						<canvas id="clicks"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>Scans</h2>
+						<canvas id="scans"></canvas>
+					</div>
+
+					<div class="geolocation">
+						<h2>Countries</h2>
+						<table id="country">
+							<thead>
+								<tr>
+									<th data-dt-order="disable">Country</th>
+									<th>Visits</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+
+						<h2>Cities</h2>
+						<table id="city">
+							<thead>
+								<tr>
+									<th data-dt-order="disable">City</th>
+									<th>Visits</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+
+					<div class="chart">
+						<h2>Browser</h2>
+						<canvas id="browser"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>OS</h2>
+						<canvas id="os"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>Screen</h2>
+						<canvas id="screen"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>Language</h2>
+						<canvas id="lang"></canvas>
+					</div>
 				</div>
+			</div>
 
-				<div class="chart">
-					<h3>Scans</h3>
-					<canvas id="scans"></canvas>
-				</div>
-
-				<div class="geolocation">
-					<h3>Countries</h3>
-					<table id="country">
-						<thead>
-							<tr>
-								<th data-dt-order="disable">Country</th>
-								<th>Visits</th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-
-					<h3>Cities</h3>
-					<table id="city">
-						<thead>
-							<tr>
-								<th data-dt-order="disable">City</th>
-								<th>Visits</th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-				</div>
-
-				<div class="chart">
-					<h3>Browser</h3>
-					<canvas id="browser"></canvas>
-				</div>
-
-				<div class="chart">
-					<h3>OS</h3>
-					<canvas id="os"></canvas>
-				</div>
-
-				<div class="chart">
-					<h3>Screen</h3>
-					<canvas id="screen"></canvas>
-				</div>
-
-				<div class="chart">
-					<h3>Language</h3>
-					<canvas id="lang"></canvas>
+			<div class="no-analytics-data">
+				<div class="wrapper">
+					<span class="center block">
+						<img src="./assets/images/no-analytics.jpg" alt="No analytics recorded so far..." />
+					</span>
+					<p>We don't have analytics data for your account. Kindly check back in an hour or <a href="#" data-screen="help|block|true">contact support</a> if you continue facing the same issue.</p>
 				</div>
 			</div>
 		</div><!-- #analytics -->

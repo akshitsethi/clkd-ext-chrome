@@ -1,7 +1,4 @@
 // constants.js
-
-import { m } from "motion/react";
-
 // Language codes
 export const language = {
     "af": "Afrikaans",
