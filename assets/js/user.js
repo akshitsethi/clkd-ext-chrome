@@ -78,7 +78,7 @@ export const User = {
         }
 
         // Switch to dashboard
-        await Screen.show('dashboard', 'block', 'true', 'true');
+        await Screen.show('dashboard', 'block', 'true', true);
     },
     userHeaderMenuEvent: function () {
         if (!Selectors.HEADER) {

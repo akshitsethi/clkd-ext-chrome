@@ -22,7 +22,7 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			// Screen.show('analytics', 'block', 'true', true);
+			// Screen.show('dashboard', 'block', 'true', true);
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);

@@ -4,6 +4,7 @@ import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
 import { Settings } from "./settings.js";
 import { Analytics } from "./analytics.js";
+import { Dashboard } from "./dashboard.js";
 
 export const Screen = {
     constants: {
@@ -51,7 +52,7 @@ export const Screen = {
         el.style.display = display;
 
         if (callback === 'true') {
-            async === true ? await this[screen]() : this[screen];
+            async === true ? await this[screen]() : this[screen]();
         }
     },
     updateHeaderSections: function (screen) {
@@ -81,8 +82,8 @@ export const Screen = {
     hideAll: function () {
         Selectors.SCREENS.forEach(screen => screen.style.display = 'none');
     },
-    dashboard: function () {
-
+    dashboard: async function () {
+        await Dashboard.init();
     },
     links: function () {
 

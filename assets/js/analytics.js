@@ -169,7 +169,7 @@ export const Analytics = {
         };
 
         // Store analytics data for the user
-        User.setAnalytics(analytics);
+        await User.setAnalytics(analytics);
     },
     processData: function () {
         // Initial data
@@ -252,9 +252,6 @@ export const Analytics = {
             );
         }
     },
-    events: function () {
-
-    },
     init: async function () {
         // Get stored data and update DOM
         try {
@@ -278,7 +275,7 @@ export const Analytics = {
             Selectors.ANALYTICS_SECTION.style.display = 'block';
             Selectors.NO_ANALYTICS_SECTION.style.display = 'none';
         } catch (error) {
-            console.log(error);
+            console.error(error);
             Notification.error(error.message ?? i18n.DEFAULT_ERROR);
 
             // Show screen display `data not found` message
