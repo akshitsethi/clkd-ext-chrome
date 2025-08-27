@@ -20,3 +20,12 @@ export const formatDate = (date, format = 'normal') => {
 
   return format === 'normal' ? `${year}-${month}-${day}` : `${day}/${month}`;
 };
+
+// Get current tab
+export const getCurrentTab = async function() {
+	const queryOptions = { active: true };
+
+	// `tab` will either be a `tabs.Tab` instance or `undefined`.
+	const [tab] = await chrome.tabs.query(queryOptions);
+	return tab;
+};
