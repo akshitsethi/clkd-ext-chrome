@@ -398,35 +398,39 @@ h2 {
 #dashboard {
     & .engagements {
         background: rgba(119, 148, 182, 0.105);
-        display: flex;
-        justify-content: space-between;
         padding: 2rem 1rem 1rem;
 
-        & div[data-stat] {
-            position: relative;
-            width: 68px;
-            text-align: center;
-            padding: 1.75rem 0 0;
-            border-radius: 8px;
+        & .engagements-data {
+            display: flex;
+            justify-content: space-between;
 
-            & .number {
-                font-family: 'Inter', 'Open Sans', 'Helvetica Neue', sans-serif;
-                font-weight: 900;
-                font-size: 1.75rem;
-                color: #273144;
-            }
+            & div[data-stat] {
+                position: relative;
+                width: 68px;
+                text-align: center;
+                padding: 1.75rem 0 0;
+                border-radius: 8px;
 
-            & img {
-                position: absolute;
-                top: 0;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                max-width: 28px;
+                & .number {
+                    font-family: 'Inter', 'Open Sans', 'Helvetica Neue', sans-serif;
+                    font-weight: 900;
+                    font-size: 1.75rem;
+                    color: #273144;
+                }
+
+                & img {
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    max-width: 28px;
+                }
             }
         }
     }
 
     & .insights {
+        padding: 1rem;
         background-image: linear-gradient(180deg, rgba(119, 148, 182, 0.105) 43%, rgba(255, 255, 255, 0) 100%);
 
         & .insights-data {

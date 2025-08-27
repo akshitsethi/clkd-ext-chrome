@@ -68,14 +68,14 @@ export const User = {
         Selectors.SECONDARY_HEADER.style.display = 'none';
     },
     loginSuccess: async function () {
-        // Update user data in header & make it visible
-        this.updateDataInHeader();
-        this.showHeader();
-
         // Fetch settings (because it'll be required by various modules)
         if (Object.entries(Store.SETTINGS).length === 0) {
             await Settings.fetchFromAPI();
         }
+
+        // Update user data in header & make it visible
+        this.updateDataInHeader();
+        this.showHeader();
 
         // Switch to dashboard
         await Screen.show('dashboard', 'block', 'true', true);

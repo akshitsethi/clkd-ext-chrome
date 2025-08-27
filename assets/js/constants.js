@@ -538,7 +538,7 @@ export const refreshDuration = {
 };
 
 // Blank slate for analytics computations
-export const blankSlate = {
+export const analyticsBlankSlate = {
     clicks: {
         labels: [],
         all: [],
@@ -555,6 +555,40 @@ export const blankSlate = {
     lang: {},
     country: {},
     city: {}
+};
+
+// Blank slate for dashboard computations
+export const dashboardBlankSlate = {
+    totals: {
+        today: {
+            clicks: 0,
+            scans: 0,
+            pages: 0
+        },
+        week: {
+            clicks: 0,
+            scans: 0,
+            pages: 0
+        }
+    },
+    insights: {
+        today: {
+            country: {},
+            city: {},
+            browser: {},
+            screen: {},
+            lang: {},
+            os: {}
+        },
+        week: {
+            country: {},
+            city: {},
+            browser: {},
+            screen: {},
+            lang: {},
+            os: {}
+        }
+    }
 };
 
 // Chart types

@@ -20,9 +20,9 @@ export const Settings = {
     OPTIONS: {
         analytics_duration: ['day', 'week', '2weeks', 'month'],
         links_per_page: ['5', '10', '25', '50', '100'],
-        default_domain: ['clkdin', 'clkgg', 'pgxes', 'cdlk', 'xxlk'],
+        default_domain: ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk'],
         pages_per_page: ['5', '10', '25', '50', '100'],
-        default_page_domain: ['clkdin', 'clkgg', 'pgxes', 'cdlk', 'xxlk']
+        default_page_domain: ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk']
     },
     updateDOM: async function () {
         try {

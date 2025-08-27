@@ -5,7 +5,7 @@ import { Store } from "./store.js";
 import { User } from "./user.js";
 import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
-import { country, language, apiBase, refreshDuration, analyticsDuration, blankSlate, variableChartTypes, variableChartColors, dataTableLanguage } from "./constants.js";
+import { country, language, apiBase, refreshDuration, analyticsDuration, analyticsBlankSlate, variableChartTypes, variableChartColors, dataTableLanguage } from "./constants.js";
 import { formatDate } from "./helper.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
@@ -173,12 +173,12 @@ export const Analytics = {
     },
     processData: function () {
         // Initial data
-        this.COMPUTATIONS = structuredClone(blankSlate);
+        this.COMPUTATIONS = structuredClone(analyticsBlankSlate);
 
         // Country codes array
         const countryCodes = Object.keys(country);
 
-        const data = this.DATA[Store.SETTINGS.analytics_duration]['data'];
+        const data = this.DATA[Store.SETTINGS.analytics_duration].data;
         const date = new Date();
 
         for (let i = 0; i < analyticsDuration[Store.SETTINGS.analytics_duration]; i++) {
