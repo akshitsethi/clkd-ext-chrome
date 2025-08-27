@@ -6,6 +6,7 @@ import { Help } from "./help.js";
 import { User } from "./user.js";
 import { Upgrade } from "./upgrade.js";
 import { Subscription } from "./subscription.js";
+import { Dashboard } from "./dashboard.js";
 
 export const Events = {
     init: function () {
@@ -16,5 +17,6 @@ export const Events = {
         Help.events();
         Upgrade.events();
         Subscription.events();
+        Dashboard.events();
     }
 };

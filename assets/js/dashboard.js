@@ -9,6 +9,7 @@ import { formatDate } from "./helper.js";
 import { Selectors } from "./selectors.js";
 
 export const Dashboard = {
+    CURRENT_PERIOD: 'today',
     DATA_KEYS: Analytics.DATA_KEYS,
     processData: function() {
         // Initial data
@@ -62,14 +63,60 @@ export const Dashboard = {
         }
 
         // After computation, find out the top performing values (daily & weekly)
-        
+        for (const key of this.DATA_KEYS) {
+            for (const period of ['today', 'week']) {
+                if (Object.keys(this.COMPUTATIONS.insights[period]).length !== 0) {
+                    this.COMPUTATIONS.insights[period][key] = Object.keys(this.COMPUTATIONS.insights[period][key]).reduce((a, b) => this.COMPUTATIONS.insights[period][key][a] > this.COMPUTATIONS.insights[period][key][b] ? a : b);
+                } else {
+                    this.COMPUTATIONS.insights[period][key] = '--';
+                }
+            }
+		}
     },
-    updateEngagementsAndInsights: function() {
+    processPrettyName: function(type, value) {
+        if (type === 'lang') {
+            return language[value.replace('_', '-')] ?? value;
+        } else if (type === 'country') {
+            value = value.replace('_', '-');
+            return `<span><img src="./assets/images/flags/${value}.svg"> ${country[value] ?? value}</span>`
+        } else if (type === 'city') {
+            return value.replace('_', ' ');
+        }
+
+        return value;
+    },
+    updateEngagementsAndInsights: function(period = 'today') {
         if (!Selectors.ENGAGEMENTS_SECTION || !Selectors.INSIGHTS_SECTION) {
             return;
         }
 
+        // Engagements
+        const stats = Selectors.ENGAGEMENTS_SECTION.querySelectorAll('div[data-stat]');
+        if (stats.length !== 0) {
+            stats.forEach(stat => {
+                const type = stat.getAttribute('data-stat');
+                const number = stat.querySelector('.number');
+                if (!type || !number) {
+                    return;
+                }
 
+                number.innerText = this.COMPUTATIONS.totals[period][type];
+            });
+        }
+
+        // Insights
+        const insights = Selectors.INSIGHTS_SECTION.querySelectorAll('div[data-insight]');
+        if (insights.length !== 0) {
+            insights.forEach(insight => {
+                const type = insight.getAttribute('data-insight');
+                const span = insight.querySelector('span');
+                if (!type || !span) {
+                    return;
+                }
+
+                span.innerHTML = this.processPrettyName(type, this.COMPUTATIONS.insights[period][type]);
+            });
+        }
     },
     updateDOM: async function() {
         try {
@@ -90,7 +137,7 @@ export const Dashboard = {
             this.processData();
 
             // Update engagements & insights
-            this.updateEngagementsAndInsights();
+            this.updateEngagementsAndInsights(this.CURRENT_PERIOD);
         } catch (error) {
             console.error(error);
             Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -98,7 +145,43 @@ export const Dashboard = {
             Processing.hide();
         }
     },
+    updatePeriodEvent: function() {
+        if (!Selectors.STATS_SWITCHER_BUTTON) {
+            return;
+        }
+
+        Selectors.STATS_SWITCHER_BUTTON.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                Processing.show(document.body);
+
+                const currentPeriod = e.target.getAttribute('data-period');
+                if (!currentPeriod) {
+                    throw new Error(i18n.SELECTOR_NOT_FOUND);
+                }
+                this.CURRENT_PERIOD = currentPeriod === 'today' ? 'week' : 'today';
+
+                // Update attribute and text
+                e.target.setAttribute('data-period', this.CURRENT_PERIOD);
+                e.target.innerText = this.CURRENT_PERIOD;
+
+                // Update engagements & insights
+                this.updateEngagementsAndInsights(this.CURRENT_PERIOD);
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            } finally {
+                Processing.hide();
+            }
+        });
+    },
+
+    events: function() {
+        this.updatePeriodEvent();
+    },
     init: async function () {
+        // Update DOM with computations
         await this.updateDOM();
     }
 };

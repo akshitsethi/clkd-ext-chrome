@@ -19,6 +19,7 @@ export const Selectors = {
     // Dashboard
     ENGAGEMENTS_SECTION: document.querySelector('.engagements-data'),
     INSIGHTS_SECTION: document.querySelector('.insights-data'),
+    STATS_SWITCHER_BUTTON: document.querySelector('.stats-switcher a'),
 
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
