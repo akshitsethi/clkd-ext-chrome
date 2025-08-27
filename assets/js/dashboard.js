@@ -78,7 +78,7 @@ export const Dashboard = {
             return language[value.replace('_', '-')] ?? value;
         } else if (type === 'country') {
             value = value.replace('_', '-');
-            return `<span><img src="./assets/images/flags/${value}.svg"> ${country[value] ?? value}</span>`
+            return `<img src="./assets/images/flags/${value}.svg"> ${country[value] ?? value}`;
         } else if (type === 'city') {
             return value.replace('_', ' ');
         }
@@ -109,7 +109,7 @@ export const Dashboard = {
         if (insights.length !== 0) {
             insights.forEach(insight => {
                 const type = insight.getAttribute('data-insight');
-                const span = insight.querySelector('span');
+                const span = insight.querySelector('.insight-info');
                 if (!type || !span) {
                     return;
                 }

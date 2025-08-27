@@ -440,6 +440,7 @@ h2 {
             & div {
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
                 padding: 0.60rem 0;
                 font-size: 0.825rem;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.04);
@@ -448,18 +449,22 @@ h2 {
                     border-bottom: 0;
                 }
 
-                & label {
-                    min-width: 90px;
-                    font-weight: 500;
-                }
-
                 & span {
-                    margin-left: auto;
-                    font-weight: 500;
+                    &:first-child {
+                        min-width: 90px;
+                        font-weight: 500;
+                    }
+                    &:last-child {
+                        display: flex;
+                        font-weight: 500;
+                        width: 100%;
+                        justify-content: right;
 
-                    & img {
-                        max-width: 20px;
-                        border-radius: 2px;
+                        & img {
+                            max-width: 20px;
+                            border-radius: 4px;
+                            margin-right: 0.25rem;
+                        }
                     }
                 }
             }
