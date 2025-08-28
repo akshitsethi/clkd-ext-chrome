@@ -27,6 +27,7 @@ export const Selectors = {
     LINK_ENTRY_TEMPLATE: document.querySelector('#links #link-entry-template'),
     LINK_EDIT_TEMPLATE: document.querySelector('#links #link-edit-template'),
     LINKS_SECTION: document.querySelector('#links .links-data'),
+    LINKS_NO_DATA_MESSAGE: document.querySelector('#links .no-links-data'),
 
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
@@ -51,9 +52,6 @@ export const Selectors = {
     HELP_SECTION: document.querySelector('#help .help-section'),
     HELP_SECTION_SUCCESS: document.querySelector('#help .help-success'),
     HELP_LINKS: document.querySelectorAll('#help .help-links a[data-action]'),
-
-    // Tooltips
-    TOOLTIPS: document.querySelectorAll('[tooltip]'),
 
     // Processing
     PROCESSING_TEMPLATE: document.getElementById('processing'),

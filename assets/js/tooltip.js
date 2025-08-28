@@ -1,13 +1,33 @@
 // tooltip.js
 import { randomString } from "./helper.js";
 import { i18n } from "./i18n.js";
-import { Selectors } from "./selectors.js";
 
 export const Tooltip = {
     constants: {
-        CLASSNAME: '.tooltip'
+        CLASSNAME: '.tooltip',
+        SELECTOR: '[tooltip]'
     },
-    logic: function(selector, tooltip) {
+    logic: function (selector) {
+        // Placeholder for tooltip element
+        let tooltip;
+
+        const existing = selector.querySelector(this.constants.CLASSNAME);
+        if (existing) {
+            tooltip = existing;
+        } else {
+            const random = randomString(6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+            tooltip = document.createElement('div');
+            tooltip.setAttribute('id', `${random}-tooltip`);
+            tooltip.classList.add('tooltip');
+
+            // Set selector's ID
+            selector.setAttribute('id', random);
+        }
+
+        // Set tooltip's content
+        tooltip.innerText = selector.getAttribute('tooltip');
+
         const x = '0';
         const y = '16px';
 
@@ -30,7 +50,7 @@ export const Tooltip = {
             tooltip.style.top = `${e.clientY}px`;
         }
     },
-    show: function(el, text) {
+    show: function (el, text) {
         if (!el) {
             throw new Error(i18n.SELECTOR_NOT_FOUND);
         }
@@ -38,48 +58,17 @@ export const Tooltip = {
         // Set tooltip attribute for `el`
         el.setAttribute('tooltip', text);
 
-        // Placeholder for tooltip element
-        let tooltip;
-
-        const existing = el.querySelector(this.constants.CLASSNAME);
-        if (existing) {
-            tooltip = existing;
-        } else {
-            const random = randomString(6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-
-            tooltip = document.createElement('div');
-            tooltip.setAttribute('id', `${random}-tooltip`);
-            tooltip.classList.add('tooltip');
-
-            // Set selector's ID
-            el.setAttribute('id', random);
-        }
-
-        // Set tooltip's content
-        tooltip.innerText = text;
-
         // Initialise logic
-        this.logic(el, tooltip);
+        this.logic(el);
     },
-    createEvent: function() {
-        if (Selectors.TOOLTIPS.length === 0) {
+    createEvent: function () {
+        const tooltips = document.querySelectorAll(this.constants.SELECTOR);
+        if (tooltips.length === 0) {
             return;
         }
 
-        for (const selector of Selectors.TOOLTIPS) {
-            const tooltip = document.createElement('div');
-            const random = randomString(6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-
-            // Set selector's ID
-            selector.setAttribute('id', random);
-
-            // Set tooltip's ID
-            tooltip.setAttribute('id', `${random}-tooltip`);
-            tooltip.classList.add('tooltip');
-            tooltip.innerText = selector.getAttribute('tooltip');
-
-            // Tooltip logic
-            this.logic(selector, tooltip);
+        for (const selector of tooltips) {
+            this.logic(selector);
         }
     },
     events: function () {

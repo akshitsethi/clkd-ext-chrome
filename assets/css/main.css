@@ -584,7 +584,95 @@ h2 {
         & .links-data {
             width: 100%;
 
-            
+            & .flex {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                & .core {
+                    padding-right: 0.5rem;
+
+                    & .link {
+                        margin-top: 0;
+
+                        & .slug {
+                            font-size: 1rem;
+                            font-weight: 600;
+                            word-break: break-all;
+                            line-height: 1.5;
+                        }
+
+                        & .domain {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            color: #909090;
+                            background: #ffffff;
+                            font-size: 0.683rem;
+                            padding: 0.25rem 0.35rem;
+                            border: 1px solid rgba(0, 0, 0, 0.125);
+                            border-radius: 4px;
+                            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.01);
+                        }
+                    }
+
+                    & .target {
+                        word-break: break-all;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+
+                    & p {
+                        font-size: 0.825rem;
+                        color: #303030;
+                        margin: 0.75rem 0 0.25rem;
+                    }
+
+                    & .created {
+                        font-size: 0.750rem;
+                        color: #606060;
+                    }
+                }
+
+                & .actions {
+                    position: absolute;
+                    display: none;
+                    align-items: center;
+                    margin-left: auto;
+                    padding-left: 1rem;
+                    right: 0;
+                    bottom: 0;
+                    background: transparent;
+                    z-index: 1;
+
+                    & a {
+                        position: relative;
+                        padding: 0.25rem;
+                        margin-right: 0.25rem;
+                        border-radius: 8px;
+
+                        &:hover {
+                            background: rgba(0, 0, 0, 0.04);
+                        }
+
+                        & img {
+                            max-width: 21px;
+                        }
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+
+                &:hover {
+                    & .actions {
+                        display: flex;
+                    }
+                }
+            }
         }
 
         & .no-links-data {

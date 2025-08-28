@@ -13,6 +13,7 @@ import { User } from "./user.js";
 
 export const Links = {
 	DATA: [],
+	TABLE: null,
 	singleEvents: function (content) {
 		const analytics = content.querySelector('.analytics');
 		if (analytics) this.analyticsEvent(analytics);
@@ -65,13 +66,52 @@ export const Links = {
 	qrcodeEvent: function (selector) {
 		if (!selector) return;
 
-		selector.addEventListener('click', e => {
+		selector.addEventListener('click', async e => {
 			e.preventDefault();
 
 			try {
 				Processing.show(document.body);
 
+				let target = e.target;
+				if (target.nodeName === 'IMG') {
+					target = e.target.parentElement;
+				}
 
+				const parent = target.closest('tr');
+				if (!parent) {
+					throw new Error(i18n.QRCODE_ERROR);
+				}
+
+				const domain = parent.getAttribute('data-domain');
+				const slug = parent.getAttribute('data-slug');
+				if (!domain || !slug) {
+					throw new Error(i18n.QRCODE_ERROR);
+				}
+
+				// Generate QR using scan link
+				const scanLink = `https://${domain}/${slug}?scan=1`;
+				const qrcode = await QR.generate(scanLink);
+
+				// Open QR Code in modal
+				const imgEl = document.createElement('img');
+				imgEl.setAttribute('src', qrcode);
+				this.selectors.MODAL_CONTENT.appendChild(imgEl);
+
+				// Download button
+				const divEl = document.createElement('div');
+				divEl.classList.add('download');
+
+				// Remove its event listener
+				const anchor = document.createElement('a');
+				anchor.setAttribute('href', qrcode);
+				anchor.setAttribute('data-filename', `${slug}.png`);
+				anchor.appendChild(document.createTextNode('Download'));
+				anchor.addEventListener('click', );
+
+				divEl.appendChild(anchor);
+				this.selectors.MODAL_CONTENT.appendChild(divEl);
+
+				Modal.show();
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -131,51 +171,88 @@ export const Links = {
 		}
 	},
 	populateData: function () {
-		const table = Selectors.LINKS_SECTION.querySelector('table tbody');
+		const table = Selectors.LINKS_SECTION.querySelector('tbody');
 		const active = this.DATA.filter(link => !link.is_archive);
 
-		// Add table data
-		for (const single of active) {
-			let url = single.url;
-			if (url.length > 75) {
-				url = url.substring(0, 75) + '...';
+		if (active.length !== 0) {
+			// Empty out the table body
+			table.innerHTML = null;
+
+			if (DataTable.isDataTable(this.TABLE)) {
+				this.TABLE.clear().destroy();
+				this.TABLE = null;
 			}
 
-			const template = Selectors.LINK_ENTRY_TEMPLATE.content;
-			const content = template.cloneNode(true);
+			// Add table data
+			for (const single of active) {
+				let url = single.url;
+				if (url.length > 75) {
+					url = url.substring(0, 75) + '...';
+				}
 
-			// Add core details to row
-			const row = content.querySelector('tr');
-			row.setAttribute('data-slug', single.slug);
-			row.setAttribute('data-domain', single.domain);
-			row.setAttribute('data-url', single.url);
-			row.setAttribute('data-created', single.created);
+				const template = Selectors.LINK_ENTRY_TEMPLATE.content;
+				const content = template.cloneNode(true);
 
-			// Anchor
-			const anchor = content.querySelector('.link');
-			anchor.addEventListener('click', e => {
-				chrome.tabs.create({ url: `https://${single.domain}/${single.slug}` });
-			});
-			anchor.querySelector('.slug').appendChild(document.createTextNode(single.slug));
-			anchor.querySelector('.domain').appendChild(document.createTextNode(single.domain));
+				// Add core details to row
+				const row = content.querySelector('tr');
+				row.setAttribute('data-slug', single.slug);
+				row.setAttribute('data-domain', single.domain);
+				row.setAttribute('data-url', single.url);
+				row.setAttribute('data-created', single.created);
 
-			// Paragraph
-			const target = content.querySelector('.target > a');
-			target.setAttribute('anchor', single.url);
-			target.addEventListener('click', e => {
-				chrome.tabs.create({ url: e.target.anchor });
-			});
-			target.appendChild(document.createTextNode(url));
+				// Anchor
+				const anchor = content.querySelector('.link');
+				anchor.addEventListener('click', e => {
+					e.preventDefault();
+					chrome.tabs.create({ url: `https://${single.domain}/${single.slug}` });
+				});
+				anchor.querySelector('.slug').appendChild(document.createTextNode(single.slug));
+				anchor.querySelector('.domain').appendChild(document.createTextNode(single.domain));
 
-			// Datetime
-			const created = content.querySelector('.created');
-			created.appendChild(document.createTextNode(single.created));
+				// Paragraph
+				const target = content.querySelector('.target > a');
+				target.setAttribute('href', single.url);
+				target.addEventListener('click', e => {
+					e.preventDefault();
+					chrome.tabs.create({ url: e.target.href });
+				});
+				target.appendChild(document.createTextNode(url));
 
-			// Add event listeners
-			this.singleEvents(content);
+				// Datetime
+				const created = content.querySelector('.created');
+				created.appendChild(document.createTextNode(single.created));
 
-			// Add row to table body
-			table.append(content);
+				// Add event listeners
+				this.singleEvents(content);
+
+				// Add row to table body
+				table.append(content);
+			}
+
+			// Initialise DataTable
+			this.TABLE = new DataTable(
+				Selectors.LINKS_SECTION,
+				{
+					language: {
+						search: 'Filter Links',
+						entries: {
+							_: 'links',
+							1: 'link'
+						},
+						zeroRecords: 'No matching links found'
+					},
+					pageLength: Number(Store.SETTINGS.links_per_page),
+					lengthChange: false,
+					autowidth: false,
+					order: []
+				}
+			);
+
+			Selectors.LINKS_SECTION.style.display = 'tablek';
+			Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'none';
+		} else {
+			Selectors.LINKS_SECTION.style.display = 'none';
+			Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'block';
 		}
 	},
 	fetchFromAPI: async function (next = null) {

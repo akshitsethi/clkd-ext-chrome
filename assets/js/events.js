@@ -8,7 +8,6 @@ import { Upgrade } from "./upgrade.js";
 import { Subscription } from "./subscription.js";
 import { Dashboard } from "./dashboard.js";
 import { Links } from "./links.js";
-import { Tooltip } from "./tooltip.js";
 
 export const Events = {
     init: function () {
@@ -21,6 +20,5 @@ export const Events = {
         Subscription.events();
         Dashboard.events();
         Links.events();
-        Tooltip.events();
     }
 };
