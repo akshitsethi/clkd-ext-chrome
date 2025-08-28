@@ -11,6 +11,53 @@ import { Tooltip } from "./tooltip.js";
 import { i18n } from "./i18n.js";
 
 export const Links = {
+	DATA: [],
+	fetchFromAPI: async function(next = null) {
+		const body = {
+			user_id: Store.USER.ID,
+			token: Store.USER.token
+		};
+
+		// Check if `next` parameter is specified to fetch additional data
+		if (next) {
+			if (!next.hasOwnProperty('slug') || !next.hasOwnProperty('user_id')) {
+				throw new Error(i18n.API_INVALID_RESPONSE);
+			}
+
+			body.next = next;
+		}
+
+		const request = await fetch(`${apiBase}/data`, {
+			method: 'POST',
+			async: true,
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			contentType: 'json',
+			body: JSON.stringify(body)
+		});
+
+		// Get JSON data
+        const response = await request.json();
+
+        // Check for `message` property in the response returned from API
+        if (!response.hasOwnProperty('message')) {
+            throw new Error(i18n.API_INVALID_RESPONSE);
+        }
+        if (request.status !== 200) {
+            throw new Error(response.message);
+        }
+
+		// Set user's link data
+
+
+		// Recursion (we keep calling the endpoint until next is not null)
+		if (response.hasOwnProperty('next')) {
+			await this.fetchFromAPI(response.next);
+		}
+
+		
+	},
     getCurrentUrl: async function() {
 		try {
 			// Fetch current tab details
@@ -45,8 +92,8 @@ export const Links = {
 		});
     },
     events: function() {
-        this.chromeListenerEvent();
 		this.getCurrentUrlEvent();
+        this.chromeListenerEvent();
     },
     init: function() {
 

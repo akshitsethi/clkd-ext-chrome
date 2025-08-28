@@ -128,7 +128,7 @@ export const Analytics = {
 
         return labels
     },
-    getDataFromAPI: async function (duration) {
+    fetchFromAPI: async function (duration) {
         const request = await fetch(`${apiBase}/analytics`, {
             method: 'POST',
             async: true,
@@ -265,7 +265,7 @@ export const Analytics = {
                 Object.entries(this.DATA) === 0
                 || !this.DATA.hasOwnProperty(Store.SETTINGS.analytics_duration)
                 || this.DATA[Store.SETTINGS.analytics_duration].refresh <= Date.now()) {
-                await this.getDataFromAPI(Store.SETTINGS.analytics_duration);
+                await this.fetchFromAPI(Store.SETTINGS.analytics_duration);
             }
 
             // Now that we have data, update DOM

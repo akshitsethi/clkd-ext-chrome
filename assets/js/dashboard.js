@@ -135,7 +135,7 @@ export const Dashboard = {
                 Object.entries(Analytics.DATA) === 0
                 || !Analytics.DATA.hasOwnProperty('week')
                 || Analytics.DATA['week'].refresh <= Date.now()) {
-                await Analytics.getDataFromAPI('week');
+                await Analytics.fetchFromAPI('week');
             }
 
             // Process data in desired format
