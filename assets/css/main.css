@@ -527,7 +527,8 @@ h2 {
             margin: 0.75rem 0 1.25rem;
             font-weight: 600;
 
-            & #reveal-url {
+            & .reveal-url {
+                position: relative;
                 cursor: help;
                 border-bottom: 2px dotted #303030;
             }
@@ -1293,6 +1294,28 @@ h2 {
     &.block {
         width: 100%;
     }
+}
+
+/* Tooltip */
+/** Tooltip */
+[tooltip] .tooltip {
+	position: fixed;
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.625;
+	padding: 0.250rem 0.5rem;
+	background-image: linear-gradient(to top, #4bce82 0%, #2ecc71 100%);
+    color: #ffffff;
+	border-radius: 8px;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.2s, visibility 0s;
+	min-width: 90px;
+}
+
+[tooltip]:hover .tooltip {
+	visibility: visible;
+	opacity: 1;
 }
 
 /* Switches */

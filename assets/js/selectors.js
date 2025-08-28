@@ -19,11 +19,11 @@ export const Selectors = {
     // Dashboard
     ENGAGEMENTS_SECTION: document.querySelector('#dashboard .engagements-data'),
     INSIGHTS_SECTION: document.querySelector('#dashboard .insights-data'),
-    STATS_SWITCHER_BUTTON: document.querySelector('#dashboard .stats-switcher a'),
+    STATS_SWITCHER_BUTTON: document.querySelector('.stats-switcher a'),
 
     // Links
     LINK_FORM: document.querySelector('#links .link-form'),
-    REVEAL_URL_LINK: document.querySelector('#links #reveal-url'),
+    REVEAL_URL_LINK: document.querySelector('#links .reveal-url'),
 
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
@@ -48,6 +48,9 @@ export const Selectors = {
     HELP_SECTION: document.querySelector('#help .help-section'),
     HELP_SECTION_SUCCESS: document.querySelector('#help .help-success'),
     HELP_LINKS: document.querySelectorAll('#help .help-links a[data-action]'),
+
+    // Tooltips
+    TOOLTIPS: document.querySelectorAll('[tooltip]'),
 
     // Processing
     PROCESSING_TEMPLATE: document.getElementById('processing'),

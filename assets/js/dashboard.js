@@ -63,17 +63,22 @@ export const Dashboard = {
         }
 
         // After computation, find out the top performing values (daily & weekly)
-        for (const key of this.DATA_KEYS) {
-            for (const period of ['today', 'week']) {
-                if (Object.keys(this.COMPUTATIONS.insights[period]).length !== 0) {
+        for (const period of ['today', 'week']) {
+            for (const key of this.DATA_KEYS) {
+                if (Object.keys(this.COMPUTATIONS.insights[period][key]).length) {
                     this.COMPUTATIONS.insights[period][key] = Object.keys(this.COMPUTATIONS.insights[period][key]).reduce((a, b) => this.COMPUTATIONS.insights[period][key][a] > this.COMPUTATIONS.insights[period][key][b] ? a : b);
                 } else {
-                    this.COMPUTATIONS.insights[period][key] = '--';
+                    this.COMPUTATIONS.insights[period][key] = null;
                 }
             }
-		}
+        }
     },
     processPrettyName: function(type, value) {
+        // Bail early if value is null
+        if (!value) {
+            return value;
+        }
+
         if (type === 'lang') {
             return language[value.replace('_', '-')] ?? value;
         } else if (type === 'country') {
@@ -114,7 +119,7 @@ export const Dashboard = {
                     return;
                 }
 
-                span.innerHTML = this.processPrettyName(type, this.COMPUTATIONS.insights[period][type]);
+                span.innerHTML = this.processPrettyName(type, this.COMPUTATIONS.insights[period][type]) ?? '--';
             });
         }
     },

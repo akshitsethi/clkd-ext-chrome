@@ -1,6 +1,6 @@
 // helper.js
 // Generate random string (for variable number of characters)
-export const randomString = (length, chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#$_-.') => {
+export const randomString = (length, chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-') => {
   let result = '';
 
   for (var i = length; i > 0; --i) {
