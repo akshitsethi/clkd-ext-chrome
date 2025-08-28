@@ -248,28 +248,6 @@
 				<div class="links">
 					<h2>Links</h2>
 
-					<template id="link-edit-template">
-						<form class="link-edit-form">
-							<header>
-								<h3></h3>
-							</header>
-
-							<div class="response"></div>
-							<div class="details">
-								<label>Current Target</label>
-								<span></span>
-							</div>
-
-							<label for="redirect">New Redirect</label>
-							<div class="input">
-								<input type="url" name="redirect" id="redirect"
-									placeholder="https://new.url/my-long-url">
-								<input type="hidden" name="id">
-								<button class="button" type="submit">Update</button>
-							</div>
-						</form>
-					</template>
-
 					<table class="links-data row-border">
 						<thead>
 							<tr>
@@ -290,17 +268,16 @@
 							<td>
 								<div class="flex">
 									<div class="core">
-										<a href="#" data-id="#" data-slug="#" data-url="#" data-created="#"
-											class="slug-domain">
+										<a href="#" data-slug="#" data-url="#" data-created="#" class="link">
 											<span class="slug"></span>
 											<span class="domain"></span>
 										</a>
-										<p>→ <a href="#" class="target redirect"></a></p>
-										<span class="time"></span>
+										<p class="target">→ <a href="#"></a></p>
+										<span class="created"></span>
 									</div>
 									<div class="actions">
-										<a href="#" class="preview">
-											<img src="./assets/images/preview.png" alt="Open Link" />
+										<a href="#" class="analytics">
+											<img src="./assets/images/preview.png" alt="Link Analytics" />
 										</a>
 										<a href="#" class="edit">
 											<img src="./assets/images/edit.png" alt="Edit Link" />
@@ -315,6 +292,25 @@
 								</div>
 							</td>
 						</tr>
+					</template>
+
+					<template id="link-edit-template">
+						<form class="link-edit-form">
+							<header><h3></h3></header>
+
+							<div class="response"></div>
+							<div class="link-details">
+								<label>Current Target</label>
+								<span></span>
+							</div>
+
+							<label for="redirect">New Redirect</label>
+							<div class="input">
+								<input type="url" name="redirect" id="redirect" placeholder="https://new.url/my-long-url">
+								<input type="hidden" name="id">
+								<button class="button" type="submit">Update</button>
+							</div>
+						</form>
 					</template>
 				</div>
 			</div>

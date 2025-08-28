@@ -6,6 +6,8 @@ import { Notification } from "./notification.js";
 import { Analytics } from "./analytics.js";
 import { i18n } from "./i18n.js";
 import { Settings } from "./settings.js";
+import { Links } from "./links.js";
+import { refreshDuration } from "./constants.js";
 
 export const User = {
     constants: {
@@ -23,12 +25,19 @@ export const User = {
         // Also, set data for the user store object
         Store.USER = data;
     },
-    setSettings: async function (data) {
-        // Store user settings data
-        await Store.set({ settings: data }, 'sync');
+    setLinks: async function (data) {
+        // Merge new data with existing one
+        Links.DATA = [...Links.DATA, ...data];
 
-        // Also, set data for the user store object
-        Store.SETTINGS = data;
+        // Store links data to locally
+        await Store.set(
+            {
+                links: {
+                    data: Links.DATA,
+                    refresh: refreshDuration.links
+                }
+            }
+        );
     },
     setAnalytics: async function (data) {
         // Store analytics data to locally
@@ -36,6 +45,13 @@ export const User = {
 
         // Also, set data for the user store object
         Analytics.DATA = data;
+    },
+    setSettings: async function (data) {
+        // Store user settings data
+        await Store.set({ settings: data }, 'sync');
+
+        // Also, set data for the user store object
+        Store.SETTINGS = data;
     },
     clearData: async function () {
         // Clear both local and synced storage

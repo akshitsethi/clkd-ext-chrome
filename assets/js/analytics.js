@@ -223,36 +223,7 @@ export const Analytics = {
             }
         }
     },
-    updateDOM: function () {
-        this.processData();
-
-        // Register required components(or registrables)
-		Chart.register(...registerables);
-
-        // Initialise charts
-        for (const key of this.VISIT_CHARTS) {
-            this.createClickAndScanChart(
-                key,
-                key.charAt(0).toUpperCase() + key.substring(1),
-                this.COMPUTATIONS[key],
-                variableChartColors[key]
-            );
-        }
-
-        // Create country and city records table
-        this.createDataTable('country', this.processDataTableRecords('country', this.COMPUTATIONS['country']));
-        this.createDataTable('city', this.processDataTableRecords('city', this.COMPUTATIONS['city']));
-
-        for (const key of this.VARIABLE_CHARTS) {
-            this.createVariableChart(
-                key,
-                variableChartTypes[key],
-                this.COMPUTATIONS[key],
-                variableChartColors[key]
-            );
-        }
-    },
-    init: async function () {
+    updateDOM: async function () {
         // Get stored data and update DOM
         try {
             Processing.show(document.body);
@@ -268,8 +239,34 @@ export const Analytics = {
                 await this.fetchFromAPI(Store.SETTINGS.analytics_duration);
             }
 
-            // Now that we have data, update DOM
-            this.updateDOM();
+            // Let's process data
+            this.processData();
+
+            // Register required components(or registrables)
+            Chart.register(...registerables);
+
+            // Initialise charts
+            for (const key of this.VISIT_CHARTS) {
+                this.createClickAndScanChart(
+                    key,
+                    key.charAt(0).toUpperCase() + key.substring(1),
+                    this.COMPUTATIONS[key],
+                    variableChartColors[key]
+                );
+            }
+
+            // Create country and city records table
+            this.createDataTable('country', this.processDataTableRecords('country', this.COMPUTATIONS['country']));
+            this.createDataTable('city', this.processDataTableRecords('city', this.COMPUTATIONS['city']));
+
+            for (const key of this.VARIABLE_CHARTS) {
+                this.createVariableChart(
+                    key,
+                    variableChartTypes[key],
+                    this.COMPUTATIONS[key],
+                    variableChartColors[key]
+                );
+            }
 
             // Show `analytics-data` div
             Selectors.ANALYTICS_SECTION.style.display = 'block';
@@ -284,5 +281,8 @@ export const Analytics = {
         } finally {
             Processing.hide();
         }
+    },
+    init: async function () {
+        await this.updateDOM();
     }
 };

@@ -5,6 +5,7 @@ import { Notification } from "./notification.js";
 import { Settings } from "./settings.js";
 import { Analytics } from "./analytics.js";
 import { Dashboard } from "./dashboard.js";
+import { Links } from "./links.js";
 
 export const Screen = {
     constants: {
@@ -85,8 +86,8 @@ export const Screen = {
     dashboard: async function () {
         await Dashboard.init();
     },
-    links: function () {
-
+    links: async function () {
+        await Links.init();
     },
     analytics: async function () {
         await Analytics.init();

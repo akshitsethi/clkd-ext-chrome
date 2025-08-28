@@ -579,117 +579,27 @@ h2 {
     }
 
     & .links {
-        padding: 2rem 0;
+        padding: 1.5rem 0;
 
         & .links-data {
             width: 100%;
 
-            & .slug-domain {
-                margin-top: 0;
-
-                & .slug {
-                    font-size: 1rem;
-                    font-weight: 600;
-                    word-break: break-all;
-                    line-height: 1.5;
-                }
-
-                & .domain {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    color: #909090;
-                    background: #ffffff;
-                    font-size: 0.683rem;
-                    padding: 0.25rem 0.35rem;
-                    border: 1px solid rgba(0, 0, 0, 0.125);
-                    border-radius: 4px;
-                    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.01);
-                    z-index: 2;
-                }
-            }
-
-            & .redirect {
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-
-            & .target {
-                word-break: break-all;
-            }
-
-            & p {
-                font-size: 0.825rem;
-                color: #303030;
-                margin: 0.75rem 0 0.25rem;
-            }
-
-            & .time {
-                font-size: 0.750rem;
-                color: #606060;
-            }
-
-            & .flex {
-                position: relative;
-                display: flex;
-                align-items: center;
-
-                & .core {
-                    padding-right: 0.5rem;
-                }
-
-                & .actions {
-                    position: absolute;
-                    display: none;
-                    align-items: center;
-                    margin-left: auto;
-                    padding-left: 1rem;
-                    right: 0;
-                    bottom: 0;
-                    background: transparent;
-                    z-index: 5;
-
-                    & a {
-                        padding: 0.25rem;
-                        margin-right: 0.25rem;
-                        border-radius: 8px;
-
-                        &:hover {
-                            background: rgba(0, 0, 0, 0.04);
-                        }
-
-                        & img {
-                            max-width: 21px;
-                        }
-
-                        &:last-child {
-                            margin-right: 0;
-                        }
-                    }
-                }
-
-                &:hover {
-                    & .actions {
-                        display: flex;
-                    }
-                }
-            }
+            
         }
 
         & .no-links-data {
+            padding: 1.5rem 0;
             display: none;
 
             & h3 {
                 font-weight: 500;
-                font-size: 1rem;
+                font-size: 0.938rem;
                 margin-bottom: 0.5rem;
             }
         }
     }
 
-    .link-form,
-    .link-edit-form {
+    .link-form {
         & .input {
             display: flex;
             padding: 0.5rem;
@@ -699,12 +609,6 @@ h2 {
         }
 
         & input {
-            display: block;
-            width: 100%;
-            padding: 0.75rem;
-            margin: 0;
-            padding-left: 0;
-            font-size: 1rem;
             background-color: transparent;
         }
 
@@ -748,15 +652,6 @@ h2 {
     margin: 0 -1rem;
     background: rgba(56, 182, 255, 0.105);
 
-    & .columns {
-        display: grid;
-
-        &.two {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.25rem;
-        }
-    }
-
     & .link-mode {
         display: none;
         padding: 0.5rem 1rem;
@@ -764,20 +659,6 @@ h2 {
         &.show {
             display: block;
         }
-    }
-
-    & input {
-        box-sizing: border-box;
-        display: block;
-        padding: 0.75rem;
-        border-radius: 8px;
-        outline: 0;
-        border: 0;
-        width: 100%;
-    }
-
-    & label {
-        font-weight: 500;
     }
 }
 

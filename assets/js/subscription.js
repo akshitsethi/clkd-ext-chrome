@@ -31,7 +31,7 @@ export const Subscription = {
 
         if (showConfetti) {
             // Confetti (as a celebration for subscription purchase)
-            var end = Date.now() + 3 * 1000;
+            var end = Date.now() + (3 * 1000);
 
             (function celebrate() {
                 confetti({

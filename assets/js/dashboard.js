@@ -181,7 +181,6 @@ export const Dashboard = {
             }
         });
     },
-
     events: function() {
         this.updatePeriodEvent();
     },
