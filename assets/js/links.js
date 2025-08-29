@@ -157,6 +157,9 @@ export const Links = {
 			}
 		});
 	},
+	addNewLink: function(data) {
+		console.log(data);
+	},
 	updateDOM: async function () {
 		try {
 			Processing.show(document.body);
@@ -276,7 +279,7 @@ export const Links = {
 		}
 	},
 	populateArchive: function() {
-
+		
 	},
 	fetchFromAPI: async function (next = null) {
 		const body = {
@@ -322,6 +325,42 @@ export const Links = {
 			await this.fetchFromAPI(response.next);
 		}
 	},
+	syncWithAPI: async function(url, domain) {
+		if (!url || !domain) {
+			throw new Error(i18n.URL_DOMAIN_ERROR);
+		}
+
+		// Request details
+		const body = {
+			url: url,
+			domain: domain,
+			user_id: Store.USER.ID,
+			token: Store.USER.token
+		};
+
+		const request = await fetch(`${apiBase}/link`, {
+			method: 'POST',
+			async: true,
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			contentType: 'json',
+			body: JSON.stringify(body)
+		});
+
+		// Get JSON data
+        const response = await request.json();
+
+        // Check for `message` property in the response returned from API
+        if (!response.hasOwnProperty('message')) {
+            throw new Error(i18n.API_INVALID_RESPONSE);
+        }
+        if (request.status !== 200) {
+            throw new Error(response.message);
+        }
+
+		return response.message;
+	},
 	getCurrentUrl: async function () {
 		try {
 			// Fetch current tab details
@@ -355,9 +394,58 @@ export const Links = {
 			await this.getCurrentUrl();
 		});
 	},
+	createLinkFormEvent: function() {
+		if (!Selectors.LINK_FORM) {
+			return;
+		}
+
+		Selectors.LINK_FORM.addEventListener('submit', async e => {
+			e.preventDefault();
+
+			try {
+				Processing.show(document.body);
+
+				// Create form data
+				const data = new FormData(e.target);
+
+				// Initialise API request
+				const response = await this.syncWithAPI(data.get('url'), data.get('domain'));
+
+				// Add newly generated link
+				this.addNewLink(response);
+			} catch (error) {
+				console.error(error);
+				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+			} finally {
+				Processing.hide();
+			}
+		});
+	},
+	createLinkFromTabEvent: function() {
+		if (!Selectors.LINK_FROM_TAB_BUTTON) {
+			return;
+		}
+
+		Selectors.LINK_FROM_TAB_BUTTON.addEventListener('click', e => {
+			e.preventDefault();
+
+			try {
+				Processing.show(document.body);
+
+				console.log(e.target);
+			} catch (error) {
+				console.error(error);
+				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+			} finally {
+				Processing.hide();
+			}
+		});
+	},
 	events: function () {
 		this.getCurrentUrlEvent();
 		this.chromeListenerEvent();
+		this.createLinkFormEvent();
+		this.createLinkFromTabEvent();
 	},
 	init: async function () {
 		await this.updateDOM();
