@@ -24,6 +24,7 @@ export const Selectors = {
 
     // Links
     LINK_FORM: document.querySelector('#links .link-form'),
+    LINK_FROM_TAB_BUTTON: document.querySelector('#links #create-from-tab'),
     REVEAL_URL_LINK: document.querySelector('#links .reveal-url'),
     LINK_ENTRY_TEMPLATE: document.querySelector('#links #link-entry-template'),
     LINK_EDIT_TEMPLATE: document.querySelector('#links #link-edit-template'),

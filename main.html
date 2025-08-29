@@ -190,131 +190,141 @@
 		</div><!-- #dashboard -->
 
 		<div id="links" class="screen">
-			<div class="wrapper" data-content="active">
-				<div class="quick-create">
-					<form class="link-form" method="POST">
-						<div class="input">
-							<input type="url" name="url" autocomplete="off" placeholder="https://example.com/my-long-url">
-							<input type="hidden" name="domain" value="clkd.in">
-							<button class="button green" type="submit">Create</button>
-						</div>
-					</form>
-
-					<span class="divider">or</span>
-					<span class="center block">
-						<button id="create-from-tab" class="button link">Shorten Current <span class="reveal-url">URL</span></button>
-					</span>
-
-					<div class="link-output">
-						<div class="short-link">
-							<a class="new-link" href="#">#</a>
-							<a class="copy" href="#">Copy</a>
-							<a class="qrcode" href="#">QR Code</a>
-						</div>
-					</div>
-
-					<div class="section-footer">
-						<div class="domains">
-							<select name="domain">
-								<option value="clkd.in">clkd.in</option>
-								<option value="clk.gg">clk.gg</option>
-								<option value="pgx.es">pgx.es</option>
-								<option value="cd.lk">cd.lk</option>
-								<option value="xx.lk">xx.lk</option>
-							</select>
-						</div>
-
-						<div class="switcher">
-							<span><img src="./assets/images/power.png" alt="Mode"></span> <a href="#"
-								data-mode="manual">Auto</a>
-						</div>
-
-						<div class="qr-settings">
-							<span><img src="./assets/images/wrench.png" alt="QR Settings"></span> <a href="#"
-								data-screen="settings">Settings</a>
-						</div>
-					</div>
-
-					<div class="inline-modal">
-						<div class="link-mode" data-type="inline-modal">
+			<div data-content="active">
+				<div class="wrapper">
+					<div class="quick-create">
+						<form class="link-form" method="POST">
 							<div class="input">
-								<input type="text" name="custom-slug" class="custom-slug"
-									placeholder="Type your unique slug">
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="links">
-					<h2>Links</h2>
-
-					<table class="links-data row-border">
-						<thead>
-							<tr><th data-dt-order="disable"></th></tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-
-					<div class="no-links-data">
-						<h3>Haven't created a short link yet?</h3>
-						<p>Shorten long links and get attention by customizing what they say. Create your first one
-							using the options at the top.</p>
-					</div>
-
-					<template id="link-entry-template">
-						<tr>
-							<td>
-								<div class="flex">
-									<div class="core">
-										<a href="#" data-slug="#" data-url="#" data-created="#" class="link">
-											<span class="slug"></span>
-											<span class="domain"></span>
-										</a>
-										<p class="target">→ <a href="#"></a></p>
-										<span class="created"></span>
-									</div>
-									<div class="actions">
-										<a href="#" class="analytics">
-											<img src="./assets/images/chart.png" alt="Link Analytics" />
-										</a>
-										<a href="#" class="edit">
-											<img src="./assets/images/edit.png" alt="Edit Link" />
-										</a>
-										<a href="#" class="qrcode">
-											<img src="./assets/images/dash-scans.png" alt="QR Code" />
-										</a>
-										<a href="#" class="archive">
-											<img src="./assets/images/archive.png" alt="Archive Link" />
-										</a>
-									</div>
-								</div>
-							</td>
-						</tr>
-					</template>
-
-					<template id="link-edit-template">
-						<form class="link-edit-form">
-							<header><h3></h3></header>
-
-							<div class="response"></div>
-							<div class="link-details">
-								<label>Current Target</label>
-								<span></span>
-							</div>
-
-							<label for="redirect">New Redirect</label>
-							<div class="input">
-								<input type="url" name="redirect" id="redirect" placeholder="https://new.url/my-long-url">
-								<input type="hidden" name="id">
-								<button class="button" type="submit">Update</button>
+								<input type="url" name="url" autocomplete="off" placeholder="https://example.com/my-long-url">
+								<input type="hidden" name="domain" value="clkd.in">
+								<button class="button green" type="submit">Create</button>
 							</div>
 						</form>
-					</template>
+
+						<span class="divider">or</span>
+						<span class="center block">
+							<button id="create-from-tab" class="button link">Shorten Current <span class="reveal-url">URL</span></button>
+						</span>
+
+						<div class="link-output">
+							<div class="short-link">
+								<a class="new-link" href="#">#</a>
+								<a class="copy" href="#">Copy</a>
+								<a class="qrcode" href="#">QR Code</a>
+							</div>
+						</div>
+
+						<div class="section-footer">
+							<div class="domains">
+								<select name="domain">
+									<option value="clkd.in">clkd.in</option>
+									<option value="clk.gg">clk.gg</option>
+									<option value="pgx.es">pgx.es</option>
+									<option value="cd.lk">cd.lk</option>
+									<option value="xx.lk">xx.lk</option>
+								</select>
+							</div>
+
+							<div class="switcher">
+								<span><img src="./assets/images/power.png" alt="Mode"></span> <a href="#"
+									data-mode="manual">Auto</a>
+							</div>
+
+							<div class="qr-settings">
+								<span><img src="./assets/images/wrench.png" alt="QR Settings"></span> <a href="#"
+									data-screen="settings">Settings</a>
+							</div>
+						</div>
+
+						<div class="inline-modal">
+							<div class="link-mode" data-type="inline-modal">
+								<div class="input">
+									<input type="text" name="custom-slug" class="custom-slug"
+										placeholder="Type your unique slug">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="links">
+						<h2>Links</h2>
+
+						<table class="links-data row-border">
+							<thead>
+								<tr><th data-dt-order="disable"></th></tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+
+						<div class="no-links-data">
+							<h3>Haven't created a short link yet?</h3>
+							<p>Shorten long links and get attention by customizing what they say. Create your first one
+								using the options at the top.</p>
+						</div>
+
+						<template id="link-entry-template">
+							<tr>
+								<td>
+									<div class="flex">
+										<div class="core">
+											<a href="#" data-slug="#" data-url="#" data-created="#" class="link">
+												<span class="slug"></span>
+												<span class="domain"></span>
+											</a>
+											<p class="target">→ <a href="#"></a></p>
+											<span class="created"></span>
+										</div>
+										<div class="actions">
+											<a href="#" class="analytics">
+												<img src="./assets/images/chart.png" alt="Link Analytics" />
+											</a>
+											<a href="#" class="edit">
+												<img src="./assets/images/edit.png" alt="Edit Link" />
+											</a>
+											<a href="#" class="qrcode">
+												<img src="./assets/images/dash-scans.png" alt="QR Code" />
+											</a>
+											<a href="#" class="archive">
+												<img src="./assets/images/archive.png" alt="Archive Link" />
+											</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</template>
+
+						<template id="link-edit-template">
+							<form class="link-edit-form">
+								<header><h3></h3></header>
+
+								<div class="response"></div>
+								<div class="link-details">
+									<label>Current Target</label>
+									<span></span>
+								</div>
+
+								<label for="redirect">New Redirect</label>
+								<div class="input">
+									<input type="url" name="redirect" id="redirect" placeholder="https://new.url/my-long-url">
+									<input type="hidden" name="id">
+									<button class="button" type="submit">Update</button>
+								</div>
+							</form>
+						</template>
+					</div>
 				</div>
 			</div>
 
-			<div class="wrapper" data-content="archive">
-				
+			<div data-content="archive">
+				<div class="wrapper">
+					<div class="no-links-archive">
+						<span class="center block">
+							<img src="./assets/images/thinking.png" alt="No archived link" />
+						</span>
+
+						<p>It seems like you have not archived a link yet. As soon as a <span class="semibold">link is archived</span>, it'll appear here.</p>
+					</div>
+				</div>
 			</div>
 		</div><!-- #links -->
 

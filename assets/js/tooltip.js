@@ -39,7 +39,7 @@ export const Tooltip = {
             }
 
             const rect = tooltip.getBoundingClientRect();
-            const rectWidth = rect.width + 16;
+            const rectWidth = rect.width + 24;
             const vWidth = window.innerWidth - rectWidth;
             const rectX = e.clientX + rectWidth;
             const minX = rectX;

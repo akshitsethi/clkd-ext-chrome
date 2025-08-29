@@ -14,7 +14,8 @@ import { Modal } from "./modal.js";
 
 export const Links = {
 	DATA: [],
-	TABLE: null,
+	ACTIVE_TABLE: null,
+	ARCHIVE_TABLE: null,
 	singleEvents: function (content) {
 		const analytics = content.querySelector('.analytics');
 		if (analytics) this.analyticsEvent(analytics);
@@ -37,7 +38,7 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
-
+				
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -179,8 +180,9 @@ export const Links = {
 				this.DATA = data.links.data;
 			}
 
-			// Process and populate data once we have it
+			// Populate active & archived data once we have it
 			this.populateData();
+			this.populateArchive();
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -196,9 +198,9 @@ export const Links = {
 			// Empty out the table body
 			table.innerHTML = null;
 
-			if (DataTable.isDataTable(this.TABLE)) {
-				this.TABLE.clear().destroy();
-				this.TABLE = null;
+			if (DataTable.isDataTable(this.ACTIVE_TABLE)) {
+				this.ACTIVE_TABLE.clear().destroy();
+				this.ACTIVE_TABLE = null;
 			}
 
 			// Add table data
@@ -248,7 +250,7 @@ export const Links = {
 			}
 
 			// Initialise DataTable
-			this.TABLE = new DataTable(
+			this.ACTIVE_TABLE = new DataTable(
 				Selectors.LINKS_SECTION,
 				{
 					language: {
@@ -272,6 +274,9 @@ export const Links = {
 			Selectors.LINKS_SECTION.style.display = 'none';
 			Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'block';
 		}
+	},
+	populateArchive: function() {
+
 	},
 	fetchFromAPI: async function (next = null) {
 		const body = {
