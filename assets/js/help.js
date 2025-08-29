@@ -31,7 +31,7 @@ export const Help = {
             e.preventDefault();
 
             try {
-                Processing.show(Selectors.HELP_FORM);
+                Processing.show(document.body);
 
                 const data = new FormData(e.target);
                 const request = await fetch(`${apiBase}/support`, {

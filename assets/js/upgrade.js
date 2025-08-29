@@ -21,7 +21,7 @@ export const Upgrade = {
 
             try {
                 const planEl = e.target.closest(this.constants.PLANS_CLASSNAME);
-                Processing.show(planEl);
+                Processing.show(document.body);
 
                 const plan = e.target.getAttribute('data-plan');
                 const term = e.target.getAttribute('data-term');

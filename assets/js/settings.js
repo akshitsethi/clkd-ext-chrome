@@ -137,7 +137,7 @@ export const Settings = {
             e.preventDefault();
 
             try {
-                Processing.show(Selectors.SETTINGS_FORM);
+                Processing.show(document.body);
 
                 // Create form data object
                 const data = new FormData(e.target);

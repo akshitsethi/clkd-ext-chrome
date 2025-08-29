@@ -5,7 +5,6 @@ import { Store } from "./store.js";
 import { i18n } from "./i18n.js";
 import { Events } from "./events.js";
 import { Screen } from "./screen.js";
-import { Analytics } from "./analytics.js";
 
 // Main application
 const CLKD = {

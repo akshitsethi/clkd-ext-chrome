@@ -55,4 +55,9 @@ export const Selectors = {
 
     // Processing
     PROCESSING_TEMPLATE: document.getElementById('processing'),
+
+    // Modal
+    MODAL: document.querySelector('.modal'),
+    MODAL_CONTENT: document.querySelector('.modal-content'),
+    MODAL_CLOSE: document.querySelector('.modal-close')
 };
