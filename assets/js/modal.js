@@ -4,7 +4,7 @@ import { Notification } from "./notification.js";
 import { Selectors } from "./selectors.js";
 
 export const Modal = {
-    show: function (content) {
+    show: function (content, type = 'html') {
         if (!content) {
             throw new Error(i18n.DEFAULT_ERROR);
         }
@@ -13,7 +13,11 @@ export const Modal = {
         }
 
         // Add content before displaying modal
-        Selectors.MODAL_CONTENT.innerHTML = content;
+        if (type === 'html') {
+            Selectors.MODAL_CONTENT.innerHTML = content;
+        } else if (type === 'node') {
+            Selectors.MODAL_CONTENT.appendChild(content);
+        }
 
         // Disable scroll when modal is visible in the viewport
         document.body.style.overflow = 'hidden';

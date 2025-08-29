@@ -10,6 +10,7 @@ import { getCurrentTab } from "./helper.js";
 import { Tooltip } from "./tooltip.js";
 import { i18n } from "./i18n.js";
 import { User } from "./user.js";
+import { Modal } from "./modal.js";
 
 export const Links = {
 	DATA: [],
@@ -54,7 +55,7 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
-
+				
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -93,9 +94,13 @@ export const Links = {
 				const qrcode = await QR.generate(scanLink);
 
 				// Open QR Code in modal
+				const el = document.createElement('div');
+				el.classList.add('modal-qrcode');
+
+				// QRcode image
 				const imgEl = document.createElement('img');
 				imgEl.setAttribute('src', qrcode);
-				this.selectors.MODAL_CONTENT.appendChild(imgEl);
+				el.appendChild(imgEl);
 
 				// Download button
 				const divEl = document.createElement('div');
@@ -106,12 +111,25 @@ export const Links = {
 				anchor.setAttribute('href', qrcode);
 				anchor.setAttribute('data-filename', `${slug}.png`);
 				anchor.appendChild(document.createTextNode('Download'));
-				anchor.addEventListener('click', );
+				anchor.addEventListener('click', e => {
+					e.preventDefault();
+
+					try {
+						chrome.downloads.download({
+							url: e.target.href,
+							filename: e.target.getAttribute('data-filename')
+						});
+					} catch (error) {
+						console.error(error);
+						Notification.error(i18n.DOWNLOAD_ERROR);
+					}
+				});
 
 				divEl.appendChild(anchor);
-				this.selectors.MODAL_CONTENT.appendChild(divEl);
+				el.appendChild(divEl);
 
-				Modal.show();
+				// Show modal
+				Modal.show(el, 'node');
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);

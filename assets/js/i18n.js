@@ -16,4 +16,5 @@ export const i18n = {
 
     // QR Code
     QRCODE_ERROR: 'Error occurred while generating the QR Code.',
+    DOWNLOAD_ERROR: 'Unable to initiate download.'
 };
