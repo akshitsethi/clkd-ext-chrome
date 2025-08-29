@@ -11,9 +11,7 @@ import { User } from "./user.js";
 
 export const Subscription = {
     successEvent: function (showConfetti = false) {
-        if (!Selectors.SUBSCRIPTION_DETAILS_SECTION || !Store.USER.subscription) {
-            return;
-        }
+        if (!Selectors.SUBSCRIPTION_DETAILS_SECTION || !Store.USER.subscription) return;
 
         if (!Store.USER.subscription.hasOwnProperty('plan_and_cycle') || !Store.USER.subscription.hasOwnProperty('end')) {
             throw new Error(i18n.SUBSCRIPTION_DATA_NOT_AVAILABLE);
@@ -56,9 +54,7 @@ export const Subscription = {
         }
     },
     verifyButtonEvent: function () {
-        if (!Selectors.VERIFY_SUBSCRIPTION_BUTTON) {
-            return;
-        }
+        if (!Selectors.VERIFY_SUBSCRIPTION_BUTTON) return;
 
         Selectors.VERIFY_SUBSCRIPTION_BUTTON.addEventListener('click', async e => {
             e.preventDefault();

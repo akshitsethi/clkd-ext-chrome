@@ -30,9 +30,7 @@ export const Processing = {
         }
     },
     hide: function () {
-        if (!this.SELECTOR) {
-            return;
-        }
+        if (!this.SELECTOR) return;
 
         // Remove injected processing `div`
         const el = this.SELECTOR.querySelector(this.constants.PROCESSING_CLASSNAME);

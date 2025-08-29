@@ -129,9 +129,7 @@ export const Settings = {
         Notification.success(i18n.SETTINGS_UPDATED)
     },
     formSubmitEvent: function () {
-        if (!Selectors.SETTINGS_FORM) {
-            return;
-        }
+        if (!Selectors.SETTINGS_FORM) return;
 
         Selectors.SETTINGS_FORM.addEventListener('submit', async e => {
             e.preventDefault();

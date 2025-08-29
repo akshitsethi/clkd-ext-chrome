@@ -3,14 +3,13 @@ import DataTable from "datatables.net";
 import { Notification } from "./notification.js";
 import { Processing } from "./processing.js";
 import { Store } from "./store.js";
-import { QR } from "./qr.js";
 import { apiBase } from "./constants.js";
 import { Selectors } from "./selectors.js";
 import { getCurrentTab } from "./helper.js";
 import { Tooltip } from "./tooltip.js";
 import { i18n } from "./i18n.js";
 import { User } from "./user.js";
-import { Modal } from "./modal.js";
+import { Common } from "./common.js";
 
 export const Links = {
 	DATA: [],
@@ -83,54 +82,11 @@ export const Links = {
 				if (!parent) {
 					throw new Error(i18n.QRCODE_ERROR);
 				}
-
 				const domain = parent.getAttribute('data-domain');
 				const slug = parent.getAttribute('data-slug');
-				if (!domain || !slug) {
-					throw new Error(i18n.QRCODE_ERROR);
-				}
 
-				// Generate QR using scan link
-				const scanLink = `https://${domain}/${slug}?scan=1`;
-				const qrcode = await QR.generate(scanLink);
-
-				// Open QR Code in modal
-				const el = document.createElement('div');
-				el.classList.add('modal-qrcode');
-
-				// QRcode image
-				const imgEl = document.createElement('img');
-				imgEl.setAttribute('src', qrcode);
-				el.appendChild(imgEl);
-
-				// Download button
-				const divEl = document.createElement('div');
-				divEl.classList.add('download');
-
-				// Remove its event listener
-				const anchorEl = document.createElement('a');
-				anchorEl.setAttribute('href', qrcode);
-				anchorEl.setAttribute('data-filename', `${slug}.png`);
-				anchorEl.appendChild(document.createTextNode('Download'));
-				anchorEl.addEventListener('click', e => {
-					e.preventDefault();
-
-					try {
-						chrome.downloads.download({
-							url: e.target.href,
-							filename: e.target.getAttribute('data-filename')
-						});
-					} catch (error) {
-						console.error(error);
-						Notification.error(i18n.DOWNLOAD_ERROR);
-					}
-				});
-
-				divEl.appendChild(anchorEl);
-				el.appendChild(divEl);
-
-				// Show modal
-				Modal.show(el, 'node');
+				// Show QRCode modal
+				await Common.QRCodeModal(domain, slug);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -198,6 +154,9 @@ export const Links = {
 		const active = this.DATA.filter(link => !link.is_archive);
 
 		if (active.length !== 0) {
+			// Sort data in descending order
+			active.length >= 2 && active.sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
+
 			// Empty out the table body
 			table.innerHTML = null;
 
@@ -395,9 +354,7 @@ export const Links = {
 		});
 	},
 	createLinkFormEvent: function() {
-		if (!Selectors.LINK_FORM) {
-			return;
-		}
+		if (!Selectors.LINK_FORM) return;
 
 		Selectors.LINK_FORM.addEventListener('submit', async e => {
 			e.preventDefault();
@@ -441,11 +398,37 @@ export const Links = {
 			}
 		});
 	},
+	newLinkOutputEvents: function() {
+		if (!Selectors.LINK_OUTPUT_SECTION) return;
+
+		const link = Selectors.LINK_OUTPUT_SECTION.querySelector('.new-link');
+		if (link) {
+			link.addEventListener('click', e => {
+				
+			});
+		}
+
+		const copy = Selectors.LINK_OUTPUT_SECTION.querySelector('.copy');
+		if (copy) {
+			copy.addEventListener('click', async e => {
+				e.preventDefault();
+				await Common.copyText(copy);
+			});
+		}
+
+		const qrcode = Selectors.LINK_OUTPUT_SECTION.querySelector('.qrcode');
+		if (qrcode) {
+			qrcode.addEventListener('click', e => {
+
+			});
+		}
+	},
 	events: function () {
 		this.getCurrentUrlEvent();
 		this.chromeListenerEvent();
 		this.createLinkFormEvent();
 		this.createLinkFromTabEvent();
+		this.newLinkOutputEvents();
 	},
 	init: async function () {
 		await this.updateDOM();

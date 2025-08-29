@@ -8,9 +8,7 @@ import { Store } from "./store.js";
 
 export const Help = {
     updateDOMEvent: function () {
-        if (!Selectors.HELP_FORM) {
-            return;
-        }
+        if (!Selectors.HELP_FORM) return;
 
         const name = Selectors.HELP_FORM.querySelector('[name="name"]');
         if (name) {
@@ -23,9 +21,7 @@ export const Help = {
         }
     },
     formSubmitEvent: function () {
-        if (!Selectors.HELP_FORM) {
-            return;
-        }
+        if (!Selectors.HELP_FORM) return;
 
         Selectors.HELP_FORM.addEventListener('submit', async e => {
             e.preventDefault();
@@ -73,9 +69,7 @@ export const Help = {
         });
     },
     resetHelpScreenEvent: function () {
-        if (!Selectors.HELP_SECTION_SUCCESS) {
-            return;
-        }
+        if (!Selectors.HELP_SECTION_SUCCESS) return;
 
         const button = Selectors.HELP_SECTION_SUCCESS.querySelector('button');
         if (!button) {
@@ -96,9 +90,7 @@ export const Help = {
         });
     },
     actionLinksEvent: function () {
-        if (Selectors.HELP_LINKS.length === 0) {
-            return;
-        }
+        if (Selectors.HELP_LINKS.length === 0) return;
 
         Selectors.HELP_LINKS.forEach(link => link.addEventListener('click', e => {
             e.preventDefault();

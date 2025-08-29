@@ -30,6 +30,7 @@ export const Selectors = {
     LINK_EDIT_TEMPLATE: document.querySelector('#links #link-edit-template'),
     LINKS_SECTION: document.querySelector('#links .links-data'),
     LINKS_NO_DATA_MESSAGE: document.querySelector('#links .no-links-data'),
+    LINK_OUTPUT_SECTION: document.querySelector('#links .link-output'),
 
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),

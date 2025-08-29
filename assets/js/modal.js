@@ -47,9 +47,7 @@ export const Modal = {
         });
     },
     closeEvent: function () {
-        if (!Selectors.MODAL || !Selectors.MODAL_CLOSE) {
-            return;
-        }
+        if (!Selectors.MODAL || !Selectors.MODAL_CLOSE) return;
 
         Selectors.MODAL_CLOSE.addEventListener('click', e => {
             e.preventDefault();

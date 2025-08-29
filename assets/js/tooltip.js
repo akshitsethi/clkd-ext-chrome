@@ -34,9 +34,7 @@ export const Tooltip = {
         tooltip.style.transform = `translate(${x}, ${y})`;
         selector.appendChild(tooltip);
         selector.onpointermove = e => {
-            if (e.target !== e.currentTarget) {
-                return;
-            }
+            if (e.target !== e.currentTarget) return;
 
             const rect = tooltip.getBoundingClientRect();
             const rectWidth = rect.width + 24;
@@ -63,9 +61,7 @@ export const Tooltip = {
     },
     createEvent: function () {
         const tooltips = document.querySelectorAll(this.constants.SELECTOR);
-        if (tooltips.length === 0) {
-            return;
-        }
+        if (tooltips.length === 0) return;
 
         for (const selector of tooltips) {
             this.logic(selector);

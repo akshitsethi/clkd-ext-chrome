@@ -75,9 +75,7 @@ export const Dashboard = {
     },
     processPrettyName: function(type, value) {
         // Bail early if value is null
-        if (!value) {
-            return value;
-        }
+        if (!value) return value;
 
         if (type === 'lang') {
             return language[value.replace('_', '-')] ?? value;
@@ -91,9 +89,7 @@ export const Dashboard = {
         return value;
     },
     updateEngagementsAndInsights: function(period = 'today') {
-        if (!Selectors.ENGAGEMENTS_SECTION || !Selectors.INSIGHTS_SECTION) {
-            return;
-        }
+        if (!Selectors.ENGAGEMENTS_SECTION || !Selectors.INSIGHTS_SECTION) return;
 
         // Engagements
         const stats = Selectors.ENGAGEMENTS_SECTION.querySelectorAll('div[data-stat]');
@@ -151,9 +147,7 @@ export const Dashboard = {
         }
     },
     updatePeriodEvent: function() {
-        if (!Selectors.STATS_SWITCHER_BUTTON) {
-            return;
-        }
+        if (!Selectors.STATS_SWITCHER_BUTTON) return;
 
         Selectors.STATS_SWITCHER_BUTTON.addEventListener('click', e => {
             e.preventDefault();

@@ -57,9 +57,7 @@ export const Screen = {
         }
     },
     updateHeaderSections: function (screen) {
-        if (Selectors.PRIMARY_SECTION.length == 0 || Selectors.DYNAMIC_SECTION.length == 0) {
-            return;
-        }
+        if (Selectors.PRIMARY_SECTION.length == 0 || Selectors.DYNAMIC_SECTION.length == 0) return;
 
         // Loop over primary section
         this.showHideSections(Selectors.PRIMARY_SECTION, screen);
@@ -70,9 +68,7 @@ export const Screen = {
             section.style.display = 'none';
 
             let screens = section.getAttribute('data-screens');
-            if (!screens) {
-                continue;
-            }
+            if (!screens) continue;
 
             screens = screens.split('|');
             if (screens.includes(screen)) {
@@ -96,9 +92,7 @@ export const Screen = {
         await Settings.init();
     },
     switchEvent: function () {
-        if (Selectors.SCREEN_SWITCH_LINKS.length === 0) {
-            return;
-        }
+        if (Selectors.SCREEN_SWITCH_LINKS.length === 0) return;
 
         Selectors.SCREEN_SWITCH_LINKS.forEach(link => {
             link.addEventListener('click', async  e => {

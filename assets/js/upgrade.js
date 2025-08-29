@@ -12,9 +12,7 @@ export const Upgrade = {
         PLANS_CLASSNAME: '.plans'
     },
     upgradeButtonEvent: function () {
-        if (Selectors.UPGRADE_BUTTONS.length === 0) {
-            return;
-        }
+        if (Selectors.UPGRADE_BUTTONS.length === 0) return;
 
         Selectors.UPGRADE_BUTTONS.forEach(button => button.addEventListener('click', async e => {
             e.preventDefault();
@@ -75,14 +73,10 @@ export const Upgrade = {
         }));
     },
     tenureSwitcherEvent: function () {
-        if (!Selectors.TENURE_SWITCHER) {
-            return;
-        }
+        if (!Selectors.TENURE_SWITCHER) return;
 
         Selectors.TENURE_SWITCHER.addEventListener('click', e => {
-            if (Selectors.TENURE_MONTHLY.length === 0 || Selectors.TENURE_YEARLY.length === 0) {
-                return;
-            }
+            if (Selectors.TENURE_MONTHLY.length === 0 || Selectors.TENURE_YEARLY.length === 0) return;
 
             if (e.target.checked) {
                 Selectors.TENURE_MONTHLY.forEach(monthly => monthly.style.display = 'none');

@@ -29,9 +29,8 @@ export const Analytics = {
     },
     createClickAndScanChart: function(selector, label, data, colors) {
         const el = document.querySelector(`#analytics #${selector}`);
-        if (!el) {
-            return;
-        }
+        if (!el) return;
+
         if (this.CHART_INSTANCES[selector] instanceof Chart) {
             this.CHART_INSTANCES[selector].destroy();
         }
@@ -64,9 +63,8 @@ export const Analytics = {
     },
     createVariableChart: function(selector, type, data, colors) {
         const el = document.querySelector(`#analytics #${selector}`);
-        if (!el) {
-            return;
-        }
+        if (!el) return;
+
         if (this.CHART_INSTANCES[selector] instanceof Chart) {
             this.CHART_INSTANCES[selector].destroy();
         }
@@ -88,9 +86,8 @@ export const Analytics = {
     },
     createDataTable: function(selector, data) {
         const el = document.querySelector(`#analytics #${selector}`);
-        if (!el) {
-            return;
-        }
+        if (!el) return;
+
         if (DataTable.isDataTable(this.TABLE_INSTANCES[selector])) {
 			this.TABLE_INSTANCES[selector].destroy();
 		}
@@ -126,7 +123,7 @@ export const Analytics = {
             return labels.map(label => language[label.replace('_', '-')] ?? label);
         }
 
-        return labels
+        return labels;
     },
     fetchFromAPI: async function (duration) {
         const request = await fetch(`${apiBase}/analytics`, {
@@ -201,9 +198,7 @@ export const Analytics = {
             }
 
             // We don't need to process variable data if data is not found for the specified date
-            if (!find) {
-                continue;
-            }
+            if (!find) continue;
 
             // Variable data such as country, browser, screen etc
             for (const key of this.DATA_KEYS) {

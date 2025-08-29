@@ -10,6 +10,7 @@ export const i18n = {
 
     // Links
     URL_DOMAIN_ERROR: 'Missing details. Please provide a valid URL and domain.',
+    COPY_ERROR: 'Error occurred while trying to copy link.',
 
     // Settings
     SETTINGS_UPDATED: 'Settings have been saved successfully.',

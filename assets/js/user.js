@@ -59,9 +59,8 @@ export const User = {
         await Store.clear('sync');
     },
     updateDataInHeader: function () {
-        if (!Selectors.HEADER) {
-            return;
-        }
+        if (!Selectors.HEADER) return;
+
         if (Store.USER['picture']) {
             Selectors.HEADER.querySelector(this.constants.PROFILE_IMAGE_CLASSNAME).src = Store.USER['picture'];
         }
@@ -70,16 +69,14 @@ export const User = {
         }
     },
     showHeader: function () {
-        if (!Selectors.HEADER || !Selectors.SECONDARY_HEADER) {
-            return;
-        }
+        if (!Selectors.HEADER || !Selectors.SECONDARY_HEADER) return;
+
         Selectors.HEADER.style.display = 'flex';
         Selectors.SECONDARY_HEADER.style.display = 'flex';
     },
     hideHeader: function () {
-        if (!Selectors.HEADER || !Selectors.SECONDARY_HEADER) {
-            return;
-        }
+        if (!Selectors.HEADER || !Selectors.SECONDARY_HEADER) return;
+
         Selectors.HEADER.style.display = 'none';
         Selectors.SECONDARY_HEADER.style.display = 'none';
     },
@@ -97,14 +94,11 @@ export const User = {
         await Screen.show('dashboard', 'block', 'true', true);
     },
     userHeaderMenuEvent: function () {
-        if (!Selectors.HEADER) {
-            return;
-        }
+        if (!Selectors.HEADER) return;
+
         const trigger = Selectors.HEADER.querySelector(this.constants.PROFILE_MENU_LINK_CLASSNAME);
         const menu = Selectors.HEADER.querySelector(this.constants.PROFILE_MENU_CLASSNAME);
-        if (!trigger || !menu) {
-            return;
-        }
+        if (!trigger || !menu) return;
 
         trigger.addEventListener('click', e => {
             menu.classList.toggle('show');
@@ -113,9 +107,7 @@ export const User = {
         menu.querySelectorAll('li').forEach(li => li.addEventListener('click', e => menu.classList.remove('show')));
     },
     userNavigationEvent: function () {
-        if (!Selectors.NAVIGATION || !Selectors.PAGE_SELECTOR) {
-            return;
-        }
+        if (!Selectors.NAVIGATION || !Selectors.PAGE_SELECTOR) return;
 
         // 1. Toggle for `page-selector` dropdown
         // 2. Screen switch once the page is selected
@@ -149,9 +141,7 @@ export const User = {
         });
     },
     userStateSwitcherEvent: function() {
-        if (!Selectors.STATE_SWITCHERS.length === 0) {
-            return;
-        }
+        if (!Selectors.STATE_SWITCHERS.length === 0) return;
 
         Selectors.STATE_SWITCHERS.forEach(switcher => switcher.addEventListener('click', e => {
             e.preventDefault();
