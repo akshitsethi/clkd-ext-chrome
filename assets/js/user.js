@@ -148,8 +148,42 @@ export const User = {
             }
         });
     },
+    userStateSwitcherEvent: function() {
+        if (!Selectors.STATE_SWITCHERS.length === 0) {
+            return;
+        }
+
+        Selectors.STATE_SWITCHERS.forEach(switcher => switcher.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                if (e.target.nodeName !== 'A') return;
+                if (e.target.classList.contains('selected')) return;
+
+                // Get section value
+                const target = e.target.getAttribute('data-state');
+                if (!target) return;
+
+                // Switch selected state on buttons
+                switcher.querySelectorAll('a').forEach(link => link.classList.remove('selected'));
+                e.target.classList.add('selected');
+
+                // Switch screen for the desired state switcher
+                const screen = Screen.constants.CURRENT_SCREEN;
+                if (screen !== 'links') return;
+                if (Selectors.CONTENT_SECTIONS[screen].length === 0) return;
+
+                // Loop over screen to change visibility
+                Selectors.CONTENT_SECTIONS[screen].forEach(section => section.getAttribute('data-content') === target ? section.style.display = 'block' : section.style.display = 'none');
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        }));
+    },
     events: function () {
         this.userHeaderMenuEvent();
         this.userNavigationEvent();
+        this.userStateSwitcherEvent();
     }
 };

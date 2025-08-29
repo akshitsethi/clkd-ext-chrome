@@ -509,6 +509,14 @@ h2 {
 #links {
     & .wrapper {
         background-image: linear-gradient(180deg, rgba(119, 148, 182, 0.105) 43%, rgba(255, 255, 255, 0) 93%);
+
+        &[data-content] {
+            display: none;
+
+			&:first-child {
+				display: block;
+			}
+        }
     }
 
     & .quick-create {

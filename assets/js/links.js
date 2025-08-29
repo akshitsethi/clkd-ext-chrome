@@ -107,11 +107,11 @@ export const Links = {
 				divEl.classList.add('download');
 
 				// Remove its event listener
-				const anchor = document.createElement('a');
-				anchor.setAttribute('href', qrcode);
-				anchor.setAttribute('data-filename', `${slug}.png`);
-				anchor.appendChild(document.createTextNode('Download'));
-				anchor.addEventListener('click', e => {
+				const anchorEl = document.createElement('a');
+				anchorEl.setAttribute('href', qrcode);
+				anchorEl.setAttribute('data-filename', `${slug}.png`);
+				anchorEl.appendChild(document.createTextNode('Download'));
+				anchorEl.addEventListener('click', e => {
 					e.preventDefault();
 
 					try {
@@ -125,7 +125,7 @@ export const Links = {
 					}
 				});
 
-				divEl.appendChild(anchor);
+				divEl.appendChild(anchorEl);
 				el.appendChild(divEl);
 
 				// Show modal

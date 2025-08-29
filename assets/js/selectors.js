@@ -8,6 +8,7 @@ export const Selectors = {
     LOGOUT_LINK: document.getElementById('logout'),
     NAVIGATION: document.querySelector('.navigation'),
     PAGE_SELECTOR: document.querySelector('.page-selector'),
+    STATE_SWITCHERS: document.querySelectorAll('.state-switcher'),
 
     // Screen
     SCREEN_SWITCH_LINKS: document.querySelectorAll('a[data-screen]'),
@@ -59,5 +60,10 @@ export const Selectors = {
     // Modal
     MODAL: document.querySelector('.modal'),
     MODAL_CONTENT: document.querySelector('.modal-content'),
-    MODAL_CLOSE: document.querySelector('.modal-close')
+    MODAL_CLOSE: document.querySelector('.modal-close'),
+
+    // Content sections (used in links & pages)
+    CONTENT_SECTIONS: {
+        links: document.querySelectorAll('#links [data-content]')
+    }
 };

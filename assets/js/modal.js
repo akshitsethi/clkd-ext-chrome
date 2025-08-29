@@ -40,7 +40,7 @@ export const Modal = {
                 try {
                     this.hide();
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                     Notification.error(error.message ?? i18n.DEFAULT_ERROR);
                 }
             }
@@ -57,7 +57,7 @@ export const Modal = {
             try {
                 this.hide();
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             }
         });
