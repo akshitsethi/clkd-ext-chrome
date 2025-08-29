@@ -20,7 +20,12 @@ export const Links = {
 		QRCODE_CLASSNAME: '.qrcode',
 		ACTION_ANALYTICS_CLASSNAME: '.analytics',
 		ACTION_EDIT_CLASSNAME: '.edit',
-		ACTION_ARCHIVE_CLASSNAME: '.archive'
+		ACTION_ARCHIVE_CLASSNAME: '.archive',
+		SINGLE_LINK_CLASSNAME: '.link',
+		SINGLE_SLUG_CLASSNAME: '.slug',
+		SINGLE_DOMAIN_CLASSNAME: '.domain',
+		SINGLE_TARGET_CLASSNAME: '.target',
+		SINGLE_CREATED_CLASSNAME: '.created'
 	},
 	DATA: [],
 	ACTIVE_TABLE: null,
@@ -158,9 +163,8 @@ export const Links = {
 		// Enable event listeners
 		this.newLinkOutputEvents();
 
-		// TODO
 		// Reset form values
-
+		Selectors.LINK_FORM.reset();
 
 		// Make selector visible
 		Selectors.LINK_OUTPUT_SECTION.style.display = 'block';
@@ -238,16 +242,16 @@ export const Links = {
 				row.setAttribute('data-created', single.created);
 
 				// Anchor
-				const anchor = content.querySelector('.link');
+				const anchor = content.querySelector(this.constants.SINGLE_LINK_CLASSNAME);
 				anchor.addEventListener('click', e => {
 					e.preventDefault();
 					chrome.tabs.create({ url: `https://${single.domain}/${single.slug}` });
 				});
-				anchor.querySelector('.slug').appendChild(document.createTextNode(single.slug));
-				anchor.querySelector('.domain').appendChild(document.createTextNode(single.domain));
+				anchor.querySelector(this.constants.SINGLE_SLUG_CLASSNAME).appendChild(document.createTextNode(single.slug));
+				anchor.querySelector(this.constants.SINGLE_DOMAIN_CLASSNAME).appendChild(document.createTextNode(single.domain));
 
 				// Paragraph
-				const target = content.querySelector('.target > a');
+				const target = content.querySelector(this.constants.SINGLE_TARGET_CLASSNAME);
 				target.setAttribute('href', single.url);
 				target.addEventListener('click', e => {
 					e.preventDefault();
@@ -256,7 +260,7 @@ export const Links = {
 				target.appendChild(document.createTextNode(url));
 
 				// Datetime
-				const created = content.querySelector('.created');
+				const created = content.querySelector(this.constants.SINGLE_CREATED_CLASSNAME);
 				created.appendChild(document.createTextNode(single.created));
 
 				// Add event listeners
@@ -285,7 +289,7 @@ export const Links = {
 				}
 			);
 
-			Selectors.LINKS_SECTION.style.display = 'tablek';
+			Selectors.LINKS_SECTION.style.display = 'table';
 			Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'none';
 		} else {
 			Selectors.LINKS_SECTION.style.display = 'none';
@@ -438,13 +442,24 @@ export const Links = {
 			return;
 		}
 
-		Selectors.LINK_FROM_TAB_BUTTON.addEventListener('click', e => {
+		Selectors.LINK_FROM_TAB_BUTTON.addEventListener('click', async e => {
 			e.preventDefault();
 
 			try {
 				Processing.show(document.body);
 
-				console.log(e.target);
+				// Fetch URL
+				const tab = await getCurrentTab();
+				if (!tab.url || tab.url.length === 0) {
+					throw new Error(i18n.MISSING_DETAILS_ERROR);
+				}
+				const domain = this.selectors.DOMAIN_FIELD.value;
+
+				// Initialise API request
+				const response = await this.syncWithAPI(tab.url, domain);
+
+				// Add newly generated link
+				this.addNewLink(response);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
