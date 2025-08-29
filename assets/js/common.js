@@ -7,7 +7,7 @@ import { QR } from "./qr.js";
 export const Common = {
     QRCodeModal: async function(domain, slug) {
         if (!domain || !slug) {
-            throw new Error(i18n.QRCODE_ERROR);
+            throw new Error(i18n.MISSING_DETAILS_ERROR);
         }
 
         // Generate QR using scan link

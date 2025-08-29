@@ -7,6 +7,7 @@ export const i18n = {
     SELECTOR_NOT_FOUND: 'Specified selector does not exist.',
     API_INVALID_RESPONSE: 'Invalid API response.',
     MALFORMED_REQUEST: 'Invalid request. Please check the source and try again.',
+    MISSING_DETAILS_ERROR: 'Required details are missing.',
 
     // Links
     URL_DOMAIN_ERROR: 'Missing details. Please provide a valid URL and domain.',

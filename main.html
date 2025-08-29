@@ -207,9 +207,13 @@
 						</span>
 
 						<div class="link-output">
-							<a class="new-link" href="#">#</a>
-							<a class="copy" href="#">Copy</a>
-							<a class="qrcode" href="#">QR Code</a>
+							<div class="link-output-details"></div>
+
+							<template id="link-output-template">
+								<a class="new-link" href="#">#</a>
+								<a class="copy" href="#">Copy</a>
+								<a class="qrcode" href="#">QR Code</a>
+							</template>
 						</div>
 
 						<div class="section-footer">
@@ -269,7 +273,10 @@
 												<span class="slug"></span>
 												<span class="domain"></span>
 											</a>
-											<p class="target">→ <a href="#"></a></p>
+											<p class="target">
+												<img src="./assets/images/down-right.png" alt="Target" />
+												<a href="#"></a>
+											</p>
 											<span class="created"></span>
 										</div>
 										<div class="actions">

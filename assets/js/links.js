@@ -12,20 +12,30 @@ import { User } from "./user.js";
 import { Common } from "./common.js";
 
 export const Links = {
+	constants: {
+		OUTPUT_DETAILS_CLASSNAME: '.link-output-details',
+		OUTPUT_TEMPLATE_CLASSNAME: '#link-output-template',
+		OUTPUT_NEW_LINK_CLASSNAME: '.new-link',
+		OUTPUT_COPY_LINK_CLASSNAME: '.copy',
+		QRCODE_CLASSNAME: '.qrcode',
+		ACTION_ANALYTICS_CLASSNAME: '.analytics',
+		ACTION_EDIT_CLASSNAME: '.edit',
+		ACTION_ARCHIVE_CLASSNAME: '.archive'
+	},
 	DATA: [],
 	ACTIVE_TABLE: null,
 	ARCHIVE_TABLE: null,
 	singleEvents: function (content) {
-		const analytics = content.querySelector('.analytics');
+		const analytics = content.querySelector(this.constants.ACTION_ANALYTICS_CLASSNAME);
 		if (analytics) this.analyticsEvent(analytics);
 
-		const edit = content.querySelector('.edit');
+		const edit = content.querySelector(this.constants.ACTION_EDIT_CLASSNAME);
 		if (edit) this.editEvent(edit);
 
-		const qrcode = content.querySelector('.qrcode');
+		const qrcode = content.querySelector(this.constants.QRCODE_CLASSNAME);
 		if (qrcode) this.qrcodeEvent(qrcode);
 
-		const archive = content.querySelector('.archive');
+		const archive = content.querySelector(this.constants.ACTION_ARCHIVE_CLASSNAME);
 		if (archive) this.archiveEvent(archive);
 	},
 	analyticsEvent: function (selector) {
@@ -37,7 +47,7 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
-				
+
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -55,7 +65,7 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
-				
+
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -113,8 +123,53 @@ export const Links = {
 			}
 		});
 	},
-	addNewLink: function(data) {
+	showNewLinkOutput: function (domain, slug) {
+		if (!Selectors.LINK_OUTPUT_SECTION) return;
+
+		// Check for required selectors
+		const template = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_TEMPLATE_CLASSNAME);
+		const details = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_DETAILS_CLASSNAME);
+		if (!template || !details) return;
+
+		// Remove existing HTML
+		details.innerHTML = null;
+
+		// Inject data so that we can clear out event listeners
+		const content = template.content.cloneNode(true);
+
+		// Newly added link
+		const link = content.querySelector(this.constants.OUTPUT_NEW_LINK_CLASSNAME);
+		link.setAttribute('data-domain', domain);
+		link.setAttribute('data-slug', slug);
+		link.innerText = `https://${domain}/${slug}`;
+
+		// Copy text
+		const copy = content.querySelector(this.constants.OUTPUT_COPY_LINK_CLASSNAME);
+		copy.setAttribute('data-text', `https://${domain}/${slug}`);
+
+		// QRcode
+		const qrcode = content.querySelector(this.constants.QRCODE_CLASSNAME);
+		qrcode.setAttribute('data-domain', domain);
+		qrcode.setAttribute('data-slug', slug);
+
+		// Add output to details
+		details.appendChild(content);
+
+		// Enable event listeners
+		this.newLinkOutputEvents();
+
+		// TODO
+		// Reset form values
+
+
+		// Make selector visible
+		Selectors.LINK_OUTPUT_SECTION.style.display = 'block';
+	},
+	addNewLink: function (data) {
 		console.log(data);
+
+		// Show newly added link on screen
+		this.showNewLinkOutput(data.domain, data.slug);
 	},
 	updateDOM: async function () {
 		try {
@@ -237,8 +292,8 @@ export const Links = {
 			Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'block';
 		}
 	},
-	populateArchive: function() {
-		
+	populateArchive: function () {
+
 	},
 	fetchFromAPI: async function (next = null) {
 		const body = {
@@ -284,7 +339,7 @@ export const Links = {
 			await this.fetchFromAPI(response.next);
 		}
 	},
-	syncWithAPI: async function(url, domain) {
+	syncWithAPI: async function (url, domain) {
 		if (!url || !domain) {
 			throw new Error(i18n.URL_DOMAIN_ERROR);
 		}
@@ -308,15 +363,15 @@ export const Links = {
 		});
 
 		// Get JSON data
-        const response = await request.json();
+		const response = await request.json();
 
-        // Check for `message` property in the response returned from API
-        if (!response.hasOwnProperty('message')) {
-            throw new Error(i18n.API_INVALID_RESPONSE);
-        }
-        if (request.status !== 200) {
-            throw new Error(response.message);
-        }
+		// Check for `message` property in the response returned from API
+		if (!response.hasOwnProperty('message')) {
+			throw new Error(i18n.API_INVALID_RESPONSE);
+		}
+		if (request.status !== 200) {
+			throw new Error(response.message);
+		}
 
 		return response.message;
 	},
@@ -353,7 +408,7 @@ export const Links = {
 			await this.getCurrentUrl();
 		});
 	},
-	createLinkFormEvent: function() {
+	createLinkFormEvent: function () {
 		if (!Selectors.LINK_FORM) return;
 
 		Selectors.LINK_FORM.addEventListener('submit', async e => {
@@ -378,7 +433,7 @@ export const Links = {
 			}
 		});
 	},
-	createLinkFromTabEvent: function() {
+	createLinkFromTabEvent: function () {
 		if (!Selectors.LINK_FROM_TAB_BUTTON) {
 			return;
 		}
@@ -398,17 +453,30 @@ export const Links = {
 			}
 		});
 	},
-	newLinkOutputEvents: function() {
+	newLinkOutputEvents: function () {
 		if (!Selectors.LINK_OUTPUT_SECTION) return;
 
-		const link = Selectors.LINK_OUTPUT_SECTION.querySelector('.new-link');
+		const link = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_NEW_LINK_CLASSNAME);
 		if (link) {
 			link.addEventListener('click', e => {
-				
+				e.preventDefault();
+
+				try {
+					const domain = e.target.getAttribute('data-domain');
+					const slug = e.target.getAttribute('data-slug');
+					if (!domain || !slug) {
+						throw new Error(i18n.MISSING_DETAILS_ERROR);
+					}
+
+					chrome.tabs.create({ url: `https://${domain}/${slug}` });
+				} catch (error) {
+					console.error(error);
+					Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+				}
 			});
 		}
 
-		const copy = Selectors.LINK_OUTPUT_SECTION.querySelector('.copy');
+		const copy = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_COPY_LINK_CLASSNAME);
 		if (copy) {
 			copy.addEventListener('click', async e => {
 				e.preventDefault();
@@ -416,10 +484,21 @@ export const Links = {
 			});
 		}
 
-		const qrcode = Selectors.LINK_OUTPUT_SECTION.querySelector('.qrcode');
+		const qrcode = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.QRCODE_CLASSNAME);
 		if (qrcode) {
-			qrcode.addEventListener('click', e => {
+			qrcode.addEventListener('click', async e => {
+				e.preventDefault();
 
+				try {
+					const domain = e.target.getAttribute('data-domain');
+					const slug = e.target.getAttribute('data-slug');
+
+					// Show QRCode modal
+					await Common.QRCodeModal(domain, slug);
+				} catch (error) {
+					console.error(error);
+					Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+				}
 			});
 		}
 	},
@@ -428,7 +507,6 @@ export const Links = {
 		this.chromeListenerEvent();
 		this.createLinkFormEvent();
 		this.createLinkFromTabEvent();
-		this.newLinkOutputEvents();
 	},
 	init: async function () {
 		await this.updateDOM();
