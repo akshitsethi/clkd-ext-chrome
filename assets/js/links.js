@@ -25,7 +25,10 @@ export const Links = {
 		SINGLE_SLUG_CLASSNAME: '.slug',
 		SINGLE_DOMAIN_CLASSNAME: '.domain',
 		SINGLE_TARGET_CLASSNAME: '.target',
-		SINGLE_CREATED_CLASSNAME: '.created'
+		SINGLE_CREATED_CLASSNAME: '.created',
+		CREATE_SECTION_CLASSNAME: '.quick-create',
+		INLINE_MODAL_CLASSNAME: '.inline-modal',
+		SLUG_FIELD_CLASSNAME: '.custom-slug'
 	},
 	DATA: [],
 	ACTIVE_TABLE: null,
@@ -170,10 +173,23 @@ export const Links = {
 		Selectors.LINK_OUTPUT_SECTION.style.display = 'block';
 	},
 	addNewLink: function (data) {
-		console.log(data);
+		// Add new link to local storage
+		const link = {
+			slug: data.slug,
+			domain: data.domain,
+			url: data.url,
+			is_archive: data.is_archive,
+			created: data.created
+		};
+
+		// Add to storage
+		User.setLinks([ link ]);
 
 		// Show newly added link on screen
 		this.showNewLinkOutput(data.domain, data.slug);
+
+		// Refresh links table
+		this.populateData();
 	},
 	updateDOM: async function () {
 		try {
@@ -343,7 +359,7 @@ export const Links = {
 			await this.fetchFromAPI(response.next);
 		}
 	},
-	syncWithAPI: async function (url, domain) {
+	syncWithAPI: async function (url, domain, slug = null) {
 		if (!url || !domain) {
 			throw new Error(i18n.URL_DOMAIN_ERROR);
 		}
@@ -355,6 +371,7 @@ export const Links = {
 			user_id: Store.USER.ID,
 			token: Store.USER.token
 		};
+		if (slug) body.slug = slug;
 
 		const request = await fetch(`${apiBase}/link`, {
 			method: 'POST',
@@ -421,11 +438,23 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
-				// Create form data
-				const data = new FormData(e.target);
+				// Get URL & domain
+				const url = e.target.querySelector('input[name=url]').value;
+				const domain = Selectors.LINK_DOMAIN_SELECTOR.value;
+
+				// OPTIONAL: custom slug
+				let slug = null;
+				if (Selectors.LINK_MODE_SWITCHER.getAttribute('data-mode') === 'manual') {
+					const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
+
+					slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value;
+					if (!slug || slug.length === 0) {
+						throw new Error(i18n.EMPTY_SLUG_ERROR);
+					}
+				}
 
 				// Initialise API request
-				const response = await this.syncWithAPI(data.get('url'), data.get('domain'));
+				const response = await this.syncWithAPI(url, domain, slug);
 
 				// Add newly generated link
 				this.addNewLink(response);
@@ -448,15 +477,26 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
-				// Fetch URL
+				// Fetch URL & domain
 				const tab = await getCurrentTab();
-				if (!tab.url || tab.url.length === 0) {
+				const domain = Selectors.LINK_DOMAIN_SELECTOR.value;
+				if (!tab.url || tab.url.length === 0 || !domain) {
 					throw new Error(i18n.MISSING_DETAILS_ERROR);
 				}
-				const domain = this.selectors.DOMAIN_FIELD.value;
+
+				// OPTIONAL: custom slug
+				let slug = null;
+				if (Selectors.LINK_MODE_SWITCHER.getAttribute('data-mode') === 'manual') {
+					const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
+
+					slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value;
+					if (!slug || slug.length === 0) {
+						throw new Error(i18n.EMPTY_SLUG_ERROR);
+					}
+				}
 
 				// Initialise API request
-				const response = await this.syncWithAPI(tab.url, domain);
+				const response = await this.syncWithAPI(tab.url, domain, slug);
 
 				// Add newly generated link
 				this.addNewLink(response);
@@ -517,11 +557,39 @@ export const Links = {
 			});
 		}
 	},
+	modeSwitcherEvent: function() {
+		if (!Selectors.LINK_MODE_SWITCHER) return;
+
+		Selectors.LINK_MODE_SWITCHER.addEventListener('click', e => {
+			e.preventDefault();
+
+			try {
+				const mode = e.target.getAttribute('data-mode');
+				const toggle = (mode === 'auto') ? 'manual': 'auto';
+				if (!mode || !['auto', 'manual'].includes(mode)) {
+					throw new Error(i18n.MISSING_DETAILS_ERROR);
+				}
+
+				const parent = e.target.closest(this.constants.CREATE_SECTION_CLASSNAME);
+				const inline = parent.querySelector(this.constants.INLINE_MODAL_CLASSNAME);
+
+				e.target.classList.toggle('selected');
+				e.target.setAttribute('data-mode', toggle);
+				e.target.innerText = toggle;
+
+				inline.classList.toggle('show');
+			} catch (error) {
+				console.error(error);
+				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+			}
+		});
+	},
 	events: function () {
 		this.getCurrentUrlEvent();
 		this.chromeListenerEvent();
 		this.createLinkFormEvent();
 		this.createLinkFromTabEvent();
+		this.modeSwitcherEvent();
 	},
 	init: async function () {
 		await this.updateDOM();

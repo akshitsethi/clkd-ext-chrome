@@ -196,7 +196,6 @@
 						<form class="link-form" method="POST">
 							<div class="input">
 								<input type="url" name="url" autocomplete="off" placeholder="https://example.com/my-long-url">
-								<input type="hidden" name="domain" value="clkd.in">
 								<button class="button green" type="submit">Create</button>
 							</div>
 						</form>
@@ -227,22 +226,21 @@
 								</select>
 							</div>
 
-							<div class="switcher">
-								<span><img src="./assets/images/power.png" alt="Mode"></span> <a href="#"
-									data-mode="manual">Auto</a>
+							<div class="mode-switcher">
+								<span><img src="./assets/images/power.png" alt="Mode"></span>
+								<a href="#" data-mode="auto">auto</a>
 							</div>
 
 							<div class="qr-settings">
-								<span><img src="./assets/images/wrench.png" alt="QR Settings"></span> <a href="#"
-									data-screen="settings">Settings</a>
+								<span><img src="./assets/images/wrench.png" alt="QR Settings"></span>
+								<a href="#" data-screen="settings">Settings</a>
 							</div>
 						</div>
 
 						<div class="inline-modal">
 							<div class="link-mode" data-type="inline-modal">
 								<div class="input">
-									<input type="text" name="custom-slug" class="custom-slug"
-										placeholder="Type your unique slug">
+									<input type="text" name="custom-slug" class="custom-slug" placeholder="Type custom slug for short link">
 								</div>
 							</div>
 						</div>

@@ -560,12 +560,12 @@ h2 {
                 align-items: center;
             }
 
-            & .switcher {
+            & .mode-switcher {
                 margin-left: auto;
                 margin-right: 0.5rem;
             }
 
-            & .switcher,
+            & .mode-switcher,
             & .qr-settings {
                 display: flex;
                 align-items: center;
@@ -578,6 +578,7 @@ h2 {
                     padding: 0.25rem;
                     border-radius: 8px;
                     margin-left: 0.125rem;
+                    text-transform: capitalize;
 
                     &.selected {
                         background: #ffffff;
@@ -754,14 +755,13 @@ h2 {
 .inline-modal {
     margin: 0 -1rem;
     background: rgba(56, 182, 255, 0.105);
+    display: none;
 
     & .link-mode {
-        display: none;
-        padding: 0.5rem 1rem;
-
-        &.show {
-            display: block;
-        }
+        padding: 0 1rem 0.5rem;
+    }
+    &.show {
+        display: block;
     }
 }
 

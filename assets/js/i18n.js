@@ -7,11 +7,12 @@ export const i18n = {
     SELECTOR_NOT_FOUND: 'Specified selector does not exist.',
     API_INVALID_RESPONSE: 'Invalid API response.',
     MALFORMED_REQUEST: 'Invalid request. Please check the source and try again.',
-    MISSING_DETAILS_ERROR: 'Required details are missing.',
+    MISSING_DETAILS_ERROR: 'Required data is missing.',
 
     // Links
     URL_DOMAIN_ERROR: 'Missing details. Please provide a valid URL and domain.',
     COPY_ERROR: 'Error occurred while trying to copy link.',
+    EMPTY_SLUG_ERROR: 'Please provide a unique slug or switch to "Auto" mode',
 
     // Settings
     SETTINGS_UPDATED: 'Settings have been saved successfully.',
