@@ -224,13 +224,13 @@ export const Links = {
 			Processing.hide();
 		}
 	},
-	populateData: function () {
+	populateData: function (type = 'active') {
 		const table = Selectors.LINKS_SECTION.querySelector('tbody');
-		const active = this.DATA.filter(link => !link.is_archive);
+		const data = type === 'active' ? this.DATA.filter(link => !link.is_archive) : this.DATA.filter(link => link.is_archive);
 
-		if (active.length !== 0) {
+		if (data.length !== 0) {
 			// Sort data in descending order
-			active.length >= 2 && active.sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
+			data.length >= 2 && data.sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
 
 			// Empty out the table body
 			table.innerHTML = null;
@@ -241,14 +241,14 @@ export const Links = {
 			}
 
 			// Add table data
-			for (const single of active) {
+			for (const single of data) {
 				let url = single.url;
 				if (url.length > 75) {
 					url = url.substring(0, 75) + '...';
 				}
 
-				const template = Selectors.LINK_ENTRY_TEMPLATE.content;
-				const content = template.cloneNode(true);
+				const template = Selectors.LINK_ENTRY_TEMPLATE;
+				const content = template.content.cloneNode(true);
 
 				// Add core details to row
 				const row = content.querySelector('tr');
