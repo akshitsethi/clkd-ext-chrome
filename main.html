@@ -82,7 +82,7 @@
 		<div class="dynamic-section" data-screens="links">
 			<div class="state-switcher">
 				<a href="#" data-state="active" class="selected">Active</a>
-				<a href="#" data-state="archive">Archived</a>
+				<a href="#" data-state="archive">Archive</a>
 			</div>
 		</div>
 	</div><!-- .secondary-header -->
@@ -249,7 +249,7 @@
 					<div class="links">
 						<h2>Links</h2>
 
-						<table class="links-data row-border">
+						<table class="links-data table-data row-border">
 							<thead>
 								<tr><th data-dt-order="disable"></th></tr>
 							</thead>
@@ -317,6 +317,17 @@
 
 			<div data-content="archive">
 				<div class="wrapper">
+					<div class="links-archive">
+						<h2>Archive</h2>
+
+						<table class="archive-data table-data row-border">
+							<thead>
+								<tr><th data-dt-order="disable"></th></tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+
 					<div class="no-links-archive">
 						<span class="center block">
 							<img src="./assets/images/thinking.png" alt="No archived link" />
@@ -324,6 +335,28 @@
 
 						<p>It seems like you have not archived a link yet. As soon as a <span class="semibold">link is archived</span>, it'll appear here.</p>
 					</div>
+
+					<template id="link-archive-template">
+						<tr>
+							<td>
+								<div class="flex">
+									<div class="core">
+										<a href="#" data-slug="#" data-url="#" data-created="#" class="link">
+											<span class="slug"></span>
+											<span class="domain"></span>
+										</a>
+										<a href="#" class="target"></a>
+										<span class="created"></span>
+									</div>
+									<div class="actions">
+										<a href="#" class="restore">
+											<img src="./assets/images/restore.png" alt="Restore Link" />
+										</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</template>
 				</div>
 			</div>
 		</div><!-- #links -->

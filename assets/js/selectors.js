@@ -34,6 +34,11 @@ export const Selectors = {
     LINK_DOMAIN_SELECTOR: document.querySelector('#links select[name=domain]'),
     LINK_MODE_SWITCHER: document.querySelector('#links .mode-switcher a'),
 
+    // Archives
+    LINK_ARCHIVE_SECTION: document.querySelector('#links .archive-data'),
+    LINKS_NO_ARCHIVE_MESSAGE: document.querySelector('#links .no-links-archive'),
+    LINK_ARCHIVE_TEMPLATE: document.querySelector('#links #link-archive-template'),
+
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
     NO_ANALYTICS_SECTION: document.querySelector('#analytics .no-analytics-data'),

@@ -12,7 +12,8 @@ export const i18n = {
     // Links
     URL_DOMAIN_ERROR: 'Missing details. Please provide a valid URL and domain.',
     COPY_ERROR: 'Error occurred while trying to copy link.',
-    EMPTY_SLUG_ERROR: 'Please provide a unique slug or switch to "Auto" mode',
+    EMPTY_SLUG_ERROR: 'Please provide a unique slug or switch to "Auto" mode.',
+    LINK_NOT_FOUND: 'Unable to locate the specified link in storage.',
 
     // Settings
     SETTINGS_UPDATED: 'Settings have been saved successfully.',

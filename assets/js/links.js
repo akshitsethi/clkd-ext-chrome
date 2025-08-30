@@ -21,6 +21,7 @@ export const Links = {
 		ACTION_ANALYTICS_CLASSNAME: '.analytics',
 		ACTION_EDIT_CLASSNAME: '.edit',
 		ACTION_ARCHIVE_CLASSNAME: '.archive',
+		ACTION_RESTORE_CLASSNAME: '.restore',
 		SINGLE_LINK_CLASSNAME: '.link',
 		SINGLE_SLUG_CLASSNAME: '.slug',
 		SINGLE_DOMAIN_CLASSNAME: '.domain',
@@ -28,11 +29,13 @@ export const Links = {
 		SINGLE_CREATED_CLASSNAME: '.created',
 		CREATE_SECTION_CLASSNAME: '.quick-create',
 		INLINE_MODAL_CLASSNAME: '.inline-modal',
-		SLUG_FIELD_CLASSNAME: '.custom-slug'
+		SLUG_FIELD_CLASSNAME: '.custom-slug',
 	},
 	DATA: [],
-	ACTIVE_TABLE: null,
-	ARCHIVE_TABLE: null,
+	TABLE: {
+		active: null,
+		archive: null
+	},
 	singleEvents: function (content) {
 		const analytics = content.querySelector(this.constants.ACTION_ANALYTICS_CLASSNAME);
 		if (analytics) this.analyticsEvent(analytics);
@@ -45,6 +48,10 @@ export const Links = {
 
 		const archive = content.querySelector(this.constants.ACTION_ARCHIVE_CLASSNAME);
 		if (archive) this.archiveEvent(archive);
+	},
+	archiveEvents: function (content) {
+		const restore = content.querySelector(this.constants.ACTION_RESTORE_CLASSNAME);
+		if (restore) this.restoreEvent(restore);
 	},
 	analyticsEvent: function (selector) {
 		if (!selector) return;
@@ -114,6 +121,88 @@ export const Links = {
 		});
 	},
 	archiveEvent: function (selector) {
+		if (!selector) return;
+
+		selector.addEventListener('click', async e => {
+			e.preventDefault();
+
+			try {
+				Processing.show(document.body);
+
+				let target = e.target;
+				if (target.nodeName === 'IMG') {
+					target = e.target.parentElement;
+				}
+
+				const parent = target.closest('tr');
+				if (!parent) {
+					throw new Error(i18n.QRCODE_ERROR);
+				}
+				const domain = parent.getAttribute('data-domain');
+				const slug = parent.getAttribute('data-slug');
+
+				// Set `is_archive` property for the item
+				const index = this.DATA.findIndex(link => link.slug === slug && link.domain === domain);
+				if (index === -1) {
+					throw new Error(i18n.LINK_NOT_FOUND);
+				}
+
+				// API call for setting the `is_archive` attribute
+				const request = await fetch(`${apiBase}/archive`, {
+					method: 'PATCH',
+					async: true,
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					contentType: 'json',
+					body: JSON.stringify({
+						user_id: Store.USER.ID,
+						token: Store.USER.token,
+						domain: domain,
+						slug: slug,
+						data_type: 'link',
+						is_archive: true
+					})
+				});
+
+				// Get JSON data
+				const response = await request.json();
+
+				// Check for `message` property in the response returned from API
+				if (!response.hasOwnProperty('message')) {
+					throw new Error(i18n.API_INVALID_RESPONSE);
+				}
+				if (request.status !== 200) {
+					throw new Error(response.message);
+				}
+
+				// Replace link content
+				this.DATA.splice(index, 1, {
+					slug: this.DATA[index].slug,
+					domain: this.DATA[index].domain,
+					url: this.DATA[index].url,
+					is_archive: true,
+					created: this.DATA[index].created
+				});
+
+				// Store links by passing empty array to function
+				await User.setLinks([]);
+
+				// On successfull update, refresh tables
+				this.populateData();
+				this.populateArchive();
+
+				// Show success message
+				Notification.success(response.message);
+			} catch (error) {
+				console.error(error);
+				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+			} finally {
+				Processing.hide();
+			}
+		});
+	},
+	restoreEvent: function(selector) {
 		if (!selector) return;
 
 		selector.addEventListener('click', e => {
@@ -225,19 +314,21 @@ export const Links = {
 		}
 	},
 	populateData: function (type = 'active') {
-		const table = Selectors.LINKS_SECTION.querySelector('tbody');
+		const table = type === 'active' ? Selectors.LINKS_SECTION.querySelector('tbody') : Selectors.LINK_ARCHIVE_SECTION.querySelector('tbody');
 		const data = type === 'active' ? this.DATA.filter(link => !link.is_archive) : this.DATA.filter(link => link.is_archive);
+
+		// Empty out the table body
+		table.innerHTML = null;
+
+		console.log(data.length);
 
 		if (data.length !== 0) {
 			// Sort data in descending order
 			data.length >= 2 && data.sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
 
-			// Empty out the table body
-			table.innerHTML = null;
-
-			if (DataTable.isDataTable(this.ACTIVE_TABLE)) {
-				this.ACTIVE_TABLE.clear().destroy();
-				this.ACTIVE_TABLE = null;
+			if (DataTable.isDataTable(this.TABLE[type])) {
+				this.TABLE[type].clear().destroy();
+				this.TABLE[type] = null;
 			}
 
 			// Add table data
@@ -247,15 +338,18 @@ export const Links = {
 					url = url.substring(0, 75) + '...';
 				}
 
-				const template = Selectors.LINK_ENTRY_TEMPLATE;
+				const template = type === 'active' ? Selectors.LINK_ENTRY_TEMPLATE : Selectors.LINK_ARCHIVE_TEMPLATE;
 				const content = template.content.cloneNode(true);
 
 				// Add core details to row
 				const row = content.querySelector('tr');
 				row.setAttribute('data-slug', single.slug);
 				row.setAttribute('data-domain', single.domain);
-				row.setAttribute('data-url', single.url);
-				row.setAttribute('data-created', single.created);
+
+				if (type === 'active') {
+					row.setAttribute('data-url', single.url);
+					row.setAttribute('data-created', single.created);
+				}
 
 				// Anchor
 				const anchor = content.querySelector(this.constants.SINGLE_LINK_CLASSNAME);
@@ -280,15 +374,15 @@ export const Links = {
 				created.appendChild(document.createTextNode(single.created));
 
 				// Add event listeners
-				this.singleEvents(content);
+				type === 'active' ? this.singleEvents(content) : this.archiveEvents(content);
 
 				// Add row to table body
 				table.append(content);
 			}
 
 			// Initialise DataTable
-			this.ACTIVE_TABLE = new DataTable(
-				Selectors.LINKS_SECTION,
+			this.TABLE[type] = new DataTable(
+				type === 'active' ? Selectors.LINKS_SECTION : Selectors.LINK_ARCHIVE_SECTION,
 				{
 					language: {
 						search: 'Filter Links',
@@ -305,15 +399,15 @@ export const Links = {
 				}
 			);
 
-			Selectors.LINKS_SECTION.style.display = 'table';
-			Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'none';
+			type === 'active' ? Selectors.LINKS_SECTION.style.display = 'table' : Selectors.LINK_ARCHIVE_SECTION.style.display = 'table';
+			type === 'active' ? Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'none' : Selectors.LINKS_NO_ARCHIVE_MESSAGE.style.display = 'none';
 		} else {
-			Selectors.LINKS_SECTION.style.display = 'none';
-			Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'block';
+			type === 'active' ? Selectors.LINKS_SECTION.style.display = 'none' : Selectors.LINK_ARCHIVE_SECTION.style.display = 'none';
+			type === 'active' ? Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'block' : Selectors.LINKS_NO_ARCHIVE_MESSAGE.style.display = 'block';
 		}
 	},
 	populateArchive: function () {
-
+		this.populateData('archive');
 	},
 	fetchFromAPI: async function (next = null) {
 		const body = {
