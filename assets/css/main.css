@@ -1499,6 +1499,9 @@ input:checked+.toggle:before {
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 
+    &::first-letter{
+        text-transform: capitalize;
+    }
     &:first-child {
         z-index: 2;
     }

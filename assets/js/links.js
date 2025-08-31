@@ -105,7 +105,7 @@ export const Links = {
 
 				const parent = target.closest('tr');
 				if (!parent) {
-					throw new Error(i18n.QRCODE_ERROR);
+					throw new Error(i18n.SELECTOR_NOT_FOUND);
 				}
 				const domain = parent.getAttribute('data-domain');
 				const slug = parent.getAttribute('data-slug');
@@ -136,7 +136,7 @@ export const Links = {
 
 				const parent = target.closest('tr');
 				if (!parent) {
-					throw new Error(i18n.QRCODE_ERROR);
+					throw new Error(i18n.SELECTOR_NOT_FOUND);
 				}
 				const domain = parent.getAttribute('data-domain');
 				const slug = parent.getAttribute('data-slug');
@@ -314,13 +314,13 @@ export const Links = {
 		}
 	},
 	populateData: function (type = 'active') {
-		const table = type === 'active' ? Selectors.LINKS_SECTION.querySelector('tbody') : Selectors.LINK_ARCHIVE_SECTION.querySelector('tbody');
-		const data = type === 'active' ? this.DATA.filter(link => !link.is_archive) : this.DATA.filter(link => link.is_archive);
+		// Constants based on table type
+		const table = Selectors.LINKS_SECTION[type].querySelector('table');
+		const body = table.querySelector('tbody');
+		const data = (type === 'active') ? this.DATA.filter(link => !link.is_archive) : this.DATA.filter(link => link.is_archive);
 
 		// Empty out the table body
-		table.innerHTML = null;
-
-		console.log(data.length);
+		body.innerHTML = null;
 
 		if (data.length !== 0) {
 			// Sort data in descending order
@@ -374,15 +374,14 @@ export const Links = {
 				created.appendChild(document.createTextNode(single.created));
 
 				// Add event listeners
-				type === 'active' ? this.singleEvents(content) : this.archiveEvents(content);
+				(type === 'active') ? this.singleEvents(content) : this.archiveEvents(content);
 
 				// Add row to table body
-				table.append(content);
+				body.append(content);
 			}
 
 			// Initialise DataTable
-			this.TABLE[type] = new DataTable(
-				type === 'active' ? Selectors.LINKS_SECTION : Selectors.LINK_ARCHIVE_SECTION,
+			this.TABLE[type] = new DataTable(table,
 				{
 					language: {
 						search: 'Filter Links',
@@ -399,11 +398,11 @@ export const Links = {
 				}
 			);
 
-			type === 'active' ? Selectors.LINKS_SECTION.style.display = 'table' : Selectors.LINK_ARCHIVE_SECTION.style.display = 'table';
-			type === 'active' ? Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'none' : Selectors.LINKS_NO_ARCHIVE_MESSAGE.style.display = 'none';
+			Selectors.LINKS_SECTION[type].style.display = 'block';
+			Selectors.LINKS_NO_DATA_MESSAGE[type].style.display = 'none';
 		} else {
-			type === 'active' ? Selectors.LINKS_SECTION.style.display = 'none' : Selectors.LINK_ARCHIVE_SECTION.style.display = 'none';
-			type === 'active' ? Selectors.LINKS_NO_DATA_MESSAGE.style.display = 'block' : Selectors.LINKS_NO_ARCHIVE_MESSAGE.style.display = 'block';
+			Selectors.LINKS_SECTION[type].style.display = 'none';
+			Selectors.LINKS_NO_DATA_MESSAGE[type].style.display = 'block';
 		}
 	},
 	populateArchive: function () {

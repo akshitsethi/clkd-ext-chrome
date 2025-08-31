@@ -21,7 +21,7 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			Screen.show('links', 'block', 'true', true);
+			// Screen.show('links', 'block', 'true', true);
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);

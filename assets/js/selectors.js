@@ -28,15 +28,19 @@ export const Selectors = {
     REVEAL_URL_LINK: document.querySelector('#links .reveal-url'),
     LINK_ENTRY_TEMPLATE: document.querySelector('#links #link-entry-template'),
     LINK_EDIT_TEMPLATE: document.querySelector('#links #link-edit-template'),
-    LINKS_SECTION: document.querySelector('#links .links-data'),
-    LINKS_NO_DATA_MESSAGE: document.querySelector('#links .no-links-data'),
+    LINKS_SECTION: {
+        active: document.querySelector('#links .links-table'),
+        archive: document.querySelector('#links .archive-table')
+    },
+    LINKS_NO_DATA_MESSAGE: {
+        active: document.querySelector('#links .no-links-data'),
+        archive: document.querySelector('#links .no-links-archive')
+    },
     LINK_OUTPUT_SECTION: document.querySelector('#links .link-output'),
     LINK_DOMAIN_SELECTOR: document.querySelector('#links select[name=domain]'),
     LINK_MODE_SWITCHER: document.querySelector('#links .mode-switcher a'),
 
     // Archives
-    LINK_ARCHIVE_SECTION: document.querySelector('#links .archive-data'),
-    LINKS_NO_ARCHIVE_MESSAGE: document.querySelector('#links .no-links-archive'),
     LINK_ARCHIVE_TEMPLATE: document.querySelector('#links #link-archive-template'),
 
     // Analytics

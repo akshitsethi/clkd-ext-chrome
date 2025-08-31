@@ -90,6 +90,7 @@ export const Dashboard = {
     },
     updateEngagementsAndInsights: function(period = 'today') {
         if (!Selectors.ENGAGEMENTS_SECTION || !Selectors.INSIGHTS_SECTION) return;
+        if (!this.COMPUTATIONS) return;
 
         // Engagements
         const stats = Selectors.ENGAGEMENTS_SECTION.querySelectorAll('div[data-stat]');
