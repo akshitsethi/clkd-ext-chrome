@@ -297,19 +297,22 @@
 
 						<template id="link-edit-template">
 							<form class="link-edit-form">
-								<header><h3></h3></header>
+								<header><h2></h2></header>
 
-								<div class="response"></div>
 								<div class="link-details">
-									<label>Current Target</label>
-									<span></span>
+									<span class="bold">Current Target</span>
+									<span class="url"></span>
 								</div>
 
-								<label for="redirect">New Redirect</label>
 								<div class="input">
-									<input type="url" name="redirect" id="redirect" placeholder="https://new.url/my-long-url">
-									<input type="hidden" name="id">
-									<button class="button" type="submit">Update</button>
+									<span>New Redirect</span>
+
+									<div class="flex">
+										<input type="url" name="redirect" placeholder="https://new.url/my-long-url">
+										<input type="hidden" name="domain">
+										<input type="hidden" name="slug">
+										<button class="green button small" type="submit">Update</button>
+									</div>
 								</div>
 							</form>
 						</template>

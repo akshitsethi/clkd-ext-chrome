@@ -616,7 +616,7 @@ h2 {
     .link-form {
         & .input {
             display: flex;
-            padding: 0.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 0;
             align-items: center;
             border: 1px solid rgba(0, 0, 0, 0.08);
             border-radius: 8px;
@@ -675,6 +675,47 @@ h2 {
     }
     &.show {
         display: block;
+    }
+}
+
+.link-edit-form {
+    padding: 1rem;
+
+    & h2 {
+        font-weight: 600;
+        font-size: 1.125rem;
+    }
+    & .link-details,
+    & .input {
+        margin: 1rem 0;
+
+        & span {
+            display: block;
+            font-size: 0.875rem;
+            word-break: break-all;
+            margin: 0.25rem 0;
+            line-height: 1.625;
+            color: #404040;
+
+            &.bold {
+                font-weight: 500;
+            }
+            &.url {
+                font-weight: 300;
+            }
+        }
+
+        & .flex {
+            display: flex;
+            border: 1px solid #e0e0e0;
+            padding: 0.25rem;
+            border-radius: 8px;
+
+            & input {
+                background: transparent;
+                padding: 0.75rem 0.125rem;
+            }
+        }
     }
 }
 
@@ -1503,15 +1544,15 @@ input:checked+.toggle:before {
         text-transform: capitalize;
     }
     &:first-child {
-        z-index: 2;
+        z-index: 12;
     }
 
     &:nth-child(2) {
-        z-index: 1;
+        z-index: 11;
     }
 
     &:nth-child(3) {
-        z-index: 0;
+        z-index: 10;
     }
 
     &.success {

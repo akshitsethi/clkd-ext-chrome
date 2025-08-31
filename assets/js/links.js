@@ -10,6 +10,7 @@ import { Tooltip } from "./tooltip.js";
 import { i18n } from "./i18n.js";
 import { User } from "./user.js";
 import { Common } from "./common.js";
+import { Modal } from "./modal.js";
 
 export const Links = {
 	constants: {
@@ -163,8 +164,12 @@ export const Links = {
 				if (!domain || !slug) {
 					throw new Error(i18n.MISSING_DETAILS_ERROR);
 				}
+				let url = parent.getAttribute('data-url');
+				if (url.length > 175) {
+					url = url.substring(0, 175) + '...';
+				}
 
-				const template = this.selectors.LINK_EDIT_TEMPLATE.content;
+				const template = Selectors.LINK_TEMPLATE.edit.content;
 				const content = template.cloneNode(true);
 
 				// Attach event listener to form
@@ -178,7 +183,7 @@ export const Links = {
 					e.preventDefault();
 
 					try {
-						Processing.show(document.body);
+						Processing.show(e.target);
 
 						// Create formdata object
 						const data = new FormData(e.target);
@@ -193,7 +198,8 @@ export const Links = {
 								user_id: Store.USER.ID,
 								token: Store.USER.token,
 								url: data.get('redirect'),
-								domain_slug: data.get('id'),
+								domain: data.get('domain'),
+								slug: data.get('slug'),
 							})
 						});
 
@@ -225,6 +231,9 @@ export const Links = {
 
 						// Show success message
 						Notification.success(response.message);
+
+						// On successful update, close modal
+						Modal.hide();
 					} catch (error) {
 						console.error(error);
 						Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -233,8 +242,15 @@ export const Links = {
 					}
 				});
 
-				// Add slug, domain and existing redirect link
-				
+				// Add header and existing redirect link
+				content.querySelector('header > h2').innerText = slug;
+				content.querySelector('.link-details .url').innerText = url;
+
+				// Update domain and slug info
+				content.querySelector('.input [name=domain]').value = domain;
+				content.querySelector('.input [name=slug]').value = slug;
+
+				Modal.show(content, 'node');
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
