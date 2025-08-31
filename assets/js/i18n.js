@@ -14,6 +14,7 @@ export const i18n = {
     COPY_ERROR: 'Error occurred while trying to copy link.',
     EMPTY_SLUG_ERROR: 'Please provide a unique slug or switch to "Auto" mode.',
     LINK_NOT_FOUND: 'Unable to locate the specified link in storage.',
+    LINK_CREATED: 'New short link has been created.',
 
     // Settings
     SETTINGS_UPDATED: 'Settings have been saved successfully.',

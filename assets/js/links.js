@@ -36,6 +36,73 @@ export const Links = {
 		active: null,
 		archive: null
 	},
+	archiveRestoreLogic: async function(e, is_archive) {
+		let target = e.target;
+		if (target.nodeName === 'IMG') {
+			target = e.target.parentElement;
+		}
+
+		const parent = target.closest('tr');
+		if (!parent) {
+			throw new Error(i18n.SELECTOR_NOT_FOUND);
+		}
+		const domain = parent.getAttribute('data-domain');
+		const slug = parent.getAttribute('data-slug');
+
+		// Set `is_archive` property for the item
+		const index = this.DATA.findIndex(link => link.slug === slug && link.domain === domain);
+		if (index === -1) {
+			throw new Error(i18n.LINK_NOT_FOUND);
+		}
+
+		// API call for setting the `is_archive` attribute
+		const request = await fetch(`${apiBase}/archive`, {
+			method: 'PATCH',
+			async: true,
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			contentType: 'json',
+			body: JSON.stringify({
+				user_id: Store.USER.ID,
+				token: Store.USER.token,
+				domain: domain,
+				slug: slug,
+				data_type: 'link',
+				is_archive: is_archive
+			})
+		});
+
+		// Get JSON data
+		const response = await request.json();
+
+		// Check for `message` property in the response returned from API
+		if (!response.hasOwnProperty('message')) {
+			throw new Error(i18n.API_INVALID_RESPONSE);
+		}
+		if (request.status !== 200) {
+			throw new Error(response.message);
+		}
+
+		// Replace link content
+		this.DATA.splice(index, 1, {
+			slug: this.DATA[index].slug,
+			domain: this.DATA[index].domain,
+			url: this.DATA[index].url,
+			is_archive: is_archive,
+			created: this.DATA[index].created
+		});
+
+		// Store links by passing empty array to function
+		await User.setLinks([]);
+
+		// On successfull update, refresh tables
+		this.populateData();
+		this.populateArchive();
+
+		// Show success message
+		Notification.success(response.message);
+	},
 	singleEvents: function (content) {
 		const analytics = content.querySelector(this.constants.ACTION_ANALYTICS_CLASSNAME);
 		if (analytics) this.analyticsEvent(analytics);
@@ -128,72 +195,7 @@ export const Links = {
 
 			try {
 				Processing.show(document.body);
-
-				let target = e.target;
-				if (target.nodeName === 'IMG') {
-					target = e.target.parentElement;
-				}
-
-				const parent = target.closest('tr');
-				if (!parent) {
-					throw new Error(i18n.SELECTOR_NOT_FOUND);
-				}
-				const domain = parent.getAttribute('data-domain');
-				const slug = parent.getAttribute('data-slug');
-
-				// Set `is_archive` property for the item
-				const index = this.DATA.findIndex(link => link.slug === slug && link.domain === domain);
-				if (index === -1) {
-					throw new Error(i18n.LINK_NOT_FOUND);
-				}
-
-				// API call for setting the `is_archive` attribute
-				const request = await fetch(`${apiBase}/archive`, {
-					method: 'PATCH',
-					async: true,
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					contentType: 'json',
-					body: JSON.stringify({
-						user_id: Store.USER.ID,
-						token: Store.USER.token,
-						domain: domain,
-						slug: slug,
-						data_type: 'link',
-						is_archive: true
-					})
-				});
-
-				// Get JSON data
-				const response = await request.json();
-
-				// Check for `message` property in the response returned from API
-				if (!response.hasOwnProperty('message')) {
-					throw new Error(i18n.API_INVALID_RESPONSE);
-				}
-				if (request.status !== 200) {
-					throw new Error(response.message);
-				}
-
-				// Replace link content
-				this.DATA.splice(index, 1, {
-					slug: this.DATA[index].slug,
-					domain: this.DATA[index].domain,
-					url: this.DATA[index].url,
-					is_archive: true,
-					created: this.DATA[index].created
-				});
-
-				// Store links by passing empty array to function
-				await User.setLinks([]);
-
-				// On successfull update, refresh tables
-				this.populateData();
-				this.populateArchive();
-
-				// Show success message
-				Notification.success(response.message);
+				await this.archiveRestoreLogic(e, true);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -205,13 +207,12 @@ export const Links = {
 	restoreEvent: function(selector) {
 		if (!selector) return;
 
-		selector.addEventListener('click', e => {
+		selector.addEventListener('click', async e => {
 			e.preventDefault();
 
 			try {
 				Processing.show(document.body);
-
-
+				await this.archiveRestoreLogic(e, false);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -279,6 +280,9 @@ export const Links = {
 
 		// Refresh links table
 		this.populateData();
+
+		// Success notification
+		Notification.success(i18n.LINK_CREATED);
 	},
 	updateDOM: async function () {
 		try {
