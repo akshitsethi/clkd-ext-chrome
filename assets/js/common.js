@@ -5,7 +5,18 @@ import { Modal } from "./modal.js";
 import { QR } from "./qr.js";
 
 export const Common = {
-    QRCodeModal: async function(domain, slug) {
+    QRCodeModal: async function(selector) {
+        let target = selector.target;
+        if (target.nodeName === 'IMG') {
+            target = selector.target.parentElement;
+        }
+
+        const parent = target.closest('tr');
+        if (!parent) {
+            throw new Error(i18n.SELECTOR_NOT_FOUND);
+        }
+        const domain = parent.getAttribute('data-domain');
+        const slug = parent.getAttribute('data-slug');
         if (!domain || !slug) {
             throw new Error(i18n.MISSING_DETAILS_ERROR);
         }

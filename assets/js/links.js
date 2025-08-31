@@ -30,6 +30,7 @@ export const Links = {
 		CREATE_SECTION_CLASSNAME: '.quick-create',
 		INLINE_MODAL_CLASSNAME: '.inline-modal',
 		SLUG_FIELD_CLASSNAME: '.custom-slug',
+		EDIT_FORM_CLASSNAME: '.link-edit-form',
 	},
 	DATA: [],
 	TABLE: {
@@ -147,7 +148,93 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
+				let target = e.target;
+				if (target.nodeName === 'IMG') {
+					target = e.target.parentElement;
+				}
 
+				const parent = target.closest('tr');
+				if (!parent) {
+					throw new Error(i18n.SELECTOR_NOT_FOUND);
+				}
+
+				const domain = parent.getAttribute('data-domain');
+				const slug = parent.getAttribute('data-slug');
+				if (!domain || !slug) {
+					throw new Error(i18n.MISSING_DETAILS_ERROR);
+				}
+
+				const template = this.selectors.LINK_EDIT_TEMPLATE.content;
+				const content = template.cloneNode(true);
+
+				// Attach event listener to form
+				const form = content.querySelector(this.constants.EDIT_FORM_CLASSNAME);
+				if (!form) {
+					throw new Error(i18n.SELECTOR_NOT_FOUND);
+				}
+
+				// Add form's event listener
+				form.addEventListener('submit', async e => {
+					e.preventDefault();
+
+					try {
+						Processing.show(document.body);
+
+						// Create formdata object
+						const data = new FormData(e.target);
+						const request = await fetch(`${apiBase}/link`, {
+							method: 'PATCH',
+							async: true,
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							contentType: 'json',
+							body: JSON.stringify({
+								user_id: Store.USER.ID,
+								token: Store.USER.token,
+								url: data.get('redirect'),
+								domain_slug: data.get('id'),
+							})
+						});
+
+						// Get JSON data
+						const response = await request.json();
+
+						// Check for `message` property in the response returned from API
+						if (!response.hasOwnProperty('message')) {
+							throw new Error(i18n.API_INVALID_RESPONSE);
+						}
+						if (request.status !== 200) {
+							throw new Error(response.message);
+						}
+
+						// Look for link in local storage using domain & slug
+						const index = this.DATA.findIndex(link => link.slug === slug && link.domain === domain);
+						if (index === -1) {
+							throw new Error(i18n.LINK_NOT_FOUND);
+						}
+
+						// Update value
+						this.DATA[index].url = data.get('redirect');
+
+						// Store links by passing empty array to function
+						await User.setLinks([]);
+
+						// On successfull update, refresh just active links table
+						this.populateData();
+
+						// Show success message
+						Notification.success(response.message);
+					} catch (error) {
+						console.error(error);
+						Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+					} finally {
+						Processing.hide();
+					}
+				});
+
+				// Add slug, domain and existing redirect link
+				
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -164,21 +251,7 @@ export const Links = {
 
 			try {
 				Processing.show(document.body);
-
-				let target = e.target;
-				if (target.nodeName === 'IMG') {
-					target = e.target.parentElement;
-				}
-
-				const parent = target.closest('tr');
-				if (!parent) {
-					throw new Error(i18n.SELECTOR_NOT_FOUND);
-				}
-				const domain = parent.getAttribute('data-domain');
-				const slug = parent.getAttribute('data-slug');
-
-				// Show QRCode modal
-				await Common.QRCodeModal(domain, slug);
+				await Common.QRCodeModal(e);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -342,7 +415,7 @@ export const Links = {
 					url = url.substring(0, 75) + '...';
 				}
 
-				const template = type === 'active' ? Selectors.LINK_ENTRY_TEMPLATE : Selectors.LINK_ARCHIVE_TEMPLATE;
+				const template = Selectors.LINK_TEMPLATE[type];
 				const content = template.content.cloneNode(true);
 
 				// Add core details to row

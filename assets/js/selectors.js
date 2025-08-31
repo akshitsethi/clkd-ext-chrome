@@ -26,8 +26,11 @@ export const Selectors = {
     LINK_FORM: document.querySelector('#links .link-form'),
     LINK_FROM_TAB_BUTTON: document.querySelector('#links #create-from-tab'),
     REVEAL_URL_LINK: document.querySelector('#links .reveal-url'),
-    LINK_ENTRY_TEMPLATE: document.querySelector('#links #link-entry-template'),
-    LINK_EDIT_TEMPLATE: document.querySelector('#links #link-edit-template'),
+    LINK_TEMPLATE: {
+        active: document.querySelector('#links #link-entry-template'),
+        archive: document.querySelector('#links #link-archive-template'),
+        edit: document.querySelector('#links #link-edit-template')
+    },
     LINKS_SECTION: {
         active: document.querySelector('#links .links-table'),
         archive: document.querySelector('#links .archive-table')
@@ -39,9 +42,6 @@ export const Selectors = {
     LINK_OUTPUT_SECTION: document.querySelector('#links .link-output'),
     LINK_DOMAIN_SELECTOR: document.querySelector('#links select[name=domain]'),
     LINK_MODE_SWITCHER: document.querySelector('#links .mode-switcher a'),
-
-    // Archives
-    LINK_ARCHIVE_TEMPLATE: document.querySelector('#links #link-archive-template'),
 
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
