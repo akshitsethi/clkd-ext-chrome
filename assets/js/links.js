@@ -244,6 +244,7 @@ export const Links = {
 
 				// Add header and existing redirect link
 				content.querySelector('header > h2').innerText = slug;
+				content.querySelector('header > span').innerText = domain;
 				content.querySelector('.link-details .url').innerText = url;
 
 				// Update domain and slug info

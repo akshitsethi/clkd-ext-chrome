@@ -182,6 +182,17 @@ h2 {
     }
 }
 
+.orange-gradient {
+    font-size: 0.750rem;
+    background-color: #fd868c;
+    background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+    color: #ffffff;
+
+    &:hover {
+        color: #ffffff;
+    }
+}
+
 /* Header */
 .header {
     width: 100%;
@@ -376,23 +387,15 @@ h2 {
     & .upgrade-cta {
         display: block;
         text-decoration: none;
-        font-size: 0.750rem;
         padding: 0.25rem 0.5rem;
-        background-color: #fd868c;
-        background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
         border-radius: 4px;
         font-weight: 500;
         letter-spacing: -0.25px;
-        color: #ffffff;
     }
 
     & .saver-pill {
         display: none;
         position: absolute;
-        font-size: 0.750rem;
-        background-color: #fd868c;
-        background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
-        color: #ffffff;
         padding: 0.125rem 0.25rem;
         border-radius: 0 0 2px 2px;
         font-weight: 500;
@@ -672,6 +675,10 @@ h2 {
 
     & .link-mode {
         padding: 0 1rem 0.5rem;
+
+        & input {
+            background: #ffffff;
+        }
     }
     &.show {
         display: block;
@@ -681,9 +688,21 @@ h2 {
 .link-edit-form {
     padding: 1rem;
 
-    & h2 {
-        font-weight: 600;
-        font-size: 1.125rem;
+    & header {
+        position: relative;
+
+        & h2 {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+        & .domain {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 0.683rem;
+            padding: 0.25rem 0.35rem;
+            border-radius: 4px;
+        }
     }
     & .link-details,
     & .input {
