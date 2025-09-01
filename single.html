@@ -9,11 +9,91 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./assets/css/datatables.css" type="text/css">
-	<link rel="stylesheet" href="./assets/css/single.css" type="text/css">
+	<link rel="stylesheet" href="./assets/css/main.css" type="text/css">
 </head>
 
 <body>
-    
+    <div id="analytics">
+		<div class="analytics-data">
+			<div class="wrapper">
+				<div class="slug-details">
+					<div class="slug-header">
+						<h2></h2>
+						<span class="domain"></span>
+						<a href="#" class="qrcode">
+							<img src="./assets/images/qrcode.png" alt="QR Code" />
+						</a>
+					</div>
+
+					<p><a href="#" class="redirect"></a></p>
+					<span class="time"></span>
+				</div>
+
+				<div class="chart">
+					<h2>Clicks</h2>
+					<canvas id="clicks"></canvas>
+				</div>
+
+				<div class="chart">
+					<h2>Scans</h2>
+					<canvas id="scans"></canvas>
+				</div>
+
+				<div class="geolocation">
+					<h2>Countries</h2>
+					<table id="country">
+						<thead>
+							<tr>
+								<th data-dt-order="disable">Country</th>
+								<th>Visits</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+
+					<h2>Cities</h2>
+					<table id="city">
+						<thead>
+							<tr>
+								<th data-dt-order="disable">City</th>
+								<th>Visits</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+
+				<div class="chart">
+					<h2>Browser</h2>
+					<canvas id="browser"></canvas>
+				</div>
+
+				<div class="chart">
+					<h2>OS</h2>
+					<canvas id="os"></canvas>
+				</div>
+
+				<div class="chart">
+					<h2>Screen</h2>
+					<canvas id="screen"></canvas>
+				</div>
+
+				<div class="chart">
+					<h2>Language</h2>
+					<canvas id="lang"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="no-analytics-data">
+			<div class="wrapper">
+				<span class="center block">
+					<img src="./assets/images/no-analytics.jpg" alt="No analytics recorded so far..." />
+				</span>
+				<p>We don't have analytics data for the short link. Kindly check back in an hour or <a href="#" data-screen="help|block|true">contact support</a> if you continue facing the same issue.</p>
+			</div>
+		</div>
+	</div><!-- #analytics -->
 
     <!-- Processing (dynamically injected to selectors) -->
 	<template id="processing">

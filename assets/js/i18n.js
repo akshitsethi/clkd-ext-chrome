@@ -8,6 +8,7 @@ export const i18n = {
     API_INVALID_RESPONSE: 'Invalid API response.',
     MALFORMED_REQUEST: 'Invalid request. Please check the source and try again.',
     MISSING_DETAILS_ERROR: 'Required data is missing.',
+    NO_CREDENTIALS_ERROR: 'User credentials not found. Please authenticate to continue.',
 
     // Links
     URL_DOMAIN_ERROR: 'Missing details. Please provide a valid URL and domain.',
