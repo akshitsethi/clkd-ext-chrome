@@ -131,7 +131,23 @@ export const Links = {
 			try {
 				Processing.show(document.body);
 
+				let target = e.target;
+				if (target.nodeName === 'IMG') {
+					target = e.target.parentElement;
+				}
 
+				const parent = target.closest('tr');
+				if (!parent) {
+					throw new Error(i18n.SELECTOR_NOT_FOUND);
+				}
+
+				const domain = parent.getAttribute('data-domain');
+				const slug = parent.getAttribute('data-slug');
+				if (!domain || !slug) {
+					throw new Error(i18n.MISSING_DETAILS_ERROR);
+				}
+
+				chrome.tabs.create({ url: `single.html?slug=${slug}&domain=${domain}` });
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
