@@ -52,6 +52,9 @@
 		<div class="primary-section" data-screens="subscription-verify|subscription-exists">
 			<p>&larr; &nbsp;<a href="#" data-screen="upgrade">Back to Upgrade</a></p>
 		</div>
+		<div class="primary-section" data-screens="single">
+			<p>&larr; &nbsp;<a href="#" data-screen="links">Back to Links</a></p>
+		</div>
 		<div class="primary-section" data-screens="settings">
 			<div class="dynamic-links">
 				<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back to Dashboard</a></p>
@@ -433,10 +436,79 @@
 					<span class="center block">
 						<img src="./assets/images/no-analytics.jpg" alt="No analytics recorded so far..." />
 					</span>
-					<p>We don't have analytics data for your account. Kindly check back in an hour or <a href="#" data-screen="help|block|true">contact support</a> if you continue facing the same issue.</p>
+					<p>We don't have analytics data for your account. Kindly check back in an hour or <a href="#" data-screen="help">contact support</a> if you continue facing the same issue.</p>
 				</div>
 			</div>
 		</div><!-- #analytics -->
+
+		<div id="single" class="screen">
+			<div class="analytics-data">
+				<div class="wrapper">
+					<div class="chart">
+						<h2>Clicks</h2>
+						<canvas id="clicks"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>Scans</h2>
+						<canvas id="scans"></canvas>
+					</div>
+
+					<div class="geolocation">
+						<h2>Countries</h2>
+						<table id="country">
+							<thead>
+								<tr>
+									<th data-dt-order="disable">Country</th>
+									<th>Visits</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+
+						<h2>Cities</h2>
+						<table id="city">
+							<thead>
+								<tr>
+									<th data-dt-order="disable">City</th>
+									<th>Visits</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+
+					<div class="chart">
+						<h2>Browser</h2>
+						<canvas id="browser"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>OS</h2>
+						<canvas id="os"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>Screen</h2>
+						<canvas id="screen"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>Language</h2>
+						<canvas id="lang"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<div class="no-analytics-data">
+				<div class="wrapper">
+					<span class="center block">
+						<img src="./assets/images/no-analytics.jpg" alt="No analytics recorded so far..." />
+					</span>
+					<p>We don't have analytics data for this short link. Kindly check back in an hour or <a href="#" data-screen="help">contact support</a> if you continue facing the same issue.</p>
+				</div>
+			</div>
+		</div><!-- #single -->
 
 		<div id="account" class="screen">
 			<div class="account-wrapper">

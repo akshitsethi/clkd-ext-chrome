@@ -17,6 +17,9 @@ export const i18n = {
     LINK_NOT_FOUND: 'Unable to locate the specified link in storage.',
     LINK_CREATED: 'New short link has been created.',
 
+    // Analytics
+    NO_DATA_ERROR: 'Unable to find analytics data.',
+
     // Settings
     SETTINGS_UPDATED: 'Settings have been saved successfully.',
 

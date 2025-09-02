@@ -17,6 +17,7 @@ export const Screen = {
         'dashboard',
         'links',
         'analytics',
+        'single',
         'account',
         'settings',
         'help',

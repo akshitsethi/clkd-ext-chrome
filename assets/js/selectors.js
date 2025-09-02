@@ -47,6 +47,10 @@ export const Selectors = {
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
     NO_ANALYTICS_SECTION: document.querySelector('#analytics .no-analytics-data'),
 
+    // Single
+    SINGLE_ANALYTICS_SECTION: document.querySelector('#single .analytics-data'),
+    SINGLE_NO_ANALYTICS_SECTION: document.querySelector('#single .no-analytics-data'),
+
     // Settings
     SETTINGS_FORM: document.querySelector('#settings .settings-form'),
 

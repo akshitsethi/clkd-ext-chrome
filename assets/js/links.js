@@ -11,6 +11,7 @@ import { i18n } from "./i18n.js";
 import { User } from "./user.js";
 import { Common } from "./common.js";
 import { Modal } from "./modal.js";
+import { Single } from "./single.js";
 
 export const Links = {
 	constants: {
@@ -125,7 +126,7 @@ export const Links = {
 	analyticsEvent: function (selector) {
 		if (!selector) return;
 
-		selector.addEventListener('click', e => {
+		selector.addEventListener('click', async e => {
 			e.preventDefault();
 
 			try {
@@ -147,7 +148,8 @@ export const Links = {
 					throw new Error(i18n.MISSING_DETAILS_ERROR);
 				}
 
-				chrome.tabs.create({ url: `single.html?slug=${slug}&domain=${domain}` });
+				// Open single analytics screen
+				await Single.init(domain, slug, parent.getAttribute('data-url'), parent.getAttribute('data-created'));
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -199,7 +201,7 @@ export const Links = {
 					e.preventDefault();
 
 					try {
-						Processing.show(e.target);
+						Processing.show(e.target, 'absolute');
 
 						// Create formdata object
 						const data = new FormData(e.target);

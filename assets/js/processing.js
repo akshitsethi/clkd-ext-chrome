@@ -7,7 +7,7 @@ export const Processing = {
         PROCESSING_CLASSNAME: '.processing'
     },
     SELECTOR: null,
-    show: function (selector) {
+    show: function (selector, position = 'fixed') {
         if (!selector) {
             throw new Error(i18n.SELECTOR_NOT_FOUND);
         }
@@ -23,7 +23,9 @@ export const Processing = {
             const content = template.cloneNode(true);
 
             // Change display to flex
-            content.querySelector(this.constants.PROCESSING_CLASSNAME).style.display = 'flex';
+            const processing = content.querySelector(this.constants.PROCESSING_CLASSNAME);
+            processing.style.display = 'flex';
+            processing.style.position = position;
 
             // Append to selector
             this.SELECTOR.append(content);

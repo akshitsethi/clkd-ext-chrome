@@ -11,6 +11,9 @@ import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
 
 export const Analytics = {
+    constants: {
+        SECTION_CLASSNAME: '#analytics'
+    },
     DATA: {},
     DATA_KEYS: ['browser', 'os', 'screen', 'lang', 'country', 'city'],
     VARIABLE_CHARTS: ['browser', 'os', 'screen', 'lang'],
@@ -28,7 +31,7 @@ export const Analytics = {
         lang: null
     },
     createClickAndScanChart: function(selector, label, data, colors) {
-        const el = document.querySelector(`#analytics #${selector}`);
+        const el = document.querySelector(`${this.constants.SECTION_CLASSNAME} #${selector}`);
         if (!el) return;
 
         if (this.CHART_INSTANCES[selector] instanceof Chart) {
@@ -62,7 +65,7 @@ export const Analytics = {
 		});
     },
     createVariableChart: function(selector, type, data, colors) {
-        const el = document.querySelector(`#analytics #${selector}`);
+        const el = document.querySelector(`${this.constants.SECTION_CLASSNAME} #${selector}`);
         if (!el) return;
 
         if (this.CHART_INSTANCES[selector] instanceof Chart) {
@@ -85,7 +88,7 @@ export const Analytics = {
 		});
     },
     createDataTable: function(selector, data) {
-        const el = document.querySelector(`#analytics #${selector}`);
+        const el = document.querySelector(`${this.constants.SECTION_CLASSNAME} #${selector}`);
         if (!el) return;
 
         if (DataTable.isDataTable(this.TABLE_INSTANCES[selector])) {

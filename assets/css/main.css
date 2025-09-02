@@ -838,9 +838,37 @@ h2 {
         margin: 0 auto;
     }
 
+    & .analytics-data {
+        display: none;
+
+        & h2 {
+            margin: 0 0 0.5rem;
+        }
+
+        & .chart,
+        & .geolocation {
+            padding-bottom: 2.25rem;
+        }
+
+        & .chart {
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    & .no-analytics-data {
+        display: none;
+
+        & a {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Single (Analytics) */
+.single #analytics {
     & .slug-details {
-		padding: 1rem;
-		margin-bottom: 0.5rem;
 		background: rgba(119, 148, 182, 0.105);
 
 		& .slug-header {
@@ -867,25 +895,7 @@ h2 {
 			}
 		}
 
-		& h2 {
-			display: inline-block;
-			position: relative;
-			margin: 0;
-			font-weight: 600;
-
-			&:before {
-				position: absolute;
-				content: ' ';
-				left: 0;
-				bottom: -2px;
-				width: 100%;
-				height: 9px;
-				background-color: rgba(244, 109, 154, 0.225);
-				transform: skew(-0.5deg, -0.5deg);
-			}
-		}
-
-		& p {
+		& a {
 			font-size: 0.875rem;
 			word-wrap: break-word;
 			margin: 0.5rem 0 0.25rem;
@@ -895,35 +905,10 @@ h2 {
 			}
 		}
 
-		& .time {
+		& .created {
 			color: #606060;
 		}
 	}
-
-    & .analytics-data {
-        & h2 {
-            margin: 0 0 0.5rem;
-        }
-
-        & .chart,
-        & .geolocation {
-            padding-bottom: 2.25rem;
-        }
-
-        & .chart {
-            &:last-child {
-                padding-bottom: 0;
-            }
-        }
-    }
-
-    & .no-analytics-data {
-        display: none;
-
-        & a {
-            text-decoration: underline;
-        }
-    }
 }
 
 /* Settings */
@@ -1580,7 +1565,7 @@ input:checked+.toggle:before {
 
 /* Processing */
 .processing {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     left: 0;

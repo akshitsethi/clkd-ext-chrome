@@ -8,11 +8,18 @@ import { country, language, apiBase, refreshDuration, analyticsDuration, analyti
 import { formatDate } from "./helper.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
+import { Analytics } from "./analytics.js";
+import { Screen } from "./screen.js";
 
 export const Single = {
-    PAGE: {
-        slug: null,
+    constants: {
+        SECTION_CLASSNAME: '#single'
+    },
+    link: {
         domain: null,
+        slug: null,
+        url: null,
+        created: null
     },
     DATA: {},
     DATA_KEYS: ['browser', 'os', 'screen', 'lang', 'country', 'city'],
@@ -30,165 +37,39 @@ export const Single = {
         screen: null,
         lang: null
     },
-    set: function(data) {
-        sessionStorage.setItem(`${this.PAGE.slug}:${this.PAGE.domain}`, JSON.stringify(data));
-    },
-    get: function() {
-        const data = sessionStorage.getItem(`${this.PAGE.slug}:${this.PAGE.domain}`);
-        if (data === null) {
-            return data;
+    set: async function(data) {
+        if (!this.link.domain || !this.link.slug) {
+            throw new Error(i18n.MALFORMED_REQUEST);
         }
 
-        return JSON.parse(data);
-    },
-    createClickAndScanChart: function(selector, label, data, colors) {
-        const el = document.querySelector(`#analytics #${selector}`);
-        if (!el) return;
+        // Add data to unique key
+        const object = {};
+        object[`${this.link.slug}:${this.link.domain}`] = data;
 
-        if (this.CHART_INSTANCES[selector] instanceof Chart) {
-            this.CHART_INSTANCES[selector].destroy();
+        await chrome.storage.session.set(object);
+    },
+    get: async function() {
+        if (!this.link.domain || !this.link.slug) {
+            throw new Error(i18n.MALFORMED_REQUEST);
         }
 
-        this.CHART_INSTANCES[selector] = new Chart(el, {
-            type: 'bar',
-			data: {
-				labels: data.labels,
-				datasets: [
-					{
-						label: label,
-						data: data.all,
-						backgroundColor: colors.all
-					},
-					{
-						label: 'Unique',
-						data: data.unique,
-						backgroundColor: colors.unique
-					}
-				]
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true
-					}
-				}
-			}
-		});
-    },
-    createVariableChart: function(selector, type, data, colors) {
-        const el = document.querySelector(`#analytics #${selector}`);
-        if (!el) return;
-
-        if (this.CHART_INSTANCES[selector] instanceof Chart) {
-            this.CHART_INSTANCES[selector].destroy();
+        const data = await chrome.storage.session.get(`${this.link.slug}:${this.link.domain}`);
+        if (!data || !data.hasOwnProperty(`${this.link.slug}:${this.link.domain}`)) {
+            return null;
         }
 
-        this.CHART_INSTANCES[selector] = new Chart(el, {
-			type: type,
-			data: {
-				labels: this.processVariableLabels(selector, Object.keys(data)),
-				datasets: [
-					{
-						label: 'Visits',
-						data: Object.values(data),
-						backgroundColor: colors,
-						hoverOffset: 4
-					},
-				]
-			}
-		});
+        return data[`${this.link.slug}:${this.link.domain}`];
     },
-    createDataTable: function(selector, data) {
-        const el = document.querySelector(`#analytics #${selector}`);
-        if (!el) return;
-
-        if (DataTable.isDataTable(this.TABLE_INSTANCES[selector])) {
-			this.TABLE_INSTANCES[selector].destroy();
-		}
-
-		this.TABLE_INSTANCES[selector] = new DataTable(
-			el,
-			{
-				data: data,
-				language: dataTableLanguage[selector],
-				pageLength: 10,
-				lengthChange: false
-			}
-		);
+    reset: function() {
+        this.DATA = {};
+        this.COMPUTATIONS = {};
     },
-    processDataTableRecords: function(selector, data) {
-        const output = [];
-
-        if (selector === 'country') {
-            for (let [name, clicks] of Object.entries(data)) {
-                name = name.replace('_', '-');
-                output.push([`<span><img src="./assets/images/flags/${name}.svg"> ${country[name] ?? name}</span>`, clicks]);
-            }
-        } else if (selector === 'city') {
-            for (let [name, clicks] of Object.entries(data)) {
-                output.push([name.replace('_', ' '), clicks]);
-            }
-        }
-
-        return output;
-    },
-    processVariableLabels: function(selector, labels) {
-        if (selector === 'lang') {
-            return labels.map(label => language[label.replace('_', '-')] ?? label);
-        }
-
-        return labels;
-    },
-    processData: function () {
-        // Initial data
-        this.COMPUTATIONS = structuredClone(analyticsBlankSlate);
-
-        // Country codes array
-        const countryCodes = Object.keys(country);
-
-        const data = this.DATA[Store.SETTINGS.analytics_duration].data;
-        const date = new Date();
-
-        for (let i = 0; i < analyticsDuration[Store.SETTINGS.analytics_duration]; i++) {
-            const query = formatDate(new Date(date.getTime() - (i * 24 * 60 * 60 * 1000)));
-            const find = data.find(obj => obj.date === query);
-
-            // Click and scan data
-            for (const type of ['clicks', 'scans']) {
-                this.COMPUTATIONS[type].labels.unshift(formatDate(new Date(query), 'chart'));
-
-                // Add an entry for zero data
-                if (!find) {
-                    this.COMPUTATIONS[type].all.unshift(0);
-                    this.COMPUTATIONS[type].unique.unshift(0);
-                } else {
-                    // Add action and unique number for the given date
-                    this.COMPUTATIONS[type].all.unshift(find[type]);
-                    this.COMPUTATIONS[type].unique.unshift(find[`u_${type}`]);
-                }
-            }
-
-            // We don't need to process variable data if data is not found for the specified date
-            if (!find) continue;
-
-            // Variable data such as country, browser, screen etc
-            for (const key of this.DATA_KEYS) {
-                if (Object.keys(find[key]).length !== 0) {
-                    for (let [name, clicks] of Object.entries(find[key])) {
-                        if (key === 'country' && !countryCodes.includes(name)) {
-                            name = 'XX';
-                        }
-
-                        if (this.COMPUTATIONS[key][name]) {
-                            this.COMPUTATIONS[key][name] = this.COMPUTATIONS[key][name] + clicks;
-                        } else {
-                            this.COMPUTATIONS[key][name] = clicks;
-                        }
-                    }
-                }
-            }
-        }
-    },
+    createClickAndScanChart: Analytics.createClickAndScanChart,
+    createVariableChart: Analytics.createVariableChart,
+    createDataTable: Analytics.createDataTable,
+    processDataTableRecords: Analytics.processDataTableRecords,
+    processVariableLabels: Analytics.processVariableLabels,
+    processData: Analytics.processData,
     fetchFromAPI: async function (duration) {
         const request = await fetch(`${apiBase}/single`, {
             method: 'POST',
@@ -198,8 +79,8 @@ export const Single = {
             },
             contentType: 'json',
             body: JSON.stringify({
-                slug: this.PAGE.slug,
-                domain: this.PAGE.domain,
+                slug: this.link.slug,
+                domain: this.link.domain,
                 duration
             })
         });
@@ -237,7 +118,7 @@ export const Single = {
         try {
             Processing.show(document.body);
 
-            const data = this.get();
+            const data = await this.get();
             if (data !== null) {
                 this.DATA = data;
             }
@@ -247,6 +128,8 @@ export const Single = {
                 || this.DATA[Store.SETTINGS.analytics_duration].refresh <= Date.now()) {
                 await this.fetchFromAPI(Store.SETTINGS.analytics_duration);
             }
+
+            console.log(this.DATA);
 
             // Let's process data
             this.processData();
@@ -277,57 +160,39 @@ export const Single = {
                 );
             }
 
+            // Switch screen
+            Screen.show('single');
+
             // Show `analytics-data` div
-            Selectors.ANALYTICS_SECTION.style.display = 'block';
-            Selectors.NO_ANALYTICS_SECTION.style.display = 'none';
+            Selectors.SINGLE_ANALYTICS_SECTION.style.display = 'block';
+            Selectors.SINGLE_NO_ANALYTICS_SECTION.style.display = 'none';
         } catch (error) {
             console.error(error);
             Notification.error(error.message ?? i18n.DEFAULT_ERROR);
 
             // Show screen display `data not found` message
-            Selectors.ANALYTICS_SECTION.style.display = 'none';
-            Selectors.NO_ANALYTICS_SECTION.style.display = 'block';
+            Selectors.SINGLE_ANALYTICS_SECTION.style.display = 'none';
+            Selectors.SINGLE_NO_ANALYTICS_SECTION.style.display = 'block';
         } finally {
-            Processing.hide();
+            // Processing.hide();
         }
     },
-    init: async function () {
-        try {
-            Processing.show(document.body);
-
-            // Mandatory checks for the following:
-            // 1. Both slug and domain exists
-            // 2. Presence of valid user details
-            const url = new URL(window.location.href);
-
-            // Page slug & domain
-            this.PAGE.slug = url.searchParams.get('slug');
-            this.PAGE.domain = url.searchParams.get('domain');
-            if (!this.PAGE.slug || !this.PAGE.domain) {
-                // TODO
-                // Show missing details error screen
-
-                throw new Error(i18n.MISSING_DETAILS_ERROR);
-            }
-
-            // Initialise store
-            await Store.init();
-
-            // Check for user authentication details
-            if (!Store.USER.ID || !Store.USER.token) {
-                // TODO
-                // Show authentication error screen
-
-                throw new Error(i18n.NO_CREDENTIALS_ERROR);
-            }
-
-            await this.updateDOM();
-        } catch (error) {
-            console.error(error);
-            Notification.error(error.message ?? i18n.DEFAULT_ERROR);
-        } finally {
-            Processing.hide();
+    init: async function (domain, slug, url, created) {
+        if (!domain || !slug || !url || !created) {
+            throw new Error(i18n.MISSING_DETAILS_ERROR);
         }
+
+        // Reset variables
+        this.reset();
+
+        // Update link object
+        this.link = {
+            domain,
+            slug,
+            url,
+            created
+        };
+
+        await this.updateDOM();
     }
 };
-Single.init();
