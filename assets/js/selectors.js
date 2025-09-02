@@ -50,6 +50,8 @@ export const Selectors = {
     // Single
     SINGLE_ANALYTICS_SECTION: document.querySelector('#single .analytics-data'),
     SINGLE_NO_ANALYTICS_SECTION: document.querySelector('#single .no-analytics-data'),
+    SINGLE_LINK_DETAILS: document.querySelector('#single .link-details'),
+    SINGLE_HEADER_TEMPLATE: document.querySelector('#single #single-header-template'),
 
     // Settings
     SETTINGS_FORM: document.querySelector('#settings .settings-form'),

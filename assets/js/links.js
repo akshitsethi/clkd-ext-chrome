@@ -39,7 +39,7 @@ export const Links = {
 		active: null,
 		archive: null
 	},
-	archiveRestoreLogic: async function(e, is_archive) {
+	archiveRestoreLogic: async function (e, is_archive) {
 		let target = e.target;
 		if (target.nodeName === 'IMG') {
 			target = e.target.parentElement;
@@ -286,7 +286,20 @@ export const Links = {
 
 			try {
 				Processing.show(document.body);
-				await Common.QRCodeModal(e);
+
+				let target = e.target;
+				if (target.nodeName === 'IMG') {
+					target = e.target.parentElement;
+				}
+
+				const parent = target.closest('tr');
+				if (!parent) {
+					throw new Error(i18n.SELECTOR_NOT_FOUND);
+				}
+				const domain = parent.getAttribute('data-domain');
+				const slug = parent.getAttribute('data-slug');
+
+				await Common.QRCodeModal(domain, slug);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -312,7 +325,7 @@ export const Links = {
 			}
 		});
 	},
-	restoreEvent: function(selector) {
+	restoreEvent: function (selector) {
 		if (!selector) return;
 
 		selector.addEventListener('click', async e => {
@@ -381,7 +394,7 @@ export const Links = {
 		};
 
 		// Add to storage
-		User.setLinks([ link ]);
+		User.setLinks([link]);
 
 		// Show newly added link on screen
 		this.showNewLinkOutput(data.domain, data.slug);
@@ -750,19 +763,27 @@ export const Links = {
 				e.preventDefault();
 
 				try {
-					const domain = e.target.getAttribute('data-domain');
-					const slug = e.target.getAttribute('data-slug');
+					Processing.show(document.body);
 
-					// Show QRCode modal
+					let target = e.target;
+					if (target.nodeName === 'IMG') {
+						target = e.target.parentElement;
+					}
+
+					const domain = target.getAttribute('data-domain');
+					const slug = target.getAttribute('data-slug');
+
 					await Common.QRCodeModal(domain, slug);
 				} catch (error) {
 					console.error(error);
 					Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+				} finally {
+					Processing.hide();
 				}
 			});
 		}
 	},
-	modeSwitcherEvent: function() {
+	modeSwitcherEvent: function () {
 		if (!Selectors.LINK_MODE_SWITCHER) return;
 
 		Selectors.LINK_MODE_SWITCHER.addEventListener('click', e => {
@@ -770,7 +791,7 @@ export const Links = {
 
 			try {
 				const mode = e.target.getAttribute('data-mode');
-				const toggle = (mode === 'auto') ? 'manual': 'auto';
+				const toggle = (mode === 'auto') ? 'manual' : 'auto';
 				if (!mode || !['auto', 'manual'].includes(mode)) {
 					throw new Error(i18n.MISSING_DETAILS_ERROR);
 				}

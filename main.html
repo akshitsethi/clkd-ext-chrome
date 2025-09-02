@@ -443,6 +443,8 @@
 
 		<div id="single" class="screen">
 			<div class="analytics-data">
+				<div class="link-details"></div>
+
 				<div class="wrapper">
 					<div class="chart">
 						<h2>Clicks</h2>
@@ -508,6 +510,21 @@
 					<p>We don't have analytics data for this short link. Kindly check back in an hour or <a href="#" data-screen="help">contact support</a> if you continue facing the same issue.</p>
 				</div>
 			</div>
+
+			<template id="single-header-template">
+				<div class="link-wrapper">
+					<div class="flex">
+						<h2></h2>
+						<span class="domain orange-gradient"></span>
+						<a href="#" class="qrcode">
+							<img src="./assets/images/qrcode.png" alt="QR Code" />
+						</a>
+					</div>
+
+					<p><a href="#" class="target"></a></p>
+					<span class="created"></span>
+				</div>
+			</template>
 		</div><!-- #single -->
 
 		<div id="account" class="screen">

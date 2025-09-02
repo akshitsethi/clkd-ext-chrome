@@ -4,9 +4,7 @@ import { Auth } from "./auth.js";
 import { Store } from "./store.js";
 import { i18n } from "./i18n.js";
 import { Events } from "./events.js";
-import { Screen } from "./screen.js";
-import { Selectors } from "./selectors.js";
-import { Modal } from "./modal.js";
+import { Processing } from "./processing.js";
 
 // Main application
 const CLKD = {
@@ -23,14 +21,12 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			Screen.show('links', 'block', 'true', true);
-
-			// const template = Selectors.LINK_TEMPLATE.edit.content;
-			// const content = template.cloneNode(true);
-			// Modal.show(content, 'node');
+			// Screen.show('links', 'block', 'true', true);
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+		} finally {
+			Processing.hide();
 		}
 	}
 };

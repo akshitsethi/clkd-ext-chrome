@@ -1,15 +1,14 @@
 // single.js
-import DataTable from "datatables.net";
 import { Chart, registerables } from "chart.js";
 import { Store } from "./store.js";
 import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
-import { country, language, apiBase, refreshDuration, analyticsDuration, analyticsBlankSlate, variableChartTypes, variableChartColors, dataTableLanguage } from "./constants.js";
-import { formatDate } from "./helper.js";
+import { apiBase, refreshDuration, variableChartTypes, variableChartColors } from "./constants.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
 import { Analytics } from "./analytics.js";
 import { Screen } from "./screen.js";
+import { Common } from "./common.js";
 
 export const Single = {
     constants: {
@@ -37,7 +36,7 @@ export const Single = {
         screen: null,
         lang: null
     },
-    set: async function(data) {
+    set: async function (data) {
         if (!this.link.domain || !this.link.slug) {
             throw new Error(i18n.MALFORMED_REQUEST);
         }
@@ -48,7 +47,7 @@ export const Single = {
 
         await chrome.storage.session.set(object);
     },
-    get: async function() {
+    get: async function () {
         if (!this.link.domain || !this.link.slug) {
             throw new Error(i18n.MALFORMED_REQUEST);
         }
@@ -60,7 +59,7 @@ export const Single = {
 
         return data[`${this.link.slug}:${this.link.domain}`];
     },
-    reset: function() {
+    reset: function () {
         this.DATA = {};
         this.COMPUTATIONS = {};
     },
@@ -129,8 +128,6 @@ export const Single = {
                 await this.fetchFromAPI(Store.SETTINGS.analytics_duration);
             }
 
-            console.log(this.DATA);
-
             // Let's process data
             this.processData();
 
@@ -160,8 +157,61 @@ export const Single = {
                 );
             }
 
+            // Add link header with details
+            // Before that, remove existing content
+            Selectors.SINGLE_LINK_DETAILS.innerHTML = null;
+
+            const template = Selectors.SINGLE_HEADER_TEMPLATE.content;
+            const content = template.cloneNode(true);
+
+            content.querySelector('h2').innerText = this.link.slug;
+            content.querySelector('.domain').innerText = this.link.domain;
+            content.querySelector('.created').innerText = this.link.created;
+
+            // Target anchor with event listener
+            const anchor = content.querySelector('.target');
+            anchor.setAttribute('href', this.link.url);
+            anchor.innerText = this.link.url;
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                chrome.tabs.create({ url: e.target.href });
+            });
+
+            // QRcode
+            const qrcode = content.querySelector('.qrcode');
+            qrcode.setAttribute('data-domain', this.link.domain);
+            qrcode.setAttribute('data-slug', this.link.slug);
+            qrcode.addEventListener('click', async e => {
+                e.preventDefault();
+
+                try {
+                    Processing.show(document.body);
+
+                    let target = e.target;
+                    if (target.nodeName === 'IMG') {
+                        target = e.target.parentElement;
+                    }
+
+                    const domain = target.getAttribute('data-domain');
+                    const slug = target.getAttribute('data-slug');
+
+                    await Common.QRCodeModal(domain, slug);
+                } catch (error) {
+                    console.error(error);
+                    Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+                } finally {
+                    Processing.hide();
+                }
+            });
+
+            // Append to container
+            Selectors.SINGLE_LINK_DETAILS.append(content);
+
             // Switch screen
             Screen.show('single');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
             // Show `analytics-data` div
             Selectors.SINGLE_ANALYTICS_SECTION.style.display = 'block';
