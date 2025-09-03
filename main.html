@@ -27,7 +27,7 @@
 			<ul class="profile-menu">
 				<li><a href="#" data-screen="account" data-display="block" data-callback="true">Account</a></li>
 				<li><a href="#" data-screen="settings" data-callback="true" data-async="true">Settings</a></li>
-				<li><a href="#" data-screen="help">Help</a></li>
+				<li><a href="#" data-screen="help" data-callback="true">Help</a></li>
 				<li><a href="#" id="logout">Logout</a></li>
 			</ul>
 		</div>
@@ -57,7 +57,8 @@
 		</div>
 		<div class="primary-section" data-screens="settings">
 			<div class="dynamic-links">
-				<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back to Dashboard</a></p>
+				<p>&larr; &nbsp;<a href="#" data-screen="dashboard" data-display="block" data-callback="true">Back to
+						Dashboard</a></p>
 			</div>
 		</div>
 
@@ -198,14 +199,16 @@
 					<div class="quick-create">
 						<form class="link-form" method="POST">
 							<div class="input">
-								<input type="url" name="url" autocomplete="off" placeholder="https://example.com/my-long-url">
+								<input type="url" name="url" autocomplete="off"
+									placeholder="https://example.com/my-long-url">
 								<button class="button green" type="submit">Create</button>
 							</div>
 						</form>
 
 						<span class="divider">or</span>
 						<span class="center block">
-							<button id="create-from-tab" class="button link">Shorten Current <span class="reveal-url">URL</span></button>
+							<button id="create-from-tab" class="button link">Shorten Current <span
+									class="reveal-url">URL</span></button>
 						</span>
 
 						<div class="link-output">
@@ -236,14 +239,15 @@
 
 							<div class="qr-settings">
 								<span><img src="./assets/images/wrench.png" alt="QR Settings"></span>
-								<a href="#" data-screen="settings">Settings</a>
+								<a href="#" data-screen="settings" data-callback="true" data-async="true">Settings</a>
 							</div>
 						</div>
 
 						<div class="inline-modal">
 							<div class="link-mode" data-type="inline-modal">
 								<div class="input">
-									<input type="text" name="custom-slug" class="custom-slug" placeholder="Type custom slug for short link" autocomplete="off">
+									<input type="text" name="custom-slug" class="custom-slug"
+										placeholder="Type custom slug for short link" autocomplete="off">
 								</div>
 							</div>
 						</div>
@@ -255,7 +259,9 @@
 
 							<table class="links-data table-data row-border">
 								<thead>
-									<tr><th data-dt-order="disable"></th></tr>
+									<tr>
+										<th data-dt-order="disable"></th>
+									</tr>
 								</thead>
 								<tbody></tbody>
 							</table>
@@ -333,7 +339,9 @@
 
 						<table class="archive-data table-data row-border">
 							<thead>
-								<tr><th data-dt-order="disable"></th></tr>
+								<tr>
+									<th data-dt-order="disable"></th>
+								</tr>
 							</thead>
 							<tbody></tbody>
 						</table>
@@ -344,7 +352,8 @@
 							<img src="./assets/images/thinking.png" alt="No archived link" />
 						</span>
 
-						<p>It seems like you have not archived a link yet. As soon as a <span class="semibold">link is archived</span>, it'll appear here.</p>
+						<p>It seems like you have not archived a link yet. As soon as a <span class="semibold">link is
+								archived</span>, it'll appear here.</p>
 					</div>
 
 					<template id="link-archive-template">
@@ -436,7 +445,9 @@
 					<span class="center block">
 						<img src="./assets/images/no-analytics.jpg" alt="No analytics recorded so far..." />
 					</span>
-					<p>We don't have analytics data for your account. Kindly check back in an hour or <a href="#" data-screen="help">contact support</a> if you continue facing the same issue.</p>
+					<p>We don't have analytics data for your account. Kindly check back in an hour or <a href="#"
+							data-screen="help" data-callback="true">contact support</a> if you continue facing the same
+						issue.</p>
 				</div>
 			</div>
 		</div><!-- #analytics -->
@@ -507,7 +518,9 @@
 					<span class="center block">
 						<img src="./assets/images/no-analytics.jpg" alt="No analytics recorded so far..." />
 					</span>
-					<p>We don't have analytics data for this short link. Kindly check back in an hour or <a href="#" data-screen="help">contact support</a> if you continue facing the same issue.</p>
+					<p>We don't have analytics data for this short link. Kindly check back in an hour or <a href="#"
+							data-screen="help" data-callback="true">contact support</a> if you continue facing the same
+						issue.</p>
 				</div>
 			</div>
 
@@ -531,6 +544,15 @@
 			<div class="account-wrapper">
 				<div class="account-user"></div>
 				<div class="account-subscription"></div>
+
+				<template id="account-subscription-template">
+					<div class="no-subscription">
+						<p>Uh oh! Looks like you don't have an <strong>active subscription</strong> to our premium plan.
+						</p>
+						<p>Click on the button below to see what we have to offer.</p>
+						<button class="button green medium">Upgrade Now</button>
+					</div>
+				</template>
 			</div>
 		</div><!-- #account -->
 
@@ -734,12 +756,13 @@
 					<img src="./assets/images/question.png" alt="Subscription Exists" />
 				</div>
 
-				<p>It seems like you already have an active <span class="semibold">premium subscription</span>. In case you're having trouble, please get in touch with us using the information below.
+				<p>It seems like you already have an active <span class="semibold">premium subscription</span>. In case
+					you're having trouble, please get in touch with us using the information below.
 				</p>
 
 				<h2>Help & Support</h2>
 				<ul class="help-links">
-					<li><a href="#" data-screen="help">Create a support ticket</a></li>
+					<li><a href="#" data-screen="help" data-callback="true">Create a support ticket</a></li>
 					<li><a href="#" data-action="mailto" data-input="hello@clkd.in">Send an email</a></li>
 					<li><a href="#" data-action="tel" data-input="+14159231">Call us at +1(415)-9231</a></li>
 				</ul>

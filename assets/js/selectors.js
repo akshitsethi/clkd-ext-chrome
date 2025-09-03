@@ -53,6 +53,11 @@ export const Selectors = {
     SINGLE_LINK_DETAILS: document.querySelector('#single .link-details'),
     SINGLE_HEADER_TEMPLATE: document.querySelector('#single #single-header-template'),
 
+    // Account
+    ACCOUNT_USER_SECTION: document.querySelector('#account .account-user'),
+    ACCOUNT_SUBSCRIPTION_SECTION: document.querySelector('#account .account-subscription'),
+    ACCOUNT_NO_SUBSCRIPTION_TEMPLATE: document.querySelector('#account #account-subscription-template'),
+
     // Settings
     SETTINGS_FORM: document.querySelector('#settings .settings-form'),
 

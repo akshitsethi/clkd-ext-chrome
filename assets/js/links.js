@@ -189,8 +189,8 @@ export const Links = {
 					throw new Error(i18n.MISSING_DETAILS_ERROR);
 				}
 				let url = parent.getAttribute('data-url');
-				if (url.length > 175) {
-					url = url.substring(0, 175) + '...';
+				if (url.length > 125) {
+					url = url.substring(0, 125) + '...';
 				}
 
 				const template = Selectors.LINK_TEMPLATE.edit.content;

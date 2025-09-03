@@ -6,6 +6,8 @@ import { Settings } from "./settings.js";
 import { Analytics } from "./analytics.js";
 import { Dashboard } from "./dashboard.js";
 import { Links } from "./links.js";
+import { Help } from "./help.js";
+import { Account } from "./account.js";
 
 export const Screen = {
     constants: {
@@ -89,14 +91,20 @@ export const Screen = {
     analytics: async function () {
         await Analytics.init();
     },
-    settings: async function() {
+    account: function () {
+        Account.init();
+    },
+    settings: async function () {
         await Settings.init();
+    },
+    help: function () {
+        Help.init();
     },
     switchEvent: function () {
         if (Selectors.SCREEN_SWITCH_LINKS.length === 0) return;
 
         Selectors.SCREEN_SWITCH_LINKS.forEach(link => {
-            link.addEventListener('click', async  e => {
+            link.addEventListener('click', async e => {
                 e.preventDefault();
 
                 try {

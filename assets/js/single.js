@@ -171,7 +171,11 @@ export const Single = {
             // Target anchor with event listener
             const anchor = content.querySelector('.target');
             anchor.setAttribute('href', this.link.url);
-            anchor.innerText = this.link.url;
+            if (this.link.url.length > 125) {
+                anchor.innerText = this.link.url.substring(0, 125) + '...';
+            } else {
+                anchor.innerText = this.link.url;
+            }
             anchor.addEventListener('click', e => {
                 e.preventDefault();
                 chrome.tabs.create({ url: e.target.href });

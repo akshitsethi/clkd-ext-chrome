@@ -7,7 +7,7 @@ import { apiBase } from "./constants.js";
 import { Store } from "./store.js";
 
 export const Help = {
-    updateDOMEvent: function () {
+    updateDOM: function () {
         if (!Selectors.HELP_FORM) return;
 
         const name = Selectors.HELP_FORM.querySelector('[name="name"]');
@@ -83,7 +83,7 @@ export const Help = {
             Selectors.HELP_FORM.reset();
 
             // Update DOM again
-            this.updateDOMEvent();
+            this.updateDOM();
 
             Selectors.HELP_SECTION_SUCCESS.style.display = 'none';
             Selectors.HELP_SECTION.style.display = 'block';
@@ -110,9 +110,11 @@ export const Help = {
         }));
     },
     events: function () {
-        this.updateDOMEvent();
         this.formSubmitEvent();
         this.resetHelpScreenEvent();
         this.actionLinksEvent();
+    },
+    init: function () {
+        this.updateDOM();
     }
 };
