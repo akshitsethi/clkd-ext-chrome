@@ -2,6 +2,7 @@
 import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
 import { Processing } from "./processing.js";
+import { Screen } from "./screen.js";
 import { Selectors } from "./selectors.js";
 import { Store } from "./store.js";
 
@@ -16,7 +17,7 @@ export const Account = {
         },
         subscription: {
             plan: 'Plan',
-            cycle: 'Billing',
+            term: 'Billing',
             price: 'Cost',
             start: 'Start Date',
             end: 'Valid Until',
@@ -114,6 +115,19 @@ export const Account = {
             } else {
                 const template = Selectors.ACCOUNT_NO_SUBSCRIPTION_TEMPLATE.content;
                 const content = template.cloneNode(true);
+
+                // Upgrade button
+                const upgrade = content.querySelector('button');
+                upgrade.addEventListener('click', e => {
+                    e.preventDefault();
+
+                    try {
+                        Screen.show('upgrade', 'block', 'true', false);
+                    } catch (error) {
+                        console.error(error);
+                        Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+                    }
+                });
 
                 Selectors.ACCOUNT_SUBSCRIPTION_SECTION.appendChild(content);
             }

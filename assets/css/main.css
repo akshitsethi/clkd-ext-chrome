@@ -981,6 +981,8 @@ h2 {
         }
 
         & .no-subscription {
+            display: block;
+
             & p {
                 font-size: 0.938rem;
                 margin-bottom: 0.75rem;
