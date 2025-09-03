@@ -664,3 +664,9 @@ export const dataTableLanguage = {
         emptyTable: 'City data is not available'
     }
 };
+
+// URL validator options
+export const urlValidationOptions = {
+    protocols: ['http','https'],
+    require_protocol: true
+}

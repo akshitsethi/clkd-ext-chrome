@@ -3,7 +3,7 @@ import DataTable from "datatables.net";
 import { Notification } from "./notification.js";
 import { Processing } from "./processing.js";
 import { Store } from "./store.js";
-import { apiBase } from "./constants.js";
+import { apiBase, urlValidationOptions } from "./constants.js";
 import { Selectors } from "./selectors.js";
 import { getCurrentTab } from "./helper.js";
 import { Tooltip } from "./tooltip.js";
@@ -12,6 +12,7 @@ import { User } from "./user.js";
 import { Common } from "./common.js";
 import { Modal } from "./modal.js";
 import { Single } from "./single.js";
+import { isURL, isAlphanumeric } from "validator";
 
 export const Links = {
 	constants: {
@@ -33,6 +34,11 @@ export const Links = {
 		INLINE_MODAL_CLASSNAME: '.inline-modal',
 		SLUG_FIELD_CLASSNAME: '.custom-slug',
 		EDIT_FORM_CLASSNAME: '.link-edit-form',
+		EDIT_FORM_HEADING_CLASSNAME: 'header > h2',
+		EDIT_FORM_DOMAIN_CLASSNAME: 'header > span',
+		EDIT_FORM_URL_CLASSNAME: '.link-details .url',
+		EDIT_FORM_DOMAIN_INPUT: '.input [name=domain]',
+		EDIT_FORM_SLUG_INPUT: '.input [name=slug]'
 	},
 	DATA: [],
 	TABLE: {
@@ -261,13 +267,13 @@ export const Links = {
 				});
 
 				// Add header and existing redirect link
-				content.querySelector('header > h2').innerText = slug;
-				content.querySelector('header > span').innerText = domain;
-				content.querySelector('.link-details .url').innerText = url;
+				content.querySelector(this.constants.EDIT_FORM_HEADING_CLASSNAME).innerText = slug;
+				content.querySelector(this.constants.EDIT_FORM_DOMAIN_CLASSNAME).innerText = domain;
+				content.querySelector(this.constants.EDIT_FORM_URL_CLASSNAME).innerText = url;
 
 				// Update domain and slug info
-				content.querySelector('.input [name=domain]').value = domain;
-				content.querySelector('.input [name=slug]').value = slug;
+				content.querySelector(this.constants.EDIT_FORM_DOMAIN_INPUT).value = domain;
+				content.querySelector(this.constants.EDIT_FORM_SLUG_INPUT).value = slug;
 
 				Modal.show(content, 'node');
 			} catch (error) {
@@ -582,6 +588,11 @@ export const Links = {
 			throw new Error(i18n.URL_DOMAIN_ERROR);
 		}
 
+		// URL validation
+		if (!isURL(url, urlValidationOptions)) {
+			throw new Error(i18n.URL_VALIDATION_ERROR);
+		}
+
 		// Request details
 		const body = {
 			url: url,
@@ -589,7 +600,16 @@ export const Links = {
 			user_id: Store.USER.ID,
 			token: Store.USER.token
 		};
-		if (slug) body.slug = slug;
+		if (slug) {
+			// Slug validation
+			if (slug.startsWith('-') || slug.endsWith('-')) {
+				throw new Error(i18n.SLUG_HYPHEN_ERROR);
+			}
+			if (!isAlphanumeric(slug, 'en-US', { ignore: '-_' })) {
+				throw new Error(i18n.SLUG_VALIDATION_ERROR);
+			}
+			body.slug = slug;
+		}
 
 		const request = await fetch(`${apiBase}/link`, {
 			method: 'POST',
@@ -665,7 +685,7 @@ export const Links = {
 				if (Selectors.LINK_MODE_SWITCHER.getAttribute('data-mode') === 'manual') {
 					const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
 
-					slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value;
+					slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value.trim();
 					if (!slug || slug.length === 0) {
 						throw new Error(i18n.EMPTY_SLUG_ERROR);
 					}

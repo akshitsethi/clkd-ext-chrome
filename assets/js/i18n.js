@@ -12,8 +12,11 @@ export const i18n = {
 
     // Links
     URL_DOMAIN_ERROR: 'Missing details. Please provide a valid URL and domain.',
+    URL_VALIDATION_ERROR: 'Please provide a valid URL and ensure it starts with either http or https.',
     COPY_ERROR: 'Error occurred while trying to copy link.',
     EMPTY_SLUG_ERROR: 'Please provide a unique slug or switch to "Auto" mode.',
+    SLUG_VALIDATION_ERROR: 'Slug can only contain alphanumeric characters along with hyphen and underscore.',
+    SLUG_HYPHEN_ERROR: 'Slug cannot start or end with a hyphen.',
     LINK_NOT_FOUND: 'Unable to locate the specified link in storage.',
     LINK_CREATED: 'New short link has been created.',
 
