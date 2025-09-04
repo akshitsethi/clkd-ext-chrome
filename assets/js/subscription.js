@@ -13,7 +13,7 @@ export const Subscription = {
     successEvent: function (showConfetti = false) {
         if (!Selectors.SUBSCRIPTION_DETAILS_SECTION || !Store.USER.subscription) return;
 
-        if (!Store.USER.subscription.hasOwnProperty('plan_and_cycle') || !Store.USER.subscription.hasOwnProperty('end')) {
+        if (!Object.keys(Store.USER.subscription).length) {
             throw new Error(i18n.SUBSCRIPTION_DATA_NOT_AVAILABLE);
         }
 
@@ -24,7 +24,7 @@ export const Subscription = {
             throw new Error(i18n.SELECTOR_NOT_FOUND);
         }
 
-        plan.innerText = Store.USER.subscription.plan_and_cycle;
+        plan.innerText = Store.USER.subscription.plan;
         validity.innerText = new Date(Store.USER.subscription.end * 1000).toString();
 
         if (showConfetti) {
@@ -88,7 +88,7 @@ export const Subscription = {
 
                 // Update subscription details and premium status
                 Store.USER.subscription = response.message;
-                Store.USER.is_premium = data.message.status === 'active' ? true : false;
+                Store.USER.is_premium = response.message.status === 'active' ? true : false;
 
                 // Update locally stored subscription data
                 await User.setData(Store.USER);
