@@ -15,6 +15,8 @@ export const Screen = {
         CURRENT_SCREEN: null,
         DEFAULT_DISPLAY: 'block'
     },
+    dynamic: ['links', 'analytics'],
+    pages: ['dashboard', 'links', 'analytics'],
     screens: [
         'dashboard',
         'links',
@@ -51,6 +53,9 @@ export const Screen = {
         // Update header sections along with dynamic links
         this.updateHeaderSections(screen);
 
+        // Update selected value for the `page-selector` based on screen
+        this.updatePageSelector(screen);
+
         // Bring the screen to viewport
         Selectors.SCREENS.forEach(screen => screen.style.display = 'none');
         el.style.display = display;
@@ -60,11 +65,34 @@ export const Screen = {
         }
     },
     updateHeaderSections: function (screen) {
-        if (Selectors.PRIMARY_SECTION.length == 0 || Selectors.DYNAMIC_SECTION.length == 0) return;
+        if (Selectors.PRIMARY_SECTION.length === 0 || Selectors.DYNAMIC_SECTION.length === 0) return;
+
+        // Update dynamic link
+        const anchor = Selectors.DYNAMIC_LINK.querySelector('a');
+        if (this.dynamic.includes(this.constants.PREVIOUS_SCREEN)) {
+            anchor.setAttribute('data-screen', this.constants.PREVIOUS_SCREEN);
+            anchor.querySelector('span').innerText = this.constants.PREVIOUS_SCREEN.charAt(0).toUpperCase() + this.constants.PREVIOUS_SCREEN.substring(1);
+        } else {
+            anchor.setAttribute('data-screen', 'dashboard');
+            anchor.querySelector('span').innerText = 'Dashboard';
+        }
 
         // Loop over primary section
         this.showHideSections(Selectors.PRIMARY_SECTION, screen);
         this.showHideSections(Selectors.DYNAMIC_SECTION, screen);
+    },
+    updatePageSelector: function(screen) {
+        if (!this.pages.includes(screen)) return;
+
+        // If the above condition is not met, reset page selector to `dashboard`
+        // Remove `selected` from all and add it to the current target
+        const anchors = Selectors.PAGE_SELECTOR.querySelectorAll('a');
+
+        if (!anchors.length) return;
+        anchors.forEach(anchor => anchor.getAttribute('data-section') !== screen ? anchor.classList.remove('selected') : anchor.classList.add('selected'));
+
+        // Update current page value
+        Selectors.NAVIGATION.querySelector('.current-page').innerText = screen;
     },
     showHideSections: function (selector, screen) {
         for (const section of selector) {
@@ -109,7 +137,8 @@ export const Screen = {
 
                 try {
                     let target = e.target;
-                    if (e.target.nodeName === 'IMG') {
+                    console.log(e.target.nodeName);
+                    if (e.target.nodeName === 'IMG' || e.target.nodeName === 'SPAN') {
                         target = e.target.parentElement;
                     }
 

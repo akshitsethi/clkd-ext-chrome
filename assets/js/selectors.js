@@ -9,6 +9,7 @@ export const Selectors = {
     NAVIGATION: document.querySelector('.navigation'),
     PAGE_SELECTOR: document.querySelector('.page-selector'),
     STATE_SWITCHERS: document.querySelectorAll('.state-switcher'),
+    DYNAMIC_LINK: document.querySelector('.dynamic-link'),
 
     // Screen
     SCREEN_SWITCH_LINKS: document.querySelectorAll('a[data-screen]'),

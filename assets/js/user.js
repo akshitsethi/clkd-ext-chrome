@@ -122,7 +122,7 @@ export const User = {
                 const section = e.target.getAttribute('data-section');
 
                 // Switch screen
-                await Screen.show(section.toLowerCase(), 'block', 'true', true);
+                await Screen.show(section, 'block', 'true', true);
 
                 // Remove `selected` from all and add it to the current target
                 const anchors = Selectors.PAGE_SELECTOR.querySelectorAll('a');

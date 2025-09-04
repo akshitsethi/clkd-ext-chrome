@@ -280,6 +280,9 @@ h2 {
             &:hover {
                 background: rgba(119, 148, 182, 0.0325);
             }
+            &::first-letter {
+                text-transform: capitalize;
+            }
         }
     }
 }
@@ -304,6 +307,9 @@ h2 {
             cursor: pointer;
             border-radius: 8px;
 
+            &::first-letter {
+                text-transform: capitalize;
+            }
             &:hover {
                 background-color: #ffffff;
             }
