@@ -5,7 +5,7 @@ import { Store } from "./store.js";
 import { User } from "./user.js";
 import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
-import { country, language, apiBase, refreshDuration, analyticsDuration, analyticsBlankSlate, variableChartTypes, variableChartColors, dataTableLanguage } from "./constants.js";
+import { country, language, apiBase, refreshDuration, analyticsDuration, analyticsBlankSlate, variableChartTypes, variableChartColors, dataTableLanguage, analyticsDurationNiceName } from "./constants.js";
 import { formatDate } from "./helper.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
@@ -30,7 +30,7 @@ export const Analytics = {
         screen: null,
         lang: null
     },
-    createClickAndScanChart: function(selector, label, data, colors) {
+    createClickAndScanChart: function (selector, label, data, colors) {
         const el = document.querySelector(`${this.constants.SECTION_CLASSNAME} #${selector}`);
         if (!el) return;
 
@@ -40,31 +40,31 @@ export const Analytics = {
 
         this.CHART_INSTANCES[selector] = new Chart(el, {
             type: 'bar',
-			data: {
-				labels: data.labels,
-				datasets: [
-					{
-						label: label,
-						data: data.all,
-						backgroundColor: colors.all
-					},
-					{
-						label: 'Unique',
-						data: data.unique,
-						backgroundColor: colors.unique
-					}
-				]
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true
-					}
-				}
-			}
-		});
+            data: {
+                labels: data.labels,
+                datasets: [
+                    {
+                        label: label,
+                        data: data.all,
+                        backgroundColor: colors.all
+                    },
+                    {
+                        label: 'Unique',
+                        data: data.unique,
+                        backgroundColor: colors.unique
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     },
-    createVariableChart: function(selector, type, data, colors) {
+    createVariableChart: function (selector, type, data, colors) {
         const el = document.querySelector(`${this.constants.SECTION_CLASSNAME} #${selector}`);
         if (!el) return;
 
@@ -73,39 +73,39 @@ export const Analytics = {
         }
 
         this.CHART_INSTANCES[selector] = new Chart(el, {
-			type: type,
-			data: {
-				labels: this.processVariableLabels(selector, Object.keys(data)),
-				datasets: [
-					{
-						label: 'Visits',
-						data: Object.values(data),
-						backgroundColor: colors,
-						hoverOffset: 4
-					},
-				]
-			}
-		});
+            type: type,
+            data: {
+                labels: this.processVariableLabels(selector, Object.keys(data)),
+                datasets: [
+                    {
+                        label: 'Visits',
+                        data: Object.values(data),
+                        backgroundColor: colors,
+                        hoverOffset: 4
+                    },
+                ]
+            }
+        });
     },
-    createDataTable: function(selector, data) {
+    createDataTable: function (selector, data) {
         const el = document.querySelector(`${this.constants.SECTION_CLASSNAME} #${selector}`);
         if (!el) return;
 
         if (DataTable.isDataTable(this.TABLE_INSTANCES[selector])) {
-			this.TABLE_INSTANCES[selector].destroy();
-		}
+            this.TABLE_INSTANCES[selector].destroy();
+        }
 
-		this.TABLE_INSTANCES[selector] = new DataTable(
-			el,
-			{
-				data: data,
-				language: dataTableLanguage[selector],
-				pageLength: 10,
-				lengthChange: false
-			}
-		);
+        this.TABLE_INSTANCES[selector] = new DataTable(
+            el,
+            {
+                data: data,
+                language: dataTableLanguage[selector],
+                pageLength: 10,
+                lengthChange: false
+            }
+        );
     },
-    processDataTableRecords: function(selector, data) {
+    processDataTableRecords: function (selector, data) {
         const output = [];
 
         if (selector === 'country') {
@@ -121,7 +121,7 @@ export const Analytics = {
 
         return output;
     },
-    processVariableLabels: function(selector, labels) {
+    processVariableLabels: function (selector, labels) {
         if (selector === 'lang') {
             return labels.map(label => language[label.replace('_', '-')] ?? label);
         }
@@ -221,10 +221,22 @@ export const Analytics = {
             }
         }
     },
+    updateDurationText: function () {
+        if (!Selectors.ANALYTICS_DURATION_TEXT) return;
+
+        try {
+            Selectors.ANALYTICS_DURATION_TEXT.innerText = analyticsDurationNiceName[Store.SETTINGS.analytics_duration];
+        } catch (error) {
+            console.log(error);
+        }
+    },
     updateDOM: async function () {
         // Get stored data and update DOM
         try {
             Processing.show(document.body);
+
+            // Update `analytics_duration` text
+            this.updateDurationText();
 
             const data = await Store.get('analytics');
             if (data.hasOwnProperty('analytics')) {

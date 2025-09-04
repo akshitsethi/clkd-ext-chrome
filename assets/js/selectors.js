@@ -46,6 +46,7 @@ export const Selectors = {
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
     NO_ANALYTICS_SECTION: document.querySelector('#analytics .no-analytics-data'),
+    ANALYTICS_DURATION_TEXT: document.querySelector('.dynamic-section .analytics-duration-text'),
 
     // Single
     SINGLE_ANALYTICS_SECTION: document.querySelector('#single .analytics-data'),

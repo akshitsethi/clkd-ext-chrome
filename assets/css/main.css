@@ -378,6 +378,11 @@ h2 {
             }
         }
 
+        & .analytics-duration-text {
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+
         & img {
             display: block;
             max-width: 20px;
