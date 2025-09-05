@@ -69,6 +69,7 @@ export const Selectors = {
     TENURE_MONTHLY: document.querySelectorAll('#upgrade .plan-monthly'),
     TENURE_YEARLY: document.querySelectorAll('#upgrade .plan-yearly'),
     UPGRADE_SAVER_PILL: document.querySelector('.saver-pill'),
+    UPGRADE_TRIGGER: document.querySelector('.upgrade-trigger'),
 
     // Subscription
     VERIFY_SUBSCRIPTION_BUTTON: document.querySelector('#subscription-verify .verify-subscription'),

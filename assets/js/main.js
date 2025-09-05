@@ -6,6 +6,7 @@ import { i18n } from "./i18n.js";
 import { Events } from "./events.js";
 import { Processing } from "./processing.js";
 import { Screen } from "./screen.js";
+import { Limits } from "./limits.js";
 
 // Main application
 const CLKD = {
@@ -22,7 +23,9 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			// Screen.show('account', 'block', 'true', false);
+			Screen.show('links', 'block', 'true', false);
+
+			console.log(Store.USER);
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);

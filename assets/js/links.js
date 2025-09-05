@@ -13,6 +13,7 @@ import { Common } from "./common.js";
 import { Modal } from "./modal.js";
 import { Single } from "./single.js";
 import { isURL, isAlphanumeric } from "validator";
+import { Limits } from "./limits.js";
 
 export const Links = {
 	constants: {
@@ -810,20 +811,24 @@ export const Links = {
 			e.preventDefault();
 
 			try {
-				const mode = e.target.getAttribute('data-mode');
-				const toggle = (mode === 'auto') ? 'manual' : 'auto';
-				if (!mode || !['auto', 'manual'].includes(mode)) {
-					throw new Error(i18n.MISSING_DETAILS_ERROR);
+				if (!Store.USER.is_premium) {
+					Limits.upgradeModal();
+				} else {
+					const mode = e.target.getAttribute('data-mode');
+					const toggle = (mode === 'auto') ? 'manual' : 'auto';
+					if (!mode || !['auto', 'manual'].includes(mode)) {
+						throw new Error(i18n.MISSING_DETAILS_ERROR);
+					}
+
+					const parent = e.target.closest(this.constants.CREATE_SECTION_CLASSNAME);
+					const inline = parent.querySelector(this.constants.INLINE_MODAL_CLASSNAME);
+
+					e.target.classList.toggle('selected');
+					e.target.setAttribute('data-mode', toggle);
+					e.target.innerText = toggle;
+
+					inline.classList.toggle('show');
 				}
-
-				const parent = e.target.closest(this.constants.CREATE_SECTION_CLASSNAME);
-				const inline = parent.querySelector(this.constants.INLINE_MODAL_CLASSNAME);
-
-				e.target.classList.toggle('selected');
-				e.target.setAttribute('data-mode', toggle);
-				e.target.innerText = toggle;
-
-				inline.classList.toggle('show');
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);

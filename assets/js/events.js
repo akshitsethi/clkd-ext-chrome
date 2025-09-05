@@ -9,6 +9,7 @@ import { Subscription } from "./subscription.js";
 import { Dashboard } from "./dashboard.js";
 import { Links } from "./links.js";
 import { Modal } from "./modal.js";
+import { Limits } from "./limits.js";
 
 export const Events = {
     init: function () {
@@ -22,5 +23,6 @@ export const Events = {
         Dashboard.events();
         Links.events();
         Modal.events();
+        Limits.events();
     }
 };
