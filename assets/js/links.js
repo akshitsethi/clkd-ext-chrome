@@ -210,6 +210,12 @@ export const Links = {
 					try {
 						Processing.show(e.target, 'absolute');
 
+						// Show upgrade trigger for editing links
+						if (!Store.USER.is_premium) {
+							Modal.hide();
+							return Limits.upgradeModal('Edit Link');
+						}
+
 						// Create formdata object
 						const data = new FormData(e.target);
 						const request = await fetch(`${apiBase}/link`, {

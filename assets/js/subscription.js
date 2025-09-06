@@ -8,6 +8,7 @@ import { Screen } from "./screen.js";
 import { Store } from "./store.js";
 import { apiBase } from "./constants.js";
 import { User } from "./user.js";
+import { Limits } from "./limits.js";
 
 export const Subscription = {
     successEvent: function (showConfetti = false) {
@@ -26,6 +27,9 @@ export const Subscription = {
 
         plan.innerText = Store.USER.subscription.plan;
         validity.innerText = new Date(Store.USER.subscription.end * 1000).toString();
+
+        // Update UX based on user plan
+        Limits.init();
 
         if (showConfetti) {
             // Confetti (as a celebration for subscription purchase)

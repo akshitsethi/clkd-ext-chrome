@@ -4,21 +4,32 @@ import { Selectors } from "./selectors.js";
 import { Notification } from "./notification.js";
 import { i18n } from "./i18n.js";
 import { Screen } from "./screen.js";
+import { Store } from "./store.js";
 
 export const Limits = {
     updateDOM: function () {
-        // TODO
-        //
-        // Update UI so that certain elements can be hidden or shown based on user's membership plan.
-        // For registered users, certain features will remain disabled.
-        // For example, list of available domains will be short for non-premium users.
+        // Upgrade CTA button
+        if (Selectors.HEADER_UPGRADE_CTA) {
+            if (Store.USER.is_premium) {
+                Selectors.HEADER_UPGRADE_CTA.style.display = 'none';
+            } else {
+                Selectors.HEADER_UPGRADE_CTA.style.display = 'block';
+            }
+        }
+
+        
     },
-    upgradeModal: function (heading = 'Premium Feature') {
+    upgradeModal: function (heading = 'Premium Feature', content = null) {
         if (!Selectors.UPGRADE_TRIGGER) return;
 
         // Before displaying upgrade modal, update feature name in the header
-        const header = Selectors.UPGRADE_TRIGGER.querySelector('h1');
+        const header = Selectors.UPGRADE_TRIGGER.querySelector('h2');
         header.innerText = heading;
+
+        if (content) {
+            const lead = Selectors.UPGRADE_TRIGGER.querySelector('.lead');
+            lead.innerHTML = content;
+        }
 
         animate(Selectors.UPGRADE_TRIGGER, { y: [100, 0], visibility: 'visible' }, { ease: "easeInOut", duration: 0.25 });
     },
