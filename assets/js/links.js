@@ -684,11 +684,15 @@ export const Links = {
 				// OPTIONAL: custom slug
 				let slug = null;
 				if (Selectors.LINK_MODE_SWITCHER.getAttribute('data-mode') === 'manual') {
-					const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
+					if (!Store.USER.is_premium) {
+						return Limits.upgradeModal('Custom Slug');
+					} else {
+						const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
 
-					slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value.trim();
-					if (!slug || slug.length === 0) {
-						throw new Error(i18n.EMPTY_SLUG_ERROR);
+						slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value.trim();
+						if (!slug || slug.length === 0) {
+							throw new Error(i18n.EMPTY_SLUG_ERROR);
+						}
 					}
 				}
 
@@ -726,11 +730,15 @@ export const Links = {
 				// OPTIONAL: custom slug
 				let slug = null;
 				if (Selectors.LINK_MODE_SWITCHER.getAttribute('data-mode') === 'manual') {
-					const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
+					if (!Store.USER.is_premium) {
+						return Limits.upgradeModal('Custom Slug');
+					} else {
+						const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
 
-					slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value;
-					if (!slug || slug.length === 0) {
-						throw new Error(i18n.EMPTY_SLUG_ERROR);
+						slug = parent.querySelector(this.constants.SLUG_FIELD_CLASSNAME).value;
+						if (!slug || slug.length === 0) {
+							throw new Error(i18n.EMPTY_SLUG_ERROR);
+						}
 					}
 				}
 
@@ -811,24 +819,20 @@ export const Links = {
 			e.preventDefault();
 
 			try {
-				if (!Store.USER.is_premium) {
-					Limits.upgradeModal();
-				} else {
-					const mode = e.target.getAttribute('data-mode');
-					const toggle = (mode === 'auto') ? 'manual' : 'auto';
-					if (!mode || !['auto', 'manual'].includes(mode)) {
-						throw new Error(i18n.MISSING_DETAILS_ERROR);
-					}
-
-					const parent = e.target.closest(this.constants.CREATE_SECTION_CLASSNAME);
-					const inline = parent.querySelector(this.constants.INLINE_MODAL_CLASSNAME);
-
-					e.target.classList.toggle('selected');
-					e.target.setAttribute('data-mode', toggle);
-					e.target.innerText = toggle;
-
-					inline.classList.toggle('show');
+				const mode = e.target.getAttribute('data-mode');
+				const toggle = (mode === 'auto') ? 'manual' : 'auto';
+				if (!mode || !['auto', 'manual'].includes(mode)) {
+					throw new Error(i18n.MISSING_DETAILS_ERROR);
 				}
+
+				const parent = e.target.closest(this.constants.CREATE_SECTION_CLASSNAME);
+				const inline = parent.querySelector(this.constants.INLINE_MODAL_CLASSNAME);
+
+				e.target.classList.toggle('selected');
+				e.target.setAttribute('data-mode', toggle);
+				e.target.innerText = toggle;
+
+				inline.classList.toggle('show');
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);

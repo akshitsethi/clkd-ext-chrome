@@ -13,8 +13,14 @@ export const Limits = {
         // For registered users, certain features will remain disabled.
         // For example, list of available domains will be short for non-premium users.
     },
-    upgradeModal: function () {
-        animate(Selectors.UPGRADE_TRIGGER, { y: [100, 0], opacity: 1 }, { ease: "easeInOut", duration: 0.25 });
+    upgradeModal: function (heading = 'Premium Feature') {
+        if (!Selectors.UPGRADE_TRIGGER) return;
+
+        // Before displaying upgrade modal, update feature name in the header
+        const header = Selectors.UPGRADE_TRIGGER.querySelector('h1');
+        header.innerText = heading;
+
+        animate(Selectors.UPGRADE_TRIGGER, { y: [100, 0], visibility: 'visible' }, { ease: "easeInOut", duration: 0.25 });
     },
     upgradeButtonEvent: function() {
         if (!Selectors.UPGRADE_TRIGGER) return;
@@ -27,7 +33,7 @@ export const Limits = {
 
             try {
                 // Close upgrade modal and switch to upgrade screen
-                animate(Selectors.UPGRADE_TRIGGER, { opacity: 0 }, { ease: "easeInOut", duration: 0.25 });
+                animate(Selectors.UPGRADE_TRIGGER, { y: [0, 400], visibility: 'hidden' }, { ease: "easeInOut", duration: 0.25 });
                 Screen.show('upgrade');
             } catch (error) {
                 console.error(error);
@@ -45,7 +51,7 @@ export const Limits = {
             e.preventDefault();
 
             try {
-                animate(Selectors.UPGRADE_TRIGGER, { opacity: 0 }, { ease: "easeInOut", duration: 0.25 });
+                animate(Selectors.UPGRADE_TRIGGER, { y: [0, 400], visibility: 'hidden' }, { ease: "easeInOut", duration: 0.25 });
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -54,7 +60,7 @@ export const Limits = {
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
-                animate(Selectors.UPGRADE_TRIGGER, { opacity: 0 }, { ease: "easeInOut", duration: 0.25 });
+                animate(Selectors.UPGRADE_TRIGGER, { y: [0, 400], visibility: 'hidden' }, { ease: "easeInOut", duration: 0.25 });
             }
         });
     },
