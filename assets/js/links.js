@@ -390,8 +390,9 @@ export const Links = {
 		// Enable event listeners
 		this.newLinkOutputEvents();
 
-		// Reset form values
+		// Reset form values & empty the `custom-slug` field as well
 		Selectors.LINK_FORM.reset();
+		document.querySelector(`#links ${this.constants.SLUG_FIELD_CLASSNAME}`).value = null;
 
 		// Make selector visible
 		Selectors.LINK_OUTPUT_SECTION.style.display = 'block';
@@ -440,14 +441,14 @@ export const Links = {
 			} else {
 				this.DATA = data.links.data;
 			}
-
-			// Populate active & archived data once we have it
-			this.populateData();
-			this.populateArchive();
 		} catch (error) {
 			console.error(error);
 			Notification.error(error.message ?? i18n.DEFAULT_ERROR);
 		} finally {
+			// Populate active & archived data once we have it
+			this.populateData();
+			this.populateArchive();
+
 			Processing.hide();
 		}
 	},

@@ -16,8 +16,6 @@ export const Limits = {
                 Selectors.HEADER_UPGRADE_CTA.style.display = 'block';
             }
         }
-
-        
     },
     upgradeModal: function (heading = 'Premium Feature', content = null) {
         if (!Selectors.UPGRADE_TRIGGER) return;

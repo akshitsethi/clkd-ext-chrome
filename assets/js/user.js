@@ -8,6 +8,7 @@ import { i18n } from "./i18n.js";
 import { Settings } from "./settings.js";
 import { Links } from "./links.js";
 import { refreshDuration } from "./constants.js";
+import { Limits } from "./limits.js";
 
 export const User = {
     constants: {
@@ -85,6 +86,9 @@ export const User = {
         if (Object.entries(Store.SETTINGS).length === 0) {
             await Settings.fetchFromAPI();
         }
+
+        // Initialise limits
+        Limits.init();
 
         // Update user data in header & make it visible
         this.updateDataInHeader();

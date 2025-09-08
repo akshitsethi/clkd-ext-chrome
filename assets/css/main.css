@@ -612,12 +612,12 @@ h2 {
         padding: 1.5rem 0;
 
         & .no-links-data {
-            padding: 1.5rem 0;
+            padding: 0.5rem 0 1.5rem;
             display: none;
 
             & h3 {
-                font-weight: 500;
-                font-size: 0.938rem;
+                font-weight: 600;
+                font-size: 1.0625rem;
                 margin-bottom: 0.5rem;
             }
         }
