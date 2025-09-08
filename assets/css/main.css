@@ -942,7 +942,7 @@ h2 {
 #account {
     & .account-wrapper {
         padding: 1rem;
-        font-size: 0.938rem;
+        font-size: 0.875rem;
     }
 
     & .account-user,
@@ -969,10 +969,6 @@ h2 {
                 margin-left: auto;
                 word-break: break-all;
 
-                &::first-letter {
-                    text-transform: capitalize;
-                }
-
                 & img {
                     max-width: 32px;
                     height: auto;
@@ -989,6 +985,12 @@ h2 {
         & h2 {
             font-size: 1.125rem;
             margin-bottom: 1rem;
+        }
+
+        & .data {
+            &::first-letter {
+                text-transform: capitalize;
+            }
         }
 
         & .no-subscription {
