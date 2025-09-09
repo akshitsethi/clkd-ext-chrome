@@ -4,17 +4,21 @@ import { Notification } from "./notification.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
 import { Store } from "./store.js";
-import { apiBase } from "./constants.js";
+import { apiBase, planDomains } from "./constants.js";
 import { User } from "./user.js";
 import { Limits } from "./limits.js";
 
 export const Settings = {
+    constants: {
+        ANALYTICS_DURATION_CLASSNAME: 'select[name=analytics_duration]',
+        LINKS_PAGE_CLASSNAME: 'select[name=default_domain]'
+    },
     DEFAULT: {
         analytics_duration: 'week',
         links_per_page: '10',
-        default_domain: 'clkdin',
+        default_domain: 'clkd.in',
         pages_per_page: '10',
-        default_page_domain: 'clkdin',
+        default_page_domain: 'clkd.in',
         qr_background: '#ffffff',
         qr_text: '#000000'
     },
@@ -41,10 +45,7 @@ export const Settings = {
                 const element = Selectors.SETTINGS_FORM.querySelector(`#${key}`);
                 if (element) {
                     element.value = value;
-
-                    if (element.type === 'color') {
-                        element.setAttribute('data-previous', value);
-                    }
+                    element.setAttribute('data-previous', value);
                 }
             }
 
@@ -165,32 +166,105 @@ export const Settings = {
             }
         });
     },
-    colorChangeEvent: function() {
+    colorChangeEvent: function () {
         if (!Selectors.SETTINGS_FORM) return;
 
         const colors = Selectors.SETTINGS_FORM.querySelectorAll('input[type=color]');
-        if (!colors) return;
+        if (!colors.length) return;
 
         colors.forEach(color => color.addEventListener('change', e => {
-            const newValue = e.target.value;
-            const oldValue = e.target.getAttribute('data-previous');
+            try {
+                const newValue = e.target.value;
+                const oldValue = e.target.getAttribute('data-previous');
 
-            if (newValue === oldValue) return;
+                if (newValue === oldValue) return;
 
-            // Revert change if user is on a free plan
-            console.log(Store.USER);
-            if (!Store.USER.is_premium) {
-                Limits.upgradeModal('QR Code Colors');
+                // Revert change if user is on a free plan
+                if (!Store.USER.is_premium) {
+                    Limits.upgradeModal('QR Code Colors');
 
-                e.target.value = oldValue;
+                    // Switch back to previous value
+                    e.target.value = oldValue;
+                }
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             }
         }));
+    },
+    domainChangeEvent: function () {
+        if (!Selectors.SETTINGS_FORM) return;
+
+        const select = Selectors.SETTINGS_FORM.querySelector(this.constants.LINKS_PAGE_CLASSNAME);
+        if (!select) return;
+
+        select.addEventListener('change', e => {
+            try {
+                const newValue = e.target.value;
+                const oldValue = e.target.getAttribute('data-previous');
+
+                if (newValue === oldValue) return;
+
+                // Revert change if user is on a free plan
+                if (!Store.USER.is_premium) {
+                    if (newValue !== this.DEFAULT.default_domain) {
+                        Limits.upgradeModal(newValue, i18n.BASIC_DOMAIN_NOT_AVAILABLE);
+
+                        // Switch back to previous value
+                        e.target.value = oldValue;
+                    }
+                } else {
+                    if (planDomains.basic.includes(newValue)) {
+                        Limits.upgradeModal(newValue, i18n.BASIC_DOMAIN_NOT_AVAILABLE);
+
+                        // Switch back to previous value
+                        e.target.value = oldValue;
+                    } else if (planDomains.pro.includes(newValue)) {
+                        Limits.upgradeModal(newValue, i18n.PRO_DOMAIN_NOT_AVAILABLE);
+
+                        // Switch back to previous value
+                        e.target.value = oldValue;
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+    },
+    analyticsDurationChangeEvent: function () {
+        if (!Selectors.SETTINGS_FORM) return;
+
+        const select = Selectors.SETTINGS_FORM.querySelector(this.constants.ANALYTICS_DURATION_CLASSNAME);
+        if (!select) return;
+
+        select.addEventListener('change', e => {
+            try {
+                const newValue = e.target.value;
+                const oldValue = e.target.getAttribute('data-previous');
+
+                if (newValue === oldValue) return;
+
+                // Revert change if user is on a free plan
+                if (!Store.USER.is_premium) {
+
+
+                    // Switch back to previous value
+                    e.target.value = oldValue;
+                }
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
     },
     events: function () {
         this.formSubmitEvent();
         this.colorChangeEvent();
+        this.domainChangeEvent();
+        this.analyticsDurationChangeEvent();
     },
-    init: async function() {
+    init: async function () {
         await this.updateDOM();
     }
 };

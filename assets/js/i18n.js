@@ -29,6 +29,10 @@ export const i18n = {
     // Subscription
     SUBSCRIPTION_DATA_NOT_AVAILABLE: 'Unable to fetch subscription details. Please try again later.',
 
+    // Limits
+    BASIC_DOMAIN_NOT_AVAILABLE: 'This domain is part of our <strong>Basic</strong> plan or above. Please consider upgrading if you wish to use it.',
+    PRO_DOMAIN_NOT_AVAILABLE: 'This domain is part of our <strong>Pro</strong> plan. Please consider upgrading if you wish to use it.',
+
     // QR Code
     QRCODE_ERROR: 'Error occurred while generating the QR Code.',
     DOWNLOAD_ERROR: 'Unable to initiate download.'

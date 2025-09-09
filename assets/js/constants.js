@@ -670,3 +670,10 @@ export const urlValidationOptions = {
     protocols: ['http','https'],
     require_protocol: true
 }
+
+// User plan domains
+export const planDomains = {
+    registered: ['clkd.in'],
+    basic: ['clk.gg', 'pgx.es'],
+    pro: ['cd.lk', 'xx.lk']
+};
