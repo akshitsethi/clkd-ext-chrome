@@ -137,7 +137,6 @@ export const Screen = {
 
                 try {
                     let target = e.target;
-                    console.log(e.target.nodeName);
                     if (e.target.nodeName === 'IMG' || e.target.nodeName === 'SPAN') {
                         target = e.target.parentElement;
                     }

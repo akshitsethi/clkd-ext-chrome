@@ -6,6 +6,7 @@ import { Selectors } from "./selectors.js";
 import { Store } from "./store.js";
 import { apiBase } from "./constants.js";
 import { User } from "./user.js";
+import { Limits } from "./limits.js";
 
 export const Settings = {
     DEFAULT: {
@@ -33,16 +34,20 @@ export const Settings = {
             if (Object.entries(Store.SETTINGS).length === 0) {
                 await this.fetchFromAPI();
             }
-
+        } catch (error) {
+            console.error(error);
+        } finally {
             for (const [key, value] of Object.entries(Store.SETTINGS)) {
                 const element = Selectors.SETTINGS_FORM.querySelector(`#${key}`);
                 if (element) {
                     element.value = value;
+
+                    if (element.type === 'color') {
+                        element.setAttribute('data-previous', value);
+                    }
                 }
             }
-        } catch (error) {
-            console.error(error);
-        } finally {
+
             Processing.hide();
         }
     },
@@ -51,9 +56,6 @@ export const Settings = {
             if (!data.hasOwnProperty(option) || !this.OPTIONS[option].includes(data[option])) {
                 data[option] = this.DEFAULT[option];
             }
-
-            // TODO
-            // Adjust few options based on selected plan
         }
 
         return data;
@@ -163,8 +165,30 @@ export const Settings = {
             }
         });
     },
+    colorChangeEvent: function() {
+        if (!Selectors.SETTINGS_FORM) return;
+
+        const colors = Selectors.SETTINGS_FORM.querySelectorAll('input[type=color]');
+        if (!colors) return;
+
+        colors.forEach(color => color.addEventListener('change', e => {
+            const newValue = e.target.value;
+            const oldValue = e.target.getAttribute('data-previous');
+
+            if (newValue === oldValue) return;
+
+            // Revert change if user is on a free plan
+            console.log(Store.USER);
+            if (!Store.USER.is_premium) {
+                Limits.upgradeModal('QR Code Colors');
+
+                e.target.value = oldValue;
+            }
+        }));
+    },
     events: function () {
         this.formSubmitEvent();
+        this.colorChangeEvent();
     },
     init: async function() {
         await this.updateDOM();
