@@ -509,6 +509,7 @@ export const continents = {
 // Analytics duration
 export const analyticsDuration = {
     'day': 1,
+    '3days': 3,
     'week': 7,
     '2weeks': 14,
     'month': 30,
@@ -518,6 +519,7 @@ export const analyticsDuration = {
 // Duration nice name
 export const analyticsDurationNiceName = {
     'day': 'Today',
+    '3days': 'Last 3 days',
     'week': 'This Week',
     '2weeks': 'Last 2 Weeks',
     'month': 'Last Month',
