@@ -1215,7 +1215,10 @@ h2 {
     & .upgrade-close {
         position: absolute;
         right: 0.25rem;
-        top: -1.25rem;
+        top: -1.75rem;
+        background: #ffffff;
+        padding: 0.25rem;
+        border-radius: 6px;
 
         & img {
             max-width: 16px;

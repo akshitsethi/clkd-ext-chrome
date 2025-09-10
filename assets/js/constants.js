@@ -519,8 +519,9 @@ export const analyticsDuration = {
 export const analyticsDurationNiceName = {
     'day': 'Today',
     'week': 'This Week',
-    '2weeks': 'Past 2 Weeks',
-    'month': 'Past Month'
+    '2weeks': 'Last 2 Weeks',
+    'month': 'Last Month',
+    '2months': 'Last 2 Months'
 };
 
 // API Endpoint
@@ -676,4 +677,11 @@ export const planDomains = {
     registered: ['clkd.in'],
     basic: ['clk.gg', 'pgx.es'],
     pro: ['cd.lk', 'xx.lk']
+};
+
+// Analytics duration as per user plan
+export const planAnalyticsDuration = {
+    registered: ['day', '3days'],
+    basic: ['week', '2weeks'],
+    pro: ['month', '2months']
 };

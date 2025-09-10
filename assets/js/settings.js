@@ -4,7 +4,7 @@ import { Notification } from "./notification.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
 import { Store } from "./store.js";
-import { apiBase, planDomains } from "./constants.js";
+import { analyticsDurationNiceName, apiBase, planAnalyticsDuration, planDomains } from "./constants.js";
 import { User } from "./user.js";
 import { Limits } from "./limits.js";
 
@@ -14,7 +14,7 @@ export const Settings = {
         LINKS_PAGE_CLASSNAME: 'select[name=default_domain]'
     },
     DEFAULT: {
-        analytics_duration: 'week',
+        analytics_duration: '3days',
         links_per_page: '10',
         default_domain: 'clkd.in',
         pages_per_page: '10',
@@ -23,7 +23,7 @@ export const Settings = {
         qr_text: '#000000'
     },
     OPTIONS: {
-        analytics_duration: ['day', 'week', '2weeks', 'month'],
+        analytics_duration: ['day', '3days', 'week', '2weeks', 'month', '2months'],
         links_per_page: ['5', '10', '25', '50', '100'],
         default_domain: ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk'],
         pages_per_page: ['5', '10', '25', '50', '100'],
@@ -208,18 +208,13 @@ export const Settings = {
                 // Revert change if user is on a free plan
                 if (!Store.USER.is_premium) {
                     if (newValue !== this.DEFAULT.default_domain) {
-                        Limits.upgradeModal(newValue, i18n.BASIC_DOMAIN_NOT_AVAILABLE);
+                        planDomains.basic.includes(newValue) ? Limits.upgradeModal(newValue, i18n.BASIC_DOMAIN_NOT_AVAILABLE) : Limits.upgradeModal(newValue, i18n.PRO_DOMAIN_NOT_AVAILABLE);
 
                         // Switch back to previous value
                         e.target.value = oldValue;
                     }
                 } else {
-                    if (planDomains.basic.includes(newValue)) {
-                        Limits.upgradeModal(newValue, i18n.BASIC_DOMAIN_NOT_AVAILABLE);
-
-                        // Switch back to previous value
-                        e.target.value = oldValue;
-                    } else if (planDomains.pro.includes(newValue)) {
+                    if (planDomains.pro.includes(newValue) && Store.USER.subscription.plan === 'basic') {
                         Limits.upgradeModal(newValue, i18n.PRO_DOMAIN_NOT_AVAILABLE);
 
                         // Switch back to previous value
@@ -247,10 +242,19 @@ export const Settings = {
 
                 // Revert change if user is on a free plan
                 if (!Store.USER.is_premium) {
+                    if (!planAnalyticsDuration.registered.includes(newValue)) {
+                        planAnalyticsDuration.basic.includes(newValue) ? Limits.upgradeModal(analyticsDurationNiceName[newValue], i18n.BASIC_ANALYTICS_NOT_AVAILABLE) : Limits.upgradeModal(analyticsDurationNiceName[newValue], i18n.PRO_ANALYTICS_NOT_AVAILABLE);
 
+                        // Switch back to previous value
+                        e.target.value = oldValue;
+                    }
+                } else {
+                    if (planAnalyticsDuration.pro.includes(newValue) && Store.USER.subscription.plan === 'basic') {
+                        Limits.upgradeModal(analyticsDurationNiceName[newValue], i18n.PRO_ANALYTICS_NOT_AVAILABLE);
 
-                    // Switch back to previous value
-                    e.target.value = oldValue;
+                        // Switch back to previous value
+                        e.target.value = oldValue;
+                    }
                 }
             } catch (error) {
                 console.error(error);
