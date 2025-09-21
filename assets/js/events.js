@@ -10,6 +10,7 @@ import { Dashboard } from "./dashboard.js";
 import { Links } from "./links.js";
 import { Modal } from "./modal.js";
 import { Limits } from "./limits.js";
+import { Tmp } from "./tmp.js";
 
 export const Events = {
     init: function () {
@@ -24,5 +25,6 @@ export const Events = {
         Links.events();
         Modal.events();
         Limits.events();
+        Tmp.events();
     }
 };

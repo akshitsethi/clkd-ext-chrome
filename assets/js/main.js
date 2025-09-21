@@ -23,7 +23,7 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			// Screen.show('analytics', 'block', 'true', false);
+			Screen.show('qrcode', 'block', 'false', false);
 			// console.log(Store.USER);
 		} catch (error) {
 			console.error(error);

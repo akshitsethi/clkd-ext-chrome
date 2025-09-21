@@ -31,6 +31,7 @@ export const Screen = {
         'subscription-verify',
         'subscription-success',
         'subscription-exists',
+        'qrcode'
     ],
     show: async function (screen, display = this.constants.DEFAULT_DISPLAY, callback = null, async = false) {
         if (!this.screens.includes(screen)) {
