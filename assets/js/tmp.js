@@ -34,21 +34,18 @@ export const Tmp = {
                 }
             );
 
-            const ctx = canvas.getContext("2d");
-            const boxX = (canvas.width - 80) / 2;
-            const boxY = (canvas.height - 80) / 2;
+            const ctx = canvas.getContext('2d');
 
             // Set fill style to white and draw the rectangle
             ctx.fillStyle = background;
-            ctx.fillRect(boxX, boxY, 80, 80);
+            ctx.roundRect(160, 160, 80, 80, 12);
+            ctx.fill();
 
             const img = await loadImage(image);
-
-            console.log(img);
             const center = (400 - 60) / 2;
             ctx.drawImage(img, center, center, 60, 60);
 
-            return canvas.toDataURL("image/png");
+            return canvas.toDataURL('image/png');
         } catch (error) {
             console.error(error);
             Notification.error(i18n.QRCODE_ERROR);

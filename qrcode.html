@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRCode Generator</title>
+</head>
+<body>
+    <form class="qrcode-form" enctype="multipart/form-data">
+        <input type="radio" name="color" value="red">Red
+        <input type="radio" name="color" value="green">Green
+        <input type="radio" name="color" value="blue">Blue
+
+        <input type="file" name="logo">
+        <input type="submit" name="submit" value="Submit">
+    </form>
+
+    <script src="./assets/dist/main.js"></script>
+    <!-- <script type="text/javascript">
+        const form = document.querySelector('.qrcode--form');
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const logo = data.get('logo');
+
+            // Convert file to array buffer before sending it to the server
+            formData.set('logo', await new Blob([logo], { type: logo.type }).arrayBuffer());
+
+            const request = await fetch('http://localhost:8788/api/qrcode',
+                {
+                    method: 'POST',
+                    body: data
+                }
+            );
+        });
+    </script> -->
+</body>
+</html>

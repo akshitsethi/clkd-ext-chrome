@@ -49,9 +49,7 @@ export const Tooltip = {
         }
     },
     show: function (el, text) {
-        if (!el) {
-            throw new Error(i18n.SELECTOR_NOT_FOUND);
-        }
+        if (!el) return;
 
         // Set tooltip attribute for `el`
         el.setAttribute('tooltip', text);

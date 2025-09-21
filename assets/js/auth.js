@@ -54,9 +54,7 @@ export const Auth = {
 		}
 	},
 	googleLoginEvent: function () {
-		if (!Selectors.GOOGLE_OAUTH_BUTTON) {
-			throw new Error(i18n.SELECTOR_NOT_FOUND);
-		}
+		if (!Selectors.GOOGLE_OAUTH_BUTTON) return;
 
 		Selectors.GOOGLE_OAUTH_BUTTON.addEventListener('click', async e => {
 			e.preventDefault();
@@ -126,9 +124,7 @@ export const Auth = {
 		});
 	},
 	logoutEvent: function () {
-		if (!Selectors.LOGOUT_LINK) {
-			return;
-		}
+		if (!Selectors.LOGOUT_LINK) return;
 
 		Selectors.LOGOUT_LINK.addEventListener('click', async e => {
 			e.preventDefault();

@@ -1,6 +1,5 @@
 // processing.js
 import { Selectors } from "./selectors.js";
-import { i18n } from "./i18n.js";
 
 export const Processing = {
     constants: {
@@ -8,8 +7,12 @@ export const Processing = {
     },
     SELECTOR: null,
     show: function (selector, position = 'fixed') {
+        // Do nothing if processing template does not exist
+        if (!Selectors.PROCESSING_TEMPLATE) return;
+
+        // If the selector does not exist, use <body> tag
         if (!selector) {
-            throw new Error(i18n.SELECTOR_NOT_FOUND);
+            selector = document.body;
         }
 
         // This needs to be used later for hiding it
