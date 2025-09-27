@@ -31,13 +31,14 @@
 
 	<div class="secondary-header">
 		<!-- Primary sections -->
-		<div class="primary-section" data-screens="dashboard|links|analytics">
+		<div class="primary-section" data-screens="dashboard|links|pages|analytics">
 			<div class="navigation">
 				<span class="current-page">Dashboard</span>
 
 				<ul class="page-selector">
 					<li><a href="#" data-section="dashboard" class="selected">Dashboard</a></li>
 					<li><a href="#" data-section="links">Links</a></li>
+					<li><a href="#" data-section="pages">Pages</a></li>
 					<li><a href="#" data-section="analytics">Analytics</a></li>
 				</ul>
 			</div>
@@ -81,6 +82,12 @@
 			</div>
 		</div>
 		<div class="dynamic-section" data-screens="links">
+			<div class="state-switcher">
+				<a href="#" data-state="active" class="selected">Active</a>
+				<a href="#" data-state="archive">Archive</a>
+			</div>
+		</div>
+		<div class="dynamic-section" data-screens="pages">
 			<div class="state-switcher">
 				<a href="#" data-state="active" class="selected">Active</a>
 				<a href="#" data-state="archive">Archive</a>
@@ -382,6 +389,153 @@
 				</div>
 			</div>
 		</div><!-- #links -->
+
+		<div id="pages" class="screen">
+			<div data-content="active">
+				<div class="wrapper">
+					<div class="quick-create">
+						<form class="page-form" method="POST">
+							<div class="input">
+								<input type="url" name="url" autocomplete="off"
+									placeholder="https://example.com/my-long-url">
+								<button class="button green" type="submit">Create</button>
+							</div>
+						</form>
+
+						<div class="page-output">
+							<div class="page-output-details"></div>
+
+							<template id="page-output-template">
+								<a class="new-page" href="#">#</a>
+								<a class="copy" href="#">Copy</a>
+								<a class="qrcode" href="#">QR Code</a>
+							</template>
+						</div>
+
+						<div class="section-footer">
+							<div class="domains">
+								<select name="domain">
+									<option value="clkd.in">clkd.in</option>
+									<option value="clk.gg">clk.gg</option>
+									<option value="pgx.es">pgx.es</option>
+									<option value="cd.lk">cd.lk</option>
+									<option value="xx.lk">xx.lk</option>
+								</select>
+							</div>
+
+							<div class="mode-switcher">
+								<span><img src="./assets/images/power.png" alt="Mode"></span>
+								<a href="#" data-mode="auto">auto</a>
+							</div>
+
+							<div class="qr-settings">
+								<span><img src="./assets/images/wrench.png" alt="QR Settings"></span>
+								<a href="#" data-screen="settings" data-callback="true" data-async="true">Settings</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="pages">
+						<div class="pages-table">
+							<h2>Pages</h2>
+
+							<table class="pages-data table-data row-border">
+								<thead>
+									<tr>
+										<th data-dt-order="disable"></th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+
+						<div class="no-links-data">
+							<h3>Haven't created a page yet?</h3>
+							<p></p>
+						</div>
+
+						<template id="page-entry-template">
+							<tr>
+								<td>
+									<div class="flex">
+										<div class="core">
+											<a href="#" data-slug="#" data-url="#" data-created="#" class="link">
+												<span class="slug"></span>
+												<span class="domain"></span>
+											</a>
+											<a href="#" class="target"></a>
+											<span class="created"></span>
+										</div>
+										<div class="actions">
+											<a href="#" class="analytics">
+												<img src="./assets/images/chart.png" alt="Page Analytics" />
+											</a>
+											<a href="#" class="edit">
+												<img src="./assets/images/edit.png" alt="Edit Page" />
+											</a>
+											<a href="#" class="qrcode">
+												<img src="./assets/images/dash-scans.png" alt="QR Code" />
+											</a>
+											<a href="#" class="archive">
+												<img src="./assets/images/archive.png" alt="Archive Page" />
+											</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</template>
+					</div>
+				</div>
+			</div>
+
+			<div data-content="archive">
+				<div class="wrapper">
+					<div class="archive-table">
+						<h2>Archive</h2>
+
+						<table class="archive-data table-data row-border">
+							<thead>
+								<tr>
+									<th data-dt-order="disable"></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+
+					<div class="no-pages-archive">
+						<span class="center block">
+							<img src="./assets/images/thinking.png" alt="No archived page" />
+						</span>
+
+						<p>It seems like you have not archived a page yet. As soon as a <span class="semibold">page is
+								archived</span>, it'll appear here.</p>
+					</div>
+
+					<template id="page-archive-template">
+						<tr>
+							<td>
+								<div class="flex">
+									<div class="core">
+										<a href="#" data-slug="#" data-url="#" data-created="#" class="link">
+											<span class="slug"></span>
+											<span class="domain"></span>
+										</a>
+										<a href="#" class="target"></a>
+										<span class="created"></span>
+									</div>
+									<div class="actions">
+										<a href="#" class="restore">
+											<img src="./assets/images/restore.png" alt="Restore Link" />
+										</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</template>
+				</div>
+			</div>
+		</div><!-- #pages -->
 
 		<div id="analytics" class="screen">
 			<div class="analytics-data">

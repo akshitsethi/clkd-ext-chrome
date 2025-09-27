@@ -8,6 +8,7 @@ import { Dashboard } from "./dashboard.js";
 import { Links } from "./links.js";
 import { Help } from "./help.js";
 import { Account } from "./account.js";
+import { Pages } from "./pages.js";
 
 export const Screen = {
     constants: {
@@ -16,10 +17,11 @@ export const Screen = {
         DEFAULT_DISPLAY: 'block'
     },
     dynamic: ['links', 'analytics'],
-    pages: ['dashboard', 'links', 'analytics'],
+    sections: ['dashboard', 'links', 'pages', 'analytics'],
     screens: [
         'dashboard',
         'links',
+        'pages',
         'analytics',
         'single',
         'account',
@@ -39,7 +41,7 @@ export const Screen = {
         }
 
         // Display the desired screen
-        const el = document.getElementById(screen);
+        const el = document.querySelector(`div#${screen}`);
         if (!el) {
             throw new Error(i18n.NO_SCREEN_ERROR);
         }
@@ -83,7 +85,7 @@ export const Screen = {
         this.showHideSections(Selectors.DYNAMIC_SECTION, screen);
     },
     updatePageSelector: function(screen) {
-        if (!this.pages.includes(screen)) return;
+        if (!this.sections.includes(screen)) return;
 
         // If the above condition is not met, reset page selector to `dashboard`
         // Remove `selected` from all and add it to the current target
@@ -116,6 +118,9 @@ export const Screen = {
     },
     links: async function () {
         await Links.init();
+    },
+    pages: async function () {
+        await Pages.init();
     },
     analytics: async function () {
         await Analytics.init();
