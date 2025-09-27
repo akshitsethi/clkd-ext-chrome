@@ -17,7 +17,7 @@ export const Analytics = {
     DATA: {},
     DATA_KEYS: ['browser', 'os', 'screen', 'lang', 'country', 'city'],
     VARIABLE_CHARTS: ['browser', 'os', 'screen', 'lang'],
-    VISIT_CHARTS: ['clicks', 'scans'],
+    VISIT_CHARTS: ['clicks', 'scans', 'pages'],
     TABLE_INSTANCES: {
         country: null,
         city: null
@@ -186,7 +186,7 @@ export const Analytics = {
             const find = data.find(obj => obj.date === query);
 
             // Click and scan data
-            for (const type of ['clicks', 'scans']) {
+            for (const type of ['clicks', 'scans', 'pages']) {
                 this.COMPUTATIONS[type].labels.unshift(formatDate(new Date(query), 'chart'));
 
                 // Add an entry for zero data

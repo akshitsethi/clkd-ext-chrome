@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>CLKD | Supercharged Links</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./assets/css/datatables.css" type="text/css">
 	<link rel="stylesheet" href="./assets/css/main.css" type="text/css">
 </head>
-
 <body data-current-screen="dashboard">
 	<header class="header">
 		<h1 class="logo">clkd</h1>
@@ -398,6 +394,11 @@
 					<div class="chart">
 						<h2>Scans</h2>
 						<canvas id="scans"></canvas>
+					</div>
+
+					<div class="chart">
+						<h2>Pages</h2>
+						<canvas id="pages"></canvas>
 					</div>
 
 					<div class="geolocation">
@@ -825,5 +826,4 @@
 	<script src="./assets/dist/main.js"></script>
 	<script src="./websocket.js"></script>
 </body>
-
 </html>

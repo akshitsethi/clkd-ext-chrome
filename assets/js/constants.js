@@ -552,6 +552,11 @@ export const analyticsBlankSlate = {
         all: [],
         unique: []
     },
+    pages: {
+        labels: [],
+        all: [],
+        unique: []
+    },
     browser: {},
     os: {},
     screen: {},
@@ -611,6 +616,10 @@ export const variableChartColors = {
     scans: {
         all: ['rgb(99, 193, 247)'],
         unique: ['rgb(46, 204, 113)']
+    },
+    pages: {
+        all: ['rgb(231, 76, 60)'],
+        unique: ['rgb(99, 193, 247)']
     },
     browser: [
         'rgb(255, 201, 39)',

@@ -28,13 +28,15 @@ export const Dashboard = {
             // If found, compute data
             if (find) {
                 // Weekly computation for click & scan data
-                this.COMPUTATIONS.totals.week.clicks += find.clicks;
-                this.COMPUTATIONS.totals.week.scans += find.scans;
+                this.COMPUTATIONS.totals.week.clicks += find.clicks ?? 0;
+                this.COMPUTATIONS.totals.week.scans += find.scans ?? 0;
+                this.COMPUTATIONS.totals.week.pages += find.pages ?? 0;
 
                 // Today's computation
                 if (i === 0) {
-                    this.COMPUTATIONS.totals.today.clicks += find.clicks;
-                    this.COMPUTATIONS.totals.today.scans += find.scans;
+                    this.COMPUTATIONS.totals.today.clicks = find.clicks ?? 0;
+                    this.COMPUTATIONS.totals.today.scans = find.scans ?? 0;
+                    this.COMPUTATIONS.totals.today.pages = find.pages ?? 0;
                 }
 
                 // Variable data such as country, browser, screen etc
