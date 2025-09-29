@@ -14,9 +14,11 @@ import { Modal } from "./modal.js";
 import { Single } from "./single.js";
 import { isURL, isAlphanumeric } from "validator";
 import { Limits } from "./limits.js";
+import { TWO_THIRDS_PI } from "chart.js/helpers";
 
 export const Links = {
 	constants: {
+		DATA_TYPE: 'link',
 		OUTPUT_DETAILS_CLASSNAME: '.link-output-details',
 		OUTPUT_TEMPLATE_CLASSNAME: '#link-output-template',
 		OUTPUT_NEW_LINK_CLASSNAME: '.new-link',
@@ -60,9 +62,9 @@ export const Links = {
 		const slug = parent.getAttribute('data-slug');
 
 		// Set `is_archive` property for the item
-		const index = this.DATA.findIndex(link => link.slug === slug && link.domain === domain);
+		const index = this.DATA.findIndex(entry => entry.slug === slug && entry.domain === domain);
 		if (index === -1) {
-			throw new Error(i18n.LINK_NOT_FOUND);
+			throw new Error(i18n.ENTRY_NOT_FOUND);
 		}
 
 		// API call for setting the `is_archive` attribute
@@ -78,7 +80,7 @@ export const Links = {
 				token: Store.USER.token,
 				domain: domain,
 				slug: slug,
-				data_type: 'link',
+				data_type: this.constants.DATA_TYPE,
 				is_archive: is_archive
 			})
 		});
@@ -94,17 +96,22 @@ export const Links = {
 			throw new Error(response.message);
 		}
 
-		// Replace link content
-		this.DATA.splice(index, 1, {
+		// Updated data
+		const data = {
 			slug: this.DATA[index].slug,
 			domain: this.DATA[index].domain,
-			url: this.DATA[index].url,
 			is_archive: is_archive,
 			created: this.DATA[index].created
-		});
+		};
+		if (this.constants.DATA_TYPE === 'link') {
+			data.url = this.DATA[index].url;
+		}
 
-		// Store links by passing empty array to function
-		await User.setLinks([]);
+		// Replace link content
+		this.DATA.splice(index, 1, data);
+
+		// Store entries by passing empty array to function
+		await User.setEntries([], this.constants.DATA_TYPE);
 
 		// On successfull update, refresh tables
 		this.populateData();
@@ -255,7 +262,7 @@ export const Links = {
 						this.DATA[index].url = data.get('redirect');
 
 						// Store links by passing empty array to function
-						await User.setLinks([]);
+						await User.setEntries([], this.constants.DATA_TYPE);
 
 						// On successfull update, refresh just active links table
 						this.populateData();
@@ -355,7 +362,7 @@ export const Links = {
 			}
 		});
 	},
-	showNewLinkOutput: function (domain, slug) {
+	showNewEntryOutput: function (domain, slug) {
 		if (!Selectors.LINK_OUTPUT_SECTION) return;
 
 		// Check for required selectors
@@ -397,41 +404,43 @@ export const Links = {
 		// Make selector visible
 		Selectors.LINK_OUTPUT_SECTION.style.display = 'block';
 	},
-	addNewLink: function (data) {
-		// Add new link to local storage
-		const link = {
+	addNewEntry: async function (data) {
+		// Add new entry to local storage
+		const entry = {
 			slug: data.slug,
 			domain: data.domain,
-			url: data.url,
 			is_archive: data.is_archive,
 			created: data.created
 		};
+		if (this.constants.DATA_TYPE === 'link') {
+			entry.url = data.url;
+		}
 
 		// Add to storage
-		User.setLinks([link]);
+		await User.setEntries([entry], this.constants.DATA_TYPE);
 
 		// Show newly added link on screen
-		this.showNewLinkOutput(data.domain, data.slug);
+		this.showNewEntryOutput(data.domain, data.slug);
 
 		// Refresh links table
 		this.populateData();
 
 		// Success notification
-		Notification.success(i18n.LINK_CREATED);
+		Notification.success(i18n.CREATED[this.constants.DATA_TYPE]);
 	},
 	updateDOM: async function () {
 		try {
 			Processing.show(document.body);
 
 			// Get data from storage
-			const data = await Store.get('links');
+			const data = await Store.get(`${this.constants.DATA_TYPE}s`);
 
 			// Fetch fresh data from API if any of the conditions are not met
 			if (
-				!data.hasOwnProperty('links')
-				|| !data.links.hasOwnProperty('data')
-				|| !data.links.hasOwnProperty('refresh')
-				|| data.links.refresh <= Date.now()
+				!data.hasOwnProperty(`${this.constants.DATA_TYPE}s`)
+				|| !data[`${this.constants.DATA_TYPE}s`].hasOwnProperty('data')
+				|| !data[`${this.constants.DATA_TYPE}s`].hasOwnProperty('refresh')
+				|| data[`${this.constants.DATA_TYPE}s`].refresh <= Date.now()
 			) {
 				// Set data to empty array
 				this.DATA = [];
@@ -439,7 +448,7 @@ export const Links = {
 				// Request data from API
 				await this.fetchFromAPI();
 			} else {
-				this.DATA = data.links.data;
+				this.DATA = data[`${this.constants.DATA_TYPE}s`].data;
 			}
 		} catch (error) {
 			console.error(error);
@@ -550,7 +559,8 @@ export const Links = {
 	fetchFromAPI: async function (next = null) {
 		const body = {
 			user_id: Store.USER.ID,
-			token: Store.USER.token
+			token: Store.USER.token,
+			data_type: this.constants.DATA_TYPE
 		};
 
 		// Check if `next` parameter is specified to fetch additional data
@@ -584,7 +594,7 @@ export const Links = {
 		}
 
 		// Set user's link data
-		await User.setLinks(response.message);
+		await User.setEntries(response.message, this.constants.DATA_TYPE);
 
 		// Recursion (we keep calling the endpoint until next is not null)
 		if (response.hasOwnProperty('next') && response.next !== null) {
@@ -707,7 +717,7 @@ export const Links = {
 				const response = await this.syncWithAPI(url, domain, slug);
 
 				// Add newly generated link
-				this.addNewLink(response);
+				this.addNewEntry(response);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -753,7 +763,7 @@ export const Links = {
 				const response = await this.syncWithAPI(tab.url, domain, slug);
 
 				// Add newly generated link
-				this.addNewLink(response);
+				this.addNewEntry(response);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);

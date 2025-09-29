@@ -7,6 +7,7 @@ import { Analytics } from "./analytics.js";
 import { i18n } from "./i18n.js";
 import { Settings } from "./settings.js";
 import { Links } from "./links.js";
+import { Pages } from "./pages.js";
 import { refreshDuration } from "./constants.js";
 import { Limits } from "./limits.js";
 
@@ -26,19 +27,19 @@ export const User = {
         // Also, set data for the user store object
         Store.USER = data;
     },
-    setLinks: async function (data) {
+    setEntries: async function (data, data_type) {
         // Merge new data with existing one
         Links.DATA = [...Links.DATA, ...data];
 
+        // Data object
+        const data = {};
+        data[`${data_type}s`] = {
+            data: data_type === 'link' ? Links.DATA : Pages.DATA,
+            refresh: refreshDuration.entries
+        };
+
         // Store links data to locally
-        await Store.set(
-            {
-                links: {
-                    data: Links.DATA,
-                    refresh: refreshDuration.links
-                }
-            }
-        );
+        await Store.set();
     },
     setAnalytics: async function (data) {
         // Store analytics data to locally

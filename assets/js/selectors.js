@@ -46,7 +46,20 @@ export const Selectors = {
     LINK_MODE_SWITCHER: document.querySelector('#links .mode-switcher a'),
 
     // Pages
-    
+    PAGE_FORM: document.querySelector('#pages .page-form'),
+    PAGE_TEMPLATE: {
+        active: document.querySelector('#pages #page-entry-template'),
+        archive: document.querySelector('#pages #page-archive-template')
+    },
+    PAGES_SECTION: {
+        active: document.querySelector('#pages .pages-table'),
+        archive: document.querySelector('#pages .archive-table')
+    },
+    PAGES_NO_DATA_MESSAGE: {
+        active: document.querySelector('#pages .no-pages-data'),
+        archive: document.querySelector('#pages .no-pages-archive')
+    },
+    PAGE_OUTPUT_SECTION: document.querySelector('#pages .page-output'),
 
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),

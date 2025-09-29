@@ -17,8 +17,14 @@ export const i18n = {
     EMPTY_SLUG_ERROR: 'Please provide a unique slug or switch to "Auto" mode.',
     SLUG_VALIDATION_ERROR: 'Slug can only contain alphanumeric characters along with hyphen and underscore.',
     SLUG_HYPHEN_ERROR: 'Slug cannot start or end with a hyphen.',
-    LINK_NOT_FOUND: 'Unable to locate the specified link in storage.',
-    LINK_CREATED: 'New short link has been created.',
+    CREATED: {
+        link: 'New short link has been created.',
+        page: 'New page has been created.',
+    },
+    ENTRY_NOT_FOUND: 'Unable to locate the specified entry in storage.',
+
+    // Pages
+    SLUG_DOMAIN_ERROR: 'Missing details. Please provide a valid slug and domain.',
 
     // Analytics
     NO_DATA_ERROR: 'Unable to find analytics data.',

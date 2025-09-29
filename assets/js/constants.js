@@ -536,8 +536,7 @@ export const refreshDuration = {
         account: date + 60 * 60 * 1000, // 1 hour
         slug: date + 60 * 60 * 1000
     },
-    links: date + 60 * 60 * 1000 * 24 * 7, // 7 days
-    pages: date + 60 * 60 * 1000 * 24 * 7
+    entries: date + 60 * 60 * 1000 * 24 * 7 // 7 days
 };
 
 // Blank slate for analytics computations

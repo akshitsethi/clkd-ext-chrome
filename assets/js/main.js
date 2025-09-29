@@ -6,7 +6,6 @@ import { i18n } from "./i18n.js";
 import { Events } from "./events.js";
 import { Processing } from "./processing.js";
 import { Screen } from "./screen.js";
-import { Limits } from "./limits.js";
 
 // Main application
 const CLKD = {
