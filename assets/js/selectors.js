@@ -45,6 +45,9 @@ export const Selectors = {
     LINK_DOMAIN_SELECTOR: document.querySelector('#links select[name=domain]'),
     LINK_MODE_SWITCHER: document.querySelector('#links .mode-switcher a'),
 
+    // Pages
+    
+
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
     NO_ANALYTICS_SECTION: document.querySelector('#analytics .no-analytics-data'),

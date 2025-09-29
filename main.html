@@ -361,8 +361,7 @@
 							<img src="./assets/images/thinking.png" alt="No archived link" />
 						</span>
 
-						<p>It seems like you have not archived a link yet. As soon as a <span class="semibold">link is
-								archived</span>, it'll appear here.</p>
+						<p>It seems like you have not archived a link yet. As soon as a <span class="semibold">link is archived</span>, it'll appear here.</p>
 					</div>
 
 					<template id="link-archive-template">
@@ -396,10 +395,18 @@
 					<div class="quick-create">
 						<form class="page-form" method="POST">
 							<div class="input">
-								<input type="url" name="url" autocomplete="off"
-									placeholder="https://example.com/my-long-url">
-								<button class="button green" type="submit">Create</button>
+								<select name="domain">
+									<option value="clkd.in">clkd.in</option>
+									<option value="clk.gg">clk.gg</option>
+									<option value="pgx.es">pgx.es</option>
+									<option value="cd.lk">cd.lk</option>
+									<option value="xx.lk">xx.lk</option>
+								</select>
+								<span class="divider">/</span>
+								<input type="text" name="slug" autocomplete="off" placeholder="Type your unique slug">
 							</div>
+
+							<button class="button pink" type="submit">Create</button>
 						</form>
 
 						<div class="page-output">
@@ -410,28 +417,6 @@
 								<a class="copy" href="#">Copy</a>
 								<a class="qrcode" href="#">QR Code</a>
 							</template>
-						</div>
-
-						<div class="section-footer">
-							<div class="domains">
-								<select name="domain">
-									<option value="clkd.in">clkd.in</option>
-									<option value="clk.gg">clk.gg</option>
-									<option value="pgx.es">pgx.es</option>
-									<option value="cd.lk">cd.lk</option>
-									<option value="xx.lk">xx.lk</option>
-								</select>
-							</div>
-
-							<div class="mode-switcher">
-								<span><img src="./assets/images/power.png" alt="Mode"></span>
-								<a href="#" data-mode="auto">auto</a>
-							</div>
-
-							<div class="qr-settings">
-								<span><img src="./assets/images/wrench.png" alt="QR Settings"></span>
-								<a href="#" data-screen="settings" data-callback="true" data-async="true">Settings</a>
-							</div>
 						</div>
 					</div>
 
@@ -449,9 +434,9 @@
 							</table>
 						</div>
 
-						<div class="no-links-data">
+						<div class="no-pages-data">
 							<h3>Haven't created a page yet?</h3>
-							<p></p>
+							<p>Create a page and get attention by customizing what they say. Create your first one using the options at the top.</p>
 						</div>
 
 						<template id="page-entry-template">
@@ -508,8 +493,7 @@
 							<img src="./assets/images/thinking.png" alt="No archived page" />
 						</span>
 
-						<p>It seems like you have not archived a page yet. As soon as a <span class="semibold">page is
-								archived</span>, it'll appear here.</p>
+						<p>It seems like you have not archived a page yet. As soon as a <span class="semibold">page is archived</span>, it'll appear here.</p>
 					</div>
 
 					<template id="page-archive-template">

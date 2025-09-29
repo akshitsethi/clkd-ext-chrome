@@ -650,11 +650,13 @@ h2 {
     }
 }
 
-.link-output {
+.link-output,
+.page-output {
     display: none;
     margin: 0 0 1rem;
 
-    & .link-output-details {
+    & .link-output-details,
+    & .page-output-details {
         display: flex;
         align-items: center;
         font-size: 0.875rem;
@@ -669,7 +671,8 @@ h2 {
             line-height: 1.425;
         }
 
-        & .new-link {
+        & .new-link,
+        & .new-page {
             word-break: break-all;
         }
 
@@ -846,6 +849,70 @@ h2 {
             & .actions {
                 display: flex;
             }
+        }
+    }
+}
+
+/* Pages */
+#pages {
+    & [data-content] {
+        background-image: linear-gradient(180deg, rgba(119, 148, 182, 0.105) 43%, rgba(255, 255, 255, 0) 93%);
+
+        & .wrapper {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+    }
+
+    & .page-form {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 8px;
+        padding: 0.5rem;
+
+        & .input {
+            display: flex;
+            align-items: center;
+
+            & input,
+            & select {
+                background: transparent;
+                border-radius: 0;
+                padding: 1rem 0.25rem;
+            }
+            & select {
+                font-weight: 600;
+            }
+
+            & .divider {
+                padding: 0;
+                margin: 0 0.25rem;
+                font-weight: 600;
+                color: #101010;
+            }
+        }
+
+        & .button {
+            width: 100%;
+        }
+    }
+
+    & .pages,
+    & .pages-archive {
+        padding: 1.5rem 0;
+
+        & .no-pages-data {
+            padding: 0.5rem 0 1.5rem;
+            display: none;
+
+            & h3 {
+                font-weight: 600;
+                font-size: 1.0625rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        & .no-pages-archive {
+            display: none;
         }
     }
 }
