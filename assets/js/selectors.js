@@ -25,7 +25,6 @@ export const Selectors = {
     STATS_SWITCHER_BUTTON: document.querySelector('.stats-switcher a'),
 
     // Links
-    LINK_FORM: document.querySelector('#links .link-form'),
     LINK_FROM_TAB_BUTTON: document.querySelector('#links #create-from-tab'),
     REVEAL_URL_LINK: document.querySelector('#links .reveal-url'),
     LINK_TEMPLATE: {
@@ -41,12 +40,10 @@ export const Selectors = {
         active: document.querySelector('#links .no-links-data'),
         archive: document.querySelector('#links .no-links-archive')
     },
-    LINK_OUTPUT_SECTION: document.querySelector('#links .link-output'),
     LINK_DOMAIN_SELECTOR: document.querySelector('#links select[name=domain]'),
     LINK_MODE_SWITCHER: document.querySelector('#links .mode-switcher a'),
 
-    // Pages
-    PAGE_FORM: document.querySelector('#pages .page-form'),
+    // Pages,
     PAGE_TEMPLATE: {
         active: document.querySelector('#pages #page-entry-template'),
         archive: document.querySelector('#pages #page-archive-template')
@@ -59,7 +56,20 @@ export const Selectors = {
         active: document.querySelector('#pages .no-pages-data'),
         archive: document.querySelector('#pages .no-pages-archive')
     },
-    PAGE_OUTPUT_SECTION: document.querySelector('#pages .page-output'),
+
+    // Common (for both links & pages)
+    FORM: {
+        link: document.querySelector('#links .link-form'),
+        page: document.querySelector('#pages .page-form')
+    },
+    OUTPUT_SECTION: {
+        link: document.querySelector('#links .link-output'),
+        page: document.querySelector('#pages .page-output')
+    },
+    CONTENT_SECTIONS: {
+        links: document.querySelectorAll('#links [data-content]'),
+        pages: document.querySelectorAll('#pages [data-content]')
+    },
 
     // Analytics
     ANALYTICS_SECTION: document.querySelector('#analytics .analytics-data'),
@@ -104,10 +114,5 @@ export const Selectors = {
     // Modal
     MODAL: document.querySelector('.modal'),
     MODAL_CONTENT: document.querySelector('.modal-content'),
-    MODAL_CLOSE: document.querySelector('.modal-close'),
-
-    // Content sections (used in links & pages)
-    CONTENT_SECTIONS: {
-        links: document.querySelectorAll('#links [data-content]')
-    }
+    MODAL_CLOSE: document.querySelector('.modal-close')
 };

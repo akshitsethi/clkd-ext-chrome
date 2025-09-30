@@ -4,7 +4,7 @@ import { Notification } from "./notification.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
 import { Store } from "./store.js";
-import { analyticsDurationNiceName, apiBase, planAnalyticsDuration, planDomains } from "./constants.js";
+import { analyticsDurationNiceName, apiBase, defaultDomain, domains, planAnalyticsDuration, planDomains } from "./constants.js";
 import { User } from "./user.js";
 import { Limits } from "./limits.js";
 
@@ -16,18 +16,18 @@ export const Settings = {
     DEFAULT: {
         analytics_duration: '3days',
         links_per_page: '10',
-        default_domain: 'clkd.in',
+        default_domain: defaultDomain,
         pages_per_page: '10',
-        default_page_domain: 'clkd.in',
+        default_page_domain: defaultDomain,
         qr_background: '#ffffff',
         qr_text: '#000000'
     },
     OPTIONS: {
         analytics_duration: ['day', '3days', 'week', '2weeks', 'month', '2months'],
         links_per_page: ['5', '10', '25', '50', '100'],
-        default_domain: ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk'],
+        default_domain: domains,
         pages_per_page: ['5', '10', '25', '50', '100'],
-        default_page_domain: ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk']
+        default_page_domain: domains
     },
     updateDOM: async function () {
         try {

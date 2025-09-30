@@ -8,6 +8,7 @@ import { Upgrade } from "./upgrade.js";
 import { Subscription } from "./subscription.js";
 import { Dashboard } from "./dashboard.js";
 import { Links } from "./links.js";
+import { Pages } from "./pages.js";
 import { Modal } from "./modal.js";
 import { Limits } from "./limits.js";
 
@@ -22,6 +23,7 @@ export const Events = {
         Subscription.events();
         Dashboard.events();
         Links.events();
+        Pages.events();
         Modal.events();
         Limits.events();
     }

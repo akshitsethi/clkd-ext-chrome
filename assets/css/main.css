@@ -671,8 +671,7 @@ h2 {
             line-height: 1.425;
         }
 
-        & .new-link,
-        & .new-page {
+        & .new-entry {
             word-break: break-all;
         }
 
@@ -683,6 +682,13 @@ h2 {
         & .qrcode {
             margin-left: 0.75rem;
         }
+    }
+}
+.page-output {
+    margin: 1rem 0 0;
+
+    & .page-output-details {
+        background-image: linear-gradient(to left, #00a63d 0%, #16b751 19%, #09c04c 60%, #1eb354 100%);
     }
 }
 
@@ -772,7 +778,8 @@ h2 {
         & .core {
             padding-right: 0.5rem;
 
-            & .link {
+            & .link,
+            & .page {
                 margin-top: 0;
 
                 & .slug {
@@ -799,7 +806,7 @@ h2 {
             & .target {
                 word-break: break-all;
                 display: inline-block;
-                padding: 0.25rem 0;
+                padding-top: 0.25rem;
                 font-size: 0.825rem;
                 color: #303030;
 
@@ -811,6 +818,7 @@ h2 {
             & .created {
                 font-size: 0.750rem;
                 color: #606060;
+                padding-top: 0.25rem;
             }
         }
 

@@ -1,4 +1,180 @@
 // constants.js
+// API Endpoint
+export const apiBase = 'http://localhost:8788/api';
+
+// Default domain
+export const defaultDomain = 'clkd.in';
+
+// List of available domains
+export const domains = ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk'];
+
+// Data refresh window for API data
+const date = Date.now();
+export const refreshDuration = {
+    analytics: {
+        account: date + 60 * 60 * 1000, // 1 hour
+        slug: date + 60 * 60 * 1000
+    },
+    entries: date + 60 * 60 * 1000 * 24 * 7 // 7 days
+};
+
+// Blank slate for analytics computations
+export const analyticsBlankSlate = {
+    clicks: {
+        labels: [],
+        all: [],
+        unique: []
+    },
+    scans: {
+        labels: [],
+        all: [],
+        unique: []
+    },
+    pages: {
+        labels: [],
+        all: [],
+        unique: []
+    },
+    browser: {},
+    os: {},
+    screen: {},
+    lang: {},
+    country: {},
+    city: {}
+};
+
+// Blank slate for dashboard computations
+export const dashboardBlankSlate = {
+    totals: {
+        today: {
+            clicks: 0,
+            scans: 0,
+            pages: 0
+        },
+        week: {
+            clicks: 0,
+            scans: 0,
+            pages: 0
+        }
+    },
+    insights: {
+        today: {
+            country: {},
+            city: {},
+            browser: {},
+            screen: {},
+            lang: {},
+            os: {}
+        },
+        week: {
+            country: {},
+            city: {},
+            browser: {},
+            screen: {},
+            lang: {},
+            os: {}
+        }
+    }
+};
+
+// Chart types
+export const variableChartTypes = {
+    browser: 'doughnut',
+    os: 'pie',
+    screen: 'doughnut',
+    lang: 'pie'
+};
+
+// Chart colors
+export const variableChartColors = {
+    clicks: {
+        all: ['rgb(255, 201, 39)'],
+        unique: ['rgb(244, 109, 154)']
+    },
+    scans: {
+        all: ['rgb(99, 193, 247)'],
+        unique: ['rgb(46, 204, 113)']
+    },
+    pages: {
+        all: ['rgb(231, 76, 60)'],
+        unique: ['rgb(99, 193, 247)']
+    },
+    browser: [
+        'rgb(255, 201, 39)',
+        'rgb(46, 204, 113)',
+        'rgb(244, 109, 154)',
+        'rgb(99, 193, 247)',
+        'rgb(231, 76, 60)',
+        'rgb(207, 217, 223)'
+    ],
+    os: [
+        'rgb(99, 193, 247)',
+        'rgb(244, 109, 154)',
+        'rgb(46, 204, 113)',
+        'rgb(255, 201, 39)',
+        'rgb(231, 76, 60)',
+        'rgb(207, 217, 223)'
+    ],
+    screen: [
+        'rgb(207, 217, 223)',
+        'rgb(99, 193, 247)',
+        'rgb(244, 109, 154)',
+        'rgb(46, 204, 113)',
+        'rgb(255, 201, 39)',
+        'rgb(231, 76, 60)'
+    ],
+    lang: [
+        'rgb(231, 76, 60)',
+        'rgb(99, 193, 247)',
+        'rgb(244, 109, 154)',
+        'rgb(46, 204, 113)',
+        'rgb(255, 201, 39)',
+        'rgb(207, 217, 223)'
+    ]
+};
+
+// DataTable language
+export const dataTableLanguage = {
+    country: {
+        search: 'Filter Countries',
+        entries: {
+            _: 'countries',
+            1: 'country'
+        },
+        zeroRecords: 'No matching countries found',
+        emptyTable: 'Country data is not available'
+    },
+    city: {
+        search: 'Filter Cities',
+        entries: {
+            _: 'cities',
+            1: 'city'
+        },
+        zeroRecords: 'No matching cities found',
+        emptyTable: 'City data is not available'
+    }
+};
+
+// URL validator options
+export const urlValidationOptions = {
+    protocols: ['http','https'],
+    require_protocol: true
+}
+
+// User plan domains
+export const planDomains = {
+    registered: ['clkd.in'],
+    basic: ['clk.gg', 'pgx.es'],
+    pro: ['cd.lk', 'xx.lk']
+};
+
+// Analytics duration as per user plan
+export const planAnalyticsDuration = {
+    registered: ['day', '3days'],
+    basic: ['week', '2weeks'],
+    pro: ['month', '2months']
+};
+
 // Language codes
 export const language = {
     "af": "Afrikaans",
@@ -524,174 +700,4 @@ export const analyticsDurationNiceName = {
     '2weeks': 'Last 2 Weeks',
     'month': 'Last Month',
     '2months': 'Last 2 Months'
-};
-
-// API Endpoint
-export const apiBase = 'http://localhost:8788/api';
-
-// Data refresh window for API data
-const date = Date.now();
-export const refreshDuration = {
-    analytics: {
-        account: date + 60 * 60 * 1000, // 1 hour
-        slug: date + 60 * 60 * 1000
-    },
-    entries: date + 60 * 60 * 1000 * 24 * 7 // 7 days
-};
-
-// Blank slate for analytics computations
-export const analyticsBlankSlate = {
-    clicks: {
-        labels: [],
-        all: [],
-        unique: []
-    },
-    scans: {
-        labels: [],
-        all: [],
-        unique: []
-    },
-    pages: {
-        labels: [],
-        all: [],
-        unique: []
-    },
-    browser: {},
-    os: {},
-    screen: {},
-    lang: {},
-    country: {},
-    city: {}
-};
-
-// Blank slate for dashboard computations
-export const dashboardBlankSlate = {
-    totals: {
-        today: {
-            clicks: 0,
-            scans: 0,
-            pages: 0
-        },
-        week: {
-            clicks: 0,
-            scans: 0,
-            pages: 0
-        }
-    },
-    insights: {
-        today: {
-            country: {},
-            city: {},
-            browser: {},
-            screen: {},
-            lang: {},
-            os: {}
-        },
-        week: {
-            country: {},
-            city: {},
-            browser: {},
-            screen: {},
-            lang: {},
-            os: {}
-        }
-    }
-};
-
-// Chart types
-export const variableChartTypes = {
-    browser: 'doughnut',
-    os: 'pie',
-    screen: 'doughnut',
-    lang: 'pie'
-};
-
-// Chart colors
-export const variableChartColors = {
-    clicks: {
-        all: ['rgb(255, 201, 39)'],
-        unique: ['rgb(244, 109, 154)']
-    },
-    scans: {
-        all: ['rgb(99, 193, 247)'],
-        unique: ['rgb(46, 204, 113)']
-    },
-    pages: {
-        all: ['rgb(231, 76, 60)'],
-        unique: ['rgb(99, 193, 247)']
-    },
-    browser: [
-        'rgb(255, 201, 39)',
-        'rgb(46, 204, 113)',
-        'rgb(244, 109, 154)',
-        'rgb(99, 193, 247)',
-        'rgb(231, 76, 60)',
-        'rgb(207, 217, 223)'
-    ],
-    os: [
-        'rgb(99, 193, 247)',
-        'rgb(244, 109, 154)',
-        'rgb(46, 204, 113)',
-        'rgb(255, 201, 39)',
-        'rgb(231, 76, 60)',
-        'rgb(207, 217, 223)'
-    ],
-    screen: [
-        'rgb(207, 217, 223)',
-        'rgb(99, 193, 247)',
-        'rgb(244, 109, 154)',
-        'rgb(46, 204, 113)',
-        'rgb(255, 201, 39)',
-        'rgb(231, 76, 60)'
-    ],
-    lang: [
-        'rgb(231, 76, 60)',
-        'rgb(99, 193, 247)',
-        'rgb(244, 109, 154)',
-        'rgb(46, 204, 113)',
-        'rgb(255, 201, 39)',
-        'rgb(207, 217, 223)'
-    ]
-};
-
-// DataTable language
-export const dataTableLanguage = {
-    country: {
-        search: 'Filter Countries',
-        entries: {
-            _: 'countries',
-            1: 'country'
-        },
-        zeroRecords: 'No matching countries found',
-        emptyTable: 'Country data is not available'
-    },
-    city: {
-        search: 'Filter Cities',
-        entries: {
-            _: 'cities',
-            1: 'city'
-        },
-        zeroRecords: 'No matching cities found',
-        emptyTable: 'City data is not available'
-    }
-};
-
-// URL validator options
-export const urlValidationOptions = {
-    protocols: ['http','https'],
-    require_protocol: true
-}
-
-// User plan domains
-export const planDomains = {
-    registered: ['clkd.in'],
-    basic: ['clk.gg', 'pgx.es'],
-    pro: ['cd.lk', 'xx.lk']
-};
-
-// Analytics duration as per user plan
-export const planAnalyticsDuration = {
-    registered: ['day', '3days'],
-    basic: ['week', '2weeks'],
-    pro: ['month', '2months']
 };

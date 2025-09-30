@@ -14,14 +14,13 @@ import { Modal } from "./modal.js";
 import { Single } from "./single.js";
 import { isURL, isAlphanumeric } from "validator";
 import { Limits } from "./limits.js";
-import { TWO_THIRDS_PI } from "chart.js/helpers";
 
 export const Links = {
 	constants: {
 		DATA_TYPE: 'link',
 		OUTPUT_DETAILS_CLASSNAME: '.link-output-details',
 		OUTPUT_TEMPLATE_CLASSNAME: '#link-output-template',
-		OUTPUT_NEW_LINK_CLASSNAME: '.new-link',
+		OUTPUT_NEW_ENTRY_CLASSNAME: '.new-entry',
 		OUTPUT_COPY_LINK_CLASSNAME: '.copy',
 		QRCODE_CLASSNAME: '.qrcode',
 		ACTION_ANALYTICS_CLASSNAME: '.analytics',
@@ -196,6 +195,7 @@ export const Links = {
 				if (!domain || !slug) {
 					throw new Error(i18n.MISSING_DETAILS_ERROR);
 				}
+
 				let url = parent.getAttribute('data-url');
 				if (url.length > 125) {
 					url = url.substring(0, 125) + '...';
@@ -363,11 +363,11 @@ export const Links = {
 		});
 	},
 	showNewEntryOutput: function (domain, slug) {
-		if (!Selectors.LINK_OUTPUT_SECTION) return;
+		if (!Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE]) return;
 
 		// Check for required selectors
-		const template = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_TEMPLATE_CLASSNAME);
-		const details = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_DETAILS_CLASSNAME);
+		const template = Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE].querySelector(this.constants.OUTPUT_TEMPLATE_CLASSNAME);
+		const details = Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE].querySelector(this.constants.OUTPUT_DETAILS_CLASSNAME);
 		if (!template || !details) return;
 
 		// Remove existing HTML
@@ -377,7 +377,7 @@ export const Links = {
 		const content = template.content.cloneNode(true);
 
 		// Newly added link
-		const link = content.querySelector(this.constants.OUTPUT_NEW_LINK_CLASSNAME);
+		const link = content.querySelector(this.constants.OUTPUT_NEW_ENTRY_CLASSNAME);
 		link.setAttribute('data-domain', domain);
 		link.setAttribute('data-slug', slug);
 		link.innerText = `https://${domain}/${slug}`;
@@ -395,14 +395,17 @@ export const Links = {
 		details.appendChild(content);
 
 		// Enable event listeners
-		this.newLinkOutputEvents();
+		this.newEntryOutputEvents();
 
 		// Reset form values & empty the `custom-slug` field as well
-		Selectors.LINK_FORM.reset();
-		document.querySelector(`#links ${this.constants.SLUG_FIELD_CLASSNAME}`).value = null;
+		Selectors.FORM[this.constants.DATA_TYPE].reset();
+
+		if (this.constants.DATA_TYPE === 'link') {
+			document.querySelector(`#links ${this.constants.SLUG_FIELD_CLASSNAME}`).value = null;
+		}
 
 		// Make selector visible
-		Selectors.LINK_OUTPUT_SECTION.style.display = 'block';
+		Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE].style.display = 'block';
 	},
 	addNewEntry: async function (data) {
 		// Add new entry to local storage
@@ -686,9 +689,9 @@ export const Links = {
 		});
 	},
 	createLinkFormEvent: function () {
-		if (!Selectors.LINK_FORM) return;
+		if (!Selectors.FORM[this.constants.DATA_TYPE]) return;
 
-		Selectors.LINK_FORM.addEventListener('submit', async e => {
+		Selectors.FORM[this.constants.DATA_TYPE].addEventListener('submit', async e => {
 			e.preventDefault();
 
 			try {
@@ -772,10 +775,10 @@ export const Links = {
 			}
 		});
 	},
-	newLinkOutputEvents: function () {
-		if (!Selectors.LINK_OUTPUT_SECTION) return;
+	newEntryOutputEvents: function () {
+		if (!Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE]) return;
 
-		const link = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_NEW_LINK_CLASSNAME);
+		const link = Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE].querySelector(this.constants.OUTPUT_NEW_ENTRY_CLASSNAME);
 		if (link) {
 			link.addEventListener('click', e => {
 				e.preventDefault();
@@ -795,7 +798,7 @@ export const Links = {
 			});
 		}
 
-		const copy = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.OUTPUT_COPY_LINK_CLASSNAME);
+		const copy = Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE].querySelector(this.constants.OUTPUT_COPY_LINK_CLASSNAME);
 		if (copy) {
 			copy.addEventListener('click', async e => {
 				e.preventDefault();
@@ -803,7 +806,7 @@ export const Links = {
 			});
 		}
 
-		const qrcode = Selectors.LINK_OUTPUT_SECTION.querySelector(this.constants.QRCODE_CLASSNAME);
+		const qrcode = Selectors.OUTPUT_SECTION[this.constants.DATA_TYPE].querySelector(this.constants.QRCODE_CLASSNAME);
 		if (qrcode) {
 			qrcode.addEventListener('click', async e => {
 				e.preventDefault();

@@ -29,17 +29,21 @@ export const User = {
     },
     setEntries: async function (data, data_type) {
         // Merge new data with existing one
-        Links.DATA = [...Links.DATA, ...data];
+        if (data_type === 'link') {
+            Links.DATA = [...Links.DATA, ...data];
+        } else if (data_type === 'page') {
+            Pages.DATA = [...Pages.DATA, ...data];
+        }
 
         // Data object
-        const data = {};
-        data[`${data_type}s`] = {
+        const dataObject = {};
+        dataObject[`${data_type}s`] = {
             data: data_type === 'link' ? Links.DATA : Pages.DATA,
             refresh: refreshDuration.entries
         };
 
         // Store links data to locally
-        await Store.set();
+        await Store.set(dataObject);
     },
     setAnalytics: async function (data) {
         // Store analytics data to locally
@@ -146,7 +150,7 @@ export const User = {
         });
     },
     userStateSwitcherEvent: function() {
-        if (!Selectors.STATE_SWITCHERS.length === 0) return;
+        if (Selectors.STATE_SWITCHERS.length === 0) return;
 
         Selectors.STATE_SWITCHERS.forEach(switcher => switcher.addEventListener('click', e => {
             e.preventDefault();
@@ -165,7 +169,7 @@ export const User = {
 
                 // Switch screen for the desired state switcher
                 const screen = Screen.constants.CURRENT_SCREEN;
-                if (screen !== 'links') return;
+                if (!['links', 'pages'].includes(screen)) return;
                 if (Selectors.CONTENT_SECTIONS[screen].length === 0) return;
 
                 // Loop over screen to change visibility

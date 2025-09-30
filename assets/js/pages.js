@@ -18,8 +18,8 @@ export const Pages = {
 		DATA_TYPE: 'page',
 		OUTPUT_DETAILS_CLASSNAME: '.page-output-details',
 		OUTPUT_TEMPLATE_CLASSNAME: '#page-output-template',
-		OUTPUT_NEW_PAGE_CLASSNAME: '.new-page',
-		OUTPUT_COPY_PAGE_CLASSNAME: '.copy',
+		OUTPUT_NEW_ENTRY_CLASSNAME: '.new-entry',
+		OUTPUT_COPY_LINK_CLASSNAME: '.copy',
 		QRCODE_CLASSNAME: '.qrcode',
 		ACTION_ANALYTICS_CLASSNAME: '.analytics',
 		ACTION_EDIT_CLASSNAME: '.edit',
@@ -40,13 +40,42 @@ export const Pages = {
 	archiveEvents: Links.archiveEvents,
 	analyticsEvent: Links.analyticsEvent,
 	editEvent: function (selector) {
+		if (!selector) return;
 
+		selector.addEventListener('click', async e => {
+			e.preventDefault();
+
+			try {
+				let target = e.target;
+				if (target.nodeName === 'IMG') {
+					target = e.target.parentElement;
+				}
+
+				const parent = target.closest('tr');
+				if (!parent) {
+					throw new Error(i18n.SELECTOR_NOT_FOUND);
+				}
+				const domain = parent.getAttribute('data-domain');
+				const slug = parent.getAttribute('data-slug');
+				if (!domain || !slug) {
+					throw new Error(i18n.MISSING_DETAILS_ERROR);
+				}
+
+				chrome.tabs.create({ url: `page.html?slug=${slug}&domain=${domain}` });
+			} catch (error) {
+				console.error(error);
+				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+			} finally {
+				Processing.hide();
+			}
+		});
 	},
 	qrcodeEvent: Links.qrcodeEvent,
 	archiveEvent: Links.archiveEvent,
 	restoreEvent: Links.restoreEvent,
 	showNewEntryOutput: Links.showNewEntryOutput,
 	addNewEntry: Links.addNewEntry,
+	newEntryOutputEvents: Links.newEntryOutputEvents,
 	updateDOM: Links.updateDOM,
 	populateData: function (type = 'active') {
 		// Constants based on table type
@@ -173,9 +202,9 @@ export const Pages = {
 		return response.message;
 	},
     createPageFormEvent: function () {
-		if (!Selectors.PAGE_FORM) return;
+		if (!Selectors.FORM[this.constants.DATA_TYPE]) return;
 
-		Selectors.PAGE_FORM.addEventListener('submit', async e => {
+		Selectors.FORM[this.constants.DATA_TYPE].addEventListener('submit', async e => {
 			e.preventDefault();
 
 			try {
@@ -188,7 +217,7 @@ export const Pages = {
 				const response = await this.syncWithAPI(data.get('slug'), data.get('domain'));
 
 				// Add newly generated page
-				this.addNewPage(response);
+				this.addNewEntry(response);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
