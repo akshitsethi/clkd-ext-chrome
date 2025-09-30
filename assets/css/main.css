@@ -52,6 +52,7 @@ h4,
 h5,
 h6 {
     overflow-wrap: break-word;
+    text-wrap: balance;
 }
 
 /* Improve line wrapping */
@@ -60,15 +61,6 @@ p {
     font-size: 0.875rem;
     line-height: 1.625;
     color: #273144;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    text-wrap: balance;
 }
 
 a {
