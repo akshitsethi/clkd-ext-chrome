@@ -16,7 +16,7 @@ export const Screen = {
         CURRENT_SCREEN: null,
         DEFAULT_DISPLAY: 'block'
     },
-    dynamic: ['links', 'analytics'],
+    dynamic: ['links', 'pages', 'analytics'],
     sections: ['dashboard', 'links', 'pages', 'analytics'],
     screens: [
         'dashboard',
@@ -70,15 +70,17 @@ export const Screen = {
     updateHeaderSections: function (screen) {
         if (Selectors.PRIMARY_SECTION.length === 0 || Selectors.DYNAMIC_SECTION.length === 0) return;
 
-        // Update dynamic link
-        const anchor = Selectors.DYNAMIC_LINK.querySelector('a');
-        if (this.dynamic.includes(this.constants.PREVIOUS_SCREEN)) {
-            anchor.setAttribute('data-screen', this.constants.PREVIOUS_SCREEN);
-            anchor.querySelector('span').innerText = this.constants.PREVIOUS_SCREEN.charAt(0).toUpperCase() + this.constants.PREVIOUS_SCREEN.substring(1);
-        } else {
-            anchor.setAttribute('data-screen', 'dashboard');
-            anchor.querySelector('span').innerText = 'Dashboard';
-        }
+        // Update dynamic links
+        Selectors.DYNAMIC_LINK.forEach(link => {
+            const anchor = link.querySelector('a');
+            if (this.dynamic.includes(this.constants.PREVIOUS_SCREEN)) {
+                anchor.setAttribute('data-screen', this.constants.PREVIOUS_SCREEN);
+                anchor.querySelector('span').innerText = this.constants.PREVIOUS_SCREEN.charAt(0).toUpperCase() + this.constants.PREVIOUS_SCREEN.substring(1);
+            } else {
+                anchor.setAttribute('data-screen', 'dashboard');
+                anchor.querySelector('span').innerText = 'Dashboard';
+            }
+        });
 
         // Loop over primary section
         this.showHideSections(Selectors.PRIMARY_SECTION, screen);

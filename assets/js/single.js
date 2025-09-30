@@ -21,6 +21,7 @@ export const Single = {
         created: null
     },
     DATA: {},
+    DATA_TYPE: null,
     DATA_KEYS: ['browser', 'os', 'screen', 'lang', 'country', 'city'],
     VARIABLE_CHARTS: ['browser', 'os', 'screen', 'lang'],
     VISIT_CHARTS: ['clicks', 'scans'],
@@ -169,17 +170,19 @@ export const Single = {
             content.querySelector('.created').innerText = this.link.created;
 
             // Target anchor with event listener
-            const anchor = content.querySelector('.target');
-            anchor.setAttribute('href', this.link.url);
-            if (this.link.url.length > 125) {
-                anchor.innerText = this.link.url.substring(0, 125) + '...';
-            } else {
-                anchor.innerText = this.link.url;
+            if (this.DATA_TYPE === 'link') {
+                const anchor = content.querySelector('.target');
+                anchor.setAttribute('href', this.link.url);
+                if (this.link.url.length > 125) {
+                    anchor.innerText = this.link.url.substring(0, 125) + '...';
+                } else {
+                    anchor.innerText = this.link.url;
+                }
+                anchor.addEventListener('click', e => {
+                    e.preventDefault();
+                    chrome.tabs.create({ url: e.target.href });
+                });
             }
-            anchor.addEventListener('click', e => {
-                e.preventDefault();
-                chrome.tabs.create({ url: e.target.href });
-            });
 
             // QRcode
             const qrcode = content.querySelector('.qrcode');
@@ -231,7 +234,7 @@ export const Single = {
             // Processing.hide();
         }
     },
-    init: async function (domain, slug, url, created) {
+    init: async function (domain, slug, url, created, type) {
         if (!domain || !slug || !url || !created) {
             throw new Error(i18n.MISSING_DETAILS_ERROR);
         }
@@ -246,6 +249,7 @@ export const Single = {
             url,
             created
         };
+        this.DATA_TYPE = type;
 
         await this.updateDOM();
     }

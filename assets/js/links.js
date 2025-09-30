@@ -162,7 +162,13 @@ export const Links = {
 				}
 
 				// Open single analytics screen
-				await Single.init(domain, slug, parent.getAttribute('data-url'), parent.getAttribute('data-created'));
+				await Single.init(
+					domain,
+					slug,
+					parent.getAttribute('data-url'),
+					parent.getAttribute('data-created'),
+					this.constants.DATA_TYPE
+				);
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);

@@ -9,7 +9,7 @@ export const Selectors = {
     NAVIGATION: document.querySelector('.navigation'),
     PAGE_SELECTOR: document.querySelector('.page-selector'),
     STATE_SWITCHERS: document.querySelectorAll('.state-switcher'),
-    DYNAMIC_LINK: document.querySelector('.dynamic-link'),
+    DYNAMIC_LINK: document.querySelectorAll('.dynamic-link'),
     HEADER_UPGRADE_CTA: document.querySelector('.upgrade-cta'),
 
     // Screen
