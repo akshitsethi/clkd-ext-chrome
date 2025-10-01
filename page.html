@@ -10,7 +10,41 @@
 	<link rel="stylesheet" href="./assets/css/page.css" type="text/css">
 </head>
 <body>
+	<header>
+		<div class="container">
+			<ul class="tabs">
+				<li>
+					<a href="#" data-tab="content" class="selected">
+						<img src="./assets/images/page/content.png" alt="Content" /> Content
+					</a>
+				</li>
+				<li>
+					<a href="#" data-tab="design">
+						<img src="./assets/images/page/design.png" alt="Design" /> Design
+					</a>
+				</li>
+				<li>
+					<a href="#" data-tab="settings">
+						<img src="./assets/images/page/settings.png" alt="Settings" /> Settings
+					</a>
+				</li>
+			</ul>
 
+			<a href="#" class="save button link">Publish</a>
+		</div>
+	</header>
+
+	<div class="wrapper">
+		<div class="content">
+
+		</div>
+
+		<div class="preview">
+			<div class="phone">
+				<iframe src="loading.html" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"></iframe>
+			</div>
+		</div>
+	</div>
 
 	<!-- Processing (dynamically injected to selectors) -->
 	<template id="processing">
