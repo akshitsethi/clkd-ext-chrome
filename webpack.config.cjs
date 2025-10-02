@@ -5,7 +5,8 @@ module.exports = (env) => ({
 	mode: env.mode,
 	entry: {
 		main: ['./assets/js/main.js'],
-		page: ['./assets/js/page/page.js']
+		page: ['./assets/js/page/page.js'],
+		preview: ['./assets/js/page/preview.js']
 	},
 	output: {
 		path: path.resolve(__dirname, 'assets/dist'),

@@ -29,3 +29,15 @@ export const getCurrentTab = async function() {
 	const [tab] = await chrome.tabs.query(queryOptions);
 	return tab;
 };
+
+// Debounce function to prevent duplicate triggers
+export const debounce = function(callback, delay = 800) {
+  let timer;
+
+  return function() {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+          callback();
+      }, delay);
+  };
+};
