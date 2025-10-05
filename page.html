@@ -12,7 +12,7 @@
 <body>
 	<header>
 		<div class="container">
-			<ul class="tabs">
+			<ul class="header-tabs">
 				<li>
 					<a href="#" data-tab="content" class="selected">
 						<img src="./assets/images/page/content.png" alt="Content" /> Content
@@ -37,7 +37,7 @@
 	<div class="wrapper">
 		<div class="primary transparent">
 			<section id="content" class="tab">
-				<div class="actions">
+				<div class="content-actions">
 					<a href="#" class="add-link"><img src="./assets/images/add-white.png" /> Add Link</a>
 
 					<div class="embed-content">
@@ -106,8 +106,8 @@
 									</div>
 
 									<div class="area">
-										<div class="core-items">
-											<div>
+										<div class="core">
+											<div class="data">
 												<input type="text" name="title" placeholder="Title">
 												<input type="url" name="url" placeholder="URL">
 											</div>
@@ -158,67 +158,14 @@
 						<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M16.24 3.5h-8.5a5 5 0 0 0-5 5v7a5 5 0 0 0 5 5h8.5a5 5 0 0 0 5-5v-7a5 5 0 0 0-5-5"/><path d="m2.99 17l2.75-3.2a2.2 2.2 0 0 1 2.77-.27a2.2 2.2 0 0 0 2.77-.27l2.33-2.33a4 4 0 0 1 5.16-.43l2.49 1.93M7.99 10.17a1.66 1.66 0 1 0 0-3.32a1.66 1.66 0 0 0 0 3.32"/></g></svg>
 					</a>
 					<a href="#" data-inline="settings">
-						<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 5.32H6.095A3.595 3.595 0 0 0 2.5 8.923v6.162a3.595 3.595 0 0 0 3.595 3.595H12a3.595 3.595 0 0 0 3.595-3.595V8.924A3.594 3.594 0 0 0 12 5.319m9.5 4.119v5.135c0 .25-.071.496-.205.708a1.355 1.355 0 0 1-.555.493a1.27 1.27 0 0 1-.73.124a1.367 1.367 0 0 1-.677-.278l-3.225-2.588a1.376 1.376 0 0 1-.503-1.047c0-.2.045-.397.133-.575c.092-.168.218-.315.37-.432l3.225-2.567a1.36 1.36 0 0 1 .678-.278c.25-.032.504.011.729.123a1.336 1.336 0 0 1 .76 1.182"/></svg>
+						<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></g></svg>
 					</a>
 					<a href="#" data-inline="zoom">
 						<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.244 17.738a7.494 7.494 0 1 0 0-14.988a7.494 7.494 0 0 0 0 14.988m5.318-2.176l5.688 5.688M10.244 6.245v7.998m3.999-3.999H6.245"/></svg>
 					</a>
 				</template>
 
-				<div class="content-items">
-					<div class="item">
-						<div class="entry">
-							<div class="type">
-								<img src="./assets/images/page/embed/link.png" />
-							</div>
-
-							<form>
-								<div class="main">
-									<div class="drag" data-swapy-handle>
-										<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=" " role="img" aria-hidden="false" aria-labelledby="ltclid77_title "><title id="ltclid77_title">Move</title><path fill="currentColor" d="M5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm6-5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1-11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>
-									</div>
-
-									<div class="area">
-										<div class="core-items">
-											<div>
-												<input type="text" name="title" placeholder="Title">
-												<input type="url" name="url" placeholder="URL">
-											</div>
-											<div class="status">
-												<label class="switch">
-													<input type="checkbox" name="status">
-													<span class="toggle round"></span>
-												</label>
-											</div>
-										</div>
-
-										<div class="actions">
-											<a href="#" data-inline="delete">
-												<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M5.47 6.015v12.514a2.72 2.72 0 0 0 2.721 2.721h7.618a2.72 2.72 0 0 0 2.72-2.72V6.014m-15.235.001h17.412"/><path d="M8.735 6.015V4.382a1.632 1.632 0 0 1 1.633-1.632h3.264a1.632 1.632 0 0 1 1.633 1.632v1.633M9.824 16.992v-5.439m4.353 5.439v-5.439"/></g></svg>
-											</a>
-										</div>
-									</div>
-								</div>
-
-								<div class="secondary">
-									<div class="delete">
-										<div class="title">
-											<h4>Delete</h4>
-										</div>
-
-										<div class="content">
-											<p>Please click the button below to confirm deletion.</p>
-											<button class="delete-item">
-												<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M5.47 6.015v12.514a2.72 2.72 0 0 0 2.721 2.721h7.618a2.72 2.72 0 0 0 2.72-2.72V6.014m-15.235.001h17.412"/><path d="M8.735 6.015V4.382a1.632 1.632 0 0 1 1.633-1.632h3.264a1.632 1.632 0 0 1 1.633 1.632v1.633M9.824 16.992v-5.439m4.353 5.439v-5.439"/></g></svg>
-												Delete Forever
-											</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+				<div class="content-items"></div>
 
 				<div class="no-content-data">
 					<img src="./assets/images/couple-talking.png" />

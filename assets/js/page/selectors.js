@@ -1,11 +1,13 @@
 // selectors.js
 export const Selectors = {
     // Header
-    
+    TABS: document.querySelectorAll('.header-tabs a'),
 
     // Content
     ADD_LINK: document.querySelector('#content .add-link'),
     EMBED_BUTTON: document.querySelector('#content .embed-button'),
     ENTRY_TEMPLATE: document.querySelector('#content #content-entry-template'),
-    NO_CONTENT_MESSAGE: document.querySelector('#content .no-content-data')
+    ACTIONS_TEMPLATE: document.querySelector('#content #content-actions-template'),
+    NO_CONTENT_MESSAGE: document.querySelector('#content .no-content-data'),
+    ITEMS_CONTAINER: document.querySelector('#content .content-items')
 };
