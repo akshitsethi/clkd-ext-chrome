@@ -25,7 +25,7 @@ export const i18n = {
 
     // Pages
     SLUG_DOMAIN_ERROR: 'Missing details. Please provide a valid slug and domain.',
-    
+    PAGE_URL_ERROR: 'Invalid URL. Please verify the source and try again.',
 
     // Analytics
     NO_DATA_ERROR: 'Unable to find analytics data.',

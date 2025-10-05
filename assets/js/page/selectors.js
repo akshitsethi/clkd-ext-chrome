@@ -2,6 +2,7 @@
 export const Selectors = {
     // Header
     TABS: document.querySelectorAll('.header-tabs a'),
+    SECTIONS: document.querySelectorAll('.tab'),
 
     // Content
     ADD_LINK: document.querySelector('#content .add-link'),
