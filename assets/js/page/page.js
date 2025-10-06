@@ -8,6 +8,7 @@ import { Processing } from "../processing.js";
 export const Page = {
     constants: {
         HEADER_CLASSNAME: 'header',
+        MENU_CLASSNAME: '.header-tabs',
         WRAPPER_CLASSNAME: '.wrapper',
         SCREEN: {
             error: '.error-screen',
@@ -37,7 +38,7 @@ export const Page = {
 
         // Make design screen visible
         document.querySelector(this.constants.HEADER_CLASSNAME).style.display = 'block';
-        document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'flex';
+        document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
     },
     showScreen(type) {
         document.querySelector(this.constants.SCREEN[type]).style.display = 'flex';
@@ -70,6 +71,26 @@ export const Page = {
         Selectors.SECTIONS.forEach(section => section.style.display = 'none');
         tabEl.style.display = 'block';
     },
+    mobileMenuEvent: function() {
+        if (!Selectors.MOBILE_MENU_BUTTON) return;
+
+        Selectors.MOBILE_MENU_BUTTON.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                const menu = document.querySelector(this.constants.MENU_CLASSNAME);
+                if (!menu) return;
+
+                // Switch buttons
+                Selectors.MOBILE_MENU_BUTTON.querySelectorAll('img').forEach(img => img.classList.toggle('show'));
+
+                menu.classList.toggle('show');
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+    },
     tabSwitchEvent: function() {
         if (Selectors.TABS.length === 0) return;
 
@@ -78,8 +99,8 @@ export const Page = {
 
             try {
                 let target = e.target;
-                if (target.nodeName === 'IMG') {
-                    target = e.target.parentElement;
+                if (target.nodeName !== 'A') {
+                    target = e.target.closest('a');
                 }
 
                 const tabId = target.getAttribute('data-tab');
@@ -99,6 +120,14 @@ export const Page = {
 
                 // Fetch the selected section and show it's content
                 localStorage.setItem(`${Page.SLUG}|${Page.DOMAIN}-section`, tabId);
+
+                // Switcher for mobile menu
+                const menu = document.querySelector(this.constants.MENU_CLASSNAME);
+                if (!menu) return;
+
+                // Switch buttons
+                Selectors.MOBILE_MENU_BUTTON.querySelectorAll('img').forEach(img => img.classList.contains('open') ? img.classList.add('show') : img.classList.remove('show'));
+                menu.classList.remove('show');
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -106,6 +135,7 @@ export const Page = {
         }));
     },
     events: function() {
+        this.mobileMenuEvent();
         this.tabSwitchEvent();
     },
     init: async function() {

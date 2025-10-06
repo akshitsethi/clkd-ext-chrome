@@ -135,11 +135,30 @@ export const Content = {
             }
         });
     },
-    addEmbedEvent: function() {
-
-    },
     embedButtonEvent: function() {
+        if (!Selectors.EMBED_BUTTON) return;
 
+        Selectors.EMBED_BUTTON.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                let target = e.target;
+                if (target.nodeName === 'IMG') {
+                    target = e.target.parentElement;
+                }
+
+                // Update toggle arrow
+                target.querySelectorAll('img').forEach(img => img.classList.toggle('show'));
+
+                Selectors.EMBED_OPTIONS.classList.toggle('show');
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+    },
+    addEmbedEvent: function() {
+        
     },
     events: function() {
         this.addLinkEvent();
