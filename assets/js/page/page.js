@@ -1,9 +1,10 @@
 // page/page.js
 import { Events } from "./events.js";
-import { Notification } from "../notification.js";
 import { Selectors } from "./selectors.js";
-import { i18n } from "../i18n.js";
+import { Store } from "../store.js"
+import { Notification } from "../notification.js";
 import { Processing } from "../processing.js";
+import { i18n } from "../i18n.js";
 
 export const Page = {
     constants: {
@@ -29,9 +30,63 @@ export const Page = {
         providers: {}
     },
     SWAPY: null,
+    get: function(attribute, id = null) {
+        if (id !== null) {
+            return this.DATA[attribute][id];
+        }
+
+        return this.DATA[attribute];
+    },
+    set: function(attribute, value, id = null, subId = null) {
+        if (id !== null) {
+            if (subId !== null) {
+                this.DATA[attribute][id][subId] = value;
+            } else {
+                this.DATA[attribute][id] = value;
+            }
+        } else {
+            this.DATA[attribute] = value;
+        }
+    },
+    remove: function(attribute, id) {
+        if (this.DATA[attribute] instanceof Map) {
+            this.DATA[attribute].delete(id);
+        } else {
+            delete this.DATA[attribute][id];
+        }
+    },
+    save: async function() {
+        // Get existing content data
+        const existing = await Store.get('content');
+
+        // Start with an empty object
+        const data = {
+            'content': existing.content ?? {}
+        };
+
+        // Set content data as combination of slug and domain
+        data.content[`${this.SLUG}|${this.DOMAIN}`] = {
+            order: Array.from(this.get('order').entries()),
+            content: this.get('content'),
+            design: this.get('design'),
+            settings: this.get('settings'),
+            social: {
+                order: Array.from(this.get('social', 'order').entries()),
+                content: this.get('social', 'content')
+            },
+            providers: this.get('providers')
+        }
+
+        // Store updated data object
+        await Store.set(data);
+    },
     updateDOM: function() {
         // Set essential constants (slug and domain)
         this.setSlugAndDomain();
+
+        // Verify credentials and fetch data from server (if required)
+        this.verifyCredentials();
+        this.fetchData();
 
         // Switch to last active tab
         this.switchToSavedTab();
@@ -39,6 +94,16 @@ export const Page = {
         // Make design screen visible
         document.querySelector(this.constants.HEADER_CLASSNAME).style.display = 'block';
         document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
+    },
+    verifyCredentials: function() {
+        // TODO
+        // Verify existing user credentials
+        // and also ensure that the user has the right to edit this particular page
+
+        // So, basically if there is existing data present
+    },
+    fetchData: function() {
+
     },
     showScreen(type) {
         document.querySelector(this.constants.SCREEN[type]).style.display = 'flex';
@@ -54,7 +119,7 @@ export const Page = {
         }
     },
     switchToSavedTab: function() {
-        let tabId = localStorage.getItem(`${Page.SLUG}|${Page.DOMAIN}-section`);
+        let tabId = localStorage.getItem(`${this.SLUG}|${this.DOMAIN}-section`);
 
         // Since we don't have a section name, show the content section
         tabId = tabId || 'content';
@@ -119,7 +184,7 @@ export const Page = {
                 tabEl.style.display = 'block';
 
                 // Fetch the selected section and show it's content
-                localStorage.setItem(`${Page.SLUG}|${Page.DOMAIN}-section`, tabId);
+                localStorage.setItem(`${this.SLUG}|${this.DOMAIN}-section`, tabId);
 
                 // Switcher for mobile menu
                 const menu = document.querySelector(this.constants.MENU_CLASSNAME);

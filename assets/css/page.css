@@ -330,9 +330,9 @@ header {
 
                         & a {
                             justify-content: left;
-                            font-size: 0.875rem;
+                            font-size: 0.938rem;
                             font-weight: 500;
-                            padding: 0.375rem 0.75rem;
+                            padding: 0.5rem 0.75rem;
 
                             &:first-child {
                                 border-radius: 12px 12px 0 0;
@@ -343,7 +343,7 @@ header {
                             }
 
                             &:hover {
-                                background: #f6f6f1;
+                                background: rgba(56, 182, 255, 0.125);
                             }
 
                             & img {

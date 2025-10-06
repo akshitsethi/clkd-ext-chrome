@@ -2,10 +2,8 @@
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
 import { Notification } from "../notification.js";
-import { Store } from "../store.js"
 import { i18n } from "../i18n.js";
 import { randomString } from "../helper.js";
-import { Social } from "./social.js";
 
 export const Content = {
     constants: {
@@ -26,28 +24,35 @@ export const Content = {
             googlemaps: ['settings', 'zoom']
         }
     },
-    save: async function() {
-        // Get existing content data
-        const existing = await Store.get('content');
-
-        // Start with an empty object
-        const data = {};
-
-        // Set content data as combination of slug and domain
-        data[`${Page.constants.SLUG}|${Page.constants.DOMAIN}`] = {
-            order: Array.from(Page.DATA.order.entries()),
-            content: Page.DATA.content,
-            design: Page.DATA.design,
-            settings: Page.DATA.settings,
-            social: {
-                order: Social.DATA.order.entries(),
-                content: Social.DATA.content
-            },
-            providers: Page.DATA.providers
-        }
-
-        // Store updated data object
-        await Store.set(Object.assign(data, existing.content));
+    CONTENT_DATA: {
+        link: {
+            thumbnail: null,
+            layout: 'classic',
+            sensitive: 'disable'
+        },
+        youtube: {
+            layout: 'none',
+            authorProfileStatus: 'off',
+            embedTitleStatus: 'off'
+        },
+        vimeo: {
+            layout: 'none',
+            authorProfileStatus: 'off',
+            embedTitleStatus: 'off'
+        },
+        googlemaps: {
+            mapType: 'roadmap',
+            mapZoom: '12'
+        },
+        soundcloud: {
+            layout: 'none'
+        },
+        twitter: {},
+        instagram: {},
+        facebook: {},
+        threads: {},
+        spotify: {},
+        tiktok: {}
     },
     generateId: function() {
         return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
@@ -56,7 +61,7 @@ export const Content = {
         let ID = this.generateId();
 
         // Although one in a 10 million chance of collision, still ensure that we don't have a duplicate ID
-        while (Page.DATA.content.hasOwnProperty(ID)) {
+        while (Page.get('content').hasOwnProperty(ID)) {
             ID = this.generateId();
         }
 
@@ -105,10 +110,35 @@ export const Content = {
 
                 // TODO
                 // Add event listeners
+
             });
         }
 
+        // Prepend item to map
+        Page.set('order', new Map([...new Map().set(ID, ID), ...Page.get('order')]));
+
+        // Add empty object to `content` attribute for holding content box data
+        Page.set(
+            'content',
+            {
+                type,
+                title: null,
+                url: null,
+                status: 'off',
+                ...this.CONTENT_DATA[type]
+            },
+            ID
+        );
+
+        // Update local storage
+        Page.save();
+
+        // Add item on screen
         Selectors.ITEMS_CONTAINER.prepend(content);
+
+        // TODO
+        // Remove once testing is over
+        console.log(Page.DATA);
     },
     updateContentSectionVisibility: function(show = true) {
         if (show) {
