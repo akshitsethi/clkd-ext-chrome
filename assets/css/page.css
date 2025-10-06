@@ -95,7 +95,7 @@ header {
     background: #f3f3f1;
     padding: 0.925rem 0;
     top: 0;
-    z-index: 1;
+    z-index: 2;
 
     & .container {
         width: 100%;
@@ -290,9 +290,6 @@ header {
                     border-radius: 12px 0 0 12px;
                     transition: transform 200ms ease-in-out;
 
-                    &:hover {
-                        opacity: 0.85;
-                    }
                     & img {
                         margin-right: 0.5rem;
                         max-width: 24px;
@@ -303,13 +300,15 @@ header {
                     position: relative;
                     display: flex;
                     align-items: center;
-                    background: #ffffff;
+                    background: #20bf6b;
                     border: 2px solid #20bf6b;
-                    border-left: 0;
                     border-radius: 0 12px 12px 0;
 
                     & .embed-button {
-                        padding: 1rem 1.5rem;
+                        padding: 1.125rem 1.125rem;
+                        border-radius: 8px;
+                        margin-right: 0.125rem;
+                        background: #ffffff;
 
                         & img {
                             display: none;
@@ -328,7 +327,7 @@ header {
                         background: #ffffff;
                         padding: 0;
                         right: -2px;
-                        z-index: 2;
+                        z-index: 1;
                         border-radius: 12px;
                         border: 1px solid #e9e9e9;
 
