@@ -57,6 +57,9 @@ export const Content = {
     generateId: function() {
         return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     },
+    render: function() {
+        
+    },
     addNewItem: async function(type = 'link') {
         let ID = this.generateId();
 
@@ -110,7 +113,7 @@ export const Content = {
 
                 // TODO
                 // Add event listeners
-
+                
             });
         }
 

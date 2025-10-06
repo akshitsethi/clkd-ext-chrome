@@ -5,6 +5,9 @@ import { Store } from "../store.js"
 import { Notification } from "../notification.js";
 import { Processing } from "../processing.js";
 import { i18n } from "../i18n.js";
+import { Content } from "./content.js";
+import { Design } from "./design.js";
+import { Settings } from "./settings.js";
 
 export const Page = {
     constants: {
@@ -56,16 +59,11 @@ export const Page = {
         }
     },
     save: async function() {
-        // Get existing content data
-        const existing = await Store.get('content');
-
         // Start with an empty object
-        const data = {
-            'content': existing.content ?? {}
-        };
+        const data = {};
 
-        // Set content data as combination of slug and domain
-        data.content[`${this.SLUG}|${this.DOMAIN}`] = {
+        // Add data with unique identifier
+        data[`${this.SLUG}|${this.DOMAIN}`] = {
             order: Array.from(this.get('order').entries()),
             content: this.get('content'),
             design: this.get('design'),
@@ -80,13 +78,22 @@ export const Page = {
         // Store updated data object
         await Store.set(data);
     },
-    updateDOM: function() {
+    updateDOM: async function() {
         // Set essential constants (slug and domain)
         this.setSlugAndDomain();
 
         // Verify credentials and fetch data from server (if required)
-        this.verifyCredentials();
-        this.fetchData();
+        await this.verifyCredentials();
+        await this.fetchData();
+
+        // Get data stored previously or fetched recently from the remote server
+        await this.getStoredData();
+
+        // Validate locally stored data
+        this.validateData();
+
+        // Render existing data on screen
+        this.render();
 
         // Switch to last active tab
         this.switchToSavedTab();
@@ -95,18 +102,58 @@ export const Page = {
         document.querySelector(this.constants.HEADER_CLASSNAME).style.display = 'block';
         document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
     },
-    verifyCredentials: function() {
+    verifyCredentials: async function() {
         // TODO
         // Verify existing user credentials
         // and also ensure that the user has the right to edit this particular page
 
-        // So, basically if there is existing data present
+        // So, basically if there is existing data present and the version number is correct
+        // allow the user to continue editing without need for verifying remotely
     },
-    fetchData: function() {
+    fetchData: async function() {
+        // TODO
+        // Fetch data from the `json` endpoint and verify it so that it can be used
+        // to populate existing data, design and settings
 
+        
     },
-    showScreen(type) {
+    getStoredData: async function() {
+        const data = await Store.get(`${this.SLUG}|${this.DOMAIN}`);
+
+        // If the data does not exist, the default value will be used
+        if (data && data.hasOwnProperty(`${this.SLUG}|${this.DOMAIN}`)) {
+            this.DATA = data[`${this.SLUG}|${this.DOMAIN}`];
+        }
+
+        // Convert arrays back to `Map` object
+        if (!(this.get('order') instanceof Map)) {
+            this.set('order', new Map(this.get('order')));
+        }
+        if (!(this.get('social', 'order') instanceof Map)) {
+            this.set('social', new Map(this.get('social', 'order')), 'order');
+        }
+    },
+    validateData: function() {
+        // The validation of data here needs to be done to make sure that all the required keys are
+        // present in the DATA object
+
+        // Also, make sure that the version number matches with the actual encoding of the object
+        // Basically, base64 value retrieved from database matches the base64 value of the object
+        console.log(this.DATA);
+    },
+    render: function() {
+        Content.render();
+        Design.render();
+        Settings.render();
+    },
+    showErrorScreen(type, error) {
         document.querySelector(this.constants.SCREEN[type]).style.display = 'flex';
+
+        // Replace title
+        document.title = document.title.replace('{slug}', 'Error');
+
+        // Throw error to stop further execution
+        throw new Error(error);
     },
     setSlugAndDomain: function() {
         const url = new URL(window.location.href);
@@ -114,9 +161,11 @@ export const Page = {
         this.DOMAIN = url.searchParams.get('domain');
 
         if (!this.SLUG || !this.DOMAIN) {
-            this.showScreen('error');
-            throw new Error(i18n.PAGE_URL_ERROR);
+            this.showErrorScreen('error', i18n.PAGE_URL_ERROR);
         }
+
+        // Everything looks good, update page title
+        document.title = document.title.replace('{slug}', `${this.SLUG} at ${this.DOMAIN}`);
     },
     switchToSavedTab: function() {
         let tabId = localStorage.getItem(`${this.SLUG}|${this.DOMAIN}-section`);
@@ -208,7 +257,7 @@ export const Page = {
             Processing.show();
 
             // Update DOM
-            this.updateDOM();
+            await this.updateDOM();
 
             // Initialise events (for different sections)
             this.events();

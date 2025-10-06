@@ -2,5 +2,7 @@
 
 
 export const Design = {
-    
+    render: function() {
+        
+    }
 };

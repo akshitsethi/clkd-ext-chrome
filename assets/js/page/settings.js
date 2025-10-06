@@ -2,5 +2,7 @@
 
 
 export const Settings = {
-    
+    render: function() {
+        
+    }
 };
