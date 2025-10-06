@@ -103,14 +103,10 @@ header {
         margin: 0 auto;
         display: flex;
         align-items: center;
-        justify-content: space-around;
 
         @media (max-width: 1300px) {
             width: calc(100% - 2rem);
             margin: 0 1rem;
-        }
-        @media (max-width: 867px) {
-            justify-content: left;
         }
     }
 
@@ -209,6 +205,7 @@ header {
     & .header-cta {
         display: flex;
         align-items: center;
+        margin-left: auto;
         gap: 1rem;
 
         & .save,
@@ -231,10 +228,6 @@ header {
             @media (max-width: 867px) {
                 display: block;
             }
-        }
-
-        @media (max-width: 867px) {
-            margin-left: auto;
         }
     }
 }
@@ -533,6 +526,7 @@ header {
 
     /* Preview */
     & .preview {
+        display: flex;
         align-items: center;
         position: fixed;
         height: calc(100% - 86px);
@@ -546,9 +540,10 @@ header {
             background: #ffffff;
             box-shadow: 0 8px 17px #00000029;
             border-radius: 32px;
-            height: 86%;
-            width: 100%;
-            max-width: 78%;
+            height: 94%;
+            width: 98%;
+            max-width: 380px;
+            max-height: 640px;
             overflow: hidden;
 
             & iframe {
@@ -562,30 +557,18 @@ header {
         & .preview {
             max-width: 34%;
             left: 66%;
-
-            & .phone {
-                max-width: 84%;
-            }
         }
     }
     @media (max-width: 1180px) {
         & .preview {
             max-width: 36%;
             left: 64%;
-
-            & .phone {
-                max-width: 86%;
-            }
         }
     }
     @media (max-width: 1024px) {
         & .preview {
             max-width: 40%;
             left: 60%;
-
-            & .phone {
-                max-width: 92%;
-            }
         }
         & .primary {
             max-width: 56%;
