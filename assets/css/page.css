@@ -452,18 +452,18 @@ header {
                                             margin-right: 0;
                                         }
                                         &.selected {
-                                            background: #e0e2d9;
+                                            background: #f1f1f1;
 
                                             &:hover {
-                                                background: #e0e2d9;
+                                                background: #f1f1f1;
                                             }
                                         }
                                         &[data-inline="delete"] {
                                             &.selected {
-                                                background: #fc5c65;
+                                                background: rgba(244, 109, 154,0.1625);
 
                                                 & svg {
-                                                    color: #ffffff;
+                                                    color: rgba(244, 109, 154,0.85);
                                                 }
                                             }
                                         }
@@ -474,7 +474,7 @@ header {
                                             max-width: 20px;
                                             height: auto;
                                             display: block;
-                                            color: #808080;
+                                            color: #909090;
                                         }
                                     }
                                 }
@@ -492,7 +492,7 @@ header {
                                 }
                             }
                             & .title {
-                                background: #e0e2d9;
+                                background: #f3f3f1;
                                 text-align: center;
                                 font-size: 0.875rem;
                                 padding: 0.5rem;

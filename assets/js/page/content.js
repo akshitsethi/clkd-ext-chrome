@@ -147,6 +147,9 @@ export const Content = {
         // Generate item's content (HTML structure with event listeners)
         const content = this.generateItemStructure(ID, ID, type);
 
+        // Add event listeners
+        this.addActionEventListeners(content);
+
         // Prepend item to map
         Page.set('order', new Map([...new Map().set(ID, ID), ...Page.get('order')]));
 
@@ -176,6 +179,38 @@ export const Content = {
         // Remove once testing is over
         console.log(Page.DATA);
     },
+    addActionEventListeners: function(content) {
+        this.openInlineModalEvent(content);
+        // this.deleteItemEvent();
+    },
+    openInlineModalEvent: function(content) {
+        const actions = content.querySelectorAll('.actions a');
+        if (!actions.length) return;
+
+        actions.forEach(action => action.addEventListener('click', e => {
+            e.preventDefault();
+
+            let target = e.target;
+            if (target.nodeName !== 'A') {
+                target = target.closest('a');
+            }
+
+            const action = target.getAttribute('data-inline');
+            if (!action) return;
+
+            // Selected class for anchor links
+            actions.forEach(action => action !== target ? action.classList.remove('selected') : action.classList.toggle('selected'));
+
+            // Display the desired inline modal
+            const parentElement = target.closest('.item');
+            const modals = parentElement.querySelectorAll('.secondary div[data-inline]');
+
+            modals.forEach(modal => modal.classList.contains(action) ? modal.classList.toggle('show') : modal.classList.remove('show'));
+        }));
+    },
+    deleteItemEvent: function() {
+
+    },
     render: function() {
         const order = Array.from(Page.get('order'));
         if (!order.length) return;
@@ -188,6 +223,9 @@ export const Content = {
 
             // Generate item structure
             const content = this.generateItemStructure(id, slotId, data.type);
+
+            // Add event listeners
+            this.addActionEventListeners(content);
 
             // Populate existing content
             this.populateItemContent(id, content, data);
