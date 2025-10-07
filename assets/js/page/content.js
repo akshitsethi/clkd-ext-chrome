@@ -1,4 +1,5 @@
 // page/content.js
+import { createSwapy } from "swapy";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
 import { Notification } from "../notification.js";
@@ -53,6 +54,7 @@ export const Content = {
         spotify: {},
         tiktok: {}
     },
+    SWAPY: null,
     generateId: function() {
         return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     },
@@ -71,6 +73,9 @@ export const Content = {
 
         // Set id and content type to form
         form.setAttribute('id', id);
+
+        // Prevent form submission
+        form.addEventListener('submit', e => e.preventDefault());
 
         // Update icon and add attribute to form
         entry.querySelector('.type img').setAttribute('src', `./assets/images/page/embed/${type}.png`);
@@ -161,6 +166,9 @@ export const Content = {
         // Update local storage
         Page.save();
 
+        // Update for drag and drop to work
+        this.SWAPY.update();
+
         // Add item on screen
         Selectors.ITEMS_CONTAINER.prepend(content);
 
@@ -179,7 +187,7 @@ export const Content = {
             const data = Page.get('content', id);
 
             // Generate item structure
-            const content = this.generateItemStructure(slotId, id, data.type);
+            const content = this.generateItemStructure(id, slotId, data.type);
 
             // Populate existing content
             this.populateItemContent(id, content, data);
@@ -214,7 +222,7 @@ export const Content = {
                 }
 
                 // Bail early if there is no value
-                if (!value) continue;
+                if (value === null || value === undefined) continue;
 
                 // For all other content type
                 Page.set('content', value.trim(), id, field);
@@ -280,9 +288,23 @@ export const Content = {
     addEmbedEvent: function() {
         
     },
+    dragDropEvent: function() {
+        this.SWAPY = createSwapy(Selectors.ITEMS_CONTAINER, {
+            animation: 'dynamic',
+            swapMode: 'hover'
+        });
+
+        this.SWAPY.onSwap(async e => {
+            Page.set('order', e.newSlotItemMap.asMap);
+
+            // Update storage
+            await Page.save();
+        });
+    },
     events: function() {
         this.addLinkEvent();
-        this.addEmbedEvent();
         this.embedButtonEvent();
+        this.addEmbedEvent();
+        this.dragDropEvent();
     }
 };

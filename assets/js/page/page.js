@@ -32,7 +32,6 @@ export const Page = {
         },
         providers: {}
     },
-    SWAPY: null,
     get: function(attribute, id = null) {
         if (id !== null) {
             return this.DATA[attribute][id];
