@@ -12,5 +12,8 @@ export const Selectors = {
     ENTRY_TEMPLATE: document.querySelector('#content #content-entry-template'),
     ACTIONS_TEMPLATE: document.querySelector('#content #content-actions-template'),
     NO_CONTENT_MESSAGE: document.querySelector('#content .no-content-data'),
-    ITEMS_CONTAINER: document.querySelector('#content .content-items')
+    ITEMS_CONTAINER: document.querySelector('#content .content-items'),
+
+    // Preview
+    PREVIEW_FRAME: document.querySelector('.preview iframe')
 };

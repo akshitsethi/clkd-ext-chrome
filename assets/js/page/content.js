@@ -3,12 +3,11 @@ import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
 import { Notification } from "../notification.js";
 import { i18n } from "../i18n.js";
-import { randomString } from "../helper.js";
+import { debounce, randomString } from "../helper.js";
 
 export const Content = {
     constants: {
         COMMON_FIELDS: [
-            'type',
             'title',
             'url',
             'status'
@@ -26,26 +25,26 @@ export const Content = {
     },
     CONTENT_DATA: {
         link: {
-            thumbnail: null,
-            layout: 'classic',
-            sensitive: 'disable'
+            image: null,
+            radioLayout: 'classic',
+            radioSensitive: 'disable'
         },
         youtube: {
-            layout: 'none',
-            authorProfileStatus: 'off',
-            embedTitleStatus: 'off'
+            radioLayout: 'none',
+            statusAuthorProfile: 'off',
+            statusEmbedTitle: 'off'
         },
         vimeo: {
             layout: 'none',
-            authorProfileStatus: 'off',
-            embedTitleStatus: 'off'
+            statusAuthorProfile: 'off',
+            statusEmbedTitle: 'off'
         },
         googlemaps: {
-            mapType: 'roadmap',
-            mapZoom: '12'
+            radioMapType: 'roadmap',
+            rangeMapZoom: '12'
         },
         soundcloud: {
-            layout: 'none'
+            radioLayout: 'none'
         },
         twitter: {},
         instagram: {},
@@ -57,17 +56,7 @@ export const Content = {
     generateId: function() {
         return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     },
-    render: function() {
-        
-    },
-    addNewItem: async function(type = 'link') {
-        let ID = this.generateId();
-
-        // Although one in a 10 million chance of collision, still ensure that we don't have a duplicate ID
-        while (Page.get('content').hasOwnProperty(ID)) {
-            ID = this.generateId();
-        }
-
+    generateItemStructure: function(id, slotId, type) {
         const template = Selectors.ENTRY_TEMPLATE.content;
         const content = template.cloneNode(true);
 
@@ -77,11 +66,11 @@ export const Content = {
         const form = content.querySelector('form');
 
         // Set attributes and distinct name for inputs
-        item.setAttribute('data-swapy-slot', ID);
-        entry.setAttribute('data-swapy-item', ID);
+        item.setAttribute('data-swapy-slot', slotId);
+        entry.setAttribute('data-swapy-item', id);
 
         // Set id and content type to form
-        form.setAttribute('id', ID);
+        form.setAttribute('id', id);
 
         // Update icon and add attribute to form
         entry.querySelector('.type img').setAttribute('src', `./assets/images/page/embed/${type}.png`);
@@ -104,18 +93,54 @@ export const Content = {
         if (inputs.length !== 0) {
             inputs.forEach(input => {
                 const name = input.getAttribute('name');
-
-                input.setAttribute('name', `${name}-${ID}`);
-                input.setAttribute('id', `${name}-${ID}`);
+                input.setAttribute('name', `${name}-${id}`);
 
                 // Adding event listeners based on input type
                 const type = input.getAttribute('type');
 
-                // TODO
-                // Add event listeners
-                
+                // Event listeners
+                if (['checkbox', 'radio', 'range'].includes(type)) {
+                    input.addEventListener('change', async e => await this.save());
+                } else {
+                    input.addEventListener('keyup', debounce(async () => {
+                        await this.save(true);
+                    }));
+                }
             });
         }
+
+        return content;
+    },
+    populateItemContent: function(id, content, data) {
+        for (const [key, value] of Object.entries(data)) {
+            if (!value) continue;
+
+            // TODO
+            // Check if key.includes('image') and show the image on screen
+            // instead of updating value to the file input
+
+            const selector = key.includes('radio') ? content.querySelectorAll(`input[name=${key}-${id}]`) : content.querySelector(`input[name=${key}-${id}]`);
+            if (!selector) continue;
+
+            if (key.includes('status')) {
+                if (value === 'on') selector.setAttribute('checked', 'checked');
+            } else if (key.includes('radio')) {
+                selector.forEach(radio => radio.value === value && radio.setAttribute('checked', 'checked'));
+            } else {
+                selector.value = value;
+            }
+        }
+    },
+    addNewItem: async function(type = 'link') {
+        let ID = this.generateId();
+
+        // Although one in a 10 million chance of collision, still ensure that we don't have a duplicate ID
+        while (Page.get('content').hasOwnProperty(ID)) {
+            ID = this.generateId();
+        }
+
+        // Generate item's content (HTML structure with event listeners)
+        const content = this.generateItemStructure(ID, ID, type);
 
         // Prepend item to map
         Page.set('order', new Map([...new Map().set(ID, ID), ...Page.get('order')]));
@@ -142,6 +167,69 @@ export const Content = {
         // TODO
         // Remove once testing is over
         console.log(Page.DATA);
+    },
+    render: function() {
+        const order = Array.from(Page.get('order'));
+        if (!order.length) return;
+
+        // Update content section
+        this.updateContentSectionVisibility(true);
+
+        for (const [slotId, id] of order.reverse()) {
+            const data = Page.get('content', id);
+
+            // Generate item structure
+            const content = this.generateItemStructure(slotId, id, data.type);
+
+            // Populate existing content
+            this.populateItemContent(id, content, data);
+
+            // Add item on screen
+            Selectors.ITEMS_CONTAINER.prepend(content);
+        }
+    },
+    save: async function(embeds = false) {
+        const forms = Selectors.ITEMS_CONTAINER.querySelectorAll('form');
+        if (!forms.length) return;
+
+        // Loop over forms to store data
+        for (const form of forms) {
+            const id = form.getAttribute('id');
+            const type = form.getAttribute('data-type');
+            const data = new FormData(form);
+
+            // Fields based on form type
+            const fields = [...this.constants.COMMON_FIELDS, ...Object.keys(this.CONTENT_DATA[type])];
+
+            // Loop over form data
+            for (const field of fields) {
+                // Skip saving image fields as it's logic is handled separately
+                if (field.includes('image')) continue;
+
+                const value = data.get(`${field}-${id}`);
+
+                // Process `status` fields early as they will return `null` when not checked
+                if (field.includes('status') && value !== 'on') {
+                    Page.set('content', 'off', id, field);
+                }
+
+                // Bail early if there is no value
+                if (!value) continue;
+
+                // For all other content type
+                Page.set('content', value.trim(), id, field);
+            }
+
+            // Process embeds
+            if (embeds) {
+                // TODO
+                // Add logic for processing embeds and storing HTML in providers
+                // also, ensure that we don't fetch data from remote servers multiple times
+            }
+        }
+
+        // Update local storage
+        Page.save();
     },
     updateContentSectionVisibility: function(show = true) {
         if (show) {
@@ -180,9 +268,8 @@ export const Content = {
                     target = e.target.parentElement;
                 }
 
-                // Update toggle arrow
+                // Update toggle arrow and toggle option dropdown
                 target.querySelectorAll('img').forEach(img => img.classList.toggle('show'));
-
                 Selectors.EMBED_OPTIONS.classList.toggle('show');
             } catch (error) {
                 console.error(error);

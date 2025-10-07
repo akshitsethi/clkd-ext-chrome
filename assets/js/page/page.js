@@ -77,6 +77,14 @@ export const Page = {
 
         // Store updated data object
         await Store.set(data);
+
+        // After data is saved, update preview to reflect changes
+        this.preview();
+    },
+    preview: function() {
+        if (!Selectors.PREVIEW_FRAME) return;
+
+        Selectors.PREVIEW_FRAME.src = Selectors.PREVIEW_FRAME.src;
     },
     updateDOM: async function() {
         // Set essential constants (slug and domain)
