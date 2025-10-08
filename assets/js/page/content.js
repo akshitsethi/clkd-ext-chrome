@@ -42,7 +42,7 @@ export const Content = {
             statusEmbedTitle: 'off'
         },
         vimeo: {
-            layout: 'none',
+            radioLayout: 'none',
             statusAuthorProfile: 'off',
             statusEmbedTitle: 'off'
         },
