@@ -5,6 +5,8 @@ import { Selectors } from "./selectors.js";
 import { Notification } from "../notification.js";
 import { i18n } from "../i18n.js";
 import { debounce, randomString } from "../helper.js";
+import { isURL } from "validator";
+import { Providers } from "./providers.js";
 
 export const Content = {
     constants: {
@@ -16,13 +18,17 @@ export const Content = {
         ACTIONS: {
             link: ['sensitive', 'thumbnail', 'layout'],
             youtube: ['settings'],
-            vimeo: ['settings'],
-            tiktok: ['settings'],
+            instagram: [],
             twitter: ['settings', 'layout'],
+            facebook: [],
+            tiktok: ['settings'],
             soundcloud: ['settings'],
-            spotify: ['settings'],
-            googlemaps: ['settings', 'zoom']
-        }
+            threads: [],
+            vimeo: ['settings'],
+            googlemaps: ['settings', 'zoom'],
+            spotify: ['settings']
+        },
+        IGNORE_PROCESSING_LIST: ['googlemaps'],
     },
     CONTENT_DATA: {
         link: {
@@ -160,21 +166,8 @@ export const Content = {
         this.openInlineModalEvent(content);
         this.deleteItemEvent(content);
 
-        // Prepend item to map
-        Page.set('order', new Map([...new Map().set(ID, ID), ...Page.get('order')]));
-
-        // Add empty object to `content` attribute for holding content box data
-        Page.set(
-            'content',
-            {
-                type,
-                title: null,
-                url: null,
-                status: 'off',
-                ...this.CONTENT_DATA[type]
-            },
-            ID
-        );
+        // Update object containing page data
+        this.setItemDataToObject(ID, ID, type);
 
         // Update local storage
         Page.save();
@@ -188,6 +181,28 @@ export const Content = {
         // TODO
         // Remove once testing is over
         console.log(Page.DATA);
+    },
+    setItemDataToObject: function(id, slotId, type) {
+        // Prepend item to map
+        Page.set('order', new Map([...new Map().set(slotId, id), ...Page.get('order')]));
+
+        // Add empty object to `content` attribute for holding content box data
+        Page.set(
+            'content',
+            {
+                type,
+                title: null,
+                url: null,
+                status: 'off',
+                ...this.CONTENT_DATA[type]
+            },
+            id
+        );
+
+        // Add an empty object to `providers` key for holding embed data
+        if (type !== 'link') {
+            Page.set('providers', {}, id);
+        }
     },
     openInlineModalEvent: function(content) {
         const selectors = content.querySelectorAll('.actions a');
@@ -299,18 +314,33 @@ export const Content = {
 
                 // For all other content type
                 Page.set('content', value.trim(), id, field);
-            }
 
-            // Process embeds
-            if (embeds) {
-                // TODO
-                // Add logic for processing embeds and storing HTML in providers
-                // also, ensure that we don't fetch data from remote servers multiple times
+                // Process embeds
+                if (embeds) {
+                    await this.processEmbed(id, type, field, value);
+                }
             }
         }
 
         // Update local storage
         Page.save();
+    },
+    processEmbed: async function(id, type, field, value) {
+        if (type === 'link' || field !== 'url' || this.constants.IGNORE_PROCESSING_LIST.includes(type)) {
+            return;
+        }
+        if (!value || !isURL(value)) {
+            return;
+        }
+
+        // Get provider data
+        const data = Page.get('providers', id);
+        if (data && data.hasOwnProperty('url') && data.url === value) {
+            console.log('Skipped processing oEmbed');
+            return;
+        }
+
+        await Providers.fetch(id, type, value);
     },
     updateContentSectionVisibility: function(show = true) {
         if (show) {
@@ -359,7 +389,34 @@ export const Content = {
         });
     },
     addEmbedEvent: function() {
-        
+        if (!Selectors.EMBED_OPTIONS) return;
+
+        const embeds = Selectors.EMBED_OPTIONS.querySelectorAll('a');
+        if (!embeds) return;
+
+        embeds.forEach(embed => embed.addEventListener('click', async e => {
+            e.preventDefault();
+
+            try {
+                let target = e.target;
+                if (target.nodeName !== 'A') {
+                    target = e.target.closest('a');
+                }
+
+                // Determine embed type
+                const type = target.getAttribute('data-embed');
+
+                // Add new embed
+                await this.addNewItem(type);
+                this.updateContentSectionVisibility(true);
+
+                // Hide embed options dropdown
+                Selectors.EMBED_OPTIONS.classList.remove('show');
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        }));
     },
     dragDropEvent: function() {
         this.SWAPY = createSwapy(Selectors.ITEMS_CONTAINER, {

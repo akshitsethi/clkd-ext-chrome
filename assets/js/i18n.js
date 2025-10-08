@@ -27,6 +27,8 @@ export const i18n = {
     SLUG_DOMAIN_ERROR: 'Missing details. Please provide a valid slug and domain.',
     PAGE_URL_ERROR: 'Invalid URL. Please verify the source and try again.',
     DATA_ERROR: 'Unable to fetch or validate data. Please try again by refreshing the page.',
+    EMBED_PROCESSING_ERROR: 'An error occurred while trying to process the embed data. Please try entering the link again.',
+    EMBED_FETCH_SUCCESS: 'Embed has been fetched successfully.',
 
     // Analytics
     NO_DATA_ERROR: 'Unable to find analytics data.',

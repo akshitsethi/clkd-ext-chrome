@@ -159,7 +159,7 @@
 
 										<div class="content">
 											<p>Please click the button below to confirm deletion.</p>
-											<button class="delete-item">
+											<button class="delete-item" type="button">
 												<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M5.47 6.015v12.514a2.72 2.72 0 0 0 2.721 2.721h7.618a2.72 2.72 0 0 0 2.72-2.72V6.014m-15.235.001h17.412"/><path d="M8.735 6.015V4.382a1.632 1.632 0 0 1 1.633-1.632h3.264a1.632 1.632 0 0 1 1.633 1.632v1.633M9.824 16.992v-5.439m4.353 5.439v-5.439"/></g></svg>
 												Delete Forever
 											</button>
@@ -190,6 +190,10 @@
 				</template>
 
 				<template id="content-inline-template">
+					<div class="settings" data-inline="settings">
+						
+					</div>
+
 					<div class="thumbnail" data-inline="thumbnail">
 						<div class="title">
 							<h4>Add Thumbnail</h4>
@@ -233,8 +237,8 @@
 						<div class="title"></div>
 
 						<div class="content">
-							<p>Display sensitive content warning?</p>
-							<p>Visitors will be shown a notification before they can visit the link.</p>
+							<p class="base">Display sensitive content warning?</p>
+							<p class="sm">Visitors will be shown a notification before they can visit the link.</p>
 
 							<div class="radio-options flex">
 								<label>
@@ -251,6 +255,10 @@
 								</label>
 							</div>
 						</div>
+					</div>
+
+					<div class="zoom" data-inline="zoom">
+						
 					</div>
 				</template>
 
