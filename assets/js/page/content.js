@@ -148,7 +148,8 @@ export const Content = {
         const content = this.generateItemStructure(ID, ID, type);
 
         // Add event listeners
-        this.addActionEventListeners(content);
+        this.openInlineModalEvent(content);
+        this.deleteItemEvent(content);
 
         // Prepend item to map
         Page.set('order', new Map([...new Map().set(ID, ID), ...Page.get('order')]));
@@ -179,15 +180,11 @@ export const Content = {
         // Remove once testing is over
         console.log(Page.DATA);
     },
-    addActionEventListeners: function(content) {
-        this.openInlineModalEvent(content);
-        // this.deleteItemEvent();
-    },
     openInlineModalEvent: function(content) {
-        const actions = content.querySelectorAll('.actions a');
-        if (!actions.length) return;
+        const selectors = content.querySelectorAll('.actions a');
+        if (!selectors.length) return;
 
-        actions.forEach(action => action.addEventListener('click', e => {
+        selectors.forEach(selector => selector.addEventListener('click', e => {
             e.preventDefault();
 
             let target = e.target;
@@ -199,7 +196,7 @@ export const Content = {
             if (!action) return;
 
             // Selected class for anchor links
-            actions.forEach(action => action !== target ? action.classList.remove('selected') : action.classList.toggle('selected'));
+            selectors.forEach(selector => selector !== target ? selector.classList.remove('selected') : selector.classList.toggle('selected'));
 
             // Display the desired inline modal
             const parentElement = target.closest('.item');
@@ -208,8 +205,36 @@ export const Content = {
             modals.forEach(modal => modal.classList.contains(action) ? modal.classList.toggle('show') : modal.classList.remove('show'));
         }));
     },
-    deleteItemEvent: function() {
+    deleteItemEvent: function(content) {
+        const selector = content.querySelector('.delete-item');
+        if (!selector) return;
 
+        selector.addEventListener('click', e => {
+            e.preventDefault();
+
+            const parentEl = e.target.closest('.item');
+            const slotId = parentEl.getAttribute('data-swapy-slot');
+            const itemId = e.target.closest('.entry').getAttribute('data-swapy-item');
+
+            // Remove node
+            parentEl.remove();
+
+            // Remove parent id from order and content id from content object as we won't require the data anymore)
+            Page.remove('order', slotId);
+            Page.remove('content', itemId);
+            Page.remove('providers', itemId);
+
+            // Save data
+            Page.save();
+
+            // Update draggable elements
+            this.SWAPY.update();
+
+            // Show no data section if all items are removed
+            if (!Object.keys(Page.get('content')).length) {
+                this.updateContentSectionVisibility(false);
+            }
+        });
     },
     render: function() {
         const order = Array.from(Page.get('order'));
@@ -225,7 +250,8 @@ export const Content = {
             const content = this.generateItemStructure(id, slotId, data.type);
 
             // Add event listeners
-            this.addActionEventListeners(content);
+            this.openInlineModalEvent(content);
+            this.deleteItemEvent(content);
 
             // Populate existing content
             this.populateItemContent(id, content, data);

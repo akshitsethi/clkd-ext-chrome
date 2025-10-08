@@ -404,7 +404,7 @@ header {
                                 cursor: grab;
                             }
                             & .area {
-                                padding: 0.75rem 1.5rem;
+                                padding: 0.75rem 1rem 0.75rem 0.5rem;
                                 width: 100%;
 
                                 & .core {
@@ -427,6 +427,10 @@ header {
                                         outline: 0;
                                         padding: 0.375rem 0;
                                         font-size: 0.938rem;
+
+                                        &:first-child {
+                                            font-weight: 600;
+                                        }
                                     }
                                     & .status {
                                         margin-left: auto;
@@ -460,10 +464,10 @@ header {
                                         }
                                         &[data-inline="delete"] {
                                             &.selected {
-                                                background: rgba(244, 109, 154,0.1625);
+                                                background: rgba(255, 160, 160, 0.25);
 
                                                 & svg {
-                                                    color: rgba(244, 109, 154,0.85);
+                                                    color: rgba(245, 60, 60, 1);
                                                 }
                                             }
                                         }
@@ -484,19 +488,58 @@ header {
                         & .secondary {
                             border-radius: 0 0 12px 12px;
 
-                            & > div {
-                                display: none;
+                            & div[data-inline] {
+                                height: 0;
+                                opacity: 0;
+                                overflow: hidden;
+                                transition: height 250ms ease-in-out, opacity 250ms ease-in-out;
 
                                 &.show {
-                                    display: block;
+                                    height: auto;
+                                    opacity: 1;
                                 }
                             }
                             & .title {
-                                background: #f3f3f1;
+                                background: #e0e2d9;
                                 text-align: center;
-                                font-size: 0.875rem;
+                                font-size: 0.938rem;
                                 padding: 0.5rem;
                                 min-height: 2rem;
+                            }
+                            & .content {
+                                padding: 1rem 1.5rem;
+
+                                & p {
+                                    font-size: 0.875rem;
+                                    margin: 0;
+                                    color: #676b5f;
+                                }
+                            }
+                            & .delete {
+                                & .content {
+                                    text-align: center;
+
+                                    & p {
+                                        margin: 0 0 0.5rem;
+                                    }
+                                    & .delete-item {
+                                        display: flex;
+                                        align-items: center;
+                                        margin: 0 auto;
+                                        background: rgba(255, 160, 160, 0.25);
+                                        color: rgba(245, 60, 60, 1);
+                                        transition: opacity ease-in 200ms;
+
+                                        & svg {
+                                            max-width: 18px;
+                                            height: auto;
+                                            margin-right: 0.5rem;
+                                        }
+                                        &:hover {
+                                            opacity: 0.75;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -629,7 +672,14 @@ header {
 }
 
 /* Buttons */
-
+button {
+    border: 0;
+    font-size: 0.938rem;
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 24px;
+    cursor: pointer;
+}
 
 /* Modal */
 .modal {
