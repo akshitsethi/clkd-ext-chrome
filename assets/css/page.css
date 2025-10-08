@@ -500,7 +500,7 @@ header {
                                 }
                             }
                             & .title {
-                                background: #e0e2d9;
+                                background: #f3f3f1;
                                 text-align: center;
                                 font-size: 0.938rem;
                                 padding: 0.5rem;
@@ -535,9 +535,67 @@ header {
                                             height: auto;
                                             margin-right: 0.5rem;
                                         }
-                                        &:hover {
-                                            opacity: 0.75;
+                                    }
+                                }
+                            }
+                            & .thumbnail {
+                                text-align: center;
+
+                                & p {
+                                    margin: 0 0 0.5rem;
+                                }
+                            }
+
+                            /* Radio selectors */
+                            & .radio-options {
+                                margin-top: 1rem;
+
+                                & label {
+                                    display: flex;
+                                    cursor: pointer;
+                                    margin-bottom: 0.250rem;
+
+                                    & input {
+                                        position: absolute;
+                                        left: -9999px;
+
+                                        &:checked + div {
+                                            background: rgba(56, 182, 255, 0.125);
                                         }
+                                    }
+                                    & div {
+                                        display: flex;
+                                        flex-direction: column;
+                                        width: 100%;
+                                        padding: 0.75rem 1rem;
+                                        border-radius: 12px;
+                                        transition: 0.25s ease;
+
+                                        &:hover {
+                                            background: rgba(56, 182, 255, 0.0625);
+                                        }
+                                        & p {
+                                            &:first-child {
+                                                font-size: 0.938rem;
+                                                font-weight: 600;
+                                            }
+                                            &:last-child {
+                                                font-size: 0.825rem;
+                                                color: #676b5f;
+                                            }
+                                        }
+                                    }
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                                &.flex {
+                                    display: flex;
+                                    gap: 0.5rem;
+                                    align-items: center;
+
+                                    & label {
+                                        margin-bottom: 0;
                                     }
                                 }
                             }
@@ -679,6 +737,10 @@ button {
     padding: 0.75rem;
     border-radius: 24px;
     cursor: pointer;
+
+    &:hover {
+        opacity: 0.75;
+    }
 }
 
 /* Modal */

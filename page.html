@@ -172,7 +172,7 @@
 				</template>
 
 				<template id="content-actions-template">
-					<a href="#" data-inline="lock">
+					<a href="#" data-inline="sensitive">
 						<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9.688H7c-1.38 0-2.5 1.035-2.5 2.312v6.938c0 1.277 1.12 2.312 2.5 2.312h10c1.38 0 2.5-1.035 2.5-2.312V12c0-1.277-1.12-2.312-2.5-2.312m-9.625 0V7.374a4.625 4.625 0 0 1 9.25 0v2.313m-8.094 8.094h6.938"/></svg>
 					</a>
 					<a href="#" data-inline="layout">
@@ -187,6 +187,71 @@
 					<a href="#" data-inline="zoom">
 						<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.244 17.738a7.494 7.494 0 1 0 0-14.988a7.494 7.494 0 0 0 0 14.988m5.318-2.176l5.688 5.688M10.244 6.245v7.998m3.999-3.999H6.245"/></svg>
 					</a>
+				</template>
+
+				<template id="content-inline-template">
+					<div class="thumbnail" data-inline="thumbnail">
+						<div class="title">
+							<h4>Add Thumbnail</h4>
+						</div>
+
+						<div class="content">
+							<p>Add a Thumbnail or Icon to this Link.</p>
+							<button class="add-image">Add Thumbnail</button>
+						</div>
+					</div>
+
+					<div class="layout" data-inline="layout">
+						<div class="title">
+							<h4>Layout</h4>
+						</div>
+
+						<div class="content">
+							<p>Choose a layout for your link.</p>
+
+							<div class="radio-options">
+								<label>
+									<input type="radio" name="radioLayout" value="classic">
+									<div>
+										<p>Classic</p>
+										<p>Efficient, direct and compact.</p>
+									</div>
+								</label>
+
+								<label>
+									<input type="radio" name="radioLayout" value="featured">
+									<div>
+										<p>Featured</p>
+										<p>Make your link stand out with a larger, more attractive display.</p>
+									</div>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="sensitive" data-inline="sensitive">
+						<div class="title"></div>
+
+						<div class="content">
+							<p>Display sensitive content warning?</p>
+							<p>Visitors will be shown a notification before they can visit the link.</p>
+
+							<div class="radio-options flex">
+								<label>
+									<input type="radio" name="radioSensitive" value="enable">
+									<div>
+										<p>Yes</p>
+									</div>
+								</label>
+								<label>
+									<input type="radio" name="radioSensitive" value="disable">
+									<div>
+										<p>No</p>
+									</div>
+								</label>
+							</div>
+						</div>
+					</div>
 				</template>
 
 				<div class="content-items"></div>

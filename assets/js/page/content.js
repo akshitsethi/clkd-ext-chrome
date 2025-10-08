@@ -14,7 +14,7 @@ export const Content = {
             'status'
         ],
         ACTIONS: {
-            link: ['lock', 'thumbnail', 'layout'],
+            link: ['sensitive', 'thumbnail', 'layout'],
             youtube: ['settings'],
             vimeo: ['settings'],
             tiktok: ['settings'],
@@ -86,11 +86,20 @@ export const Content = {
         const actionsTemplate = Selectors.ACTIONS_TEMPLATE.content;
         const actionsContent = actionsTemplate.cloneNode(true);
 
+        // Inline template
+        const inlineTemplate = Selectors.INLINE_TEMPLATE.content;
+        const inlineContent = inlineTemplate.cloneNode(true);
+
         // Find the content specific selectors
         const actionDiv = form.querySelector('.actions');
+        const inlineDiv = form.querySelector('.secondary');
+
         for (const actionType of this.constants.ACTIONS[type]) {
             const action = actionsContent.querySelector(`[data-inline=${actionType}]`);
+            const inline = inlineContent.querySelector(`[data-inline=${actionType}]`);
+
             actionDiv.prepend(action);
+            inlineDiv.prepend(inline);
         }
 
         // Event listeners

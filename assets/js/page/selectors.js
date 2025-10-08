@@ -11,6 +11,7 @@ export const Selectors = {
     EMBED_OPTIONS: document.querySelector('#content .embed-options'),
     ENTRY_TEMPLATE: document.querySelector('#content #content-entry-template'),
     ACTIONS_TEMPLATE: document.querySelector('#content #content-actions-template'),
+    INLINE_TEMPLATE: document.querySelector('#content #content-inline-template'),
     NO_CONTENT_MESSAGE: document.querySelector('#content .no-content-data'),
     ITEMS_CONTAINER: document.querySelector('#content .content-items'),
 
