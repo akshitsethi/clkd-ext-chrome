@@ -7,6 +7,7 @@ import { i18n } from "../i18n.js";
 import { debounce, randomString } from "../helper.js";
 import { isURL } from "validator";
 import { Providers } from "./providers.js";
+import { providerNames } from "./constants.js";
 
 export const Content = {
     constants: {
@@ -17,16 +18,16 @@ export const Content = {
         ],
         ACTIONS: {
             link: ['sensitive', 'thumbnail', 'layout'],
-            youtube: ['settings'],
+            youtube: ['video-settings'],
             instagram: [],
-            twitter: ['settings', 'layout'],
+            twitter: [],
             facebook: [],
-            tiktok: ['settings'],
-            soundcloud: ['settings'],
+            tiktok: [],
+            soundcloud: [],
             threads: [],
-            vimeo: ['settings'],
-            googlemaps: ['settings', 'zoom'],
-            spotify: ['settings']
+            vimeo: ['video-settings'],
+            googlemaps: ['zoom', 'map-settings'],
+            spotify: []
         },
         IGNORE_PROCESSING_LIST: ['googlemaps'],
     },
@@ -104,6 +105,9 @@ export const Content = {
             const action = actionsContent.querySelector(`[data-inline=${actionType}]`);
             const inline = inlineContent.querySelector(`[data-inline=${actionType}]`);
 
+            // Update `{provider}` placeholder with provider's name
+            this.replaceProviderPlaceholder(inline, type);
+
             actionDiv.prepend(action);
             inlineDiv.prepend(inline);
         }
@@ -130,6 +134,12 @@ export const Content = {
         }
 
         return content;
+    },
+    replaceProviderPlaceholder: function(node, provider) {
+        if (provider === 'link' || !node) return;
+
+        // Make replacements to HTML
+        node.innerHTML = node.innerHTML.replaceAll('{provider}', providerNames[provider]);
     },
     populateItemContent: function(id, content, data) {
         for (const [key, value] of Object.entries(data)) {

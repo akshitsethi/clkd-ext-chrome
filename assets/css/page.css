@@ -95,6 +95,56 @@ html {
     background: #f3f3f1;
 }
 
+/* Inputs */
+.range {
+    & input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        cursor: pointer;
+        outline: none;
+        border-radius: 16px;
+        height: 6px;
+        background: #f6f6f1;
+
+        &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 16px;
+            width: 16px;
+            background-color: #505050;
+            border-radius: 50%;
+            border: none;
+            transition: .2s ease-in-out;
+        }
+        &::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 10px rgba(10, 10, 10, .1)
+        }
+        &:active::-webkit-slider-thumb {
+            box-shadow: 0 0 0 13px rgba(10, 10, 10, .2)
+        }
+        &:focus::-webkit-slider-thumb {
+            box-shadow: 0 0 0 13px rgba(10, 10, 10, .2)
+        }
+    }
+    & .ticks {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0.75rem;
+        margin-bottom: 1.5rem;
+
+        & span {
+            display: flex;
+            justify-content: center;
+            width: 0px;
+            height: 4px;
+            color: #a8a8a8;
+            font-size: 0.750rem;
+            line-height: 2.75;
+        }
+    }
+}
+
 /* Header */
 header {
     display: none;
@@ -500,10 +550,12 @@ header {
                                 height: 0;
                                 opacity: 0;
                                 overflow: hidden;
-                                transition: height 250ms ease-in-out, opacity 250ms ease-in-out;
+                                visibility: hidden;
+                                transition: height 250ms ease-in-out, opacity 250ms ease-in-out, visibility 250ms ease-in-out;
 
                                 &.show {
                                     height: auto;
+                                    visibility: visible;
                                     opacity: 1;
                                 }
                             }
@@ -515,7 +567,7 @@ header {
                                 min-height: 2rem;
                             }
                             & .content {
-                                padding: 1rem 1.5rem;
+                                padding: 1rem;
 
                                 & p {
                                     margin: 0;
@@ -556,6 +608,11 @@ header {
                                 & .base {
                                     font-weight: 500;
                                     margin-bottom: 0.125rem;
+                                }
+                            }
+                            .zoom {
+                                & p {
+                                    margin: 0 0 1rem;
                                 }
                             }
 
@@ -610,6 +667,31 @@ header {
                                     & label {
                                         margin-bottom: 0;
                                     }
+                                }
+                            }
+
+                            /* Switches */
+                            & .option {
+                                margin-bottom: 0.5rem;
+
+                                & .status {
+                                    display: flex;
+                                    align-items: center;
+
+                                    & .status-label {
+                                        margin-left: auto;
+                                        min-width: 48px;
+                                        text-align: right;
+                                    }
+                                    & .switch {
+                                        & input:checked+.toggle {
+                                            background-color: rgba(56, 182, 255, 1);
+                                        }
+                                    }
+                                }
+
+                                &:last-child {
+                                    margin-bottom: 0;
                                 }
                             }
                         }
