@@ -1110,6 +1110,9 @@ h2 {
                 background: rgba(119, 148, 182, 0.105);
             }
 
+            & input[type="file"] {
+                display: none;
+            }
             & input[type="color"] {
                 margin-left: auto;
                 width: 2rem;
@@ -1135,6 +1138,13 @@ h2 {
 
             & button {
                 margin-top: 0.5rem;
+            }
+
+            & .add-logo {
+                margin-left: auto;
+                font-weight: 500;
+                font-size: 0.875rem;
+                padding: 0.25rem;
             }
         }
     }
