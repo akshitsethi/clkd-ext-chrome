@@ -515,10 +515,6 @@ h2 {
         & .cta {
             margin-top: 1.25rem;
             padding-bottom: 0.5rem;
-
-            & .button {
-                cursor: not-allowed;
-            }
         }
     }
 }

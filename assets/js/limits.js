@@ -16,6 +16,13 @@ export const Limits = {
                 Selectors.HEADER_UPGRADE_CTA.style.display = 'block';
             }
         }
+
+        // Change default domain for links & pages screen
+        this.updateDefaultDomains();
+    },
+    updateDefaultDomains: function() {
+        Selectors.LINK_DOMAIN_SELECTOR.value = Store.SETTINGS.default_domain;
+        Selectors.PAGE_DOMAIN_SELECTOR.value = Store.SETTINGS.default_page_domain;
     },
     upgradeModal: function (heading = 'Premium Feature', content = null) {
         if (!Selectors.UPGRADE_TRIGGER) return;

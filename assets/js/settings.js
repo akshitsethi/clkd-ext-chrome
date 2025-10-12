@@ -11,7 +11,7 @@ import { Limits } from "./limits.js";
 export const Settings = {
     constants: {
         ANALYTICS_DURATION_CLASSNAME: 'select[name=analytics_duration]',
-        LINKS_PAGE_CLASSNAME: 'select[name=default_domain]'
+        DOMAIN_FIELDS_CLASSNAME: 'select[name=default_domain], select[name=default_page_domain]'
     },
     DEFAULT: {
         analytics_duration: '3days',
@@ -128,6 +128,9 @@ export const Settings = {
         // Also, update local variable for the current session
         Store.SETTINGS = settings;
 
+        // Update default domains
+        Limits.updateDefaultDomains();
+
         // Add success notification
         Notification.success(i18n.SETTINGS_UPDATED)
     },
@@ -148,6 +151,8 @@ export const Settings = {
                     analytics_duration: data.get('analytics_duration') ?? this.DEFAULT.analytics_duration,
                     links_per_page: data.get('links_per_page') ?? this.DEFAULT.links_per_page,
                     default_domain: data.get('default_domain') ?? this.DEFAULT.default_domain,
+                    pages_per_page: data.get('pages_per_page') ?? this.DEFAULT.pages_per_page,
+                    default_page_domain: data.get('default_page_domain') ?? this.DEFAULT.default_page_domain,
                     qr_background: data.get('qr_background') ?? this.DEFAULT.qr_background,
                     qr_text: data.get('qr_text') ?? this.DEFAULT.qr_text
                 };
@@ -195,10 +200,10 @@ export const Settings = {
     domainChangeEvent: function () {
         if (!Selectors.SETTINGS_FORM) return;
 
-        const select = Selectors.SETTINGS_FORM.querySelector(this.constants.LINKS_PAGE_CLASSNAME);
-        if (!select) return;
+        const selectors = Selectors.SETTINGS_FORM.querySelectorAll(this.constants.DOMAIN_FIELDS_CLASSNAME);
+        if (!selectors.length) return;
 
-        select.addEventListener('change', e => {
+        selectors.forEach(select => select.addEventListener('change', e => {
             try {
                 const newValue = e.target.value;
                 const oldValue = e.target.getAttribute('data-previous');
@@ -225,7 +230,7 @@ export const Settings = {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             }
-        });
+        }));
     },
     analyticsDurationChangeEvent: function () {
         if (!Selectors.SETTINGS_FORM) return;

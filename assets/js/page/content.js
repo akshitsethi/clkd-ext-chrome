@@ -1,11 +1,11 @@
 // page/content.js
 import { createSwapy } from "swapy";
+import { isURL } from "validator";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
 import { Notification } from "../notification.js";
 import { i18n } from "../i18n.js";
 import { debounce, randomString } from "../helper.js";
-import { isURL } from "validator";
 import { Providers } from "./providers.js";
 import { providerNames } from "./constants.js";
 

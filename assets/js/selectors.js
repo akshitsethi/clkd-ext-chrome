@@ -56,6 +56,7 @@ export const Selectors = {
         active: document.querySelector('#pages .no-pages-data'),
         archive: document.querySelector('#pages .no-pages-archive')
     },
+    PAGE_DOMAIN_SELECTOR: document.querySelector('#pages select[name=domain]'),
 
     // Common (for both links & pages)
     FORM: {
