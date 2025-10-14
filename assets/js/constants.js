@@ -1,6 +1,7 @@
 // constants.js
-// API Endpoint
+// API Endpoints
 export const apiBase = 'http://localhost:8788/api';
+export const storageBase = 'http://localhost:8788/api/file?f=';
 
 // Default domain
 export const defaultDomain = 'clkd.in';

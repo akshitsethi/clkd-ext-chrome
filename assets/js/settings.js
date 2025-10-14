@@ -11,7 +11,10 @@ import { Limits } from "./limits.js";
 export const Settings = {
     constants: {
         ANALYTICS_DURATION_CLASSNAME: 'select[name=analytics_duration]',
-        DOMAIN_FIELDS_CLASSNAME: 'select[name=default_domain], select[name=default_page_domain]'
+        DOMAIN_FIELDS_CLASSNAME: 'select[name=default_domain], select[name=default_page_domain]',
+        QR_LOGO_ADD_BUTTON_CLASSNAME: '.add-logo',
+        FORM_OPTION_CLASSNAME: '.option',
+        FILE_INPUT_CLASSNAME: 'input[type="file"]'
     },
     DEFAULT: {
         analytics_duration: '3days',
@@ -90,7 +93,8 @@ export const Settings = {
             pages_per_page: response.message.setting_pages_per_page,
             default_page_domain: response.message.setting_default_page_domain,
             qr_background: response.message.setting_qr_background,
-            qr_text: response.message.setting_qr_text
+            qr_text: response.message.setting_qr_text,
+            qr_logo: response.message.setting_qr_logo
         };
 
         // Store user settings
@@ -133,6 +137,25 @@ export const Settings = {
 
         // Add success notification
         Notification.success(i18n.SETTINGS_UPDATED)
+    },
+    uploadLogoFile: function(files) {
+        try {
+            Processing.show();
+
+            if (!files.length) {
+                throw new Error(i18n.NO_FILE_SELECTED);
+            }
+
+            // Get first entry from FileList
+            const file = files.item(0);
+
+            
+        } catch(error) {
+            console.error(error);
+            Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+        } finally {
+            Processing.hide();
+        }
     },
     formSubmitEvent: function () {
         if (!Selectors.SETTINGS_FORM) return;
@@ -267,11 +290,43 @@ export const Settings = {
             }
         });
     },
+    openFileDialogEvent: function() {
+        if (!Selectors.SETTINGS_FORM) return;
+
+        const button = Selectors.SETTINGS_FORM.querySelector(this.constants.QR_LOGO_ADD_BUTTON_CLASSNAME);
+        if (!button) return;
+
+        button.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                const parent = e.target.closest(this.constants.FORM_OPTION_CLASSNAME);
+                if (!parent) {
+                    throw new Error(i18n.SELECTOR_NOT_FOUND);
+                }
+
+                // Trigger opening of file dialog
+                parent.querySelector(this.constants.FILE_INPUT_CLASSNAME).click();
+
+                // Handle file change event
+                // i.e when a file is added to the file input
+                const fileInput = parent.querySelector(this.constants.FILE_INPUT_CLASSNAME);
+
+                fileInput.addEventListener('change', e => {
+                    this.uploadLogoFile(e.target.files);
+                });
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+    },
     events: function () {
         this.formSubmitEvent();
         this.colorChangeEvent();
         this.domainChangeEvent();
         this.analyticsDurationChangeEvent();
+        this.openFileDialogEvent();
     },
     init: async function () {
         await this.updateDOM();
