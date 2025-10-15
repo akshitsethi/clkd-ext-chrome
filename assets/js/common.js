@@ -3,6 +3,8 @@ import { i18n } from "./i18n.js";
 import { Notification } from "./notification.js";
 import { Modal } from "./modal.js";
 import { QR } from "./qr.js";
+import { Store } from "./store.js";
+import { Settings } from "./settings.js";
 
 export const Common = {
     QRCodeModal: async function(domain, slug) {
@@ -12,7 +14,18 @@ export const Common = {
 
         // Generate QR using scan link
         const scanLink = `https://${domain}/${slug}?scan=1`;
-        const qrcode = await QR.generate(scanLink);
+        let qrcode = null;
+
+        if (Store.SETTINGS.qr_logo) {
+            const logo = await Store.get('logo');
+            if (!logo || !(logo.hasOwnProperty('logo'))) {
+                logo.logo = await Settings.storeLogoToLocal(Store.SETTINGS.qr_logo);
+            }
+
+            qrcode = await QR.generate(scanLink, 'with_logo', logo.logo);
+        } else {
+            qrcode = await QR.generate(scanLink);
+        }
 
         // Open QR Code in modal
         const el = document.createElement('div');

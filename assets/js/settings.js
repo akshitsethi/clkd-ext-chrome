@@ -42,6 +42,31 @@ export const Settings = {
             reader.onerror = (e) => reject(e);
         });
     },
+    storeLogoToLocal: async function(slug) {
+        // Fetch logo from remote storage
+        try {
+            const response = await fetch(`${storageBase}${slug}`, {
+                method: 'GET',
+                async: true
+            });
+
+            // Throw error if there is an error fetching file
+            if (response.status !== 200) {
+                throw new Error(i18n.API_ERROR);
+            }
+
+            const file = new Blob([await response.blob()], { type: 'image/png' });
+            const encodedLogo = await this.fileToBase64(file);
+
+            // Store logo locally
+            await Store.set({ logo: encodedLogo });
+
+            // Return as it'll prevent querying storage again
+            return encodedLogo;
+        } catch(error) {
+            throw new Error(error.message ?? i18n.API_ERROR);
+        }
+    },
     showQRLogo: async function(element, slug) {
         if (!slug) return;
 
@@ -174,7 +199,7 @@ export const Settings = {
         // Store user settings
         await User.setSettings(settings);
     },
-    syncWithAPI: async function (settings) {
+    syncWithAPI: async function (settings, showNotification = true) {
         const request = await fetch(`${apiBase}/settings`, {
             method: 'POST',
             async: true,
@@ -207,7 +232,7 @@ export const Settings = {
         Limits.updateDefaultDomains();
 
         // Add success notification
-        Notification.success(i18n.SETTINGS_UPDATED)
+        showNotification && Notification.success(i18n.SETTINGS_UPDATED)
     },
     uploadLogoFile: async function(files) {
         try {
@@ -227,7 +252,7 @@ export const Settings = {
             Store.SETTINGS.qr_logo = response.message.slug;
 
             // Update settings
-            await this.syncWithAPI(Store.SETTINGS);
+            await this.syncWithAPI(Store.SETTINGS, false);
 
             // Convert logo to base64 and sync locally
             // Lastly, show uploaded file in settings screen
@@ -425,6 +450,12 @@ export const Settings = {
             e.preventDefault();
 
             try {
+                // Check if the user plan allows for custom logo
+                if (!Store.USER.is_premium || Store.USER.subscription.plan !== 'pro') {
+                    Limits.upgradeModal('Custom Logo QR Code', i18n.FEATURE_NOT_AVAILABLE);
+                    return;
+                }
+
                 // Trigger opening of file dialog
                 Selectors.QR_LOGO_FILE_INPUT.click();
             } catch (error) {

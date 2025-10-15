@@ -49,6 +49,7 @@ export const i18n = {
     PRO_DOMAIN_NOT_AVAILABLE: 'This domain is part of our <strong>Pro</strong> plan. Please consider upgrading if you wish to use it.',
     BASIC_ANALYTICS_NOT_AVAILABLE: 'This duration is part of our <strong>Basic</strong> plan or above. Please consider upgrading if you wish to use it.',
     PRO_ANALYTICS_NOT_AVAILABLE: 'This duration is part of our <strong>Pro</strong> plan. Please consider upgrading if you wish to use it.',
+    FEATURE_NOT_AVAILABLE: 'This feature is part of our <strong>Pro</strong> plan. Please consider upgrading if you wish to use it.',
 
     // QR Code
     QRCODE_ERROR: 'Error occurred while generating the QR Code.',
