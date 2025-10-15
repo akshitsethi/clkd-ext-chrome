@@ -765,14 +765,11 @@
 					</div>
 
 					<h3>QR Code</h3>
-					<div class="option no-flex">
-						<div class="logo-input">
-							<label for="qr_logo">Logo</label>
-							<a href="#" class="add-logo">Add</a>
-							<input type="file" name="qr_logo" id="qr_logo" accept=".jpg, .jpeg, .png" hidden>
-						</div>
+					<div class="option">
+						<label for="qr_logo">Logo</label>
 
-						<div class="logo-container"></div>
+						<a href="#" class="add-logo">Add</a>
+						<input type="file" name="qr_logo" id="qr_logo" accept=".jpg, .jpeg, .png" hidden>
 					</div>
 					<div class="option">
 						<label for="qr_background">Background color</label>
@@ -786,6 +783,13 @@
 					<div class="option">
 						<button type="submit" class="button red border medium">Save Settings</button>
 					</div>
+
+					<template id="logo-actions-template">
+						<div class="logo-actions">
+							<a href="#" data-action="view">View</a>
+							<a href="#" data-action="remove">Remove</a>
+						</div>
+					</template>
 				</form>
 			</div>
 		</div><!-- #settings -->

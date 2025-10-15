@@ -13,8 +13,7 @@ export const Settings = {
         ANALYTICS_DURATION_CLASSNAME: 'select[name=analytics_duration]',
         DOMAIN_FIELDS_CLASSNAME: 'select[name=default_domain], select[name=default_page_domain]',
         QR_LOGO_ADD_BUTTON_CLASSNAME: '.add-logo',
-        FORM_OPTION_CLASSNAME: '.option',
-        LOGO_CONTAINER_CLASSNAME: '.logo-container'
+        FORM_OPTION_CLASSNAME: '.option'
     },
     DEFAULT: {
         analytics_duration: '3days',
@@ -47,32 +46,46 @@ export const Settings = {
 
         // Try to get logo, either the existing encoded or fetch from remote storage
         const logo = await Store.get('logo');
-        if (!logo || !(logo.hasOwnProperty('logo'))) {
+        if (!logo || (logo.hasOwnProperty('logo'))) {
             // Fetch logo from remote storage
+            try {
+                const response = await fetch(`${storageBase}${slug}`, {
+                    method: 'GET',
+                    async: true
+                });
 
+                // Throw error if there is an error fetching file
+                if (response.status !== 200) {
+                    throw new Error(i18n.API_ERROR);
+                }
+
+                const file = new Blob([await response.blob()], { type: 'image/png' });
+                const encodedLogo = await this.fileToBase64(file);
+
+                // Store logo locally
+                await Store.set('logo', encodedLogo);
+            } catch(error) {
+                throw new Error(error.message ?? i18n.API_ERROR);
+            }
         }
 
         // We have the logo, so show it on screen and skip setting the value for `file` input
         const parent = element.closest(this.constants.FORM_OPTION_CLASSNAME);
         if (!parent) return;
 
-        const containerEl = parent.querySelector(this.constants.LOGO_CONTAINER_CLASSNAME);
-        const anchorEl = document.createElement('a');
-        anchorEl.setAttribute('href', '#');
-        anchorEl.addEventListener('click', e => {
+        const template = Selectors.LOGO_ACTIONS_TEMPLATE.content;
+        const content = template.cloneNode(true);
+
+        content.querySelector('[data-action="view"]').addEventListener('click', e => {
             e.preventDefault();
 
             chrome.tabs.create({ url: `${storageBase}${slug}` });
         });
 
-        const imgEl = document.createElement('img');
-        imgEl.setAttribute('src', logo.logo);
-
-        // Append `img` to container
-        anchorEl.appendChild(imgEl);
-        containerEl.appendChild(anchorEl);
-
-        return logo.logo;
+        // Append to `option` container
+        // Before that, remove `add-logo` anchor
+        Selectors.SETTINGS_FORM.querySelector(this.constants.QR_LOGO_ADD_BUTTON_CLASSNAME).style.display = 'none';
+        parent.appendChild(content);
     },
     updateDOM: async function () {
         try {

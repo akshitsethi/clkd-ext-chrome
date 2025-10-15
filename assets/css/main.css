@@ -1089,9 +1089,6 @@ h2 {
             padding: 0.35rem 0;
             border-bottom: 1px solid #f2f2f2;
 
-            &.no-flex {
-                display: block;
-            }
             &:first-child {
                 padding-top: 0;
             }
@@ -1140,28 +1137,21 @@ h2 {
                 margin-top: 0.5rem;
             }
 
-            & .logo-input {
+            & .add-logo {
+                margin-left: auto;
+                font-weight: 500;
+                font-size: 0.875rem;
+                padding: 0.25rem;
+            }
+            & .logo-actions {
                 display: flex;
                 align-items: center;
-
-                & .add-logo {
-                    margin-left: auto;
-                    font-weight: 500;
-                    font-size: 0.875rem;
-                    padding: 0.25rem;
-                }
-            }
-            & .logo-container {
-                padding: 0.25rem 0;
-                text-align: right;
+                margin-left: auto;
+                gap: 1rem;
 
                 & a {
-                    display: inline-block;
-                }
-                & img {
-                    width: auto;
-                    max-height: 32px;
-                    border-radius: 8px;
+                    font-size: 0.875rem;
+                    font-weight: 500;
                 }
             }
         }
