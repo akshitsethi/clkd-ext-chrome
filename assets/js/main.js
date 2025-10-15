@@ -22,7 +22,7 @@ const CLKD = {
 
 			// TEMPORARY
 			// To be removed once the work is complete
-			// Screen.show('settings', 'block', 'true', true);
+			Screen.show('settings', 'block', 'true', true);
 			// console.log(Store.USER);
 		} catch (error) {
 			console.error(error);

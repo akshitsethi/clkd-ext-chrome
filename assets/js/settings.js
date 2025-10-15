@@ -4,7 +4,7 @@ import { Notification } from "./notification.js";
 import { Processing } from "./processing.js";
 import { Selectors } from "./selectors.js";
 import { Store } from "./store.js";
-import { analyticsDurationNiceName, apiBase, defaultDomain, domains, planAnalyticsDuration, planDomains } from "./constants.js";
+import { analyticsDurationNiceName, apiBase, defaultDomain, domains, planAnalyticsDuration, planDomains, storageBase } from "./constants.js";
 import { User } from "./user.js";
 import { Limits } from "./limits.js";
 
@@ -14,7 +14,7 @@ export const Settings = {
         DOMAIN_FIELDS_CLASSNAME: 'select[name=default_domain], select[name=default_page_domain]',
         QR_LOGO_ADD_BUTTON_CLASSNAME: '.add-logo',
         FORM_OPTION_CLASSNAME: '.option',
-        FILE_INPUT_CLASSNAME: 'input[type="file"]'
+        LOGO_CONTAINER_CLASSNAME: '.logo-container'
     },
     DEFAULT: {
         analytics_duration: '3days',
@@ -23,7 +23,8 @@ export const Settings = {
         pages_per_page: '10',
         default_page_domain: defaultDomain,
         qr_background: '#ffffff',
-        qr_text: '#000000'
+        qr_text: '#000000',
+        qr_logo: null
     },
     OPTIONS: {
         analytics_duration: ['day', '3days', 'week', '2weeks', 'month', '2months'],
@@ -31,6 +32,47 @@ export const Settings = {
         default_domain: domains,
         pages_per_page: ['5', '10', '25', '50', '100'],
         default_page_domain: domains
+    },
+    fileToBase64: async (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (e) => reject(e);
+        });
+    },
+    getQRLogo: async function(element, slug) {
+        if (!slug) return;
+
+        // Try to get logo, either the existing encoded or fetch from remote storage
+        const logo = await Store.get('logo');
+        if (!logo || !(logo.hasOwnProperty('logo'))) {
+            // Fetch logo from remote storage
+
+        }
+
+        // We have the logo, so show it on screen and skip setting the value for `file` input
+        const parent = element.closest(this.constants.FORM_OPTION_CLASSNAME);
+        if (!parent) return;
+
+        const containerEl = parent.querySelector(this.constants.LOGO_CONTAINER_CLASSNAME);
+        const anchorEl = document.createElement('a');
+        anchorEl.setAttribute('href', '#');
+        anchorEl.addEventListener('click', e => {
+            e.preventDefault();
+
+            chrome.tabs.create({ url: `${storageBase}${slug}` });
+        });
+
+        const imgEl = document.createElement('img');
+        imgEl.setAttribute('src', logo.logo);
+
+        // Append `img` to container
+        anchorEl.appendChild(imgEl);
+        containerEl.appendChild(anchorEl);
+
+        return logo.logo;
     },
     updateDOM: async function () {
         try {
@@ -41,17 +83,23 @@ export const Settings = {
             if (Object.entries(Store.SETTINGS).length === 0) {
                 await this.fetchFromAPI();
             }
-        } catch (error) {
-            console.error(error);
-        } finally {
+
             for (const [key, value] of Object.entries(Store.SETTINGS)) {
                 const element = Selectors.SETTINGS_FORM.querySelector(`#${key}`);
                 if (element) {
+                    // Exception of `qr_logo`
+                    if (key === 'qr_logo') {
+                        await this.getQRLogo(element, value);
+                        continue;
+                    }
+
                     element.value = value;
                     element.setAttribute('data-previous', value);
                 }
             }
-
+        } catch (error) {
+            console.error(error);
+        } finally {
             Processing.hide();
         }
     },
@@ -127,10 +175,7 @@ export const Settings = {
         }
 
         // Store data locally
-        await Store.set({ settings: settings }, 'sync');
-
-        // Also, update local variable for the current session
-        Store.SETTINGS = settings;
+        await User.setSettings(settings);
 
         // Update default domains
         Limits.updateDefaultDomains();
@@ -138,7 +183,7 @@ export const Settings = {
         // Add success notification
         Notification.success(i18n.SETTINGS_UPDATED)
     },
-    uploadLogoFile: function(files) {
+    uploadLogoFile: async function(files) {
         try {
             Processing.show();
 
@@ -149,13 +194,64 @@ export const Settings = {
             // Get first entry from FileList
             const file = files.item(0);
 
-            
+            // Send request to server
+            const response = await this.postRequest(file);
+
+            // After uploading, save settings and save image to browser
+            Store.SETTINGS.qr_logo = response.message.slug;
+
+            // Update settings
+            await User.setSettings(Store.SETTINGS);
+
+            // Convert logo to base64 and sync locally
+            // Lastly, show uploaded file in settings screen
+            const encodedFile = await this.fileToBase64(file);
+            await Store.set({ logo: encodedFile });
+
+            // Success notification
+            Notification.success(i18n.QR_LOGO_UPLOADED);
         } catch(error) {
             console.error(error);
             Notification.error(error.message ?? i18n.DEFAULT_ERROR);
         } finally {
             Processing.hide();
+
+            // Reset file input
+            // This is to make sure that user gets the error message if he tries to upload the same file again
+            Selectors.QR_LOGO_FILE_INPUT.value = null;
         }
+    },
+    postRequest: function(file) {
+        return new Promise(function (resolve, reject) {
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData();
+
+            formData.append('file', file);
+            formData.append('user_id', Store.USER.ID);
+            formData.append('token', Store.USER.token);
+            formData.append('context', 'qr_logo');
+
+            // Opening connection to the server API endpoint and sending the form data
+            xhr.open('POST', `${apiBase}/file`, true);
+            xhr.timeout = 60000;
+            xhr.addEventListener('readystatechange', async () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(JSON.parse(xhr.response));
+                    }
+                }
+            });
+            xhr.addEventListener('timeout', () => {
+                reject(i18n.DEFAULT_ERROR);
+            });
+            xhr.addEventListener('error', (event) => {
+                reject(i18n.API_ERROR);
+            });
+
+            xhr.send(formData);
+        });
     },
     formSubmitEvent: function () {
         if (!Selectors.SETTINGS_FORM) return;
@@ -291,7 +387,7 @@ export const Settings = {
         });
     },
     openFileDialogEvent: function() {
-        if (!Selectors.SETTINGS_FORM) return;
+        if (!Selectors.SETTINGS_FORM || !Selectors.QR_LOGO_FILE_INPUT) return;
 
         const button = Selectors.SETTINGS_FORM.querySelector(this.constants.QR_LOGO_ADD_BUTTON_CLASSNAME);
         if (!button) return;
@@ -300,25 +396,16 @@ export const Settings = {
             e.preventDefault();
 
             try {
-                const parent = e.target.closest(this.constants.FORM_OPTION_CLASSNAME);
-                if (!parent) {
-                    throw new Error(i18n.SELECTOR_NOT_FOUND);
-                }
-
                 // Trigger opening of file dialog
-                parent.querySelector(this.constants.FILE_INPUT_CLASSNAME).click();
-
-                // Handle file change event
-                // i.e when a file is added to the file input
-                const fileInput = parent.querySelector(this.constants.FILE_INPUT_CLASSNAME);
-
-                fileInput.addEventListener('change', e => {
-                    this.uploadLogoFile(e.target.files);
-                });
+                Selectors.QR_LOGO_FILE_INPUT.click();
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             }
+        });
+
+        Selectors.QR_LOGO_FILE_INPUT.addEventListener('change', async e => {
+            await this.uploadLogoFile(e.target.files);
         });
     },
     events: function () {

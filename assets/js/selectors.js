@@ -90,6 +90,7 @@ export const Selectors = {
 
     // Settings
     SETTINGS_FORM: document.querySelector('#settings .settings-form'),
+    QR_LOGO_FILE_INPUT: document.querySelector('#settings .settings-form input[type="file"]'),
 
     // Upgrade
     UPGRADE_BUTTONS: document.querySelectorAll('#upgrade .upgrade-now'),

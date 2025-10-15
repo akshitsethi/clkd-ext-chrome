@@ -9,6 +9,34 @@ export const defaultDomain = 'clkd.in';
 // List of available domains
 export const domains = ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk'];
 
+// Allowed file formats
+export const allowedFormats = {
+    image: [
+        'image/gif',
+        'image/jpg',
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif'
+    ],
+    video: [
+        'video/mp4',
+        'video/webm'
+    ],
+    logo: [
+        'image/jpg',
+        'image/jpeg',
+        'image/png'
+    ]
+};
+
+// Max upload size
+export const maxUploadSize = {
+    image: 4194304, // 4mb
+    video: 8388608, // 8mb
+    logo: 256000 // 256kb
+};
+
 // Data refresh window for API data
 const date = Date.now();
 export const refreshDuration = {

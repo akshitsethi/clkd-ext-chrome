@@ -12,7 +12,7 @@ export const Account = {
             name: 'Name',
             email: 'Email',
             picture: 'Photo',
-            email_verified: 'Status',
+            email_verified: 'Verified',
             uuid: 'UUID'
         },
         subscription: {
@@ -39,9 +39,7 @@ export const Account = {
 
             // User details
             for (const [key, value] of Object.entries(this.pointers.user)) {
-                if (!Store.USER[key]) {
-                    continue;
-                }
+                if (!Store.USER[key]) continue;
 
                 // Parent container
                 const container = document.createElement('div');

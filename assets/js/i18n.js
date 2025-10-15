@@ -2,6 +2,7 @@
 export const i18n = {
     // Common
     DEFAULT_ERROR: 'Error occurred during processing.',
+    API_ERROR: 'Error occured while connecting to the API.',
     LOGGED_IN: 'Logged-in successfully.',
     NO_SCREEN_ERROR: 'Unable to find the specified screen.',
     SELECTOR_NOT_FOUND: 'Specified selector does not exist.',
@@ -35,6 +36,7 @@ export const i18n = {
 
     // Settings
     SETTINGS_UPDATED: 'Settings have been saved successfully.',
+    QR_LOGO_UPLOADED: 'QR logo has been uploaded successfully.',
 
     // Upload
     NO_FILE_SELECTED: 'No file has been selected. Please select one to begin processing.',
