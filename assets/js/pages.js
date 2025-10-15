@@ -214,6 +214,9 @@ export const Pages = {
 
 				// Add newly generated page
 				this.addNewEntry(response);
+
+				// Open edit screen
+				chrome.tabs.create({ url: `page.html?slug=${data.get('slug')}&domain=${data.get('domain')}` });
 			} catch (error) {
 				console.error(error);
 				Notification.error(error.message ?? i18n.DEFAULT_ERROR);
