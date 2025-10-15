@@ -1144,14 +1144,13 @@ h2 {
                 padding: 0.25rem;
             }
             & .logo-actions {
-                display: flex;
+                display: none;
                 align-items: center;
                 margin-left: auto;
                 gap: 1rem;
 
                 & a {
                     font-size: 0.875rem;
-                    font-weight: 500;
                 }
             }
         }

@@ -13,7 +13,8 @@ export const Settings = {
         ANALYTICS_DURATION_CLASSNAME: 'select[name=analytics_duration]',
         DOMAIN_FIELDS_CLASSNAME: 'select[name=default_domain], select[name=default_page_domain]',
         QR_LOGO_ADD_BUTTON_CLASSNAME: '.add-logo',
-        FORM_OPTION_CLASSNAME: '.option'
+        FORM_OPTION_CLASSNAME: '.option',
+        QR_LOGO_ACTIONS_CLASSNAME: '.logo-actions'
     },
     DEFAULT: {
         analytics_duration: '3days',
@@ -41,33 +42,8 @@ export const Settings = {
             reader.onerror = (e) => reject(e);
         });
     },
-    getQRLogo: async function(element, slug) {
+    showQRLogo: async function(element, slug) {
         if (!slug) return;
-
-        // Try to get logo, either the existing encoded or fetch from remote storage
-        const logo = await Store.get('logo');
-        if (!logo || (logo.hasOwnProperty('logo'))) {
-            // Fetch logo from remote storage
-            try {
-                const response = await fetch(`${storageBase}${slug}`, {
-                    method: 'GET',
-                    async: true
-                });
-
-                // Throw error if there is an error fetching file
-                if (response.status !== 200) {
-                    throw new Error(i18n.API_ERROR);
-                }
-
-                const file = new Blob([await response.blob()], { type: 'image/png' });
-                const encodedLogo = await this.fileToBase64(file);
-
-                // Store logo locally
-                await Store.set('logo', encodedLogo);
-            } catch(error) {
-                throw new Error(error.message ?? i18n.API_ERROR);
-            }
-        }
 
         // We have the logo, so show it on screen and skip setting the value for `file` input
         const parent = element.closest(this.constants.FORM_OPTION_CLASSNAME);
@@ -76,16 +52,53 @@ export const Settings = {
         const template = Selectors.LOGO_ACTIONS_TEMPLATE.content;
         const content = template.cloneNode(true);
 
+        // Event listeners
         content.querySelector('[data-action="view"]').addEventListener('click', e => {
             e.preventDefault();
-
             chrome.tabs.create({ url: `${storageBase}${slug}` });
+        });
+        content.querySelector('[data-action="delete"]').addEventListener('click', async e => {
+            e.preventDefault();
+
+            try {
+                Processing.show();
+
+                // Remove logo from stored settings
+                Store.SETTINGS.qr_logo = null;
+
+                // TODO
+                // Before updating settings, at this step remove logo file from R2
+                // This is necessary for a clean and healthy system
+
+                // Sync logo removal with API
+                await this.syncWithAPI(Store.SETTINGS);
+
+                // Lastly, remove the locally stored `logo` element
+                await Store.remove('logo');
+
+                // Remove actions and show the add button
+                const actions = Selectors.SETTINGS_FORM.querySelector(this.constants.QR_LOGO_ACTIONS_CLASSNAME);
+                actions.innerHTML = null;
+                actions.style.display = 'none';
+
+                Selectors.SETTINGS_FORM.querySelector(this.constants.QR_LOGO_ADD_BUTTON_CLASSNAME).style.display = 'block';
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            } finally {
+                Processing.hide();
+            }
         });
 
         // Append to `option` container
         // Before that, remove `add-logo` anchor
         Selectors.SETTINGS_FORM.querySelector(this.constants.QR_LOGO_ADD_BUTTON_CLASSNAME).style.display = 'none';
-        parent.appendChild(content);
+
+        // Remove existing content and add new values
+        const actions = parent.querySelector(this.constants.QR_LOGO_ACTIONS_CLASSNAME);
+        actions.innerHTML = null;
+        actions.appendChild(content);
+        actions.style.display = 'flex';
     },
     updateDOM: async function () {
         try {
@@ -102,7 +115,7 @@ export const Settings = {
                 if (element) {
                     // Exception of `qr_logo`
                     if (key === 'qr_logo') {
-                        await this.getQRLogo(element, value);
+                        await this.showQRLogo(element, value);
                         continue;
                     }
 
@@ -214,12 +227,15 @@ export const Settings = {
             Store.SETTINGS.qr_logo = response.message.slug;
 
             // Update settings
-            await User.setSettings(Store.SETTINGS);
+            await this.syncWithAPI(Store.SETTINGS);
 
             // Convert logo to base64 and sync locally
             // Lastly, show uploaded file in settings screen
             const encodedFile = await this.fileToBase64(file);
             await Store.set({ logo: encodedFile });
+
+            // Post logic, remove add button and show logo actions
+            await this.showQRLogo(Selectors.QR_LOGO_FILE_INPUT, response.message.slug);
 
             // Success notification
             Notification.success(i18n.QR_LOGO_UPLOADED);

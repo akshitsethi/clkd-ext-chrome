@@ -770,6 +770,8 @@
 
 						<a href="#" class="add-logo">Add</a>
 						<input type="file" name="qr_logo" id="qr_logo" accept=".jpg, .jpeg, .png" hidden>
+
+						<div class="logo-actions"></div>
 					</div>
 					<div class="option">
 						<label for="qr_background">Background color</label>
@@ -780,15 +782,13 @@
 						<input type="color" name="qr_text" id="qr_text">
 					</div>
 
-					<div class="option">
+					<div class="option no-border">
 						<button type="submit" class="button red border medium">Save Settings</button>
 					</div>
 
 					<template id="logo-actions-template">
-						<div class="logo-actions">
-							<a href="#" data-action="view">View</a>
-							<a href="#" data-action="remove">Remove</a>
-						</div>
+						<a href="#" data-action="view">View</a>
+						<a href="#" data-action="delete">Remove</a>
 					</template>
 				</form>
 			</div>

@@ -15,6 +15,12 @@ export const Store = {
 		}
 		type === 'local' ? await chrome.storage.local.set(data) : await chrome.storage.sync.set(data);
 	},
+	remove: async function(key, type = 'local') {
+		if (!key) {
+			throw new Error('No key specified.');
+		}
+		type === 'local' ? await chrome.storage.local.remove(key) : await chrome.storage.sync.remove(key);
+	},
 	clear: async function (type = 'local') {
 		type === 'local' ? await chrome.storage.local.clear() : await chrome.storage.sync.clear();
 	},
