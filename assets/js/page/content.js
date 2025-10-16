@@ -108,6 +108,9 @@ export const Content = {
             // Update `{provider}` placeholder with provider's name
             this.replaceProviderPlaceholder(inline, type);
 
+            // Add specific event listeners for custom items (such as Thumbnail)
+            this.addInlineEventListeners(inline, actionType);
+
             actionDiv.prepend(action);
             inlineDiv.prepend(inline);
         }
@@ -140,6 +143,14 @@ export const Content = {
 
         // Make replacements to HTML
         node.innerHTML = node.innerHTML.replaceAll('{provider}', providerNames[provider]);
+    },
+    addInlineEventListeners: function(inline, action) {
+        if (action !== 'thumbnail') return;
+
+        this.addImageEvent(inline);
+    },
+    addImageEvent: function(inline) {
+        console.log(inline);
     },
     populateItemContent: function(id, content, data) {
         for (const [key, value] of Object.entries(data)) {

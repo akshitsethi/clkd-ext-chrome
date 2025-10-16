@@ -226,7 +226,7 @@ export const Links = {
 						// Show upgrade trigger for editing links
 						if (!Store.USER.is_premium) {
 							Modal.hide();
-							return Limits.upgradeModal('Edit Link');
+							return Limits.upgradeModal('Edit Link', i18n.BASIC_FEATURE_NOT_AVAILABLE);
 						}
 
 						// Create formdata object
@@ -711,7 +711,7 @@ export const Links = {
 				let slug = null;
 				if (Selectors.LINK_MODE_SWITCHER.getAttribute('data-mode') === 'manual') {
 					if (!Store.USER.is_premium) {
-						return Limits.upgradeModal('Custom Slug');
+						return Limits.upgradeModal('Custom Slug', i18n.BASIC_FEATURE_NOT_AVAILABLE);
 					} else {
 						const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
 
@@ -757,7 +757,7 @@ export const Links = {
 				let slug = null;
 				if (Selectors.LINK_MODE_SWITCHER.getAttribute('data-mode') === 'manual') {
 					if (!Store.USER.is_premium) {
-						return Limits.upgradeModal('Custom Slug');
+						return Limits.upgradeModal('Custom Slug', i18n.BASIC_FEATURE_NOT_AVAILABLE);
 					} else {
 						const parent = Selectors.LINK_MODE_SWITCHER.closest(this.constants.CREATE_SECTION_CLASSNAME);
 

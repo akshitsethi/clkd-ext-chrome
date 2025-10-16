@@ -359,7 +359,7 @@ export const Settings = {
 
                 // Revert change if user is on a free plan
                 if (!Store.USER.is_premium) {
-                    Limits.upgradeModal('QR Code Colors');
+                    Limits.upgradeModal('QR Code Colors', i18n.BASIC_FEATURE_NOT_AVAILABLE);
 
                     // Switch back to previous value
                     e.target.value = oldValue;
@@ -452,7 +452,7 @@ export const Settings = {
             try {
                 // Check if the user plan allows for custom logo
                 if (!Store.USER.is_premium || Store.USER.subscription.plan !== 'pro') {
-                    Limits.upgradeModal('Custom Logo QR Code', i18n.FEATURE_NOT_AVAILABLE);
+                    Limits.upgradeModal('Custom Logo QR Code', i18n.PRO_FEATURE_NOT_AVAILABLE);
                     return;
                 }
 

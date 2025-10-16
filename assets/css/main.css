@@ -829,6 +829,10 @@ h2 {
 
                 &:hover {
                     background: rgba(0, 0, 0, 0.04);
+
+                    & .abbr {
+                        display: block;
+                    }
                 }
 
                 & img {
@@ -837,6 +841,28 @@ h2 {
 
                 &:last-child {
                     margin-right: 0;
+
+                    & .abbr {
+                        left: auto;
+                        transform: none;
+                        right: 0;
+                    }
+                }
+
+                & .abbr {
+                    display: none;
+                    position: absolute;
+                    white-space: nowrap;
+                    left: 50%;
+                    width: auto;
+                    transform: translateX(-50%);
+                    top: 2.125rem;
+                    padding: 0.275rem 0.5rem;
+                    font-weight: 500;
+                    background: #101010;
+                    border-radius: 8px;
+                    color: #ffffff;
+                    font-size: 0.75rem;
                 }
             }
         }
