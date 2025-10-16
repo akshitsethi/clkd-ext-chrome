@@ -8,6 +8,7 @@ import { i18n } from "../i18n.js";
 import { debounce, randomString } from "../helper.js";
 import { Providers } from "./providers.js";
 import { providerNames } from "./constants.js";
+import { Processing } from "../processing.js";
 
 export const Content = {
     constants: {
@@ -150,7 +151,55 @@ export const Content = {
         this.addImageEvent(inline);
     },
     addImageEvent: function(inline) {
-        console.log(inline);
+        const button = inline.querySelector('.add-image');
+        const fileInput = inline.querySelector('input[type="file"]');
+        if (!button || !fileInput) {
+            throw new Error(i18n.SELECTOR_NOT_FOUND);
+        }
+
+        button.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                fileInput.click();
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+
+        fileInput.addEventListener('change', async e => {
+            await this.uploadLinkImage(e.target.files);
+        });
+    },
+    uploadLinkImage: async function(files) {
+        try {
+            Processing.show();
+
+            if (!files.length) {
+                throw new Error(i18n.NO_FILE_SELECTED);
+            }
+
+            // Get first entry from FileList
+            const file = files.item(0);
+
+            // Send request to server
+            const response = await this.postRequest(file);
+
+
+
+            // Success notification
+            Notification.success(i18n.);
+        } catch(error) {
+            console.error(error);
+            Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+        } finally {
+            Processing.hide();
+
+            // Reset file input
+            // This is to make sure that user gets the error message if he tries to upload the same file again
+            Selectors.QR_LOGO_FILE_INPUT.value = null;
+        }
     },
     populateItemContent: function(id, content, data) {
         for (const [key, value] of Object.entries(data)) {

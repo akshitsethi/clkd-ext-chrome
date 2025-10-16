@@ -227,7 +227,8 @@ export const Analytics = {
         try {
             Selectors.ANALYTICS_DURATION_TEXT.innerText = analyticsDurationNiceName[Store.SETTINGS.analytics_duration];
         } catch (error) {
-            console.log(error);
+            console.error(error);
+            Notification.error(error.message ?? i18n.DEFAULT_ERROR);
         }
     },
     updateDOM: async function () {
