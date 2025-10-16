@@ -3,11 +3,12 @@ import { createSwapy } from "swapy";
 import { isURL } from "validator";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
+import { Store } from "../store.js";
 import { Notification } from "../notification.js";
 import { i18n } from "../i18n.js";
 import { debounce, randomString } from "../helper.js";
 import { Providers } from "./providers.js";
-import { providerNames } from "./constants.js";
+import { apiBase, providerNames } from "../constants.js";
 import { Processing } from "../processing.js";
 
 export const Content = {
@@ -186,10 +187,10 @@ export const Content = {
             // Send request to server
             const response = await this.postRequest(file);
 
-
+            console.log(response);
 
             // Success notification
-            Notification.success(i18n.);
+            Notification.success(i18n.MEDIA_UPLOADED);
         } catch(error) {
             console.error(error);
             Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -198,8 +199,43 @@ export const Content = {
 
             // Reset file input
             // This is to make sure that user gets the error message if he tries to upload the same file again
-            Selectors.QR_LOGO_FILE_INPUT.value = null;
+            // Selectors.QR_LOGO_FILE_INPUT.value = null;
         }
+    },
+    postRequest: function(file) {
+        return new Promise(function (resolve, reject) {
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData();
+
+            formData.append('file', file);
+            formData.append('user_id', Store.USER.ID);
+            formData.append('token', Store.USER.token);
+            formData.append('slug', Page.SLUG);
+            formData.append('domain', Page.DOMAIN);
+
+            console.log(Store.USER, Page.SLUG, Page.DOMAIN);
+
+            // Opening connection to the server API endpoint and sending the form data
+            xhr.open('POST', `${apiBase}/file`, true);
+            xhr.timeout = 45000;
+            xhr.addEventListener('readystatechange', async () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(JSON.parse(xhr.response));
+                    }
+                }
+            });
+            xhr.addEventListener('timeout', () => {
+                reject(i18n.DEFAULT_ERROR);
+            });
+            xhr.addEventListener('error', (event) => {
+                reject(i18n.API_ERROR);
+            });
+
+            xhr.send(formData);
+        });
     },
     populateItemContent: function(id, content, data) {
         for (const [key, value] of Object.entries(data)) {

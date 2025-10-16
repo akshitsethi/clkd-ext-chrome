@@ -287,7 +287,7 @@ export const Settings = {
 
             // Opening connection to the server API endpoint and sending the form data
             xhr.open('POST', `${apiBase}/file`, true);
-            xhr.timeout = 60000;
+            xhr.timeout = 45000;
             xhr.addEventListener('readystatechange', async () => {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
