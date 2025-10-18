@@ -40,6 +40,7 @@ export const i18n = {
 
     // Upload
     NO_FILE_SELECTED: 'No file has been selected. Please select one to begin processing.',
+    MEDIA_UPLOADED: 'Media file has been uploaded successfully.',
 
     // Subscription
     SUBSCRIPTION_DATA_NOT_AVAILABLE: 'Unable to fetch subscription details. Please try again later.',
