@@ -89,6 +89,9 @@ export const Page = {
         // Set essential constants (slug and domain)
         this.setSlugAndDomain();
 
+        // Initialise store
+        await Store.init();
+
         // Verify credentials and fetch data from server (if required)
         await this.verifyCredentials();
         await this.fetchData();

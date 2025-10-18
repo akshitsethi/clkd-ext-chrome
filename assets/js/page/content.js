@@ -10,6 +10,7 @@ import { debounce, randomString } from "../helper.js";
 import { Providers } from "./providers.js";
 import { apiBase, providerNames } from "../constants.js";
 import { Processing } from "../processing.js";
+import { button } from "motion/react-client";
 
 export const Content = {
     constants: {
@@ -170,15 +171,20 @@ export const Content = {
         });
 
         fileInput.addEventListener('change', async e => {
-            await this.uploadLinkImage(e.target.files);
+            const form = e.target.closest('form');
+            await this.uploadLinkImage(form, e.target.files);
         });
     },
-    uploadLinkImage: async function(files) {
+    uploadLinkImage: async function(form, files) {
         try {
-            Processing.show();
+            Processing.show(form, 'absolute');
 
+            const id = form.getAttribute('id');
             if (!files.length) {
                 throw new Error(i18n.NO_FILE_SELECTED);
+            }
+            if (!id) {
+                throw new Error(i18n.DEFAULT_ERROR);
             }
 
             // Get first entry from FileList
@@ -187,7 +193,13 @@ export const Content = {
             // Send request to server
             const response = await this.postRequest(file);
 
-            console.log(response);
+            // Attach file slug to id and update saved data
+            Page.set('content', response.message.slug, id, 'image');
+            Page.save();
+
+            // Update buttons
+            const manage = form.querySelector('.manage');
+            this.linkedImageOptions(id, form.querySelector('input[type="file"]'));
 
             // Success notification
             Notification.success(i18n.MEDIA_UPLOADED);
@@ -213,8 +225,6 @@ export const Content = {
             formData.append('slug', Page.SLUG);
             formData.append('domain', Page.DOMAIN);
 
-            console.log(Store.USER, Page.SLUG, Page.DOMAIN);
-
             // Opening connection to the server API endpoint and sending the form data
             xhr.open('POST', `${apiBase}/file`, true);
             xhr.timeout = 45000;
@@ -237,16 +247,51 @@ export const Content = {
             xhr.send(formData);
         });
     },
+    linkedImageOptions: function(id, selector) {
+        const parent = selector.closest('.content');
+        const manage = parent.querySelector('.manage');
+        manage.querySelector('.add-image').innerText = 'Edit Thumbnail';
+
+        const removeButton = document.createElement('button');
+        removeButton.classList.add('remove');
+        removeButton.appendChild(document.createTextNode('Remove'));
+
+        removeButton.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                const parent = e.target.closest('.manage');
+
+                // Update data object
+                Page.set('content', null, id, 'image');
+                Page.save();
+
+                // Change text for `add` button and Remove the delete button
+                parent.querySelector('.add-image').innerText = 'Add Thumbnail';
+                e.target.remove();
+
+                Notification.success(i18n.MEDIA_REMOVED);
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+
+        manage.appendChild(removeButton);
+    },
     populateItemContent: function(id, content, data) {
         for (const [key, value] of Object.entries(data)) {
             if (!value) continue;
 
-            // TODO
-            // Check if key.includes('image') and show the image on screen
-            // instead of updating value to the file input
-
             const selector = key.includes('radio') ? content.querySelectorAll(`input[name=${key}-${id}]`) : content.querySelector(`input[name=${key}-${id}]`);
             if (!selector) continue;
+
+            // Check if key.includes('image') and show the image on screen
+            // instead of updating value to the file input
+            if (key.includes('image')) {
+                this.linkedImageOptions(id, selector);
+                continue;
+            }
 
             if (key.includes('status')) {
                 if (value === 'on') selector.setAttribute('checked', 'checked');
