@@ -721,6 +721,36 @@ header {
                 }
             }
         }
+
+        & #design {
+            background: #ffffff;
+            border-radius: 32px;
+
+            & .design-section {
+                padding: 1.5rem;
+            }
+            & h3 {
+                display: flex;
+                align-items: center;
+                font-size: 1.0625rem;
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid #f3f3f1;
+
+                & span {
+                    font-weight: 600;
+                }
+                & .actions {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-left: auto;
+
+                    & a {
+                        font-size: 0.875rem;
+                    }
+                }
+            }
+        }
     }
 
     /* Preview */
@@ -757,11 +787,18 @@ header {
             max-width: 34%;
             left: 66%;
         }
+        & .primary {
+            max-width: 64%;
+        }
     }
     @media (max-width: 1180px) {
         & .preview {
             max-width: 36%;
             left: 64%;
+        }
+        & .primary {
+            max-width: 60%;
+            margin-left: 2%;
         }
     }
     @media (max-width: 1024px) {

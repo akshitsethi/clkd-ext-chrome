@@ -10,7 +10,6 @@ import { debounce, randomString } from "../helper.js";
 import { Providers } from "./providers.js";
 import { apiBase, providerNames } from "../constants.js";
 import { Processing } from "../processing.js";
-import { button } from "motion/react-client";
 
 export const Content = {
     constants: {
