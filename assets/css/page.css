@@ -229,20 +229,26 @@ header {
         }
 
         @media (max-width: 680px) {
-            display: none;
             position: absolute;
             flex-direction: column;
-            top: 72px;
+            top: 64px;
             left: 0.5rem;
-            background: #f3f3f1;
+            background: #ffffff;
             border-radius: 12px;
-            box-shadow: 0 0 4px 2px rgba(0,0,0,0.0625);
+            box-shadow: 0 0 14px 1px rgba(0,0,0,0.0625);
+            border: 1px solid #e0e0e0;
+            display: none;
 
             & li {
                 margin: 0.25rem 0.5rem;
+                width: calc(100% - 1rem);
 
                 & a {
-                    padding: 0.75rem 1.5rem;
+                    padding: 0.5rem 1rem;
+
+                    &.selected {
+                        background: #f3f3f1;
+                    }
                 }
                 &:first-child {
                     margin-top: 0.5rem;
@@ -255,7 +261,7 @@ header {
             }
 
             &.show {
-                display: block;
+                display: flex;
             }
         }
     }
@@ -788,7 +794,8 @@ header {
             left: 66%;
         }
         & .primary {
-            max-width: 64%;
+            max-width: 62%;
+            margin-left: 2%;
         }
     }
     @media (max-width: 1180px) {
@@ -798,7 +805,6 @@ header {
         }
         & .primary {
             max-width: 60%;
-            margin-left: 2%;
         }
     }
     @media (max-width: 1024px) {
@@ -808,7 +814,6 @@ header {
         }
         & .primary {
             max-width: 56%;
-            margin-left: 2%;
         }
     }
     @media (max-width: 867px) {
