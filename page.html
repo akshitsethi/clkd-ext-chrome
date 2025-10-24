@@ -365,13 +365,149 @@
 					</div>
 				</h3>
 				<div class="design-section">
-					
-				</div>
+					<div class="profile-thumbnail">
+						<div class="thumbnail">
+							<img src="./assets/images/gravatar.png" alt="Profile Image" />
+						</div>
 
-				<h3>
-					<span>Appearance</span>
-				</h3>
-				<div class="design-section">
+						<div class="profile-actions">
+							<a href="#" class="edit-profile-image">
+								<img src="./assets/images/page/edit.png" alt="Edit Image" />
+							</a>
+							<input type="file" name="profile-image-file" accept=".jpg, .jpeg, .png, .webp, .gif, .avif" hidden />
+						</div>
+					</div>
+
+					<div class="header-types">
+						<label>
+							<input type="radio" name="radioProfileDesign" value="bubble">
+							<div class="header--one">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="bubble-svg-mask">
+											<path d="M93.6797 5.15479C97.359 2.15401 102.641 2.15401 106.32 5.15479L114.253 11.625C116.75 13.6608 120.074 14.3696 123.183 13.5291L133.039 10.8652C137.616 9.62811 142.432 11.775 144.572 16.0058L149.229 25.2154C150.679 28.0814 153.416 30.0768 156.588 30.5793L166.717 32.184C171.384 32.9234 174.897 36.829 175.139 41.5483L175.672 51.9384C175.836 55.133 177.519 58.0565 180.199 59.8033L188.865 65.452C192.811 68.0247 194.427 73.0033 192.743 77.4035L189.015 87.1465C187.874 90.1271 188.225 93.4731 189.958 96.1526L195.618 104.899C198.175 108.852 197.629 114.053 194.306 117.389L186.976 124.748C184.722 127.011 183.684 130.214 184.184 133.369L185.815 143.668C186.552 148.327 183.933 152.868 179.531 154.564L169.921 158.264C166.93 159.416 164.672 161.931 163.849 165.029L161.188 175.047C159.973 179.623 155.716 182.719 150.989 182.466L140.78 181.92C137.567 181.748 134.468 183.132 132.452 185.639L126.014 193.647C123.04 197.346 117.876 198.445 113.653 196.277L104.567 191.612C101.7 190.141 98.2999 190.141 95.4331 191.612L86.3465 196.277C82.1243 198.445 76.9601 197.346 73.9862 193.647L67.548 185.639C65.5321 183.132 62.433 181.748 59.2203 181.92L49.0111 182.466C44.284 182.719 40.0271 179.623 38.8119 175.047L36.1507 165.029C35.3279 161.931 33.0702 159.416 30.0792 158.264L20.4691 154.564C16.0666 152.868 13.4477 148.327 14.1855 143.668L15.8162 133.369C16.3157 130.214 15.2781 127.011 13.024 124.748L5.69367 117.389C2.37113 114.053 1.82509 108.852 4.38248 104.899L10.0415 96.1526C11.7752 93.4731 12.1257 90.1271 10.9851 87.1465L7.25661 77.4035C5.57276 73.0033 7.18856 68.0247 11.1354 65.452L19.8014 59.8033C22.4812 58.0565 24.1636 55.133 24.3275 51.9384L24.8607 41.5483C25.1029 36.829 28.6155 32.9234 33.2828 32.184L43.4118 30.5793C46.5838 30.0768 49.3214 28.0814 50.7708 25.2154L55.4283 16.0058C57.5679 11.775 62.3844 9.6281 66.9613 10.8652L76.8169 13.5291C79.9264 14.3696 83.2504 13.6608 85.7465 11.625L93.6797 5.15479Z" fill="white"/>
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="./assets/images/night.png" mask="url(#bubble-svg-mask)"></image>
+								</svg>
+								<p>Bubble</p>
+							</div>
+						</label>
+
+						<label>
+							<input type="radio" name="radioProfileDesign" value="fairy">
+							<div class="header--two">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="fairy-svg-mask">
+											<path d="M100 173.738C24.3644 236.944 -36.9438 175.636 26.2621 100C-36.9438 24.3644 24.3644 -36.9438 100 26.2621C175.621 -36.9438 236.944 24.3644 173.738 100C236.944 175.578 175.621 236.944 100 173.738Z" fill="white"/>
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="../assets/images/night.png" mask="url(#fairy-svg-mask)"></image>
+								</svg>
+								<p>Fairy</p>
+							</div>
+						</label>
+
+						<label>
+							<input type="radio" name="radioProfileDesign" value="ufo">
+							<div class="header--three">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="ufo-svg-mask">
+											<path d="M99.9937 200V184.439C49.0583 184.439 0 150.932 0 100H15.5495C15.5495 49.0678 49.0583 0 99.9937 0V15.5612C150.929 15.5612 200 49.0678 200 100H184.451C184.451 150.932 150.929 200 99.9937 200Z" fill="white"/>
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="../assets/images/night.png" mask="url(#ufo-svg-mask)"></image>
+								</svg>
+								<p>UFO</p>
+							</div>
+						</label>
+
+						<label>
+							<input type="radio" name="radioProfileDesign" value="blob">
+							<div class="header--four">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="blob-svg-mask">
+											<path d="M0 47.4235C0 38.0237 6.53608 29.9057 15.7703 28.1488C36.4827 24.2081 73.3424 18 100 18C126.658 18 163.517 24.2081 184.23 28.1488C193.464 29.9057 200 38.0237 200 47.4235V150.374C200 159.424 193.931 167.333 185.12 169.396C164.683 174.181 127.351 181.934 100 181.934C72.6487 181.934 35.3172 174.181 14.8798 169.396C6.06883 167.333 0 159.424 0 150.374V47.4235Z" fill="white"/>
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="../assets/images/night.png" mask="url(#blob-svg-mask)"></image>
+								</svg>
+								<p>Blob</p>
+							</div>
+						</label>
+
+						<label>
+							<input type="radio" name="radioProfileDesign" value="square">
+							<div class="header--five">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="square-svg-mask">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M18.4046 100.422C8.31777 102.425 0.714259 111.325 0.714259 122L0.714256 178C0.714256 190.15 10.564 200 22.7143 200L78.7143 200C89.6402 200 98.7058 192.035 100.422 181.595C102.425 191.682 111.325 199.286 122 199.286H178C190.15 199.286 200 189.436 200 177.286V121.286C200 110.36 192.035 101.294 181.596 99.578C191.682 97.5746 199.286 88.6752 199.286 78V22C199.286 9.84974 189.436 2.97894e-06 177.286 2.44784e-06L121.286 0C110.36 -4.77585e-07 101.294 7.96461 99.5781 18.4046C97.5747 8.31778 88.6753 0.71428 78 0.71428H22C9.84974 0.71428 0 10.564 0 22.7143V78.7143C0 89.6401 7.96462 98.7058 18.4046 100.422Z" fill="white"/>
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="../assets/images/night.png" mask="url(#square-svg-mask)"></image>
+								</svg>
+								<p>Square</p>
+							</div>
+						</label>
+
+						<label>
+							<input type="radio" name="radioProfileDesign" value="star">
+							<div class="header--six">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="star-svg-mask">
+											<path d="M89.9318 6.12863C94.1569 -2.04288 105.843 -2.04288 110.068 6.12863L136.973 58.1644C138.051 60.2496 139.75 61.9486 141.836 63.0268L193.871 89.9318C202.043 94.1569 202.043 105.843 193.871 110.068L141.836 136.973C139.75 138.051 138.051 139.75 136.973 141.836L110.068 193.871C105.843 202.043 94.1569 202.043 89.9318 193.871L63.0268 141.836C61.9486 139.75 60.2496 138.051 58.1644 136.973L6.12863 110.068C-2.04288 105.843 -2.04288 94.1569 6.12863 89.9318L58.1644 63.0268C60.2496 61.9486 61.9486 60.2496 63.0268 58.1644L89.9318 6.12863Z" fill="white" />
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="../assets/images/night.png" mask="url(#star-svg-mask)"></image>
+								</svg>
+								<p>Star</p>
+							</div>
+						</label>
+
+						<label>
+							<input type="radio" name="radioProfileDesign" value="fold">
+							<div class="header--seven">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="fold-svg-mask">
+											<path d="M0 45.7358L50 33L100 45.7358L150 33L200 45.7358V168L150 155.264L100 168L50 155.264L0 168V45.7358Z" fill="white"/>
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="../assets/images/night.png" mask="url(#fold-svg-mask)"></image>
+								</svg>
+								<p>Fold</p>
+							</div>
+						</label>
+
+						<label>
+							<input type="radio" name="radioProfileDesign" value="flower">
+							<div class="header--eight">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<defs>
+										<mask id="flower-svg-mask">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M50 0H0V100C0 155.228 44.7715 200 100 200C155.228 200 200 155.228 200 100V0H150C122.386 0 100 22.3858 100 50C100 22.3858 77.6142 0 50 0Z" fill="white"/>
+										</mask>
+									</defs>
+
+									<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="../assets/images/night.png" mask="url(#flower-svg-mask)"></image>
+								</svg>
+								<p>Flower</p>
+							</div>
+						</label>
+					</div>
+
 					<h4>Font</h4>
 					<div class="grid font">
 						<label>
@@ -412,7 +548,7 @@
 						</label>
 						<label>
 							<input type="radio" name="radioProfileFont" value="Raleway">
-							<div class="grid-item max-height-20">
+							<div class="grid-item">
 								<img src="./assets/images/page/fonts/raleway.svg" alt="Raleway" />
 							</div>
 						</label>
@@ -448,7 +584,7 @@
 						</label>
 						<label>
 							<input type="radio" name="radioProfileFont" value="Quicksand">
-							<div class="grid-item max-height-20">
+							<div class="grid-item">
 								<img src="./assets/images/page/fonts/quicksand.svg" alt="Quicksand" />
 							</div>
 						</label>
@@ -532,7 +668,7 @@
 						</label>
 						<label>
 							<input type="radio" name="radioProfileFont" value="Rock+Salt">
-							<div class="grid-item max-height-20">
+							<div class="grid-item">
 								<img src="./assets/images/page/fonts/rock-salt.svg" alt="Rock Salt" />
 							</div>
 						</label>
@@ -547,6 +683,586 @@
 					<div class="color-selector">
 						<label for="colorProfileText">Text</label>
 						<input type="color" name="colorProfileText">
+					</div>
+				</div>
+
+				<h3>
+					<span>Appearance</span>
+				</h3>
+				<div class="design-section">
+					<div class="grid background">
+						<label>
+							<input type="radio" name="radioBackground" value="color">
+							<div class="grid-item custom-color"></div>
+							<p class="title">Color</p>
+						</label>
+						<label>
+							<input type="radio" name="radioBackground" value="gradient">
+							<div class="grid-item custom-gradient"></div>
+							<p class="title">Gradient</p>
+						</label>
+						<label>
+							<input type="radio" name="radioBackground" value="image">
+							<div class="grid-item custom-image">
+								<img src="./assets/images/image.png" alt="Image"/>
+							</div>
+							<p class="title">Image</p>
+						</label>
+						<label>
+							<input type="radio" name="radioBackground" value="video">
+							<div class="grid-item custom-video">
+								<img src="./assets/images/video.png" alt="Video"/>
+							</div>
+							<p class="title">Video</p>
+						</label>
+					</div>
+
+					<div class="inline-modal">
+						<div id="color" class="inline-section">
+							<div class="inline-content">
+								<h4>Pick a color</h4>
+
+								<div class="color-selector">
+									<label for="backgroundColor">Background</label>
+									<input type="color" name="backgroundColor" id="backgroundColor" value="#202020">
+								</div>
+							</div>
+						</div>
+
+						<div id="gradient" class="inline-section">
+							<div class="inline-content">
+								<h4>
+									Pick gradient colors
+									<span class="addon gradient">
+										<a href="#" data-popover="presets">
+											Presets
+											<img class="show" src="./assets/images/expand.png" alt="Open Presets" />
+											<img src="./assets/images/collapse.png" alt="Close Presets" />
+										</a>
+
+										<div class="addon-section" data-popup="presets">
+											<div class="gradient--presets">
+												<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #fddb92 0%, #d1fdff 100%);" data-preset='{"OneColor":"#fddb92","TwoColor":"#d1fdff","Angle":"0"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #a8edea 0%, #fed6e3 100%);" data-preset='{"OneColor":"#a8edea","TwoColor":"#fed6e3","Angle":"0"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #d299c2 0%, #fef9d7 100%);" data-preset='{"OneColor":"#d299c2","TwoColor":"#fef9d7","Angle":"0"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);" data-preset='{"OneColor":"#fdfcfb","TwoColor":"#e2d1c3","Angle":"135"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #cd9cf2 0%, #f6f3ff 100%);" data-preset='{"OneColor":"#cd9cf2","TwoColor":"#f6f3ff","Angle":"0"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);" data-preset='{"OneColor":"#f6d365","TwoColor":"#fda085","Angle":"120"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);" data-preset='{"OneColor":"#e0c3fc","TwoColor":"#8ec5fc","Angle":"120"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #fff1eb 0%, #ace0f9 100%);" data-preset='{"OneColor":"#fff1eb","TwoColor":"#ace0f9","Angle":"0"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #c1dfc4 0%, #deecdd 100%);" data-preset='{"OneColor":"#c1dfc4","TwoColor":"#deecdd","Angle":"0"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);" data-preset='{"OneColor":"#93a5cf","TwoColor":"#e4efe9","Angle":"45"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #dfe9f3 0%, #ffffff 100%);" data-preset='{"OneColor":"#dfe9f3","TwoColor":"#ffffff","Angle":"0"}'></a>
+												<a href="#" class="preset-item" style="background-image: linear-gradient(135deg, #d7d2cc 0%, #304352 100%);" data-preset='{"OneColor":"#d7d2cc","TwoColor":"#304352","Angle":"135"}'></a>
+											</div>
+										</div>
+									</span>
+								</h4>
+
+								<div class="flex-fields no-pt gap-1">
+									<div class="field">
+										<div class="color-selector">
+											<label for="backgroundGradientOneColor">Primary</label>
+											<input type="color" name="backgroundGradientOneColor" id="backgroundGradientOneColor" value="#202020">
+										</div>
+									</div>
+
+									<div class="field">
+										<div class="color-selector">
+											<label for="backgroundGradientTwoColor">Secondary</label>
+											<input type="color" name="backgroundGradientTwoColor" id="backgroundGradientTwoColor" value="#787878">
+										</div>
+									</div>
+								</div>
+
+								<div class="inline-field">
+									<p>Angle</p>
+									<div class="range-wrap">
+										<input type="range" id="backgroundGradientAngle" name="backgroundGradientAngle" min="0" max="315" value="0" step="45">
+										<div class="range-ticks">
+											<span>Min</span>
+											<span>45</span>
+											<span>90</span>
+											<span>135</span>
+											<span>180</span>
+											<span>225</span>
+											<span>270</span>
+											<span>Max</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="image" class="inline-section">
+							<h4>
+								Upload your own
+								<span class="addon image"></span>
+							</h4>
+
+							<div class="file-details" data-type="image"></div>
+							<div class="api-response"></div>
+
+							<div class="file-selector" data-type="image">
+								<input type="file" name="imageFile" accept=".jpg, .jpeg, .png, .webp, .gif, .avif" hidden />
+								<p>Select image to upload</p>
+								<span class="extensions">Allowed file types: JPEG, PNG, WebP, GIF, AVIF</span>
+
+								<a href="#" class="file-selector-button"></a>
+							</div>
+						</div>
+
+						<div id="video" class="inline-section">
+							<h4>
+								Upload your own
+								<span class="addon video"></span>
+							</h4>
+
+							<div class="file-details" data-type="video"></div>
+							<div class="api-response"></div>
+
+							<div class="file-selector" data-type="video">
+								<input type="file" name="videoFile" accept=".mp4, .webm" hidden />
+								<p>Select video to upload</p>
+								<span class="extensions">Allowed file types: MP4, WebM</span>
+
+								<a href="#" class="file-selector-button"></a>
+							</div>
+						</div>
+
+						<div class="backdrop-settings">
+							<div class="flex-fields">
+								<div class="field">
+									<p>Blur</p>
+									<div class="range-wrap">
+										<input type="range" id="backgroundBackdropBlur" name="backgroundBackdropBlur" min="0" max="35" value="0" step="1">
+										<div class="range-ticks">
+											<span>Min</span>
+											<span>Max</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="field">
+									<p>Backdrop Opacity</p>
+									<div class="range-wrap">
+										<input type="range" id="backgroundBackdropOpacity" name="backgroundBackdropOpacity" min="0" max="1" value="0" step="0.01">
+										<div class="range-ticks">
+											<span>Min</span>
+											<span>Max</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="inline-field">
+								<div class="color-selector">
+									<label for="backgroundBackdropColor">Color</label>
+									<input type="color" name="backgroundBackdropColor" id="backgroundBackdropColor">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h3>
+					<span>Social Icons</span>
+					<div class="actions">
+						<a href="#" class="manage-icons">Manage Icons</a>
+					</div>
+				</h3>
+				<div class="design-section">
+					
+				</div>
+
+				<h3>
+					<span>Buttons</span>
+					<div class="actions">
+						<a href="#">Presets</a>
+					</div>
+				</h3>
+				<div class="design-section">
+					<h4>Fill</h4>
+					<div class="grid">
+						<label>
+							<input type="radio" name="radioButtonFill" value="solid">
+							<div class="grid-item">
+								<img src="./assets/images/filled.png">
+								<span>Solid</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="radioButtonFill" value="outline">
+							<div class="grid-item">
+								<img src="./assets/images/outline.png">
+								<span>Transparent</span>
+							</div>
+						</label>
+					</div>
+
+					<h4>Corners</h4>
+					<div class="grid">
+						<label>
+							<input type="radio" name="radioButtonCorner" value="sharp">
+							<div class="grid-item">
+								<img src="./assets/images/sharp-corner.png">
+								<span>Sharp</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="radioButtonCorner" value="rounded">
+							<div class="grid-item">
+								<img src="./assets/images/rounded-corner.png">
+								<span>Rounded</span>
+							</div>
+						</label>
+					</div>
+
+					<h4>Border</h4>
+					<div class="grid">
+						<label>
+							<input type="radio" name="radioButtonBorder" value="none">
+							<div class="grid-item">
+								<img src="./assets/images/no-border.png">
+								<span>None</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="radioButtonBorder" value="solid">
+							<div class="grid-item">
+								<img src="./assets/images/solid-border.png">
+								<span>Solid</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="radioButtonBorder" value="dashed">
+							<div class="grid-item">
+								<img src="./assets/images/dashed-border.png">
+								<span>Dashed</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="radioButtonBorder" value="dotted">
+							<div class="grid-item">
+								<img src="./assets/images/dotted-border.png">
+								<span>Dotted</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="radioButtonBorder" value="wavy">
+							<div class="grid-item">
+								<img src="./assets/images/wavy-border.png">
+								<span>Wavy</span>
+							</div>
+						</label>
+					</div>
+
+					<h4>Shadow</h4>
+					<div class="design-inner-section">
+						<div class="grid">
+							<label>
+								<input type="radio" name="radioButtonShadow" value="none">
+								<div class="grid-item">
+									<img src="./assets/images/no-shadow.png">
+									<span>None</span>
+								</div>
+							</label>
+							<label>
+								<input type="radio" name="radioButtonShadow" value="subtle">
+								<div class="grid-item">
+									<img src="./assets/images/subtle-shadow.png">
+									<span>Subtle</span>
+								</div>
+							</label>
+							<label>
+								<input type="radio" name="radioButtonShadow" value="hard">
+								<div class="grid-item">
+									<img src="./assets/images/hard-shadow.png">
+									<span>Hard</span>
+								</div>
+							</label>
+						</div>
+
+						<div class="color-selector">
+							<label for="buttonShadowColor">Color</label>
+							<input type="color" name="buttonShadowColor" id="buttonShadowColor">
+						</div>
+
+						<h4>Direction</h4>
+						<table>
+							<tr>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="up-left">
+										<div class="grid-item">
+											<img src="./assets/images/up-left-arrow.png">
+										</div>
+									</label>
+								</td>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="up">
+										<div class="grid-item">
+											<img src="./assets/images/up-arrow.png">
+										</div>
+									</label>
+								</td>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="up-right">
+										<div class="grid-item">
+											<img src="./assets/images/up-right-arrow.png">
+										</div>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="left">
+										<div class="grid-item">
+											<img src="./assets/images/left-arrow.png">
+										</div>
+									</label>
+								</td>
+								<td></td>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="right">
+										<div class="grid-item">
+											<img src="./assets/images/right-arrow.png">												</div>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="down-left">
+										<div class="grid-item">
+											<img src="./assets/images/down-left-arrow.png">
+										</div>
+									</label>
+								</td>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="down">
+										<div class="grid-item">
+											<img src="./assets/images/down-arrow.png">
+										</div>
+									</label>
+								</td>
+								<td>
+									<label>
+										<input type="radio" name="radioButtonShadowPosition" value="down-right">
+										<div class="grid-item">
+											<img src="./assets/images/down-right-arrow.png">
+										</div>
+									</label>
+								</td>
+							</tr>
+						</table>
+
+						<h4>Thickness</h4>
+						<div class="range-wrap">
+							<input type="range" name="radioButtonShadowThickness" min="1" max="15" value="0" step="1">
+							<div class="range-ticks">
+								<span>Min</span>
+								<span>Max</span>
+							</div>
+						</div>
+
+						<h4>Opacity</h4>
+						<div class="range-wrap">
+							<input type="range" name="radioButtonShadowOpacity" min="0.01" max="1" value="0" step="0.01">
+							<div class="range-ticks">
+								<span>Min</span>
+								<span>Max</span>
+							</div>
+						</div>
+					</div>
+
+					<h4>Font & Colors</h4>
+					<div class="design-section">
+						<h5>Font</h5>
+						<div class="font-selector">
+							<div class="font-inner">
+								<div class="grid">
+									<label>
+										<input type="radio" name="radioButtonFont" value="Roboto">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/roboto.svg" alt="Roboto" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Open+Sans">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/open-sans.svg" alt="Open Sans" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Montserrat">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/montserrat.svg" alt="Montserrat" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Inter">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/inter.svg" alt="Inter" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Oswald">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/oswald.svg" alt="Oswald" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Noto+Sans">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/noto-sans.svg" alt="Noto Sans" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Raleway">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/raleway.svg" alt="Raleway" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Nunito+Sans">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/nunito-sans.svg" alt="Nunito Sans" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Rubik">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/rubik.svg" alt="Rubik" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="DM+Sans">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/dm-sans.svg" alt="DM Sans" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Work+Sans">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/work-sans.svg" alt="Work Sans" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Mulish">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/mulish.svg" alt="Mulish" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Quicksand">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/quicksand.svg" alt="Quicksand" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Outfit">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/outfit.svg" alt="Outfit" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Karla">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/karla.svg" alt="Karla" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Playfair+Display">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/playfair-display.svg" alt="Playfair Display" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Lora">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/lora.svg" alt="Lora" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Merriweather">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/merriweather.svg" alt="Merriweather" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Baskervville">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/baskervville.svg" alt="Baskervville" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Roboto+Slab">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/roboto-slab.svg" alt="Roboto Slab" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Josefin+Slab">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/josefin-slab.svg" alt="Josefin Slab" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Andada+Pro">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/andada-pro.svg" alt="Andada Pro" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Dancing+Script">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/dancing-script.svg" alt="Dancing Script" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Caveat">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/caveat.svg" alt="Caveat" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Space+Mono">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/space-mono.svg" alt="Space Mono" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Pacifico">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/pacifico.svg" alt="Pacifico" />
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonFont" value="Rock+Salt">
+										<div class="grid-item">
+											<img src="./assets/images/page/fonts/rock-salt.svg" alt="Rock Salt" />
+										</div>
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<h5>Colors</h5>
+						<div class="color-selector">
+							<label for="radioButtonBackgroundColor">Background</label>
+							<input type="color" name="radioButtonBackgroundColor">
+						</div>
+
+						<div class="color-selector">
+							<label for="radioButtonTextColor">Text</label>
+							<input type="color" name="radioButtonTextColor">
+						</div>
 					</div>
 				</div>
 			</section>
