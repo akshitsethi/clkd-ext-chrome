@@ -376,6 +376,40 @@
 							</a>
 							<input type="file" name="profile-image-file" accept=".jpg, .jpeg, .png, .webp, .gif, .avif" hidden />
 						</div>
+
+						<template id="thumbnail-modal-template">
+							<div class="thumbnail-selector">
+								<div class="image">
+									<img id="selected-profile-image" />
+								</div>
+
+								<div class="actions">
+									<a href="#" class="cancel">Cancel</a>
+									<a href="#" class="crop-image">Crop & Upload</a>
+								</div>
+							</div>
+						</template>
+
+						<template id="profile-modal-template">
+							<div class="profile-details">
+								<div class="field">
+									<label for="name">Display name</label>
+									<input type="text" id="name" name="name" placeholder="Enter your name (or business name)">
+									<span class="error">Title cannot be longer than 30 characters</span>
+								</div>
+
+								<div class="field">
+									<label for="bio">Bio <span class="char-counter"><span class="length">0</span> / 160</span></label>
+									<textarea id="bio" name="bio" rows="5" placeholder="Enter your bio or describe your business (up to 160 characters)"></textarea>
+									<span class="error">Bio cannot be longer than 160 characters</span>
+								</div>
+
+								<div class="actions">
+									<a href="#" class="cancel">Cancel</a>
+									<a href="#" class="update-profile">Update Profile</a>
+								</div>
+							</div>
+						</template>
 					</div>
 
 					<div class="grid headers">

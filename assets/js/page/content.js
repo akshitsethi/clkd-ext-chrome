@@ -10,6 +10,7 @@ import { debounce, randomString } from "../helper.js";
 import { Providers } from "./providers.js";
 import { apiBase, providerNames } from "../constants.js";
 import { Processing } from "../processing.js";
+import { Upload } from "../upload.js";
 
 export const Content = {
     constants: {
@@ -190,7 +191,7 @@ export const Content = {
             const file = files.item(0);
 
             // Send request to server
-            const response = await this.postRequest(file);
+            const response = await Upload.postRequest(file, 'file');
 
             // Attach file slug to id and update saved data
             Page.set('content', response.message.slug, id, 'image');
@@ -212,39 +213,6 @@ export const Content = {
             // This is to make sure that user gets the error message if he tries to upload the same file again
             // Selectors.QR_LOGO_FILE_INPUT.value = null;
         }
-    },
-    postRequest: function(file) {
-        return new Promise(function (resolve, reject) {
-            const xhr = new XMLHttpRequest();
-            const formData = new FormData();
-
-            formData.append('file', file);
-            formData.append('user_id', Store.USER.ID);
-            formData.append('token', Store.USER.token);
-            formData.append('slug', Page.SLUG);
-            formData.append('domain', Page.DOMAIN);
-
-            // Opening connection to the server API endpoint and sending the form data
-            xhr.open('POST', `${apiBase}/file`, true);
-            xhr.timeout = 45000;
-            xhr.addEventListener('readystatechange', async () => {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        resolve(JSON.parse(xhr.response));
-                    } else {
-                        reject(JSON.parse(xhr.response));
-                    }
-                }
-            });
-            xhr.addEventListener('timeout', () => {
-                reject(i18n.DEFAULT_ERROR);
-            });
-            xhr.addEventListener('error', (event) => {
-                reject(i18n.API_ERROR);
-            });
-
-            xhr.send(formData);
-        });
     },
     linkedImageOptions: function(id, selector) {
         const parent = selector.closest('.content');

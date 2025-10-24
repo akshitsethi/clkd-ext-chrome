@@ -15,6 +15,12 @@ export const Selectors = {
     NO_CONTENT_MESSAGE: document.querySelector('#content .no-content-data'),
     ITEMS_CONTAINER: document.querySelector('#content .content-items'),
 
+    // Profile (thumbnail, title, and bio)
+    EDIT_PROFILE_IMAGE: document.querySelector('#design .edit-profile-image'),
+    EDIT_IMAGE_FIELD: document.querySelector('#design input[name="profile-image-file"]'),
+    PROFILE_THUMBNAIL_TEMPLATE: document.querySelector('#design #thumbnail-modal-template'),
+    PROFILE_DETAILS_TEMPLATE: document.querySelector('#design #profile-modal-template'),
+
     // Preview
     PREVIEW_FRAME: document.querySelector('.preview iframe')
 };

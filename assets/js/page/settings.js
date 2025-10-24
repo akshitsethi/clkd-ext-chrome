@@ -4,5 +4,8 @@
 export const Settings = {
     render: function() {
         
+    },
+    events: function() {
+        
     }
 };

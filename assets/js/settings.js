@@ -7,6 +7,7 @@ import { Store } from "./store.js";
 import { analyticsDurationNiceName, apiBase, defaultDomain, domains, planAnalyticsDuration, planDomains, storageBase } from "./constants.js";
 import { User } from "./user.js";
 import { Limits } from "./limits.js";
+import { Upload } from "./upload.js";
 
 export const Settings = {
     constants: {
@@ -246,7 +247,7 @@ export const Settings = {
             const file = files.item(0);
 
             // Send request to server
-            const response = await this.postRequest(file);
+            const response = await Upload.postRequest(file, 'qr_logo');
 
             // After uploading, save settings and save image to browser
             Store.SETTINGS.qr_logo = response.message.slug;
@@ -274,38 +275,6 @@ export const Settings = {
             // This is to make sure that user gets the error message if he tries to upload the same file again
             Selectors.QR_LOGO_FILE_INPUT.value = null;
         }
-    },
-    postRequest: function(file) {
-        return new Promise(function (resolve, reject) {
-            const xhr = new XMLHttpRequest();
-            const formData = new FormData();
-
-            formData.append('file', file);
-            formData.append('user_id', Store.USER.ID);
-            formData.append('token', Store.USER.token);
-            formData.append('context', 'qr_logo');
-
-            // Opening connection to the server API endpoint and sending the form data
-            xhr.open('POST', `${apiBase}/file`, true);
-            xhr.timeout = 45000;
-            xhr.addEventListener('readystatechange', async () => {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        resolve(JSON.parse(xhr.response));
-                    } else {
-                        reject(JSON.parse(xhr.response));
-                    }
-                }
-            });
-            xhr.addEventListener('timeout', () => {
-                reject(i18n.DEFAULT_ERROR);
-            });
-            xhr.addEventListener('error', (event) => {
-                reject(i18n.API_ERROR);
-            });
-
-            xhr.send(formData);
-        });
     },
     formSubmitEvent: function () {
         if (!Selectors.SETTINGS_FORM) return;

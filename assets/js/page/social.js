@@ -6,5 +6,8 @@ export const Social = {
         order: new Map(),
         content: {}
     },
-    SWAPY: null
+    SWAPY: null,
+    events: function() {
+        
+    }
 };

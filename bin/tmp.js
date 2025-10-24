@@ -1,8 +1,8 @@
 // tmp.js
 import { toCanvas } from "qrcode";
 import { createCanvas, loadImage } from "canvas";
-import { Notification } from "./notification.js";
-import { i18n } from "./i18n.js";
+import { Notification } from "../assets/js/notification.js";
+import { i18n } from "../assets/js/i18n.js";
 
 export const Tmp = {
     fileToBase64: async (file) => {
