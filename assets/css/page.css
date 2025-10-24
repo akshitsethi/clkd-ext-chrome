@@ -97,6 +97,8 @@ html {
 
 /* Inputs */
 .range {
+    padding: 0 0.375rem;
+
     & input[type="range"] {
         -webkit-appearance: none;
         appearance: none;
@@ -736,7 +738,6 @@ header {
                 font-size: 1.0625rem;
                 padding: 1rem 1.5rem;
                 border-bottom: 1px solid #f3f3f1;
-                margin-top: 1rem;
 
                 & span {
                     font-weight: 600;
@@ -780,30 +781,38 @@ header {
                     }
                 }
             }
-            & .grid {
+            & .grid,
+            & table {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
                 gap: 1rem;
                 text-align: center;
 
-                & > label {
+                & label {
                     cursor: pointer;
 
                     & input {
                         position: absolute;
                         left: -9999px;
 
-                        &:checked + div + p {
-                            font-weight: 600;
+                        &:checked + div {
                             border-color: #101010;
+
+                            & p {
+                                font-weight: 600;
+                            }
                         }
                     }
                     & .grid-content {
                         position: relative;
-                        border-radius: 8px;
+                        border-radius: 12px;
+                        background: #f6f6f1;
+                        border: 2px dashed transparent;
+                        padding: 0.75rem;
 
                         & img {
-                            border-radius: 8px;
+                            margin: 0 auto;
+                            max-width: 21px;
                         }
                         & span {
                             display: block;
@@ -816,7 +825,7 @@ header {
                     grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
                     gap: 0;
 
-                    & > label {
+                    & label {
                         & input {
                             &:checked + div {
                                 border-color: #101010;
@@ -831,7 +840,6 @@ header {
                             margin: 0.50rem;
                             border-radius: 12px;
                             padding: 0.5rem;
-                            text-align: center;
                             border: 2px dashed transparent;
 
                             & p {
@@ -840,6 +848,63 @@ header {
                             }
                         }
                     }
+                }
+
+                /* Background */
+                &.background {
+                    border-radius: 12px;
+
+                    & label {
+                        height: 260px;
+                    }
+                    & .grid-content {
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        border-radius: 12px;
+
+                        & p {
+                            font-weight: 500;
+                            font-size: 1rem;
+                        }
+                        & img {
+                            max-width: 34px;
+                        }
+                    }
+                    & .custom-color {
+                        background: #3d444b;
+
+                        & p {
+                            color: #ffffff;
+                        }
+                    }
+                    & .custom-gradient {
+                        background-image: linear-gradient(rgb(61, 68, 75) 0%, rgb(104, 109, 115) 100%);
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                        background-size: cover;
+                        background-attachment: fixed;
+
+                        & p {
+                            color: #ffffff;
+                        }
+                    }
+                }
+            }
+            & table {
+                display: table;
+                width: 100%;
+
+                & td {
+                    width: 33.33%;
+                    text-align: center;
+                }
+                & label {
+                    width: 100%;
+                }
+                & .grid-content {
+                    width: 100%;
                 }
             }
             & .font-selector {
