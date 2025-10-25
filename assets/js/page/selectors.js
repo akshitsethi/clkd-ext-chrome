@@ -17,6 +17,7 @@ export const Selectors = {
 
     // Profile (thumbnail, title, and bio)
     EDIT_PROFILE_IMAGE: document.querySelector('#design .edit-profile-image'),
+    EDIT_BIO: document.querySelector('#design .edit-bio'),
     EDIT_IMAGE_FIELD: document.querySelector('#design input[name="profile-image-file"]'),
     PROFILE_THUMBNAIL_TEMPLATE: document.querySelector('#design #thumbnail-modal-template'),
     PROFILE_DETAILS_TEMPLATE: document.querySelector('#design #profile-modal-template'),

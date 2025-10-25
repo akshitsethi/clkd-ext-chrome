@@ -1349,6 +1349,44 @@ header {
             width: auto;
         }
     }
+}
+.profile-details {
+    & .field {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    & label {
+        display: flex;
+        font-weight: 500;
+        font-size: 0.938rem;
+        padding: 0 0.375rem 0.375rem 0.375rem;
+
+        & .char-counter {
+            font-size: 0.750rem;
+            font-weight: 400;
+            margin-left: auto;
+        }
+    }
+    & input[type="text"],
+    & textarea {
+        display: block;
+        width: 100%;
+        font-size: 0.938rem;
+        line-height: 1.5;
+        padding: 0.75rem;
+        border-radius: 12px;
+        border: 1px solid #eeeeee;
+        outline: 0;
+    }
+    & .error {
+        color: #fc5c65;
+        font-size: 0.825rem;
+        display: none;
+        padding: 0.250rem;
+    }
+}
+.thumbnail-selector,
+.profile-details {
     & .actions {
         background: #ffffff;
         padding: 1rem;

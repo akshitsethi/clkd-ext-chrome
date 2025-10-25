@@ -11,6 +11,10 @@ import { Selectors } from "./selectors.js";
 
 export const Profile = {
     CROPPER: null,
+    FIELD_LIMITS: {
+        name: 30,
+        bio: 160
+    },
     updateImageThumbnail: function(url) {
         if (!Selectors.PROFILE_THUMBNAIL_CONTAINER || !url) {
             throw new Error(i18n.DEFAULT_ERROR);
@@ -153,8 +157,70 @@ export const Profile = {
             }
         });
     },
+    openBioModalEvent: function() {
+        if (!Selectors.EDIT_BIO || !Selectors.PROFILE_DETAILS_TEMPLATE) return;
+
+        Selectors.EDIT_BIO.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                Processing.show();
+
+                const template = Selectors.PROFILE_DETAILS_TEMPLATE.content;
+                const content = template.cloneNode(true);
+
+                // Add data to fields
+                for (const field of ['name', 'bio']) {
+                    const fieldEl = content.querySelector(`[name="${field}"]`);
+                    const parent = fieldEl.closest('.field');
+                    const error = parent.querySelector('.error');
+                    const length = parent.querySelector('.length');
+
+                    fieldEl.addEventListener('input', e => {
+                        if (e.target.value.length > this.FIELD_LIMITS[field]) {
+                            error.style.display = 'block';
+                        } else {
+                            error.style.display = 'none';
+                        }
+
+                        // Character counter for bio field
+                        if (field === 'bio') {
+                            length.innerText = e.target.value.length;
+                        }
+                    });
+
+                    // If available, add field data
+                    if (Page.DATA.design.hasOwnProperty(field)) {
+                        fieldEl.value = Page.DATA.design[field];
+
+                        // For bio field (update character counter)
+                        if (field === 'bio' && Page.DATA.design[field] !== null) {
+                            length.innerText = Page.DATA.design[field].length;
+                        }
+                    }
+                }
+
+                // First, add desired triggers
+                // and then append template to modal
+                const cancel = content.querySelector('.cancel');
+                this.cancelEvent(cancel);
+
+                // const update = content.querySelector('.update-profile');
+                // this.updateProfileEvent(update);
+
+                // this.selectors.MODAL_CONTENT.append(content);
+                Modal.show(content, 'node');
+            } catch (error) {
+                console.log(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            } finally {
+                Processing.hide();
+            }
+        });
+    },
     events: function() {
         this.openFileDialogEvent();
         this.fileChangeEvent();
+        this.openBioModalEvent();
     }
 };
