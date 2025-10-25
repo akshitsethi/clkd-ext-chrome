@@ -143,12 +143,13 @@ export const Profile = {
                 image.onload = () => this.initialiseCropper(image);
 
                 // Show modal by passing the node object
-                Modal.show(content, 'node');
+                Modal.show(content, 'node', 600);
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             } finally {
                 Processing.hide();
+                e.target.value = null;
             }
         });
     },
