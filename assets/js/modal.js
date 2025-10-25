@@ -4,7 +4,7 @@ import { Notification } from "./notification.js";
 import { Selectors } from "./selectors.js";
 
 export const Modal = {
-    show: function (content, type = 'html') {
+    show: function (content, type = 'html', width = 640) {
         if (!content) {
             throw new Error(i18n.DEFAULT_ERROR);
         }
@@ -18,6 +18,9 @@ export const Modal = {
         } else if (type === 'node') {
             Selectors.MODAL_CONTENT.appendChild(content);
         }
+
+        // Set width
+        Selectors.MODAL_CONTAINER.style.maxWidth = `${width}px`;
 
         // Disable scroll when modal is visible in the viewport
         document.body.style.overflow = 'hidden';

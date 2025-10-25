@@ -20,6 +20,7 @@ export const Selectors = {
     EDIT_IMAGE_FIELD: document.querySelector('#design input[name="profile-image-file"]'),
     PROFILE_THUMBNAIL_TEMPLATE: document.querySelector('#design #thumbnail-modal-template'),
     PROFILE_DETAILS_TEMPLATE: document.querySelector('#design #profile-modal-template'),
+    PROFILE_THUMBNAIL_CONTAINER: document.querySelector('#design .profile-thumbnail .thumbnail img'),
 
     // Preview
     PREVIEW_FRAME: document.querySelector('.preview iframe')

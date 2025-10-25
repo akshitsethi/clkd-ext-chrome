@@ -42,6 +42,7 @@ export const i18n = {
     NO_FILE_SELECTED: 'No file has been selected. Please select one to begin processing.',
     MEDIA_UPLOADED: 'Media file has been uploaded successfully.',
     MEDIA_REMOVED: 'Media file has been removed.',
+    CROP_ERROR: 'Unable to process the image for uploading.',
 
     // Subscription
     SUBSCRIPTION_DATA_NOT_AVAILABLE: 'Unable to fetch subscription details. Please try again later.',

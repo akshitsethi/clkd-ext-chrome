@@ -1,4 +1,5 @@
 // page/events.js
+import { Modal } from "../modal.js";
 import { Content } from "./content.js";
 import { Design } from "./design.js";
 import { Profile } from "./profile.js";
@@ -12,5 +13,6 @@ export const Events = {
         Settings.events();
         Profile.events();
         Social.events();
+        Modal.events();
     }
 };

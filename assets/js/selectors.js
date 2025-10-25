@@ -116,6 +116,7 @@ export const Selectors = {
 
     // Modal
     MODAL: document.querySelector('.modal'),
+    MODAL_CONTAINER: document.querySelector('.modal-container'),
     MODAL_CONTENT: document.querySelector('.modal-content'),
     MODAL_CLOSE: document.querySelector('.modal-close')
 };
