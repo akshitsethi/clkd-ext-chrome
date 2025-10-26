@@ -204,6 +204,312 @@ export const planAnalyticsDuration = {
     pro: ['month', '2months']
 };
 
+// Social Icons
+export const socialIcons = {
+    instagram: {
+        name: 'Instagram',
+        placeholder: 'URL',
+        help: 'https://www.instagram.com/username'
+    },
+    email: {
+        name: 'Email',
+        placeholder: 'Address',
+        help: 'your@emailaddress.com'
+    },
+    facebook: {
+        name: 'Facebook',
+        placeholder: 'URL',
+        help: 'https://facebook.com/facebookpageurl'
+    },
+    youtube: {
+        name: 'YouTube',
+        placeholder: 'URL',
+        help: 'https://youtube.com/channel/youtubechannelurl'
+    },
+    x: {
+        name: 'X (formerly Twitter)',
+        placeholder: 'URL',
+        help: 'https://twitter.com/yourhandle'
+    },
+    tiktok: {
+        name: 'TikTok',
+        placeholder: 'Username',
+        help: '@tiktokusername'
+    },
+    whatsapp: {
+        name: 'WhatsApp',
+        placeholder: 'Number',
+        help: '001234567890 (Phone number with country code)'
+    },
+    'whatsapp-channel': {
+        name: 'WhatsApp Channel',
+        placeholder: 'URL',
+        help: 'https://www.whatsapp.com/channel/yourchannel'
+    },
+    threads: {
+        name: 'Threads',
+        placeholder: 'Username',
+        help: '@threadsusername'
+    },
+    linkedin: {
+        name: 'Linkedin',
+        placeholder: 'URL',
+        help: 'https://linkedin.com/in/username'
+    },
+    snapchat: {
+        name: 'Snapchat',
+        placeholder: 'URL',
+        help: 'https://www.snapchat.com/add/yourusername'
+    },
+    amazon: {
+        name: 'Amazon',
+        placeholder: 'URL',
+        help: 'https://amazon.com/shop/yourshopname'
+    },
+    'google-play': {
+        name: 'Google Play Store',
+        placeholder: 'URL',
+        help: 'https://play.google.com/store/apps/details?url=com.yourapp.app'
+    },
+    'app-store': {
+        name: 'Apple App Store',
+        placeholder: 'URL',
+        help: 'https://apps.apple.com/us/yourapp/url1234567890'
+    },
+    'apple-music': {
+        name: 'Apple Music',
+        placeholder: 'URL',
+        help: 'https://music.apple.com/us/album/youralbum'
+    },
+    'apple-podcast': {
+        name: 'Apple Podcast',
+        placeholder: 'URL',
+        help: 'https://podcasts.apple.com/us/podcast/yourpodcast/123456789'
+    },
+    line: {
+        name: 'LINE',
+        placeholder: 'URL',
+        help: 'https://line.me/xx/x/xxxxxxx'
+    },
+    bandcamp: {
+        name: 'Bandcamp',
+        placeholder: 'URL',
+        help: 'https://you.bandcamp.com/'
+    },
+    bereal: {
+        name: 'BeReal',
+        placeholder: 'URL',
+        help: 'https://bere.al/username'
+    },
+    bluesky: {
+        name: 'Bluesky',
+        placeholder: 'URL',
+        help: 'https://bsky.app/profile/username'
+    },
+    cameo: {
+        name: 'Cameo',
+        placeholder: 'URL',
+        help: 'https://cameo.com/username'
+    },
+    clubhouse: {
+        name: 'Clubhouse',
+        placeholder: 'URL',
+        help: 'https://clubhouse.com/@profile'
+    },
+    discord: {
+        name: 'Discord',
+        placeholder: 'URL',
+        help: 'https://discord.com/invite/yourchannel'
+    },
+    etsy: {
+        name: 'Etsy',
+        placeholder: 'URL',
+        help: 'https://www.etsy.com/shop/yourshop'
+    },
+    github: {
+        name: 'Github',
+        placeholder: 'URL',
+        help: 'https://www.github.com/username'
+    },
+    kick: {
+        name: 'Kick',
+        placeholder: 'URL',
+        help: 'https://kick.com/username'
+    },
+    kickstarter: {
+        name: 'Kickstarter',
+        placeholder: 'URL',
+        help: 'https://www.kickstarter.com/profile/username'
+    },
+    mastodon: {
+        name: 'Mastodon',
+        placeholder: 'URL',
+        help: 'https://mastodon.social/@username'
+    },
+    patreon: {
+        name: 'Patreon',
+        placeholder: 'URL',
+        help: 'https://patreon.com/username'
+    },
+    payment: {
+        name: 'Payment',
+        placeholder: 'URL',
+        help: 'https://venmo.com/yourusername'
+    },
+    phone: {
+        name: 'Phone',
+        placeholder: 'Number',
+        help: '001234567890 (Phone number with country code)'
+    },
+    pinterest: {
+        name: 'Pinterest',
+        placeholder: 'URL',
+        help: 'https://pinterest.com/username'
+    },
+    poshmark: {
+        name: 'Poshmark',
+        placeholder: 'URL',
+        help: 'https://poshmark.com/closet/yourcloset'
+    },
+    signal: {
+        name: 'Signal',
+        placeholder: 'URL',
+        help: 'https://signal.me/#eu/xxxxxxxxxx'
+    },
+    soundcloud: {
+        name: 'Soundcloud',
+        placeholder: 'URL',
+        help: 'https://soundcloud.com/username'
+    },
+    spotify: {
+        name: 'Spotify',
+        placeholder: 'URL',
+        help: 'https://open.spotify.com/artist/artistname'
+    },
+    substack: {
+        name: 'Substack',
+        placeholder: 'URL',
+        help: 'https://you.substack.com'
+    },
+    telegram: {
+        name: 'Telegram',
+        placeholder: 'URL',
+        help: 'https://t.me/username'
+    },
+    twitch: {
+        name: 'Twitch',
+        placeholder: 'URL',
+        help: 'https://twitch.tv/username'
+    },
+    website: {
+        name: 'Website',
+        placeholder: 'URL',
+        help: 'https://www.yourwebsite.com'
+    },
+    rednote: {
+        name: 'Rednote',
+        placeholder: 'URL',
+        help: 'https://www.xiaohongshu.com/user/profile/username'
+    },
+    bandsintown: {
+        name: 'Bandsintown',
+        placeholder: 'URL',
+        help: 'https://www.bandsintown.com/a/artistname'
+    }
+};
+
+// Google fonts
+export const googleFonts = [
+    'Roboto',
+    'Open+Sans',
+    'Montserrat',
+    'Inter',
+    'Oswald',
+    'Noto+Sans',
+    'Raleway',
+    'Nunito+Sans',
+    'Rubik',
+    'DM+Sans',
+    'Work+Sans',
+    'Mulish',
+    'Quicksand',
+    'Outfit',
+    'Karla',
+    'Playfair+Display',
+    'Lora',
+    'Merriweather',
+    'Baskervville',
+    'Roboto+Slab',
+    'Josefin+Slab',
+    'Andada+Pro',
+    'Dancing+Script',
+    'Caveat',
+    'Space+Mono',
+    'Pacifico',
+    'Rock+Salt'
+];
+export const googleFontsBackup = {
+    'Roboto': 'sans-serif',
+    'Open+Sans': 'sans-serif',
+    'Montserrat': 'sans-serif',
+    'Inter': 'sans-serif',
+    'Oswald': 'sans-serif',
+    'Noto+Sans': 'sans-serif',
+    'Raleway': 'sans-serif',
+    'Nunito+Sans': 'sans-serif',
+    'Rubik': 'sans-serif',
+    'DM+Sans': 'sans-serif',
+    'Work+Sans': 'sans-serif',
+    'Mulish': 'sans-serif',
+    'Quicksand': 'serif',
+    'Outfit': 'sans-serif',
+    'Karla': 'sans-serif',
+    'Playfair+Display': 'serif',
+    'Lora': 'serif',
+    'Merriweather': 'serif',
+    'Baskervville': 'serif',
+    'Roboto+Slab': 'serif',
+    'Josefin+Slab': 'serif',
+    'Andada+Pro': 'serif',
+    'Dancing+Script': 'cursive',
+    'Caveat': 'cursive',
+    'Space+Mono': 'monospace',
+    'Pacifico': 'cursive',
+    'Rock+Salt': 'fantasy'
+};
+
+// Embed providers
+export const embedProviders = {
+    youtube: 'YouTube',
+    instagram: 'Instagram',
+    twitter: 'X (formerly Twitter)',
+    facebook: 'Facebook',
+    tiktok: 'TikTok',
+    soundcloud: 'SoundCloud',
+    threads: 'Threads',
+    vimeo: 'Vimeo',
+    googlemaps: 'Google Maps',
+    spotify: 'Spotify'
+};
+
+// Social Icon positions
+export const socialIconPositions = [
+    'top',
+    'bottom'
+];
+
+// Shadow directions
+export const shadowDirections = [
+    'up',
+    'up-left',
+    'up-right',
+    'left',
+    'right',
+    'down',
+    'down-left',
+    'down-right'
+];
+
 // Language codes
 export const language = {
     "af": "Afrikaans",

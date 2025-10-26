@@ -31,6 +31,8 @@ export const i18n = {
     EMBED_PROCESSING_ERROR: 'An error occurred while trying to process the embed data. Please try entering the link again.',
     EMBED_FETCH_SUCCESS: 'Embed has been fetched successfully.',
     PROFILE_UPDATED: 'Profile details have been updated.',
+    SOCIAL_ICON_EXISTS: 'Social channel has already been added.',
+	SOCIAL_ICONS_UPDATED: 'Social channels have been updated.',
 
     // Analytics
     NO_DATA_ERROR: 'Unable to find analytics data.',

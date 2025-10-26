@@ -26,6 +26,7 @@ export const Selectors = {
     // Social
     MANAGE_ICONS: document.querySelector('#design .manage-icons'),
     MANAGE_ICONS_TEMPLATE: document.querySelector('#design #social-modal-template'),
+    SOCIAL_ENTRY_TEMPLATE: document.querySelector('#design #social-entry-template'),
 
     // Preview
     PREVIEW_FRAME: document.querySelector('.preview iframe')

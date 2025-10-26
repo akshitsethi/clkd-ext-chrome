@@ -3,12 +3,11 @@ import { createSwapy } from "swapy";
 import { isURL } from "validator";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
-import { Store } from "../store.js";
 import { Notification } from "../notification.js";
 import { i18n } from "../i18n.js";
 import { debounce, randomString } from "../helper.js";
 import { Providers } from "./providers.js";
-import { apiBase, providerNames } from "../constants.js";
+import { providerNames } from "../constants.js";
 import { Processing } from "../processing.js";
 import { Upload } from "../upload.js";
 

@@ -42,6 +42,9 @@ textarea,
 select {
     font-family: 'Inter', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+textarea {
+    resize: vertical;
+}
 
 /* Avoid text overflows */
 h1,
@@ -1383,7 +1386,8 @@ header {
         line-height: 1.5;
         padding: 0.75rem;
         border-radius: 12px;
-        border: 1px solid #eeeeee;
+        border: none;
+        background-color: #f6f6f1;
         outline: 0;
     }
     & .error {
@@ -1409,81 +1413,162 @@ header {
 }
 
 /* Social Icons (modal) */
-.social-container {
-    padding: 1.5rem 0;
-    height: calc(100% - 4rem);
+.social-modal {
+    padding: 1.25rem;
+    height: 780px;
+    max-height: calc(100% - 2.5rem);
 
-    & p {
-        padding: 0 1.25rem;
-        color: #808080;
-        font-size: 0.825rem;
-
-        & .bold {
-            font-weight: 600;
+    & .heading {
+        & h4 {
+            font-size: 1.5rem;
+        }
+        & p {
+            font-size: 1rem;
         }
     }
-}
-.social-items {
-    height: calc(100% - 2rem);
-    max-width: 640px;
-    scrollbar-width: thin;
-    overflow-y: auto;
-    overflow-x: hidden;
+    & .social-container {
+        padding: 1.5rem 0;
+        height: calc(100% - 4rem);
 
-    & .social-item {
-        & .social-entry {
-            position: relative;
-            margin: 0.5rem 1.25rem;
-            max-width: 100%;
-            background: #ffffff;
-            border-radius: 12px;
+        & p {
+            color: #808080;
+            font-size: 1.125rem;
+            margin-top: 0.25rem;
+        }
+    }
+    & .social-items {
+        height: calc(100% - 2rem);
+        max-width: 640px;
+        scrollbar-width: thin;
+        overflow-y: auto;
+        overflow-x: hidden;
 
-            & .social-main {
-                display: flex;
-                align-items: center;
-                border: 1px solid rgba(0,0,0,0.06);
-                box-shadow: 0 0 4px rgba(0,0,0,0.02);
+        & .social-item {
+            & .social-entry {
+                position: relative;
+                margin: 0.5rem 1.25rem;
+                max-width: 100%;
+                background: #ffffff;
                 border-radius: 12px;
 
-                & .drag {
-                    padding: 0 0.50rem;
-                    cursor: grab;
-
-                    & svg {
-                        display: block;
-                    }
-                }
-                & .social-area {
-                    padding: 0.5rem 0.75rem 0.5rem 0.25rem;
-                    width: 100%;
+                & .social-main {
                     display: flex;
                     align-items: center;
-                    gap: 0.75rem;
+                    border: 1px solid rgba(0,0,0,0.06);
+                    box-shadow: 0 0 4px rgba(0,0,0,0.02);
+                    border-radius: 12px;
 
-                    & img {
-                        max-width: 18px;
-                    }
-                    & input {
-                        margin: 0;
-                        padding: 0.5rem;
-                    }
-                    & .status {
-                        & label {
-                            display: block;
-                        }
-                    }
-                    & .actions {
+                    & .drag {
+                        padding: 0 0.50rem;
+                        cursor: grab;
+
                         & svg {
                             display: block;
                         }
                     }
+                    & .social-area {
+                        padding: 0.5rem 0.75rem 0.5rem 0.25rem;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.75rem;
+
+                        & img {
+                            max-width: 18px;
+                        }
+                        & input {
+                            margin: 0;
+                            padding: 0.5rem;
+                        }
+                        & .status {
+                            & label {
+                                display: block;
+                            }
+                        }
+                        & .actions {
+                            & svg {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+                & .error {
+                    display: none;
+                    font-size: 0.750rem;
+                    padding: 0.125rem 0;
+                    color: #fc5c65;
                 }
             }
-            & .error {
-                display: none;
-                font-size: 0.750rem;
-                padding: 0.125rem 0;
-                color: #fc5c65;
+        }
+    }
+    & .social-selector {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+
+        & a {
+            & img {
+                max-width: 2rem;
+            }
+
+            &.open {
+                & img {
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+    & .social-dropdown {
+        position: absolute;
+        display: none;
+        z-index: 2;
+        padding: 0.25rem 0.75rem;
+        background: #ffffff;
+        border-radius: 8px;
+        height: calc(100% - 5rem);
+        max-height: 720px;
+        width: 300px;
+        right: 1rem;
+        bottom: 3.375rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+
+        &.open {
+            display: block;
+        }
+        & a {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+
+            &[data-active] {
+                color: #a8a8a8;
+                cursor: not-allowed;
+
+                &::after {
+                    position: absolute;
+                    content: 'Added';
+                    color: #20bf6b;
+                    right: 0.5rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 0.825rem;
+                }
+            }
+            &:hover {
+                background: #f7f7f7;
+            }
+            & p {
+                margin: 0;
+                font-size: 0.825rem;
+            }
+            & img {
+                display: block;
+                max-width: 24px;
+                margin-right: 0.75rem;
             }
         }
     }
