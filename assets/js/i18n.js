@@ -30,6 +30,7 @@ export const i18n = {
     DATA_ERROR: 'Unable to fetch or validate data. Please try again by refreshing the page.',
     EMBED_PROCESSING_ERROR: 'An error occurred while trying to process the embed data. Please try entering the link again.',
     EMBED_FETCH_SUCCESS: 'Embed has been fetched successfully.',
+    PROFILE_UPDATED: 'Profile details have been updated.',
 
     // Analytics
     NO_DATA_ERROR: 'Unable to find analytics data.',

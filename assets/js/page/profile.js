@@ -101,6 +101,47 @@ export const Profile = {
             Modal.hide();
         });
     },
+    updateProfileEvent: function(selector) {
+        if (!selector) return;
+
+        selector.addEventListener('click', async e => {
+            e.preventDefault();
+
+            try {
+                Processing.show();
+
+                const parent = selector.closest('.profile-details');
+                if (!parent) {
+                    throw new Error(i18n.SELECTOR_NOT_FOUND);
+                }
+
+                for (const field of ['name', 'bio']) {
+                    const value = parent.querySelector(`[name="${field}"]`).value;
+                    const fieldName = field === 'name' ? 'Display name' : 'Bio';
+
+                    if (value.length > this.FIELD_LIMITS[field]) {
+                        throw new Error(`${fieldName} cannot be longer than ${this.FIELD_LIMITS[field]} characters`);
+                    }
+
+                    Page.set('design', value, field);
+                }
+
+                // Update stored data to reflect new values
+                await Page.save();
+
+                // Close modal
+                Modal.hide();
+
+                // Show update notification and refresh preview frame
+                Notification.success(i18n.PROFILE_UPDATED);
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ??i18n.DEFAULT_ERROR);
+            } finally {
+                Processing.hide();
+            }
+        });
+    },
     openFileDialogEvent: function() {
         if (!Selectors.EDIT_PROFILE_IMAGE || !Selectors.EDIT_IMAGE_FIELD) return;
 
@@ -205,8 +246,8 @@ export const Profile = {
                 const cancel = content.querySelector('.cancel');
                 this.cancelEvent(cancel);
 
-                // const update = content.querySelector('.update-profile');
-                // this.updateProfileEvent(update);
+                const update = content.querySelector('.update-profile');
+                this.updateProfileEvent(update);
 
                 // this.selectors.MODAL_CONTENT.append(content);
                 Modal.show(content, 'node');
