@@ -41,3 +41,8 @@ export const debounce = function(callback, delay = 800) {
       }, delay);
   };
 };
+
+// Wrapper for the random string function
+export const generateId = function() {
+  return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+};

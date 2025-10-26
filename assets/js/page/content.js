@@ -5,7 +5,7 @@ import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
 import { Notification } from "../notification.js";
 import { i18n } from "../i18n.js";
-import { debounce, randomString } from "../helper.js";
+import { debounce, generateId } from "../helper.js";
 import { Providers } from "./providers.js";
 import { providerNames } from "../constants.js";
 import { Processing } from "../processing.js";
@@ -64,9 +64,6 @@ export const Content = {
         tiktok: {}
     },
     SWAPY: null,
-    generateId: function() {
-        return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    },
     generateItemStructure: function(id, slotId, type) {
         const template = Selectors.ENTRY_TEMPLATE.content;
         const content = template.cloneNode(true);
@@ -269,11 +266,11 @@ export const Content = {
         }
     },
     addNewItem: async function(type = 'link') {
-        let ID = this.generateId();
+        let ID = generateId();
 
         // Although one in a 10 million chance of collision, still ensure that we don't have a duplicate ID
         while (Page.get('content').hasOwnProperty(ID)) {
-            ID = this.generateId();
+            ID = generateId();
         }
 
         // Generate item's content (HTML structure with event listeners)
