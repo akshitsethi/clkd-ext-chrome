@@ -23,6 +23,10 @@ export const Selectors = {
     PROFILE_DETAILS_TEMPLATE: document.querySelector('#design #profile-modal-template'),
     PROFILE_THUMBNAIL_CONTAINER: document.querySelector('#design .profile-thumbnail .thumbnail img'),
 
+    // Social
+    MANAGE_ICONS: document.querySelector('#design .manage-icons'),
+    MANAGE_ICONS_TEMPLATE: document.querySelector('#design #social-modal-template'),
+
     // Preview
     PREVIEW_FRAME: document.querySelector('.preview iframe')
 };

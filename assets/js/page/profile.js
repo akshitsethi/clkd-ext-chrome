@@ -108,12 +108,13 @@ export const Profile = {
             e.preventDefault();
 
             try {
-                Processing.show();
-
                 const parent = selector.closest('.profile-details');
                 if (!parent) {
                     throw new Error(i18n.SELECTOR_NOT_FOUND);
                 }
+
+                // Add loading spinner over modal
+                Processing.show(parent, 'absolute');
 
                 for (const field of ['name', 'bio']) {
                     const value = parent.querySelector(`[name="${field}"]`).value;

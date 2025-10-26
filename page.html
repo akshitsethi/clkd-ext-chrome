@@ -767,8 +767,257 @@
 							<a href="#" class="manage-icons">Manage Icons</a>
 						</div>
 					</h3>
-					<div class="design-section">
-						
+					<div class="design-section social">
+						<div class="selected-icons"></div>
+
+						<h4>Position</h4>
+						<div class="grid mt-0.5">
+							<label>
+								<input type="radio" name="radioSocialPosition" value="top">
+								<div class="grid-content">
+									<img src="./assets/images/up-arrow.png">
+									<span>Top</span>
+								</div>
+							</label>
+							<label>
+								<input type="radio" name="radioSocialPosition" value="bottom">
+								<div class="grid-content">
+									<img src="./assets/images/down-arrow.png">
+									<span>Bottom</span>
+								</div>
+							</label>
+						</div>
+						<div class="color-selector mt-0.5">
+							<label for="colorSocialIcon">Color</label>
+							<input type="color" name="colorSocialIcon">
+						</div>
+
+						<p class="no-icons-added">No social icons have been added.</p>
+
+						<template id="social-modal-template">
+							<div class="heading">
+								<h4>Show visitors where to find you</h4>
+								<p>Add your social profiles, email and more as linked icons on your page.</p>
+							</div>
+
+							<div class="social-container">
+								<p class="no-data-social">Click the <span>+</span> button to start adding icons</p>
+								<div class="social-items"></div>
+							</div>
+
+							<div class="social-selector">
+								<a href="#">
+									<img src="./assets/images/add.png" alt="Add Icon" />
+								</a>
+							</div>
+
+							<div class="social-dropdown">
+								<a href="#" data-social="amazon">
+									<img src="./assets/images/social/amazon.svg" alt="Amazon" />
+									Amazon
+								</a>
+								<a href="#" data-social="app-store">
+									<img src="./assets/images/social/app-store.svg" alt="Apple App Store" />
+									Apple App Store
+								</a>
+								<a href="#" data-social="apple-music">
+									<img src="./assets/images/social/apple-music.svg" alt="Apple Music" />
+									Apple Music
+								</a>
+								<a href="#" data-social="apple-podcast">
+									<img src="./assets/images/social/apple-podcast.svg" alt="Apple Podcast" />
+									Apple Podcast
+								</a>
+								<a href="#" data-social="bandcamp">
+									<img src="./assets/images/social/bandcamp.svg" alt="Bandcamp" />
+									Bandcamp
+								</a>
+								<a href="#" data-social="bandsintown">
+									<img src="./assets/images/social/bandsintown.svg" alt="Bandsintown" />
+									Bandsintown
+								</a>
+								<a href="#" data-social="bereal">
+									<img src="./assets/images/social/bereal.svg" alt="BeReal" />
+									BeReal
+								</a>
+								<a href="#" data-social="bluesky">
+									<img src="./assets/images/social/bluesky.svg" alt="Bluesky" />
+									Bluesky
+								</a>
+								<a href="#" data-social="cameo">
+									<img src="./assets/images/social/cameo.svg" alt="Cameo" />
+									Cameo
+								</a>
+								<a href="#" data-social="clubhouse">
+									<img src="./assets/images/social/clubhouse.svg" alt="Clubhouse" />
+									Clubhouse
+								</a>
+								<a href="#" data-social="discord">
+									<img src="./assets/images/social/discord.svg" alt="Discord" />
+									Discord
+								</a>
+								<a href="#" data-social="email">
+									<img src="./assets/images/social/email.svg" alt="Email" />
+									Email
+								</a>
+								<a href="#" data-social="etsy">
+									<img src="./assets/images/social/etsy.svg" alt="Etsy" />
+									Etsy
+								</a>
+								<a href="#" data-social="facebook">
+									<img src="./assets/images/social/facebook.svg" alt="Facebook" />
+									Facebook
+								</a>
+								<a href="#" data-social="github">
+									<img src="./assets/images/social/github.svg" alt="Github" />
+									Github
+								</a>
+								<a href="#" data-social="google-play">
+									<img src="./assets/images/social/google-play.svg" alt="Google Play Store" />
+									Google Play Store
+								</a>
+								<a href="#" data-social="instagram">
+									<img src="./assets/images/social/instagram.svg" alt="Instagram" />
+									Instagram
+								</a>
+								<a href="#" data-social="kick">
+									<img src="./assets/images/social/kick.svg" alt="Kick" />
+									Kick
+								</a>
+								<a href="#" data-social="kickstarter">
+									<img src="./assets/images/social/kickstarter.svg" alt="Kickstarter" />
+									Kickstarter
+								</a>
+								<a href="#" data-social="line">
+									<img src="./assets/images/social/line.svg" alt="LINE" />
+									LINE
+								</a>
+								<a href="#" data-social="linkedin">
+									<img src="./assets/images/social/linkedin.svg" alt="Linkedin" />
+									Linkedin
+								</a>
+								<a href="#" data-social="mastodon">
+									<img src="./assets/images/social/mastodon.svg" alt="Mastodon" />
+									Mastodon
+								</a>
+								<a href="#" data-social="patreon">
+									<img src="./assets/images/social/patreon.svg" alt="Patreon" />
+									Patreon
+								</a>
+								<a href="#" data-social="payment">
+									<img src="./assets/images/social/payment.svg" alt="Payment" />
+									Payment
+								</a>
+								<a href="#" data-social="phone">
+									<img src="./assets/images/social/phone.svg" alt="Phone" />
+									Phone
+								</a>
+								<a href="#" data-social="pinterest">
+									<img src="./assets/images/social/pinterest.svg" alt="Pinterest" />
+									Pinterest
+								</a>
+								<a href="#" data-social="poshmark">
+									<img src="./assets/images/social/poshmark.svg" alt="Poshmark" />
+									Poshmark
+								</a>
+								<a href="#" data-social="rednote">
+									<img src="./assets/images/social/rednote.svg" alt="Rednote" />
+									Rednote
+								</a>
+								<a href="#" data-social="signal">
+									<img src="./assets/images/social/signal.svg" alt="Signal" />
+									Signal
+								</a>
+								<a href="#" data-social="snapchat">
+									<img src="./assets/images/social/snapchat.svg" alt="Snapchat" />
+									Snapchat
+								</a>
+								<a href="#" data-social="soundcloud">
+									<img src="./assets/images/social/soundcloud.svg" alt="Soundcloud" />
+									Soundcloud
+								</a>
+								<a href="#" data-social="spotify">
+									<img src="./assets/images/social/spotify.svg" alt="Spotify" />
+									Spotify
+								</a>
+								<a href="#" data-social="substack">
+									<img src="./assets/images/social/substack.svg" alt="Substack" />
+									Substack
+								</a>
+								<a href="#" data-social="telegram">
+									<img src="./assets/images/social/telegram.svg" alt="Telegram" />
+									Telegram
+								</a>
+								<a href="#" data-social="threads">
+									<img src="./assets/images/social/threads.svg" alt="Threads" />
+									Threads
+								</a>
+								<a href="#" data-social="tiktok">
+									<img src="./assets/images/social/tiktok.svg" alt="TikTok" />
+									TikTok
+								</a>
+								<a href="#" data-social="twitch">
+									<img src="./assets/images/social/twitch.svg" alt="Twitch" />
+									Twitch
+								</a>
+								<a href="#" data-social="website">
+									<img src="./assets/images/social/website.svg" alt="Personal Website" />
+									Website
+								</a>
+								<a href="#" data-social="whatsapp">
+									<img src="./assets/images/social/whatsapp.svg" alt="WhatsApp" />
+									WhatsApp
+								</a>
+								<a href="#" data-social="whatsapp-channel">
+									<img src="./assets/images/social/whatsapp-channel.svg" alt="WhatsApp Channel" />
+									WhatsApp Channel
+								</a>
+								<a href="#" data-social="x">
+									<img src="./assets/images/social/x.svg" alt="X (formerly Twitter)" />
+									X (formerly Twitter)
+								</a>
+								<a href="#" data-social="youtube">
+									<img src="./assets/images/social/youtube.svg" alt="YouTube" />
+									YouTube
+								</a>
+							</div>
+						</template>
+
+						<template id="social-entry-template">
+							<div class="social-item">
+								<div class="social-entry">
+									<div class="social-main">
+										<div class="drag" data-swapy-handle>
+											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<title>Move</title>
+												<path d="M5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm6-5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1-11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="currentColor"/>
+											</svg>
+										</div>
+
+										<div class="social-area">
+											<img src="#" alt="#" />
+											<input type="text" name="url">
+
+											<div class="status">
+												<label class="switch">
+													<input type="checkbox" name="status">
+													<span class="toggle round"></span>
+												</label>
+											</div>
+
+											<div class="actions">
+												<a href="#" data-action="delete">
+													<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=" " role="img" aria-hidden="true" aria-labelledby=" "><path fill-rule="evenodd" d="m6.83 0-.35.15-1.33 1.33-.15.35V3H0v1h2v11.5l.5.5h11l.5-.5V4h2V3h-5V1.83l-.15-.35L9.52.15 9.17 0H6.83ZM10 3v-.96L8.96 1H7.04L6 2.04V3h4ZM5 4H3v11h10V4H5Zm2 3v5H6V7h1Zm3 .5V7H9v5h1V7.5Z" fill="currentColor"></path></svg>
+												</a>
+											</div>
+										</div>
+									</div>
+
+									<div class="error"></div>
+								</div>
+							</div>
+						</template>
+
 					</div>
 
 					<h3>
