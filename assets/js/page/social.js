@@ -11,10 +11,6 @@ import { debounce, generateId } from "../helper.js";
 import { Page } from "./page.js";
 
 export const Social = {
-    DATA: {
-        order: new Map(),
-        content: {}
-    },
     SWAPY: null,
     addEventListeners: function(content) {
         // Open dropdown on clicking the `+` icon
@@ -62,6 +58,7 @@ export const Social = {
 
                 // Get parent for updating content visibility
                 const parent = target.closest('.social-modal');
+                const container = parent.querySelector('.social-items');
 
                 const isActive = target.getAttribute('data-active');
                 if (isActive) {
@@ -74,7 +71,7 @@ export const Social = {
                 }
 
                 // Adds a new item to the top of `social-items` div
-                await this.addNewItem(network);
+                await this.addNewItem(network, container);
 
                 // Add the `data-active` attribute to link
                 target.setAttribute('data-active', true);
@@ -86,7 +83,7 @@ export const Social = {
             }
         }));
     },
-    addNewItem: async function() {
+    addNewItem: async function(network, parent) {
         let ID = generateId();
         
         // Although one in a 10 million chance of collision, still ensure that we don't have a duplicate ID
@@ -95,39 +92,47 @@ export const Social = {
         }
 
         // Generate item's content (HTML structure with event listeners)
-        const content = this.generateItemStructure(ID, ID, type);
+        const content = this.generateItemStructure(ID, ID, network);
 
         // Add event listeners
-        this.deleteItemEvent(content);
+        // this.deleteItemEvent(content);
 
         // Update object containing page data
-        this.setItemDataToObject(ID, ID, type);
+        this.setItemDataToObject(ID, ID, network);
 
         // Update local storage
-        Page.save();
+        // Page.save();
 
         // Update for drag and drop to work
-        this.SWAPY.update();
+        // this.SWAPY.update();
 
         // Add item on screen
-        Selectors.ITEMS_CONTAINER.append(content);
+        parent.append(content);
 
         // TODO
         // Remove once testing is over
-        console.log(this.DATA);
+        console.log(Page.DATA);
     },
-    generateItemStructure: function(id, slotId, type) {
+    generateItemStructure: function(id, slotId, network) {
         const template = Selectors.SOCIAL_ENTRY_TEMPLATE.content;
         const content = template.cloneNode(true);
 
         // Elements (for adding identifiers and attaching event listeners)
-        const item = content.querySelector('.social-item');
-        const entry = content.querySelector('.social-entry');
-        const icon = box.querySelector('img');
+        const item = content.querySelector('.item');
+        item.setAttribute('data-swapy-slot', slotId);
 
         // Set attributes and distinct name for inputs
-        item.setAttribute('data-swapy-slot', slotId);
+        const entry = content.querySelector('.entry');
         entry.setAttribute('data-swapy-item', id);
+
+        // Set `data-channel` for box and add placeholder for text field
+        entry.setAttribute('data-channel', network);
+        entry.querySelector(`input[type="text"]`).setAttribute('placeholder', `Enter ${socialIcons[network]['name']} ${socialIcons[network]['placeholder']} (${socialIcons[network]['help']})`);
+
+        // Update content as per selected network
+        const icon = entry.querySelector('img');
+        icon.setAttribute('src', `./assets/images/social/${network}.svg`);
+        icon.setAttribute('alt', socialIcons[network]['name']);
 
         // Event listeners
         const inputs = entry.querySelectorAll('input');
@@ -152,43 +157,59 @@ export const Social = {
 
         return content;
     },
-    save: async function(embeds = false) {
-        const forms = Selectors.ITEMS_CONTAINER.querySelectorAll('form');
-        if (!forms.length) return;
+    setItemDataToObject: function(id, slotId, network) {
+        // Prepend item to map
+        Page.set('social', new Map([...new Map().set(slotId, id), ...Page.get('social', 'order')]), 'order');
 
-        // Loop over forms to store data
-        for (const form of forms) {
-            const id = form.getAttribute('id');
-            const type = form.getAttribute('data-type');
-            const data = new FormData(form);
+        // Add empty object to `content` attribute for holding content box data
+        Page.set(
+            'social',
+            {
+                icon: network,
+                url: null,
+                status: 'off'
+            },
+            'content',
+            id
+        );
+    },
+    save: async function() {
+        // const forms = Selectors.ITEMS_CONTAINER.querySelectorAll('form');
+        // if (!forms.length) return;
 
-            // Fields based on form type
-            const fields = [...this.constants.COMMON_FIELDS, ...Object.keys(this.CONTENT_DATA[type])];
+        // // Loop over forms to store data
+        // for (const form of forms) {
+        //     const id = form.getAttribute('id');
+        //     const type = form.getAttribute('data-type');
+        //     const data = new FormData(form);
 
-            // Loop over form data
-            for (const field of fields) {
-                // Skip saving image fields as it's logic is handled separately
-                if (field.includes('image')) continue;
+        //     // Fields based on form type
+        //     const fields = [...this.constants.COMMON_FIELDS, ...Object.keys(this.CONTENT_DATA[type])];
 
-                const value = data.get(`${field}-${id}`);
+        //     // Loop over form data
+        //     for (const field of fields) {
+        //         // Skip saving image fields as it's logic is handled separately
+        //         if (field.includes('image')) continue;
 
-                // Process `status` fields early as they will return `null` when not checked
-                if (field.includes('status') && value !== 'on') {
-                    Page.set('content', 'off', id, field);
-                }
+        //         const value = data.get(`${field}-${id}`);
 
-                // Bail early if there is no value
-                if (value === null || value === undefined) continue;
+        //         // Process `status` fields early as they will return `null` when not checked
+        //         if (field.includes('status') && value !== 'on') {
+        //             Page.set('content', 'off', id, field);
+        //         }
 
-                // For all other content type
-                Page.set('content', value.trim(), id, field);
+        //         // Bail early if there is no value
+        //         if (value === null || value === undefined) continue;
 
-                // Process embeds
-                if (embeds) {
-                    await this.processEmbed(id, type, field, value);
-                }
-            }
-        }
+        //         // For all other content type
+        //         Page.set('content', value.trim(), id, field);
+
+        //         // Process embeds
+        //         if (embeds) {
+        //             await this.processEmbed(id, type, field, value);
+        //         }
+        //     }
+        // }
 
         // Update local storage
         Page.save();

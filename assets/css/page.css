@@ -495,6 +495,7 @@ header {
             margin: 0 auto;
             height: 100%;
 
+
             & .content-actions {
                 display: flex;
                 justify-content: space-between;
@@ -908,7 +909,7 @@ header {
                 }
             }
 
-            .no-content-data {
+            & .no-content-data {
                 height: calc(100% - 60px);
                 display: flex;
                 flex-direction: column;
@@ -1417,8 +1418,11 @@ header {
     padding: 1.25rem;
     height: 780px;
     max-height: calc(100% - 2.5rem);
+    overflow: hidden;
 
     & .heading {
+        padding-bottom: 1.5rem;
+
         & h4 {
             font-size: 1.5rem;
         }
@@ -1427,8 +1431,9 @@ header {
         }
     }
     & .social-container {
-        padding: 1.5rem 0;
-        height: calc(100% - 4rem);
+        padding: 0 0 2.5rem;
+        height: calc(100% - 5.5rem);
+        overflow-y: auto;
 
         & p {
             color: #808080;
@@ -1438,20 +1443,18 @@ header {
     }
     & .social-items {
         height: calc(100% - 2rem);
-        max-width: 640px;
+        max-width: calc(100% - 300px);
         scrollbar-width: thin;
-        overflow-y: auto;
-        overflow-x: hidden;
 
-        & .social-item {
-            & .social-entry {
+        & .item {
+            & .entry {
                 position: relative;
-                margin: 0.5rem 1.25rem;
+                margin: 0.5rem 0;
                 max-width: 100%;
                 background: #ffffff;
                 border-radius: 12px;
 
-                & .social-main {
+                & .main {
                     display: flex;
                     align-items: center;
                     border: 1px solid rgba(0,0,0,0.06);
@@ -1466,7 +1469,7 @@ header {
                             display: block;
                         }
                     }
-                    & .social-area {
+                    & .area {
                         padding: 0.5rem 0.75rem 0.5rem 0.25rem;
                         width: 100%;
                         display: flex;
@@ -1479,6 +1482,10 @@ header {
                         & input {
                             margin: 0;
                             padding: 0.5rem;
+                            outline: 0;
+                            border: 0;
+                            width: 100%;
+                            font-size: 0.938rem;
                         }
                         & .status {
                             & label {
@@ -1488,6 +1495,7 @@ header {
                         & .actions {
                             & svg {
                                 display: block;
+                                color: #909090;
                             }
                         }
                     }
@@ -1771,8 +1779,8 @@ button,
         content: "";
         height: 16px;
         width: 16px;
-        left: 2.125px;
-        bottom: 2.125px;
+        left: 2px;
+        bottom: 2px;
         background-color: #ffffff;
         -webkit-transition: .4s;
         transition: .4s;
