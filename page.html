@@ -804,9 +804,7 @@
 								<div class="social-container">
 									<p class="no-social-data">Click the <span>+</span> button to start adding icons</p>
 
-									<form class="social-form">
-										<div class="social-items"></div>
-									</form>
+									<div class="social-items"></div>
 								</div>
 
 								<div class="social-selector">
@@ -991,32 +989,34 @@
 						<template id="social-entry-template">
 							<div class="item">
 								<div class="entry">
-									<div class="main">
-										<div class="drag" data-swapy-handle>
-											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<title>Move</title>
-												<path d="M5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm6-5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1-11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="currentColor"/>
-											</svg>
-										</div>
-
-										<div class="area">
-											<img src="#" alt="#" />
-											<input type="text" name="url">
-
-											<div class="status">
-												<label class="switch">
-													<input type="checkbox" name="status">
-													<span class="toggle round"></span>
-												</label>
+									<form>
+										<div class="main">
+											<div class="drag" data-swapy-handle>
+												<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<title>Move</title>
+													<path d="M5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm6-5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1-11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="currentColor"/>
+												</svg>
 											</div>
 
-											<div class="actions">
-												<a href="#" data-action="delete">
-													<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=" " role="img" aria-hidden="true" aria-labelledby=" "><path fill-rule="evenodd" d="m6.83 0-.35.15-1.33 1.33-.15.35V3H0v1h2v11.5l.5.5h11l.5-.5V4h2V3h-5V1.83l-.15-.35L9.52.15 9.17 0H6.83ZM10 3v-.96L8.96 1H7.04L6 2.04V3h4ZM5 4H3v11h10V4H5Zm2 3v5H6V7h1Zm3 .5V7H9v5h1V7.5Z" fill="currentColor"></path></svg>
-												</a>
+											<div class="area">
+												<img src="#" alt="#" />
+												<input type="text" name="url">
+
+												<div class="status">
+													<label class="switch">
+														<input type="checkbox" name="status">
+														<span class="toggle round"></span>
+													</label>
+												</div>
+
+												<div class="actions">
+													<a href="#" data-action="delete">
+														<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class=" " role="img" aria-hidden="true" aria-labelledby=" "><path fill-rule="evenodd" d="m6.83 0-.35.15-1.33 1.33-.15.35V3H0v1h2v11.5l.5.5h11l.5-.5V4h2V3h-5V1.83l-.15-.35L9.52.15 9.17 0H6.83ZM10 3v-.96L8.96 1H7.04L6 2.04V3h4ZM5 4H3v11h10V4H5Zm2 3v5H6V7h1Zm3 .5V7H9v5h1V7.5Z" fill="currentColor"></path></svg>
+													</a>
+												</div>
 											</div>
 										</div>
-									</div>
+									</form>
 
 									<div class="error"></div>
 								</div>

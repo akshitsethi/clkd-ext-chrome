@@ -11,7 +11,56 @@ import { debounce, generateId } from "../helper.js";
 import { Page } from "./page.js";
 
 export const Social = {
+    FIELDS: [
+        'status',
+        'url'
+    ],
     SWAPY: null,
+    render: function(parent) {
+        const order = Array.from(Page.get('social', 'order'));
+        if (!order.length) return;
+
+        // Get container for `social-items`
+        const container = parent.querySelector('.social-items');
+
+        // Update content section
+        this.updateContentSectionVisibility(parent, true);
+
+        for (const [slotId, id] of order) {
+            const data = Page.get('social', 'content', id);
+
+            // Generate item structure
+            const content = this.generateItemStructure(id, slotId, data.icon);
+
+            // Add event listeners
+            this.deleteItemEvent(content, container);
+
+            // Populate existing content
+            this.populateItemContent(id, content, data);
+
+            // Also, hide the icon selector (since it already exists)
+            parent.querySelector(`.social-dropdown a[data-social="${data.icon}"]`).setAttribute('data-active', true);
+
+            // Add item on screen
+            container.append(content);
+        }
+
+        this.SWAPY.update();
+    },
+    populateItemContent: function(id, content, data) {
+        for (const [key, value] of Object.entries(data)) {
+            if (!value) continue;
+
+            const selector = content.querySelector(`input[name=${key}-${id}]`);
+            if (!selector) continue;
+
+            if (key.includes('status')) {
+                if (value === 'on') selector.setAttribute('checked', 'checked');
+            } else {
+                selector.value = value;
+            }
+        }
+    },
     addEventListeners: function(content) {
         // Open dropdown on clicking the `+` icon
         const open = content.querySelector('.social-selector a');
@@ -20,6 +69,10 @@ export const Social = {
         // Add new item on clicking a social icon from the dropdown
         const icons = content.querySelectorAll('.social-dropdown a');
         this.addIconEvent(icons);
+
+        // Initialise drag n drop
+        const container = content.querySelector('.social-items');
+        this.dragDropEvent(container);
     },
     openDropdownEvent: function (selector) {
         if (!selector) return;
@@ -83,9 +136,24 @@ export const Social = {
             }
         }));
     },
+    dragDropEvent: function(selector) {
+        if (!selector) return;
+
+        this.SWAPY = createSwapy(selector, {
+            animation: 'dynamic',
+            swapMode: 'hover'
+        });
+
+        this.SWAPY.onSwap(async e => {
+            Page.set('social', e.newSlotItemMap.asMap, 'order');
+
+            // Update storage
+            await Page.save();
+        });
+    },
     addNewItem: async function(network, parent) {
         let ID = generateId();
-        
+
         // Although one in a 10 million chance of collision, still ensure that we don't have a duplicate ID
         while (Page.get('social', 'content').hasOwnProperty(ID)) {
             ID = generateId();
@@ -95,16 +163,16 @@ export const Social = {
         const content = this.generateItemStructure(ID, ID, network);
 
         // Add event listeners
-        // this.deleteItemEvent(content);
+        this.deleteItemEvent(content, parent);
 
         // Update object containing page data
         this.setItemDataToObject(ID, ID, network);
 
         // Update local storage
-        // Page.save();
+        Page.save();
 
         // Update for drag and drop to work
-        // this.SWAPY.update();
+        this.SWAPY.update();
 
         // Add item on screen
         parent.append(content);
@@ -126,8 +194,10 @@ export const Social = {
         entry.setAttribute('data-swapy-item', id);
 
         // Set `data-channel` for box and add placeholder for text field
-        entry.setAttribute('data-channel', network);
-        entry.querySelector(`input[type="text"]`).setAttribute('placeholder', `Enter ${socialIcons[network]['name']} ${socialIcons[network]['placeholder']} (${socialIcons[network]['help']})`);
+        const form = content.querySelector('form');
+        form.setAttribute('id', `form-${id}`);
+        form.setAttribute('data-channel', network);
+        form.querySelector(`input[type="text"]`).setAttribute('placeholder', `Enter ${socialIcons[network].name} ${socialIcons[network].placeholder} (${socialIcons[network].help})`);
 
         // Update content as per selected network
         const icon = entry.querySelector('img');
@@ -145,11 +215,11 @@ export const Social = {
                 const type = input.getAttribute('type');
 
                 // Event listeners
-                if (['checkbox'].includes(type)) {
-                    input.addEventListener('change', async e => await this.save());
+                if (type === 'checkbox') {
+                    input.addEventListener('change', async e => await this.save(id));
                 } else {
                     input.addEventListener('keyup', debounce(async () => {
-                        await this.save();
+                        await this.save(id);
                     }));
                 }
             });
@@ -157,9 +227,44 @@ export const Social = {
 
         return content;
     },
+    deleteItemEvent: function(content, container) {
+        const selector = content.querySelector('[data-action="delete"]');
+        if (!selector) return;
+
+        selector.addEventListener('click', e => {
+            e.preventDefault();
+
+            const parentEl = e.target.closest('.item');
+            const slotId = parentEl.getAttribute('data-swapy-slot');
+            const itemId = e.target.closest('.entry').getAttribute('data-swapy-item');
+            const network = e.target.closest('form').getAttribute('data-channel');
+
+            // Remove node
+            parentEl.remove();
+
+            // Remove parent id from order and content id from content object as we won't require the data anymore)
+            Page.remove('social', 'order', slotId);
+            Page.remove('social', 'content', itemId);
+
+            // Save data
+            Page.save();
+
+            // Also, hide the icon selector (since it already exists)
+            const parent = container.closest('.social-modal');
+            parent.querySelector(`.social-dropdown a[data-social="${network}"]`).removeAttribute('data-active');
+
+            // Update draggable elements
+            this.SWAPY.update();
+
+            // Show no data section if all items are removed
+            if (!Object.keys(Page.get('social', 'content')).length) {
+                this.updateContentSectionVisibility(parent, false);
+            }
+        });
+    },
     setItemDataToObject: function(id, slotId, network) {
-        // Prepend item to map
-        Page.set('social', new Map([...new Map().set(slotId, id), ...Page.get('social', 'order')]), 'order');
+        // Append item to map
+        Page.set('social', Page.get('social', 'order').set(slotId, id), 'order');
 
         // Add empty object to `content` attribute for holding content box data
         Page.set(
@@ -173,43 +278,28 @@ export const Social = {
             id
         );
     },
-    save: async function() {
-        // const forms = Selectors.ITEMS_CONTAINER.querySelectorAll('form');
-        // if (!forms.length) return;
+    save: async function(id) {
+        const form = document.querySelector(`.social-items #form-${id}`);
+        if (!form) return;
 
-        // // Loop over forms to store data
-        // for (const form of forms) {
-        //     const id = form.getAttribute('id');
-        //     const type = form.getAttribute('data-type');
-        //     const data = new FormData(form);
+        // Get form data
+        const data = new FormData(form);
 
-        //     // Fields based on form type
-        //     const fields = [...this.constants.COMMON_FIELDS, ...Object.keys(this.CONTENT_DATA[type])];
+        // Loop over form data
+        for (const field of this.FIELDS) {
+            const value = data.get(`${field}-${id}`);
 
-        //     // Loop over form data
-        //     for (const field of fields) {
-        //         // Skip saving image fields as it's logic is handled separately
-        //         if (field.includes('image')) continue;
+            // Process `status` fields early as they will return `null` when not checked
+            if (field.includes('status') && value !== 'on') {
+                Page.set('social', 'off', 'content', id, field);
+            }
 
-        //         const value = data.get(`${field}-${id}`);
+            // Bail early if there is no value
+            if (value === null || value === undefined) continue;
 
-        //         // Process `status` fields early as they will return `null` when not checked
-        //         if (field.includes('status') && value !== 'on') {
-        //             Page.set('content', 'off', id, field);
-        //         }
-
-        //         // Bail early if there is no value
-        //         if (value === null || value === undefined) continue;
-
-        //         // For all other content type
-        //         Page.set('content', value.trim(), id, field);
-
-        //         // Process embeds
-        //         if (embeds) {
-        //             await this.processEmbed(id, type, field, value);
-        //         }
-        //     }
-        // }
+            // For all other content type
+            Page.set('social', value.trim(), 'content', id, field);
+        }
 
         // Update local storage
         Page.save();
@@ -234,6 +324,10 @@ export const Social = {
         const template = Selectors.MANAGE_ICONS_TEMPLATE.content;
         const content = template.cloneNode(true);
         this.addEventListeners(content);
+
+        // Populate existing content
+        this.render(content);
+
         Modal.show(content, 'node', 1024);
         // TO BE REMOVED TILL HERE
 

@@ -1434,6 +1434,7 @@ header {
         padding: 0 0 2.5rem;
         height: calc(100% - 5.5rem);
         overflow-y: auto;
+        overflow-x: hidden;
 
         & p {
             color: #808080;
@@ -1442,6 +1443,7 @@ header {
         }
     }
     & .social-items {
+        display: none;
         height: calc(100% - 2rem);
         max-width: calc(100% - 300px);
         scrollbar-width: thin;
@@ -1507,6 +1509,10 @@ header {
                     color: #fc5c65;
                 }
             }
+        }
+
+        @media (max-width: 867px) {
+            max-width: 100%;
         }
     }
     & .social-selector {

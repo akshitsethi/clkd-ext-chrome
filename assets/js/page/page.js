@@ -32,17 +32,21 @@ export const Page = {
         },
         providers: {}
     },
-    get: function(attribute, id = null) {
-        if (id !== null) {
-            return this.DATA[attribute][id];
+    get: function(attribute, id = null, subId = null) {
+        if (id !== null || subId !== null) {
+            return subId !== null ? this.DATA[attribute][id][subId] : this.DATA[attribute][id];
         }
 
         return this.DATA[attribute];
     },
-    set: function(attribute, value, id = null, subId = null) {
+    set: function(attribute, value, id = null, subId = null, field = null) {
         if (id !== null) {
             if (subId !== null) {
-                this.DATA[attribute][id][subId] = value;
+                if (field !== null) {
+                    this.DATA[attribute][id][subId][field] = value;
+                } else {
+                    this.DATA[attribute][id][subId] = value;
+                }
             } else {
                 this.DATA[attribute][id] = value;
             }
@@ -50,11 +54,19 @@ export const Page = {
             this.DATA[attribute] = value;
         }
     },
-    remove: function(attribute, id) {
-        if (this.DATA[attribute] instanceof Map) {
-            this.DATA[attribute].delete(id);
+    remove: function(attribute, id, subId = null) {
+        if (subId !== null) {
+            if (this.DATA[attribute][id] instanceof Map) {
+                this.DATA[attribute][id].delete(subId);
+            } else {
+                delete this.DATA[attribute][id][subId];
+            }
         } else {
-            delete this.DATA[attribute][id];
+            if (this.DATA[attribute] instanceof Map) {
+                this.DATA[attribute].delete(id);
+            } else {
+                delete this.DATA[attribute][id];
+            }
         }
     },
     save: async function() {
