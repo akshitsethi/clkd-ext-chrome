@@ -1,6 +1,6 @@
 // page/social.js
 import { createSwapy } from "swapy";
-import { isURL } from "validator";
+import { isURL, isEmail } from "validator";
 import { Processing } from "../processing.js";
 import { Modal } from "../modal.js";
 import { Selectors } from "./selectors.js";
@@ -41,6 +41,9 @@ export const Social = {
             // Also, hide the icon selector (since it already exists)
             parent.querySelector(`.social-dropdown a[data-social="${data.icon}"]`).setAttribute('data-active', true);
 
+            // After appending, run validation checks
+            this.validateURL(id, content);
+
             // Add item on screen
             container.append(content);
         }
@@ -73,6 +76,57 @@ export const Social = {
         // Initialise drag n drop
         const container = content.querySelector('.social-items');
         this.dragDropEvent(container);
+    },
+    validateURL: function(id, parent = null) {
+        const input = parent !== null ? parent.querySelector(`input[name="url-${id}"]`) : document.querySelector(`.social-items input[name="url-${id}"]`);
+        if (!input) return;
+
+        const entry = input.closest('.entry');
+        const form = entry.querySelector('form');
+        const network = form.getAttribute('data-channel');
+        if (!network) {
+            throw new Error(i18n.DEFAULT_ERROR);
+        }
+
+        // Error node
+        const errorEl = entry.querySelector('.error');
+
+        // Set error message to null
+        let message = null;
+
+        if (!input.value) {
+            message = 'Field cannot be left blank';
+        } else {
+            // Network based validation
+            if (network === 'email') {
+                if (!isEmail(input.value)) {
+                    message = 'Please enter a valid email address';
+                }
+            }  else if (network === 'phone' || network === 'whatsapp') {
+                if (input.value.startsWith('+')) {
+                    message = 'Plus sign (+) before country code is not required';
+                } else if (!isMobilePhone(input.value)) {
+                    message = 'Please enter a valid mobile phone number with country code';
+                }
+            } else if (network === 'threads' || network === 'tiktok') {
+                if (!input.value.startsWith('@')) {
+                    message = 'Username must start with @';
+                }
+            } else {
+                if (!input.value.startsWith('https://')) {
+                    message = 'URL must start with https://';
+                } else if (!isURL(input.value)) {
+                    message = 'Please enter a valid URL';
+                }
+            }
+        }
+
+        if (message) {
+            errorEl.innerText = message;
+            errorEl.style.display = 'block';
+        } else {
+            errorEl.style.display = 'none';
+        }
     },
     openDropdownEvent: function (selector) {
         if (!selector) return;
@@ -149,6 +203,9 @@ export const Social = {
 
             // Update storage
             await Page.save();
+
+            // Refresh icons in the container
+            this.renderIconsEvent();
         });
     },
     addNewItem: async function(network, parent) {
@@ -219,6 +276,7 @@ export const Social = {
                     input.addEventListener('change', async e => await this.save(id));
                 } else {
                     input.addEventListener('keyup', debounce(async () => {
+                        this.validateURL(id);
                         await this.save(id);
                     }));
                 }
@@ -301,6 +359,9 @@ export const Social = {
             Page.set('social', value.trim(), 'content', id, field);
         }
 
+        // On saving data, we need to refresh the icons in the container
+        this.renderIconsEvent();
+
         // Update local storage
         Page.save();
     },
@@ -316,20 +377,17 @@ export const Social = {
             container.style.display = 'none';
         }
     },
+    updateIconsContainerVisibility: function(show = true) {
+        if (show) {
+            Selectors.NO_SOCIAL_ICONS_SECTION.style.display = 'none';
+            Selectors.SOCIAL_ICONS_CONTAINER.style.display = 'flex';
+        } else {
+            Selectors.NO_SOCIAL_ICONS_SECTION.style.display = 'block';
+            Selectors.SOCIAL_ICONS_CONTAINER.style.display = 'none';
+        }
+    },
     manageIconsEvent: function() {
         if (!Selectors.MANAGE_ICONS || !Selectors.MANAGE_ICONS_TEMPLATE) return;
-
-        // TEMPORARY
-        // For working on social modal (to avoid clicking each time on refresh)
-        const template = Selectors.MANAGE_ICONS_TEMPLATE.content;
-        const content = template.cloneNode(true);
-        this.addEventListeners(content);
-
-        // Populate existing content
-        this.render(content);
-
-        Modal.show(content, 'node', 1024);
-        // TO BE REMOVED TILL HERE
 
         Selectors.MANAGE_ICONS.addEventListener('click', e => {
             e.preventDefault();
@@ -337,13 +395,17 @@ export const Social = {
             try {
                 Processing.show();
 
-                // const template = Selectors.MANAGE_ICONS_TEMPLATE.content;
-                // const content = template.cloneNode(true);
+                const template = Selectors.MANAGE_ICONS_TEMPLATE.content;
+                const content = template.cloneNode(true);
 
                 // Add event listeners
-                // this.addEventListeners();
+                this.addEventListeners(content);
 
-                // Modal.show(content, 'node', 840);
+                // Populate existing content
+                this.render(content);
+
+                // Add content to modal and display it on screen
+                Modal.show(content, 'node', 1024);
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
@@ -352,7 +414,43 @@ export const Social = {
             }
         });
     },
+    renderIconsEvent: function() {
+        if (!Selectors.SOCIAL_ICONS_CONTAINER || !Selectors.NO_SOCIAL_ICONS_SECTION) return;
+
+        const order = Array.from(Page.get('social', 'order'));
+        if (!order.length) {
+            this.updateIconsContainerVisibility(false);
+            return;
+        }
+
+        // Clear out the container
+        Selectors.SOCIAL_ICONS_CONTAINER.innerHTML = null;
+
+        // Set counter to 0
+        let counter = 0;
+
+        Page.get('social', 'order').forEach((value, key, map) => {
+            const data = Page.get('social', 'content', value);
+            if (!data.icon || data.status === 'off' || data.url.length === 0) {
+                return;
+            }
+
+            const imgEl = document.createElement('img');
+            imgEl.setAttribute('src', `./assets/images/social/${data.icon}.svg`);
+            imgEl.setAttribute('alt', socialIcons[data.icon].name);
+
+            // Add icon to container
+            Selectors.SOCIAL_ICONS_CONTAINER.append(imgEl);
+
+            // Increment counter
+            counter++;
+        });
+
+        // Show icons container only if we have atleast one icon to display
+        this.updateIconsContainerVisibility(counter ? true : false);
+    },
     events: function() {
         this.manageIconsEvent();
+        this.renderIconsEvent();
     }
 };

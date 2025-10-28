@@ -37,7 +37,7 @@ export const debounce = function(callback, delay = 800) {
   return function() {
       clearTimeout(timer);
       timer = setTimeout(() => {
-          callback();
+        callback();
       }, delay);
   };
 };
