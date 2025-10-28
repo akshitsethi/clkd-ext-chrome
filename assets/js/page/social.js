@@ -11,10 +11,12 @@ import { debounce, generateId } from "../helper.js";
 import { Page } from "./page.js";
 
 export const Social = {
-    FIELDS: [
-        'status',
-        'url'
-    ],
+    constants: {
+        FIELDS: [
+            'status',
+            'url'
+        ]
+    },
     SWAPY: null,
     render: function(parent) {
         const order = Array.from(Page.get('social', 'order'));
@@ -344,7 +346,7 @@ export const Social = {
         const data = new FormData(form);
 
         // Loop over form data
-        for (const field of this.FIELDS) {
+        for (const field of this.constants.FIELDS) {
             const value = data.get(`${field}-${id}`);
 
             // Process `status` fields early as they will return `null` when not checked

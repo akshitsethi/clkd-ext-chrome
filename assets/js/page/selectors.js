@@ -15,6 +15,9 @@ export const Selectors = {
     NO_CONTENT_MESSAGE: document.querySelector('#content .no-content-data'),
     ITEMS_CONTAINER: document.querySelector('#content .content-items'),
 
+    // Design
+    DESIGN_FORM_INPUTS: document.querySelectorAll('#design input[type="checkbox"], #design input[type="radio"], #design input[type="color"], #design input[type="range"]'),
+
     // Profile (thumbnail, title, and bio)
     EDIT_PROFILE_IMAGE: document.querySelector('#design .edit-profile-image'),
     EDIT_BIO: document.querySelector('#design .edit-bio'),

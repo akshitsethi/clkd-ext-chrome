@@ -1282,7 +1282,7 @@ header {
             & .social {
                 & .no-icons-data {
                     font-size: 1rem;
-                    padding: 0.375rem 0;
+                    font-weight: 500;
                 }
                 & .selected-icons {
                     display: flex;
