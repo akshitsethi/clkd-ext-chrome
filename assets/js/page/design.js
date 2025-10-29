@@ -29,7 +29,7 @@ export const Design = {
             'radioButtonShadowPosition',
             'rangeButtonShadowThickness',
             'rangeButtonShadowOpacity'
-        ],
+        ]
     },
     render: function() {
         for (const [key, value] of Object.entries(Page.get('design'))) {
@@ -121,8 +121,10 @@ export const Design = {
                 const parentEl = target.closest('.actions');
 
                 // Apply preset
-                // TODO
-
+                const presetType = parentEl.querySelector('.presets').getAttribute('data-preset');
+                if (presetType === 'gradient') {
+                    this.applyGradient(target);
+                }
 
                 // After apply preset, hide popup
                 parentEl.querySelector('.action-popup').classList.toggle('show');
@@ -130,11 +132,24 @@ export const Design = {
                 // Toggle arrows
                 parentEl.querySelectorAll('.arrow').forEach(img => img.classList.toggle('show'));
 
+                // Save data and show notificiation
+                Page.save();
+                Notification.success(i18n.GRADIENT_PRESET_APPLIED);
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             }
         }));
+    },
+    applyGradient: function(input) {
+        const gradientSettings = JSON.parse(input.getAttribute('data-preset'));
+        for (const [key, value] of Object.entries(gradientSettings)) {
+            const selector = document.querySelector(`#design input[name="${key}"]`);
+            if (!selector) continue;
+
+            selector.value = value;
+            Page.set('design', value, key);
+        }
     },
     saveEvent: function() {
         if (!Selectors.DESIGN_FORM_INPUTS.length) return;

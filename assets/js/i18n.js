@@ -33,6 +33,7 @@ export const i18n = {
     PROFILE_UPDATED: 'Profile details have been updated.',
     SOCIAL_ICON_EXISTS: 'Social channel has already been added.',
 	SOCIAL_ICONS_UPDATED: 'Social channels have been updated.',
+    GRADIENT_PRESET_APPLIED: 'Gradient preset has been applied.',
 
     // Analytics
     NO_DATA_ERROR: 'Unable to find analytics data.',
