@@ -59,6 +59,16 @@ export const Design = {
 
         Selectors.PROFILE_THUMBNAIL_CONTAINER.setAttribute('src', thumbnail.url);
     },
+    applyGradient: function(input) {
+        const gradientSettings = JSON.parse(input.getAttribute('data-preset'));
+        for (const [key, value] of Object.entries(gradientSettings)) {
+            const selector = document.querySelector(`#design input[name="${key}"]`);
+            if (!selector) continue;
+
+            selector.value = value;
+            Page.set('design', value, key);
+        }
+    },
     save: async function(e) {
         try {
             if (!this.constants.FIELDS.includes(e.target.name)) {
@@ -141,15 +151,19 @@ export const Design = {
             }
         }));
     },
-    applyGradient: function(input) {
-        const gradientSettings = JSON.parse(input.getAttribute('data-preset'));
-        for (const [key, value] of Object.entries(gradientSettings)) {
-            const selector = document.querySelector(`#design input[name="${key}"]`);
-            if (!selector) continue;
+    openFileDialogEvent: function() {
+        if (!Selectors.DESIGN_FILE_SELECTORS.length) return;
 
-            selector.value = value;
-            Page.set('design', value, key);
-        }
+        Selectors.DESIGN_FILE_SELECTORS.forEach(input => input.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        }));
     },
     saveEvent: function() {
         if (!Selectors.DESIGN_FORM_INPUTS.length) return;
@@ -161,6 +175,7 @@ export const Design = {
     events: function() {
         this.inlineActionEvent();
         this.presetApplyEvent();
+        this.openFileDialogEvent();
         this.saveEvent();
     }
 };
