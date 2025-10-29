@@ -962,7 +962,46 @@ header {
             }
 
             & h4 {
+                display: flex;
+                align-items: center;
                 padding: 0 0.375rem 0.375rem;
+
+                & .actions {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-left: auto;
+
+                    & a {
+                        font-size: 0.825rem;
+                        display: flex;
+                        align-items: center;
+
+                        & img {
+                            display: none;
+                            max-width: 14px;
+                            margin-left: 0.25rem;
+
+                            &.show {
+                                display: block;
+                            }
+                        }
+                    }
+
+                    & .action-popup {
+                        display: none;
+                        position: absolute;
+                        width: 360px;
+                        height: auto;
+                        right: -0.25rem;
+                        top: 1.75rem;
+
+                        &.show {
+                            display: block;
+                        }
+                    }
+                }
             }
 
             & .profile-thumbnail {
@@ -987,6 +1026,16 @@ header {
                     & img {
                         max-width: 21px;
                     }
+                }
+            }
+
+            & .flex {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                & .field {
+                    width: 100%;
                 }
             }
 
@@ -1017,7 +1066,7 @@ header {
                         position: relative;
                         border-radius: 12px;
                         background: #f6f6f1;
-                        border: 2px dashed transparent;
+                        border: 1px dashed transparent;
                         padding: 0.75rem;
 
                         & img {
@@ -1054,13 +1103,21 @@ header {
                             margin: 0.50rem;
                             border-radius: 12px;
                             padding: 0.5rem;
-                            border: 2px dashed transparent;
+                            border: 1px dashed transparent;
 
                             & p {
                                 margin-top: 0.5rem;
                                 font-size: 1rem;
+
+                                @media (max-width: 540px) {
+                                    font-size: 0.875rem;
+                                }
                             }
                         }
+                    }
+
+                    @media (max-width: 540px) {
+                        grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
                     }
                 }
 
@@ -1177,7 +1234,7 @@ header {
                         padding: 1.35rem;
                         background: #ffffff;
                         font-size: 0.875rem;
-                        border: 2px dashed transparent;
+                        border: 1px dashed transparent;
 
                         & img {
                             display: block;
@@ -1291,6 +1348,42 @@ header {
 
                     & img {
                         max-width: 18px;
+                    }
+                }
+            }
+
+            /* Inline section (for different background types & their respective options) */
+            & .inline-section {
+                /* display: none; */
+                padding: 1rem;
+                border: 1px dashed #e0e0e0;
+                border-radius: 12px;
+                margin-top: 1.5rem;
+            }
+
+            /* Presets */
+            & .presets {
+                padding: 1rem;
+                background: #ffffff;
+                border: 1px solid #e0e0e0;
+                box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.02);
+                border-radius: 12px;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 0.25rem;
+
+                &[data-preset="gradient"] {
+                    & .preset-item {
+                        width: 48px;
+                        height: 48px;
+                        background-repeat: no-repeat;
+                        border-radius: 100%;
+                        border: 0;
+
+                        &:hover {
+                            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -20px, rgba(0, 0, 0, 0.3) 0px 10px 20px -30px;
+                        }
                     }
                 }
             }

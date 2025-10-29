@@ -17,6 +17,8 @@ export const Selectors = {
 
     // Design
     DESIGN_FORM_INPUTS: document.querySelectorAll('#design input[type="checkbox"], #design input[type="radio"], #design input[type="color"], #design input[type="range"]'),
+    DESIGN_INLINE_ACTIONS: document.querySelectorAll('#design .inline-section .actions a[data-action]'),
+    DESIGN_PRESET_ITEMS: document.querySelectorAll('#design .presets .preset-item'),
 
     // Profile (thumbnail, title, and bio)
     EDIT_PROFILE_IMAGE: document.querySelector('#design .edit-profile-image'),

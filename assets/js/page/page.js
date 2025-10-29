@@ -292,8 +292,3 @@ export const Page = {
         }
     }
 };
-
-// Load extension on DOM ready
-window.addEventListener('DOMContentLoaded', () => {
-	Page.init();
-});

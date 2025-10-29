@@ -1,5 +1,6 @@
 // page/design.js
 import { i18n } from "../i18n.js";
+import { Notification } from "../notification.js";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
 
@@ -11,6 +12,10 @@ export const Design = {
             'colorProfileTitle',
             'colorProfileText',
             'radioBackground',
+            'colorBackground',
+            'colorBackgroundGradientOne',
+            'colorBackgroundGradientTwo',
+            'rangeBackgroundGradientAngle',
             'radioSocialPosition',
             'colorSocialIcon',
             'radioButtonFill',
@@ -30,15 +35,15 @@ export const Design = {
         for (const [key, value] of Object.entries(Page.get('design'))) {
             if (!value) continue;
 
-            const selector = key.includes('radio') ? document.querySelectorAll(`#design input[name=${key}]`) : document.querySelector(`#design input[name=${key}]`);
-            if (!selector) continue;
-
-            // Check if key.includes('image') and show the image on screen
+            // Check if key.includes('thumbnail') and show the image on screen
             // instead of updating value to the file input
             if (key.includes('thumbnail')) {
-                // this.linkedImageOptions(id, selector);
-                // continue;
+                this.renderThumbnail(value);
+                continue;
             }
+
+            const selector = key.includes('radio') ? document.querySelectorAll(`#design input[name=${key}]`) : document.querySelector(`#design input[name=${key}]`);
+            if (!selector) continue;
 
             if (key.includes('status')) {
                 if (value === 'on') selector.setAttribute('checked', 'checked');
@@ -48,6 +53,11 @@ export const Design = {
                 selector.value = value;
             }
         }
+    },
+    renderThumbnail: function(thumbnail) {
+        if (!thumbnail || !(thumbnail.hasOwnProperty('url'))) return;
+
+        Selectors.PROFILE_THUMBNAIL_CONTAINER.setAttribute('src', thumbnail.url);
     },
     save: async function(e) {
         try {
@@ -63,6 +73,69 @@ export const Design = {
             Notification.error(error.message ?? i18n.DEFAULT_ERROR);
         }
     },
+    inlineActionEvent: function() {
+        if (!Selectors.DESIGN_INLINE_ACTIONS.length) return;
+
+        Selectors.DESIGN_INLINE_ACTIONS.forEach(action => action.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                let target = e.target;
+                if (target.nodeName === 'IMG') {
+                    target = e.target.parentElement;
+                }
+
+                const action = target.getAttribute('data-action');
+                if (!action) {
+                    throw new Error(i18n.MALFORMED_REQUEST);
+                }
+
+                const parentEl = target.closest('.actions');
+                const actionEl = parentEl.querySelector(`#${action}`);
+                if (!actionEl) {
+                    throw new Error(i18n.SELECTOR_NOT_FOUND);
+                }
+
+                // Toggle arrows
+                target.querySelectorAll('.arrow').forEach(img => img.classList.toggle('show'));
+
+                actionEl.classList.toggle('show');
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        }));
+    },
+    presetApplyEvent: function() {
+        if (!Selectors.DESIGN_PRESET_ITEMS.length) return;
+
+        Selectors.DESIGN_PRESET_ITEMS.forEach(preset => preset.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                let target = e.target;
+                if (target.nodeName === 'IMG') {
+                    target = e.target.parentElement;
+                }
+
+                const parentEl = target.closest('.actions');
+
+                // Apply preset
+                // TODO
+
+
+                // After apply preset, hide popup
+                parentEl.querySelector('.action-popup').classList.toggle('show');
+
+                // Toggle arrows
+                parentEl.querySelectorAll('.arrow').forEach(img => img.classList.toggle('show'));
+
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        }));
+    },
     saveEvent: function() {
         if (!Selectors.DESIGN_FORM_INPUTS.length) return;
 
@@ -71,6 +144,8 @@ export const Design = {
         }
     },
     events: function() {
+        this.inlineActionEvent();
+        this.presetApplyEvent();
         this.saveEvent();
     }
 };

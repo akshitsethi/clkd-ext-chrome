@@ -82,8 +82,8 @@ export const Profile = {
                     }
                 });
             } catch (error) {
-                console.log(error);
-                Notification.show(MESSAGES.DEFAULT_ERROR);
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             }
         });
     },
@@ -253,7 +253,7 @@ export const Profile = {
                 // this.selectors.MODAL_CONTENT.append(content);
                 Modal.show(content, 'node');
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             } finally {
                 Processing.hide();
