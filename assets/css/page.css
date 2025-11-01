@@ -1124,7 +1124,7 @@ header {
                 /* Background */
                 &.background {
                     & label {
-                        height: 260px;
+                        height: 300px;
                     }
 
                     & input {
@@ -1153,6 +1153,9 @@ header {
                         flex-direction: column;
                         justify-content: center;
                         border-radius: 12px;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-position: center center;
 
                         & p {
                             font-weight: 500;
@@ -1160,7 +1163,20 @@ header {
                         }
 
                         & img {
-                            max-width: 34px;
+                            max-width: 46px;
+                            padding: 4px;
+                            background: rgba(0, 0, 0, 0.08);
+                            border-radius: 12px;
+                            z-index: 1;
+                        }
+                        & video {
+                            position: absolute;
+                            height: 100%;
+                            width: 100%;
+                            left: 0;
+                            top: 0;
+                            object-fit: cover;
+                            border-radius: 12px;
                         }
                     }
 
@@ -1333,6 +1349,18 @@ header {
                     height: 100%;
                     z-index: 1;
                 }
+
+                & .error {
+                    display: none;
+                    position: absolute;
+                    font-size: 0.750rem;
+                    padding: 0.250rem;
+                    background: #fc5c65;
+                    color: #ffffff;
+                    border-radius: 12px;
+                    top: 0.5rem;
+                    right: 0.5rem;
+                }
             }
 
             /* Social Icons */
@@ -1354,7 +1382,7 @@ header {
 
             /* Inline section (for different background types & their respective options) */
             & .inline-section {
-                /* display: none; */
+                display: none;
                 padding: 1rem;
                 border: 1px dashed #e0e0e0;
                 border-radius: 12px;

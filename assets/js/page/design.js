@@ -1,6 +1,8 @@
 // page/design.js
+import { storageBase } from "../constants.js";
 import { i18n } from "../i18n.js";
 import { Notification } from "../notification.js";
+import { Processing } from "../processing.js";
 import { Upload } from "../upload.js";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
@@ -17,6 +19,8 @@ export const Design = {
             'colorBackgroundGradientOne',
             'colorBackgroundGradientTwo',
             'rangeBackgroundGradientAngle',
+            'imageBackground',
+            'videoBackground',
             'radioSocialPosition',
             'colorSocialIcon',
             'radioButtonFill',
@@ -30,6 +34,12 @@ export const Design = {
             'radioButtonShadowPosition',
             'rangeButtonShadowThickness',
             'rangeButtonShadowOpacity'
+        ],
+        INLINE_OPTIONS: [
+            'color',
+            'gradient',
+            'image',
+            'video'
         ]
     },
     render: function() {
@@ -41,6 +51,15 @@ export const Design = {
             if (key.includes('thumbnail')) {
                 this.renderThumbnail(value);
                 continue;
+            }
+            if (key.includes('image') || key.includes('video')) {
+                this.showUploadedMedia(value, key.substring(0,5));
+                continue;
+            }
+
+            // Show `inline-section` as per the selected option
+            if (key === 'radioBackground') {
+                this.showInlineSection(value);
             }
 
             const selector = key.includes('radio') ? document.querySelectorAll(`#design input[name=${key}]`) : document.querySelector(`#design input[name=${key}]`);
@@ -69,6 +88,17 @@ export const Design = {
             selector.value = value;
             Page.set('design', value, key);
         }
+    },
+    showInlineSection: function(value) {
+        if (!this.constants.INLINE_OPTIONS.includes(value)) return;
+
+        const sectionEl = document.querySelector(`#design #${value}`);
+        if (!sectionEl) {
+            throw new Error(i18n.SELECTOR_NOT_FOUND);
+        }
+
+        Selectors.DESIGN_INLINE_SECTIONS.forEach(section => section.style.display = 'none');
+        sectionEl.style.display = 'block';
     },
     save: async function(e) {
         try {
@@ -175,15 +205,18 @@ export const Design = {
         // Listen to file change event
         Selectors.DESIGN_FILE_SELECTORS.forEach(selector => {
             const parentEl = selector.closest('.file-selector');
+            const responseEl = parentEl.querySelector('.error');
             const inputEl = parentEl.querySelector('input[type="file"]');
             if (!inputEl) {
                 throw new Error(i18n.SELECTOR_NOT_FOUND);
             }
 
-            inputEl.addEventListener('change', e => {
+            inputEl.addEventListener('change', async e => {
                 e.preventDefault();
 
                 try {
+                    Processing.show(parentEl, 'absolute');
+
                     if (!e.target.files.length) {
                         throw new Error(i18n.NO_FILE_SELECTED);
                     }
@@ -203,13 +236,65 @@ export const Design = {
                         throw new Error(i18n.FILE_SIZE_EXCEEDED);
                     }
 
-                    
+                    // Send upload request to API
+                    const response = await Upload.postRequest(file, 'file');
+
+                    // Set data and save it locally
+                    Page.set('design', response.message, `${type}Background`);
+                    Page.save();
+
+                    // Show media in it's respective area
+                    this.showUploadedMedia(response.message, type);
+
+                    // Hide response `div` on successful completion
+                    Notification.success(i18n.MEDIA_UPLOADED);
+                    responseEl.style.display = 'none';
                 } catch(error) {
                     console.error(error);
                     Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+
+                    // Show response within file selector
+                    responseEl.innerText = error.message ?? i18n.DEFAULT_ERROR;
+                    responseEl.style.display = 'block';
+                } finally {
+                    Processing.hide();
                 }
-            })
+            });
         });
+    },
+    showUploadedMedia: function(data, type) {
+        const previewEl = document.querySelector(`#design .grid-content.custom-${type}`);
+        if (!previewEl) {
+            throw new Error(i18n.SELECTOR_NOT_FOUND);
+        }
+
+        if (type === 'video') {
+            // Check for existing `video` element
+            const video = previewEl.querySelector('video');
+            if (video) video.remove();
+
+            const videoEl = document.createElement('video');
+            videoEl.setAttribute('src', `${storageBase}${data.slug}`);
+            videoEl.autoplay = true;
+            videoEl.loop = true;
+            videoEl.muted = true;
+
+            previewEl.append(videoEl);
+        } else {
+            previewEl.style.backgroundImage = `url("${storageBase}${data.slug}")`;
+        }
+    },
+    changeBackgroundOptionEvent: function() {
+        if (!Selectors.DESIGN_BACKGROUND_OPTIONS.length) return;
+
+        Selectors.DESIGN_BACKGROUND_OPTIONS.forEach(selector => selector.addEventListener('click', e => {
+            try {
+                this.showInlineSection(e.target.value);
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        }));
     },
     saveEvent: function() {
         if (!Selectors.DESIGN_FORM_INPUTS.length) return;
@@ -222,6 +307,7 @@ export const Design = {
         this.inlineActionEvent();
         this.presetApplyEvent();
         this.openFileDialogEvent();
+        this.changeBackgroundOptionEvent();
         this.saveEvent();
     }
 };
