@@ -1363,6 +1363,47 @@ header {
                 }
             }
 
+            & .template-selector {
+                position: relative;
+                bottom: 1.5rem;
+                right: 1.5rem;
+                z-index: 2;
+
+                & .template-selector-button {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    padding: 1rem;
+                    background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+                    color: #ffffff;
+                    border-radius: 12px;
+                    font-weight: 500;
+
+                    @media (max-width: 1024px) {
+                        position: fixed;
+                        right: 2.75rem;
+                        bottom: 1.5rem;
+                    }
+                }
+                & .templates {
+                    position: absolute;
+                    bottom: 4rem;
+                    right: 0;
+                    width: 80%;
+                    min-height: 500px;
+                    background: #ffffff;
+                    border: 1px solid #e0e0e0;
+                    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.02);
+                    border-radius: 12px;
+
+                    @media (max-width: 1024px) {
+                        position: fixed;
+                        bottom: 5.5rem;
+                        right: 2.75rem;
+                    }
+                }
+            }
+
             /* Social Icons */
             & .social {
                 & .no-icons-data {
