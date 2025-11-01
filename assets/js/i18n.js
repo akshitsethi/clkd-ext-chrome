@@ -47,6 +47,8 @@ export const i18n = {
     MEDIA_UPLOADED: 'Media file has been uploaded successfully.',
     MEDIA_REMOVED: 'Media file has been removed.',
     CROP_ERROR: 'Unable to process the image for uploading.',
+    FILETYPE_NOT_SUPPORTED: 'File type is not supported.',
+    FILE_SIZE_EXCEEDED: 'File size exceeds limit. Please try uploading a smaller version.',
 
     // Subscription
     SUBSCRIPTION_DATA_NOT_AVAILABLE: 'Unable to fetch subscription details. Please try again later.',

@@ -1,6 +1,7 @@
 // page/design.js
 import { i18n } from "../i18n.js";
 import { Notification } from "../notification.js";
+import { Upload } from "../upload.js";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
 
@@ -158,12 +159,57 @@ export const Design = {
             e.preventDefault();
 
             try {
-                
+                const parentEl = e.target.closest('.file-selector');
+                const inputEl = parentEl.querySelector('input[type="file"]');
+                if (!inputEl) {
+                    throw new Error(i18n.SELECTOR_NOT_FOUND);
+                }
+
+                inputEl.click();
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
             }
         }));
+
+        // Listen to file change event
+        Selectors.DESIGN_FILE_SELECTORS.forEach(selector => {
+            const parentEl = selector.closest('.file-selector');
+            const inputEl = parentEl.querySelector('input[type="file"]');
+            if (!inputEl) {
+                throw new Error(i18n.SELECTOR_NOT_FOUND);
+            }
+
+            inputEl.addEventListener('change', e => {
+                e.preventDefault();
+
+                try {
+                    if (!e.target.files.length) {
+                        throw new Error(i18n.NO_FILE_SELECTED);
+                    }
+
+                    const type = parentEl.getAttribute('data-type');
+                    if (!type || !Upload.FILE_TYPES.includes(type)) {
+                        throw new Error(i18n.MALFORMED_REQUEST);
+                    }
+
+                    // Get file
+                    const file = e.target.files.item(0);
+
+                    if (!Upload.FILE_MIME_TYPES[type].includes(file.type)) {
+                        throw new Error(i18n.FILETYPE_NOT_SUPPORTED);
+                    }
+                    if (file.size > Upload.MAX_FILE_SIZE[type]) {
+                        throw new Error(i18n.FILE_SIZE_EXCEEDED);
+                    }
+
+                    
+                } catch(error) {
+                    console.error(error);
+                    Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+                }
+            })
+        });
     },
     saveEvent: function() {
         if (!Selectors.DESIGN_FORM_INPUTS.length) return;

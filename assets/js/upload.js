@@ -5,6 +5,27 @@ import { i18n } from "./i18n.js";
 import { Page } from "./page/page.js";
 
 export const Upload = {
+    FILE_TYPES: [
+        'image',
+        'video'
+    ],
+    MAX_FILE_SIZE: {
+        image: 2097152, // 2mb
+        video: 8388608  // 8mb
+    },
+    FILE_MIME_TYPES: {
+        image: [
+            'image/jpg',
+            'image/jpeg',
+            'image/png',
+            'image/webp',
+            'image/avif',
+        ],
+        video: [
+            'video/mp4',
+            'video/webm'
+        ]
+    },
     postRequest: function(file, context) {
         return new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
