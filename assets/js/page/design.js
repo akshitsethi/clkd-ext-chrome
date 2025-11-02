@@ -21,11 +21,16 @@ export const Design = {
             'rangeBackgroundGradientAngle',
             'imageBackground',
             'videoBackground',
+            'rangeBackdropBlur',
+            'rangeBackdropOpacity',
+            'colorBackdrop',
             'radioSocialPosition',
             'colorSocialIcon',
             'radioButtonFill',
             'radioButtonCorner',
             'radioButtonBorder',
+            'rangeButtonBorderThickness',
+            'colorButtonBorder',
             'radioButtonFont',
             'colorButtonBackground',
             'colorButtonText',
@@ -99,6 +104,14 @@ export const Design = {
 
         Selectors.DESIGN_INLINE_SECTIONS.forEach(section => section.style.display = 'none');
         sectionEl.style.display = 'block';
+
+        // Show `backdrop` settings only for image and video options
+        const backdropEl = document.querySelector('#design .backdrop');
+        if (['image', 'video'].includes(value)) {
+            backdropEl.style.display = 'block';
+        } else {
+            backdropEl.style.display = 'none';
+        }
     },
     save: async function(e) {
         try {

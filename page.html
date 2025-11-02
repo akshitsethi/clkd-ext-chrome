@@ -543,6 +543,23 @@
 							</label>
 						</div>
 
+						<h4 class="mt-1.5">Colors</h4>
+						<div class="flex">
+							<div class="field">
+								<div class="color-selector mt-0.5">
+									<label for="colorProfileTitle">Title</label>
+									<input type="color" name="colorProfileTitle">
+								</div>
+							</div>
+
+							<div class="field">
+								<div class="color-selector mt-0.5">
+									<label for="colorProfileText">Bio</label>
+									<input type="color" name="colorProfileText">
+								</div>
+							</div>
+						</div>
+
 						<h4 class="mt-1.5">Font</h4>
 						<div class="font-selector mt-0.5">
 							<div class="font-inner">
@@ -709,173 +726,6 @@
 											<img src="./assets/images/page/fonts/rock-salt.svg" alt="Rock Salt" />
 										</div>
 									</label>
-								</div>
-							</div>
-						</div>
-
-						<h4 class="mt-1.5">Colors</h4>
-						<div class="flex">
-							<div class="field">
-								<div class="color-selector mt-0.5">
-									<label for="colorProfileTitle">Title</label>
-									<input type="color" name="colorProfileTitle">
-								</div>
-							</div>
-
-							<div class="field">
-								<div class="color-selector mt-0.5">
-									<label for="colorProfileText">Text</label>
-									<input type="color" name="colorProfileText">
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<h3>
-						<span>Appearance</span>
-					</h3>
-					<div class="design-section">
-						<div class="grid background">
-							<label>
-								<input type="radio" name="radioBackground" value="color">
-								<div class="grid-content custom-color">
-									<p class="title">Color</p>
-								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioBackground" value="gradient">
-								<div class="grid-content custom-gradient">
-									<p class="title">Gradient</p>
-								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioBackground" value="image">
-								<div class="grid-content custom-image">
-									<img src="./assets/images/image.png" alt="Image"/>
-								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioBackground" value="video">
-								<div class="grid-content custom-video">
-									<img src="./assets/images/video.png" alt="Video"/>
-								</div>
-							</label>
-						</div>
-
-						<div class="inline-modal">
-							<div id="color" class="inline-section">
-								<div class="inline-content">
-									<h4>Pick a color</h4>
-
-									<div class="color-selector">
-										<label for="colorBackground">Background</label>
-										<input type="color" name="colorBackground" value="#202020">
-									</div>
-								</div>
-							</div>
-
-							<div id="gradient" class="inline-section">
-								<div class="inline-content">
-									<h4>
-										Pick gradient colors
-										<div class="actions">
-											<a href="#" data-action="gradient-presets">
-												Presets
-												<img class="arrow show" src="./assets/images/expand.png" alt="Open Presets" />
-												<img class="arrow" src="./assets/images/collapse.png" alt="Close Presets" />
-											</a>
-
-											<div id="gradient-presets" class="action-popup">
-												<div class="presets" data-preset="gradient">
-													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #fddb92 0%, #d1fdff 100%);" data-preset='{"colorBackgroundGradientOne":"#fddb92","colorBackgroundGradientTwo":"#d1fdff","rangeBackgroundGradientAngle":"0"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #a8edea 0%, #fed6e3 100%);" data-preset='{"colorBackgroundGradientOne":"#a8edea","colorBackgroundGradientTwo":"#fed6e3","rangeBackgroundGradientAngle":"0"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #d299c2 0%, #fef9d7 100%);" data-preset='{"colorBackgroundGradientOne":"#d299c2","colorBackgroundGradientTwo":"#fef9d7","rangeBackgroundGradientAngle":"0"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);" data-preset='{"colorBackgroundGradientOne":"#fdfcfb","colorBackgroundGradientTwo":"#e2d1c3","rangeBackgroundGradientAngle":"135"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #cd9cf2 0%, #f6f3ff 100%);" data-preset='{"colorBackgroundGradientOne":"#cd9cf2","colorBackgroundGradientTwo":"#f6f3ff","rangeBackgroundGradientAngle":"0"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);" data-preset='{"colorBackgroundGradientOne":"#f6d365","colorBackgroundGradientTwo":"#fda085","rangeBackgroundGradientAngle":"120"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);" data-preset='{"colorBackgroundGradientOne":"#e0c3fc","colorBackgroundGradientTwo":"#8ec5fc","rangeBackgroundGradientAngle":"120"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #fff1eb 0%, #ace0f9 100%);" data-preset='{"colorBackgroundGradientOne":"#fff1eb","colorBackgroundGradientTwo":"#ace0f9","rangeBackgroundGradientAngle":"0"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #c1dfc4 0%, #deecdd 100%);" data-preset='{"colorBackgroundGradientOne":"#c1dfc4","colorBackgroundGradientTwo":"#deecdd","rangeBackgroundGradientAngle":"0"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);" data-preset='{"colorBackgroundGradientOne":"#93a5cf","colorBackgroundGradientTwo":"#e4efe9","rangeBackgroundGradientAngle":"45"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #dfe9f3 0%, #ffffff 100%);" data-preset='{"colorBackgroundGradientOne":"#dfe9f3","colorBackgroundGradientTwo":"#ffffff","rangeBackgroundGradientAngle":"0"}'></a>
-													<a href="#" class="preset-item" style="background-image: linear-gradient(135deg, #d7d2cc 0%, #304352 100%);" data-preset='{"colorBackgroundGradientOne":"#d7d2cc","colorBackgroundGradientTwo":"#304352","rangeBackgroundGradientAngle":"135"}'></a>
-												</div>
-											</div>
-										</span>
-									</h4>
-
-									<div class="flex mt-1">
-										<div class="field">
-											<div class="color-selector">
-												<label for="colorBackgroundGradientOne">Primary</label>
-												<input type="color" name="colorBackgroundGradientOne" id="colorBackgroundGradientOne" value="#202020">
-											</div>
-										</div>
-
-										<div class="field">
-											<div class="color-selector">
-												<label for="colorBackgroundGradientTwo">Secondary</label>
-												<input type="color" name="colorBackgroundGradientTwo" id="colorBackgroundGradientTwo" value="#787878">
-											</div>
-										</div>
-									</div>
-
-									<div class="field mt-1.5">
-										<h4>Angle</h4>
-										<div class="range">
-											<input type="range" name="rangeBackgroundGradientAngle" min="0" max="315" value="0" step="45">
-											<div class="ticks">
-												<span>Min</span>
-												<span>45</span>
-												<span>90</span>
-												<span>135</span>
-												<span>180</span>
-												<span>225</span>
-												<span>270</span>
-												<span>Max</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div id="image" class="inline-section">
-								<h4>
-									Upload your own
-									<div class="actions">
-										<div class="selected-custom-image"></div>
-									</div>
-								</h4>
-
-								<div class="file-details" data-type="image"></div>
-
-								<div class="file-selector" data-type="image">
-									<input type="file" name="imageFile" accept=".jpg, .jpeg, .png, .webp, .gif, .avif" hidden />
-									<p>Select image to upload</p>
-									<span class="extensions">Allowed file types: JPEG, PNG, WebP, GIF, AVIF</span>
-
-									<a href="#" class="file-selector-button"></a>
-									<div class="error"></div>
-								</div>
-							</div>
-
-							<div id="video" class="inline-section">
-								<h4>
-									Upload your own
-									<div class="actions">
-										<div class="selected-custom-video"></div>
-									</div>
-								</h4>
-
-								<div class="file-details" data-type="video"></div>
-
-								<div class="file-selector" data-type="video">
-									<input type="file" name="videoFile" accept=".mp4, .webm" hidden />
-									<p>Select video to upload</p>
-									<span class="extensions">Allowed file types: MP4, WebM</span>
-
-									<a href="#" class="file-selector-button"></a>
-									<div class="error"></div>
 								</div>
 							</div>
 						</div>
@@ -1144,6 +994,191 @@
 					</div>
 
 					<h3>
+						<span>Appearance</span>
+					</h3>
+					<div class="design-section">
+						<div class="grid background">
+							<label>
+								<input type="radio" name="radioBackground" value="color">
+								<div class="grid-content custom-color">
+									<p class="title">Color</p>
+								</div>
+							</label>
+							<label>
+								<input type="radio" name="radioBackground" value="gradient">
+								<div class="grid-content custom-gradient">
+									<p class="title">Gradient</p>
+								</div>
+							</label>
+							<label>
+								<input type="radio" name="radioBackground" value="image">
+								<div class="grid-content custom-image">
+									<img src="./assets/images/image.png" alt="Image"/>
+								</div>
+							</label>
+							<label>
+								<input type="radio" name="radioBackground" value="video">
+								<div class="grid-content custom-video">
+									<img src="./assets/images/video.png" alt="Video"/>
+								</div>
+							</label>
+						</div>
+
+						<div class="inline-modal">
+							<div id="color" class="inline-section">
+								<div class="inline-content">
+									<h4>Pick a color</h4>
+
+									<div class="color-selector">
+										<label for="colorBackground">Background</label>
+										<input type="color" name="colorBackground" value="#202020">
+									</div>
+								</div>
+							</div>
+
+							<div id="gradient" class="inline-section">
+								<div class="inline-content">
+									<h4>
+										Pick gradient colors
+										<div class="actions">
+											<a href="#" data-action="gradient-presets">
+												Presets
+												<img class="arrow show" src="./assets/images/expand.png" alt="Open Presets" />
+												<img class="arrow" src="./assets/images/collapse.png" alt="Close Presets" />
+											</a>
+
+											<div id="gradient-presets" class="action-popup">
+												<div class="presets" data-preset="gradient">
+													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #fddb92 0%, #d1fdff 100%);" data-preset='{"colorBackgroundGradientOne":"#fddb92","colorBackgroundGradientTwo":"#d1fdff","rangeBackgroundGradientAngle":"0"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #a8edea 0%, #fed6e3 100%);" data-preset='{"colorBackgroundGradientOne":"#a8edea","colorBackgroundGradientTwo":"#fed6e3","rangeBackgroundGradientAngle":"0"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #d299c2 0%, #fef9d7 100%);" data-preset='{"colorBackgroundGradientOne":"#d299c2","colorBackgroundGradientTwo":"#fef9d7","rangeBackgroundGradientAngle":"0"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);" data-preset='{"colorBackgroundGradientOne":"#fdfcfb","colorBackgroundGradientTwo":"#e2d1c3","rangeBackgroundGradientAngle":"135"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #cd9cf2 0%, #f6f3ff 100%);" data-preset='{"colorBackgroundGradientOne":"#cd9cf2","colorBackgroundGradientTwo":"#f6f3ff","rangeBackgroundGradientAngle":"0"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);" data-preset='{"colorBackgroundGradientOne":"#f6d365","colorBackgroundGradientTwo":"#fda085","rangeBackgroundGradientAngle":"120"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);" data-preset='{"colorBackgroundGradientOne":"#e0c3fc","colorBackgroundGradientTwo":"#8ec5fc","rangeBackgroundGradientAngle":"120"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #fff1eb 0%, #ace0f9 100%);" data-preset='{"colorBackgroundGradientOne":"#fff1eb","colorBackgroundGradientTwo":"#ace0f9","rangeBackgroundGradientAngle":"0"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #c1dfc4 0%, #deecdd 100%);" data-preset='{"colorBackgroundGradientOne":"#c1dfc4","colorBackgroundGradientTwo":"#deecdd","rangeBackgroundGradientAngle":"0"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);" data-preset='{"colorBackgroundGradientOne":"#93a5cf","colorBackgroundGradientTwo":"#e4efe9","rangeBackgroundGradientAngle":"45"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(0deg, #dfe9f3 0%, #ffffff 100%);" data-preset='{"colorBackgroundGradientOne":"#dfe9f3","colorBackgroundGradientTwo":"#ffffff","rangeBackgroundGradientAngle":"0"}'></a>
+													<a href="#" class="preset-item" style="background-image: linear-gradient(135deg, #d7d2cc 0%, #304352 100%);" data-preset='{"colorBackgroundGradientOne":"#d7d2cc","colorBackgroundGradientTwo":"#304352","rangeBackgroundGradientAngle":"135"}'></a>
+												</div>
+											</div>
+										</span>
+									</h4>
+
+									<div class="flex mt-1">
+										<div class="field">
+											<div class="color-selector">
+												<label for="colorBackgroundGradientOne">Primary</label>
+												<input type="color" name="colorBackgroundGradientOne" id="colorBackgroundGradientOne" value="#202020">
+											</div>
+										</div>
+
+										<div class="field">
+											<div class="color-selector">
+												<label for="colorBackgroundGradientTwo">Secondary</label>
+												<input type="color" name="colorBackgroundGradientTwo" id="colorBackgroundGradientTwo" value="#787878">
+											</div>
+										</div>
+									</div>
+
+									<div class="field mt-1.5">
+										<h4>Angle</h4>
+										<div class="range">
+											<input type="range" name="rangeBackgroundGradientAngle" min="0" max="315" value="0" step="45">
+											<div class="ticks">
+												<span>Min</span>
+												<span>45</span>
+												<span>90</span>
+												<span>135</span>
+												<span>180</span>
+												<span>225</span>
+												<span>270</span>
+												<span>Max</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div id="image" class="inline-section">
+								<h4>
+									Upload your own
+									<div class="actions">
+										<div class="selected-custom-image"></div>
+									</div>
+								</h4>
+
+								<div class="file-details" data-type="image"></div>
+
+								<div class="file-selector" data-type="image">
+									<input type="file" name="imageFile" accept=".jpg, .jpeg, .png, .webp, .gif, .avif" hidden />
+									<p>Select image to upload</p>
+									<span class="extensions">Allowed file types: JPEG, PNG, WebP, GIF, AVIF</span>
+
+									<a href="#" class="file-selector-button"></a>
+									<div class="error"></div>
+								</div>
+							</div>
+
+							<div id="video" class="inline-section">
+								<h4>
+									Upload your own
+									<div class="actions">
+										<div class="selected-custom-video"></div>
+									</div>
+								</h4>
+
+								<div class="file-details" data-type="video"></div>
+
+								<div class="file-selector" data-type="video">
+									<input type="file" name="videoFile" accept=".mp4, .webm" hidden />
+									<p>Select video to upload</p>
+									<span class="extensions">Allowed file types: MP4, WebM</span>
+
+									<a href="#" class="file-selector-button"></a>
+									<div class="error"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="design-inner-section mt-1.5 backdrop">
+							<h4>Backdrop</h4>
+
+							<div class="design-inner-content">
+								<div class="flex">
+									<div class="field">
+										<h4>Blur</h4>
+										<div class="range">
+											<input type="range" name="rangeBackdropBlur" min="0" max="35" value="0" step="1">
+											<div class="ticks">
+												<span>Min</span>
+												<span>Max</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="field">
+										<h4>Opacity</h4>
+										<div class="range">
+											<input type="range" name="rangeBackdropOpacity" min="0" max="1" value="0" step="0.01">
+											<div class="ticks">
+												<span>Min</span>
+												<span>Max</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="color-selector mt-1">
+									<label for="colorBackdrop">Color</label>
+									<input type="color" name="colorBackdrop">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<h3>
 						<span>Buttons</span>
 						<div class="actions">
 							<a href="#">Presets</a>
@@ -1186,43 +1221,21 @@
 							</label>
 						</div>
 
-						<h4 class="mt-1.5">Border</h4>
-						<div class="grid mt-0.5">
-							<label>
-								<input type="radio" name="radioButtonBorder" value="none">
-								<div class="grid-content">
-									<img src="./assets/images/no-border.png">
-									<span>None</span>
+						<h4 class="mt-1.5">Colors</h4>
+						<div class="flex">
+							<div class="field">
+								<div class="color-selector mt-0.5">
+									<label for="colorButtonBackground">Background</label>
+									<input type="color" name="colorButtonBackground">
 								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioButtonBorder" value="solid">
-								<div class="grid-content">
-									<img src="./assets/images/solid-border.png">
-									<span>Solid</span>
+							</div>
+
+							<div class="field">
+								<div class="color-selector mt-0.5">
+									<label for="colorButtonText">Text</label>
+									<input type="color" name="colorButtonText">
 								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioButtonBorder" value="dashed">
-								<div class="grid-content">
-									<img src="./assets/images/dashed-border.png">
-									<span>Dashed</span>
-								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioButtonBorder" value="dotted">
-								<div class="grid-content">
-									<img src="./assets/images/dotted-border.png">
-									<span>Dotted</span>
-								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioButtonBorder" value="wavy">
-								<div class="grid-content">
-									<img src="./assets/images/wavy-border.png">
-									<span>Wavy</span>
-								</div>
-							</label>
+							</div>
 						</div>
 
 						<h4 class="mt-1.5">Font</h4>
@@ -1395,143 +1408,195 @@
 							</div>
 						</div>
 
-						<h4 class="mt-1.5">Colors</h4>
-						<div class="flex">
-							<div class="field">
-								<div class="color-selector mt-0.5">
-									<label for="colorButtonBackground">Background</label>
-									<input type="color" name="colorButtonBackground">
-								</div>
-							</div>
+						<div class="design-inner-section mt-2">
+							<h4>Border</h4>
 
-							<div class="field">
-								<div class="color-selector mt-0.5">
-									<label for="colorButtonText">Text</label>
-									<input type="color" name="colorButtonText">
+							<div class="design-inner-content">
+								<h4>Style</h4>
+								<div class="grid mt-0.5">
+									<label>
+										<input type="radio" name="radioButtonBorder" value="none">
+										<div class="grid-content">
+											<img src="./assets/images/no-border.png">
+											<span>None</span>
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonBorder" value="solid">
+										<div class="grid-content">
+											<img src="./assets/images/solid-border.png">
+											<span>Solid</span>
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonBorder" value="dashed">
+										<div class="grid-content">
+											<img src="./assets/images/dashed-border.png">
+											<span>Dashed</span>
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonBorder" value="dotted">
+										<div class="grid-content">
+											<img src="./assets/images/dotted-border.png">
+											<span>Dotted</span>
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonBorder" value="wavy">
+										<div class="grid-content">
+											<img src="./assets/images/wavy-border.png">
+											<span>Wavy</span>
+										</div>
+									</label>
+								</div>
+
+								<div class="flex">
+									<div class="field">
+										<h4 class="mt-1.5">Thickness</h4>
+										<div class="range">
+											<input type="range" name="rangeButtonBorderThickness" min="1" max="6" value="0" step="1">
+											<div class="ticks">
+												<span>Min</span>
+												<span>Max</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="field">
+										<div class="color-selector mt-1">
+											<label for="colorButtonBorder">Color</label>
+											<input type="color" name="colorButtonBorder">
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 
-						<div class="design-inner-section">
-							<h4 class="mt-1.5">Shadow</h4>
-							<div class="grid">
-								<label>
-									<input type="radio" name="radioButtonShadow" value="none">
-									<div class="grid-content">
-										<img src="./assets/images/no-shadow.png">
-										<span>None</span>
-									</div>
-								</label>
-								<label>
-									<input type="radio" name="radioButtonShadow" value="subtle">
-									<div class="grid-content">
-										<img src="./assets/images/subtle-shadow.png">
-										<span>Subtle</span>
-									</div>
-								</label>
-								<label>
-									<input type="radio" name="radioButtonShadow" value="hard">
-									<div class="grid-content">
-										<img src="./assets/images/hard-shadow.png">
-										<span>Hard</span>
-									</div>
-								</label>
-							</div>
+						<div class="design-inner-section mt-2">
+							<h4>Shadow</h4>
 
-							<div class="color-selector mt-1">
-								<label for="colorButtonShadow">Color</label>
-								<input type="color" name="colorButtonShadow">
-							</div>
-
-							<h4 class="mt-1.5">Direction</h4>
-							<table>
-								<tr>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="up-left">
-											<div class="grid-content">
-												<img src="./assets/images/up-left-arrow.png">
-											</div>
-										</label>
-									</td>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="up">
-											<div class="grid-content">
-												<img src="./assets/images/up-arrow.png">
-											</div>
-										</label>
-									</td>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="up-right">
-											<div class="grid-content">
-												<img src="./assets/images/up-right-arrow.png">
-											</div>
-										</label>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="left">
-											<div class="grid-content">
-												<img src="./assets/images/left-arrow.png">
-											</div>
-										</label>
-									</td>
-									<td></td>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="right">
-											<div class="grid-content">
-												<img src="./assets/images/right-arrow.png">												</div>
-										</label>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="down-left">
-											<div class="grid-content">
-												<img src="./assets/images/down-left-arrow.png">
-											</div>
-										</label>
-									</td>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="down">
-											<div class="grid-content">
-												<img src="./assets/images/down-arrow.png">
-											</div>
-										</label>
-									</td>
-									<td>
-										<label>
-											<input type="radio" name="radioButtonShadowPosition" value="down-right">
-											<div class="grid-content">
-												<img src="./assets/images/down-right-arrow.png">
-											</div>
-										</label>
-									</td>
-								</tr>
-							</table>
-
-							<h4 class="mt-1.5">Thickness</h4>
-							<div class="range">
-								<input type="range" name="rangeButtonShadowThickness" min="1" max="15" value="0" step="1">
-								<div class="ticks">
-									<span>Min</span>
-									<span>Max</span>
+							<div class="design-inner-content">
+								<h4>Style</h4>
+								<div class="grid">
+									<label>
+										<input type="radio" name="radioButtonShadow" value="none">
+										<div class="grid-content">
+											<img src="./assets/images/no-shadow.png">
+											<span>None</span>
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonShadow" value="subtle">
+										<div class="grid-content">
+											<img src="./assets/images/subtle-shadow.png">
+											<span>Subtle</span>
+										</div>
+									</label>
+									<label>
+										<input type="radio" name="radioButtonShadow" value="hard">
+										<div class="grid-content">
+											<img src="./assets/images/hard-shadow.png">
+											<span>Hard</span>
+										</div>
+									</label>
 								</div>
-							</div>
 
-							<h4 class="mt-2.5">Opacity</h4>
-							<div class="range">
-								<input type="range" name="rangeButtonShadowOpacity" min="0.01" max="1" value="0" step="0.01">
-								<div class="ticks">
-									<span>Min</span>
-									<span>Max</span>
+								<div class="color-selector mt-1">
+									<label for="colorButtonShadow">Color</label>
+									<input type="color" name="colorButtonShadow">
+								</div>
+
+								<h4 class="mt-1.5">Direction</h4>
+								<table>
+									<tr>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="up-left">
+												<div class="grid-content">
+													<img src="./assets/images/up-left-arrow.png">
+												</div>
+											</label>
+										</td>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="up">
+												<div class="grid-content">
+													<img src="./assets/images/up-arrow.png">
+												</div>
+											</label>
+										</td>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="up-right">
+												<div class="grid-content">
+													<img src="./assets/images/up-right-arrow.png">
+												</div>
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="left">
+												<div class="grid-content">
+													<img src="./assets/images/left-arrow.png">
+												</div>
+											</label>
+										</td>
+										<td></td>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="right">
+												<div class="grid-content">
+													<img src="./assets/images/right-arrow.png">												</div>
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="down-left">
+												<div class="grid-content">
+													<img src="./assets/images/down-left-arrow.png">
+												</div>
+											</label>
+										</td>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="down">
+												<div class="grid-content">
+													<img src="./assets/images/down-arrow.png">
+												</div>
+											</label>
+										</td>
+										<td>
+											<label>
+												<input type="radio" name="radioButtonShadowPosition" value="down-right">
+												<div class="grid-content">
+													<img src="./assets/images/down-right-arrow.png">
+												</div>
+											</label>
+										</td>
+									</tr>
+								</table>
+
+								<h4 class="mt-1.5">Thickness</h4>
+								<div class="range">
+									<input type="range" name="rangeButtonShadowThickness" min="1" max="15" value="0" step="1">
+									<div class="ticks">
+										<span>Min</span>
+										<span>Max</span>
+									</div>
+								</div>
+
+								<h4 class="mt-2.5">Opacity</h4>
+								<div class="range">
+									<input type="range" name="rangeButtonShadowOpacity" min="0.01" max="1" value="0" step="0.01">
+									<div class="ticks">
+										<span>Min</span>
+										<span>Max</span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -1541,7 +1606,96 @@
 						<a href="#" class="template-selector-button">Templates</a>
 
 						<div class="grid templates">
-
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>One</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Two</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Three</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Four</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Five</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Six</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Seven</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Eight</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Nine</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Ten</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Eleven</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Twelve</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Thirteen</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Fourteen</span>
+								</div>
+							</label>
+							<label data-template="">
+								<div class="grid-content">
+									<img src="./assets/images/image.png" alt="Image"/>
+									<span>Fifteen</span>
+								</div>
+							</label>
 						</div>
 					</div>
 				</form>
