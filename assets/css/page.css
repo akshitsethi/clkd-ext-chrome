@@ -1282,12 +1282,17 @@ header {
                         & img {
                             display: block;
                             margin: 0 auto;
-                            max-height: 14px;
+                            max-height: 16px;
                             width: auto;
                             max-width: 100%;
                             border-radius: 0;
                         }
 
+                        &.h-14 {
+                            & img {
+                                max-height: 14px;
+                            }
+                        }
                         &.h-18 {
                             padding: 1.225rem 1.35rem;
 
