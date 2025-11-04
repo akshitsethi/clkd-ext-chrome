@@ -23,6 +23,7 @@ export const Design = {
             'videoBackground',
             'rangeBackdropBlur',
             'rangeBackdropOpacity',
+            'rangeBackdropNoise',
             'colorBackdrop',
             'radioSocialPosition',
             'colorSocialIcon',

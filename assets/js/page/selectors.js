@@ -4,6 +4,7 @@ export const Selectors = {
     TABS: document.querySelectorAll('.header-tabs a'),
     SECTIONS: document.querySelectorAll('.tab'),
     MOBILE_MENU_BUTTON: document.querySelector('.mobile-menu'),
+    HEADER_PAGE_INFO: document.querySelector('.header-cta .info'),
 
     // Content
     ADD_LINK: document.querySelector('#content .add-link'),
@@ -37,6 +38,9 @@ export const Selectors = {
     SOCIAL_ENTRY_TEMPLATE: document.querySelector('#design #social-entry-template'),
     SOCIAL_ICONS_CONTAINER: document.querySelector('#design .social .selected-icons'),
     NO_SOCIAL_ICONS_SECTION: document.querySelector('#design .social .no-icons-data'),
+
+    // Share
+    SHARE_BUTTON: document.querySelector('.wrapper .share'),
 
     // Preview
     PREVIEW_FRAME: document.querySelector('.preview iframe')

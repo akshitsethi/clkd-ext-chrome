@@ -545,10 +545,25 @@ export const Content = {
             await Page.save();
         });
     },
+    closeContentModalsEvent: function() {
+        const modals = document.querySelectorAll('#content .secondary [data-inline]');
+        if (!modals.length) return;
+
+        document.addEventListener('click', e => {
+            const excludedEl = document.querySelectorAll('.item');
+            excludedEl.forEach(el => {
+                if (!el.contains(e.target) && e.target !== el) {
+                    el.querySelectorAll('[data-inline]').forEach(modal => modal.classList.remove('show'));
+                    el.querySelectorAll('.actions a').forEach(action => action.classList.remove('selected'));
+                }
+            });
+        });
+    },
     events: function() {
         this.addLinkEvent();
         this.embedButtonEvent();
         this.addEmbedEvent();
         this.dragDropEvent();
+        this.closeContentModalsEvent();
     }
 };

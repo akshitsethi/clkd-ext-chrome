@@ -8,6 +8,7 @@ import { i18n } from "../i18n.js";
 import { Content } from "./content.js";
 import { Design } from "./design.js";
 import { Settings } from "./settings.js";
+import { QR } from "../qr.js";
 
 export const Page = {
     constants: {
@@ -114,6 +115,9 @@ export const Page = {
         // Validate locally stored data
         this.validateData();
 
+        // Inject slug, domain and url details
+        await this.injectSlugDomainDetails();
+
         // Render existing data on screen
         this.render();
 
@@ -162,6 +166,31 @@ export const Page = {
         // Also, make sure that the version number matches with the actual encoding of the object
         // Basically, base64 value retrieved from database matches the base64 value of the object
         console.log(this.DATA);
+    },
+    injectSlugDomainDetails: async function() {
+        // Inject domain & slug to the header info section
+        if (Selectors.HEADER_PAGE_INFO) {
+            const slugEl = Selectors.HEADER_PAGE_INFO.querySelector('.slug');
+            const domainEl = Selectors.HEADER_PAGE_INFO.querySelector('.domain');
+
+            slugEl.innerText = this.SLUG;
+            domainEl.innerText = this.DOMAIN;
+        }
+
+        // Inject details to share popover
+        if (Selectors.SHARE_BUTTON) {
+            const linkEl = Selectors.SHARE_BUTTON.querySelector('.page-link');
+            linkEl.innerText = `${this.DOMAIN}/${this.SLUG}`;
+
+            // Generate QR code
+            const qrEl = Selectors.SHARE_BUTTON.querySelector('.qr-code');
+            const qrcode = await QR.generate(`https://${this.DOMAIN}/${this.SLUG}?scan=1`);
+
+            const imgEl = document.createElement('img');
+            imgEl.setAttribute('src', qrcode);
+
+            qrEl.appendChild(imgEl);
+        }
     },
     render: function() {
         Content.render();
