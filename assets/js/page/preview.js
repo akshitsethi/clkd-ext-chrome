@@ -20,11 +20,25 @@ export const Preview = {
 
         const imgEl = document.createElement('img');
         imgEl.setAttribute('src', qrcode);
-
-        // Append `img` tag to QR div
         qrEl.appendChild(imgEl);
 
-        // 3. Add link along with copy button
+        // 3. Download QR code
+        const downloadEl = Selectors.SHARE_BUTTON.querySelector('.download a');
+        downloadEl.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                chrome.downloads.download({
+                    url: qrcode,
+                    filename: `${Page.SLUG}.png`
+                });
+            } catch (error) {
+                console.error(error);
+                Notification.error(i18n.DOWNLOAD_ERROR);
+            }
+        });
+
+        // 4. Add link along with copy button
         const copyEl = Selectors.SHARE_BUTTON.querySelector('.copy');
         copyEl.setAttribute('data-text', `https://${Page.DOMAIN}/${Page.SLUG}`);
         copyEl.addEventListener('click', e => {
@@ -32,7 +46,7 @@ export const Preview = {
             Common.copyText(e.target);
         });
 
-        // 4. Update social links
+        // 5. Update social links
         const links = Selectors.SHARE_BUTTON.querySelectorAll('.social a');
         if (links.length) {
             links.forEach(link => link.addEventListener('click', e => {
