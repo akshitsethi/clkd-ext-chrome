@@ -246,6 +246,14 @@ export const Settings = {
             // Get first entry from FileList
             const file = files.item(0);
 
+            // Check for mime type and file size
+            if (!Upload.FILE_MIME_TYPES.logo.includes(file.type)) {
+                throw new Error(i18n.FILETYPE_NOT_SUPPORTED);
+            }
+            if (file.size > Upload.MAX_FILE_SIZE.logo) {
+                throw new Error(i18n.FILE_SIZE_EXCEEDED);
+            }
+
             // Send request to server
             const response = await Upload.postRequest(file, 'qr_logo');
 

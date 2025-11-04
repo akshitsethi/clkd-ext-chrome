@@ -1168,6 +1168,13 @@ h2 {
                 font-weight: 500;
                 font-size: 0.875rem;
                 padding: 0.25rem;
+                text-align: right;
+
+                & span {
+                    display: block;
+                    font-weight: 400;
+                    font-size: 0.675rem;
+                }
             }
             & .logo-actions {
                 display: none;
@@ -1242,11 +1249,13 @@ h2 {
 
 /* Upgrade */
 #upgrade {
-    .plans {
-        background-image: linear-gradient(180deg, rgba(119, 148, 182, 0.105) 43%, rgba(255, 255, 255, 0) 100%);
+    & .wrapper {
+        background-image: linear-gradient(90deg, rgba(119, 148, 182, 0.105) 43%, rgba(255, 255, 255, 0) 100%);
+    }
 
+    & .plans {
         & .plan {
-            padding: 1rem;
+            padding: 1rem 0;
 
             & .plan-wrapper {
                 display: flex;
@@ -1258,6 +1267,12 @@ h2 {
                         margin: 0.35rem 0;
                         font-weight: 600;
                         color: #303030;
+
+                        &:before {
+                            background-image: linear-gradient(to right, #7fbef1 0%, #73bbf5 19%, #67b5f4 60%, #89c4f4 100%);
+                            height: 10px;
+                            opacity: 0.5;
+                        }
                     }
 
                     & .plan-price {
@@ -1280,21 +1295,22 @@ h2 {
                     list-style-type: none;
 
                     & li {
+                        display: flex;
+                        align-items: center;
                         padding: 0.25rem 0;
                         font-size: 0.875rem;
                         line-height: 1.625;
-                        margin-left: 1.25rem;
-                        position: relative;
 
                         &:last-child {
                             border: 0;
                         }
-
-                        &::before {
-                            content: '\2192';
-                            margin-right: 0.5rem;
-                            position: absolute;
-                            left: -1.25rem;
+                        & img {
+                            background-color: rgba(99, 193, 247,0.25);
+                            margin-right: 0.35rem;
+                            max-width: 20px;
+                            height: auto;
+                            padding: 0.125rem;
+                            border-radius: 50%;
                         }
                     }
                 }
@@ -1308,6 +1324,18 @@ h2 {
                 position: relative;
                 display: none;
                 align-items: center;
+            }
+
+            &.free {
+                padding: 0.75rem;
+                background: #ffffff;
+                border-radius: 12px;
+                border: 1px solid #e0e0e0;
+                box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.02);
+
+                & p {
+                    line-height: 1.75;
+                }
             }
         }
     }

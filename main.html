@@ -778,7 +778,7 @@
 					<div class="option">
 						<label for="qr_logo">Logo</label>
 
-						<a href="#" class="add-logo">Add</a>
+						<a href="#" class="add-logo">Add <span>(Allowed: .jpg, .png, Limit: 256 KB)</span></a>
 						<input type="file" name="qr_logo" id="qr_logo" accept=".jpg, .jpeg, .png" hidden>
 
 						<div class="logo-actions"></div>
@@ -852,51 +852,59 @@
 		</div><!-- #help -->
 
 		<div id="upgrade" class="screen">
-			<div class="plans">
-				<div class="plan">
-					<div class="plan-wrapper">
-						<div class="plan-header">
-							<div class="plan-title">Basic</div>
-							<div class="plan-price plan-monthly">$5 / month</div>
-							<div class="plan-price plan-yearly">$50 / year</div>
+			<div class="wrapper">
+				<h1>Upgrade</h1>
+
+				<div class="plans">
+					<div class="plan">
+						<div class="plan-wrapper">
+							<div class="plan-header">
+								<h2 class="plan-title">Basic</h2>
+								<div class="plan-price plan-monthly">$5 / month</div>
+								<div class="plan-price plan-yearly">$50 / year</div>
+							</div>
+
+							<button class="button upgrade-now green" data-plan="basic" data-term="monthly">Get
+								started</button>
 						</div>
 
-						<button class="button upgrade-now link" data-plan="basic" data-term="monthly">Get
-							started</button>
+						<div class="plan-features">
+							<ul class="plan-pointers">
+								<li><img src="/assets/images/tick.svg"> Up to 2000 Links & QR Codes</li>
+								<li><img src="/assets/images/tick.svg"> 2 weeks of click & scan data</li>
+								<li><img src="/assets/images/tick.svg"> Custom back-halves</li>
+								<li><img src="/assets/images/tick.svg"> Modify redirects</li>
+								<li><img src="/assets/images/tick.svg"> QR Code design customisation</li>
+								<li><img src="/assets/images/tick.svg"> Upto 100 pages</li>
+							</ul>
+						</div>
 					</div>
 
-					<div class="plan-features">
-						<ul class="plan-pointers">
-							<li>Up to 2000 Links & QR Codes</li>
-							<li>2 weeks of click & scan data</li>
-							<li>Custom back-halves</li>
-							<li>Modify redirects</li>
-							<li>QR Code design customisation</li>
-							<li>Upto 100 pages</li>
-						</ul>
-					</div>
-				</div>
+					<div class="plan">
+						<div class="plan-wrapper">
+							<div class="plan-header">
+								<h2 class="plan-title">Pro</h2>
+								<div class="plan-price plan-monthly">$15 / month</div>
+								<div class="plan-price plan-yearly">$150 / year</div>
+							</div>
 
-				<div class="plan">
-					<div class="plan-wrapper">
-						<div class="plan-header">
-							<div class="plan-title">Pro</div>
-							<div class="plan-price plan-monthly">$15 / month</div>
-							<div class="plan-price plan-yearly">$150 / year</div>
+							<button class="button upgrade-now green" data-plan="pro" data-term="monthly">Get
+								started</button>
 						</div>
 
-						<button class="button upgrade-now green" data-plan="pro" data-term="monthly">Get
-							started</button>
+						<div class="plan-features">
+							<div class="plan-includes">Everything in Basic, plus:</div>
+							<ul class="plan-pointers">
+								<li><img src="/assets/images/tick.svg"> Upto 10000 Links & QR Codes</li>
+								<li><img src="/assets/images/tick.svg"> Upto 500 pages</li>
+								<li><img src="/assets/images/tick.svg"> Embed brand logo in QR codes</li>
+								<li><img src="/assets/images/tick.svg"> 1 month of click & scan data</li>
+							</ul>
+						</div>
 					</div>
 
-					<div class="plan-features">
-						<div class="plan-includes">Everything in Basic, plus:</div>
-						<ul class="plan-pointers">
-							<li>Upto 10000 Links & QR Codes</li>
-							<li>Upto 500 pages</li>
-							<li>Embed brand logo in QR codes</li>
-							<li>1 month of click & scan data</li>
-						</ul>
+					<div class="plan free">
+						<p>You're currently on our <span class="semibold">Free</span> plan. Upgrade to a paid plan to access premium domains, detailed analytics, customised QR codes and more.</p>
 					</div>
 				</div>
 			</div>
@@ -961,17 +969,6 @@
 				</ul>
 			</div>
 		</div><!-- #subscription-exists -->
-
-		<div id="qrcode" class="screen">
-			<form class="qrcode-form" enctype="multipart/form-data">
-				<input type="radio" name="color" value="red">Red
-				<input type="radio" name="color" value="green">Green
-				<input type="radio" name="color" value="blue">Blue
-
-				<input type="file" name="logo">
-				<input type="submit" name="submit" value="Submit">
-			</form>
-		</div><!-- #qrcode -->
 	</div>
 
 	<!-- Processing (dynamically injected to selectors) -->

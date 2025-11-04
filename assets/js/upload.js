@@ -10,10 +10,16 @@ export const Upload = {
         'video'
     ],
     MAX_FILE_SIZE: {
+        logo: 262144, // 256kb
         image: 2097152, // 2mb
         video: 8388608  // 8mb
     },
     FILE_MIME_TYPES: {
+        logo: [
+            'image/jpg',
+            'image/jpeg',
+            'image/png',
+        ],
         image: [
             'image/jpg',
             'image/jpeg',
