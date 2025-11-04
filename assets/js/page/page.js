@@ -8,7 +8,7 @@ import { i18n } from "../i18n.js";
 import { Content } from "./content.js";
 import { Design } from "./design.js";
 import { Settings } from "./settings.js";
-import { QR } from "../qr.js";
+import { Preview } from "./preview.js";
 
 export const Page = {
     constants: {
@@ -178,19 +178,7 @@ export const Page = {
         }
 
         // Inject details to share popover
-        if (Selectors.SHARE_BUTTON) {
-            const linkEl = Selectors.SHARE_BUTTON.querySelector('.page-link');
-            linkEl.innerText = `${this.DOMAIN}/${this.SLUG}`;
-
-            // Generate QR code
-            const qrEl = Selectors.SHARE_BUTTON.querySelector('.qr-code');
-            const qrcode = await QR.generate(`https://${this.DOMAIN}/${this.SLUG}?scan=1`);
-
-            const imgEl = document.createElement('img');
-            imgEl.setAttribute('src', qrcode);
-
-            qrEl.appendChild(imgEl);
-        }
+        await Preview.updateShareButton();
     },
     render: function() {
         Content.render();

@@ -1601,16 +1601,18 @@ header {
         }
         & .share {
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin: 0 auto 2rem;
-            background: #ffffff;
-            padding: 0.5rem 0.75rem;
-            border-radius: 32px;
-            max-width: 100%;
-            box-shadow: 0 4px 8px #a09f9f29;
+            max-width: 380px;
 
+            & .anchor {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #ffffff;
+                padding: 0.5rem 0.75rem;
+                border-radius: 32px;
+                box-shadow: 0 4px 8px #a09f9f29;
+            }
             & span {
                 overflow: hidden;
                 white-space: nowrap;
@@ -1622,21 +1624,32 @@ header {
             }
 
             & .share-popover {
-                /* display: none; */
+                display: none;
                 position: absolute;
-                width: 100%;
-                width: 390px;
+                width: auto;
+                width: 380px;
                 padding: 1rem;
                 top: 0;
+                left: 50%;
+                transform: translateX(-50%);
                 background: #ffffff;
-                border-radius: 12px;
+                border-radius: 32px;
                 border: 1px solid #e0e0e0;
                 box-shadow: 0 0 4px 4px rgba(0,0,0,0.04);
 
                 & h2 {
+                    display: flex;
+                    align-items: center;
                     font-size: 1.125rem;
                     border-bottom: 1px solid #eeeeee;
                     padding-bottom: 1rem;
+
+                    & a {
+                        margin-left: auto;
+                    }
+                    & img {
+                        max-width: 22px;
+                    }
                 }
                 & .qr-code {
                     margin: 1rem 0;
@@ -1645,6 +1658,45 @@ header {
                         max-width: 240px;
                         margin: 0 auto;
                     }
+                }
+                & .link {
+                    display: flex;
+                    align-items: center;
+                    padding: 0.75rem;
+                    border: 1px solid #eeeeee;
+                    border-radius: 12px;
+
+                    & .copy {
+                        margin-left: auto;
+                        padding: 0.25rem 0.5rem;
+                        font-weight: 500;
+                        border-radius: 8px;
+                        background: #f1f1f1;
+                    }
+                }
+                & .social {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 1.25rem 0.25rem 0.25rem;
+
+                    & a {
+                        padding: 0.125rem;
+                        border-radius: 8px;
+
+                        &:hover {
+                            background: #f1f1f1;
+                        }
+                        & img {
+                            max-width: 28px;
+                        }
+                    }
+                }
+            }
+
+            &.show {
+                & .share-popover {
+                    display: block;
                 }
             }
         }
