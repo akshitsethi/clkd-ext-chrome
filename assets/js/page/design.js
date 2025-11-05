@@ -21,6 +21,8 @@ export const Design = {
             'colorBackgroundGradientTwo',
             'rangeBackgroundGradientAngle',
             'imageBackground',
+            'statusHeroBackground',
+            'colorHeroBackground',
             'videoBackground',
             'rangeBackdropBlur',
             'rangeBackdropOpacity',
@@ -47,6 +49,7 @@ export const Design = {
         INLINE_OPTIONS: [
             'color',
             'gradient',
+            'pattern',
             'image',
             'video'
         ]

@@ -1225,6 +1225,14 @@
 								</div>
 							</div>
 
+							<div id="pattern" class="inline-section">
+								<div class="inline-content">
+									<h4>
+										Select pattern
+									</h4>
+								</div>
+							</div>
+
 							<div id="image" class="inline-section">
 								<h4>
 									Upload your own
@@ -1267,8 +1275,32 @@
 						</div>
 
 						<div class="design-inner-section mt-1.5 backdrop">
-							<h4>Backdrop</h4>
+							<h4>Hero</h4>
+							<div class="design-inner-content">
+								<div class="flex">
+									<div class="field">
+										<div class="status-selector">
+											<p>Enable Hero? <span>Turns background image into a hero layout.</span></p>
 
+											<div class="status">
+												<label class="switch">
+													<input type="checkbox" name="statusHeroBackground">
+													<span class="toggle round"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="field">
+										<div class="color-selector">
+											<label for="colorHeroBackground">Hero Color</label>
+											<input type="color" name="colorHeroBackground">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<h4>Backdrop</h4>
 							<div class="design-inner-content">
 								<div class="flex">
 									<div class="field">
@@ -1308,7 +1340,7 @@
 
 									<div class="field">
 										<div class="color-selector">
-											<label for="colorBackdrop">Color</label>
+											<label for="colorBackdrop">Backdrop Color</label>
 											<input type="color" name="colorBackdrop">
 										</div>
 									</div>
