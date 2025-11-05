@@ -32,13 +32,12 @@ export const getCurrentTab = async function() {
 
 // Debounce function to prevent duplicate triggers
 export const debounce = function(callback, delay = 800) {
-  let timer;
+  let timeout;
 
-  return function() {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        callback();
-      }, delay);
+  return function(...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => callback.apply(context, args), delay);
   };
 };
 

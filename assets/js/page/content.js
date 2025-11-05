@@ -207,7 +207,7 @@ export const Content = {
 
             // Reset file input
             // This is to make sure that user gets the error message if he tries to upload the same file again
-            // Selectors.QR_LOGO_FILE_INPUT.value = null;
+            form.querySelector('input[type="file"]').value = null;
         }
     },
     linkedImageOptions: function(id, selector) {

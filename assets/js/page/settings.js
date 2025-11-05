@@ -3,11 +3,14 @@ import { i18n } from "../i18n.js";
 import { Notification } from "../notification.js";
 import { Page } from "./page.js";
 import { Selectors } from "./selectors.js";
+import { debounce } from "../helper.js";
 
 export const Settings = {
     constants: {
         FIELDS: [
-            'statusSensitiveWarning'
+            'statusSensitiveWarning',
+            'metaTitle',
+            'metaDescription'
         ]
     },
     render: function() {
@@ -48,8 +51,17 @@ export const Settings = {
     saveEvent: function() {
         if (!Selectors.SETTINGS_FORM_INPUTS.length) return;
 
+        // Create a Debounced Version of the Handler
+        const debouncedHandleKeyUp = debounce(async (e) => {
+            await this.save(e);
+        });
+
         for (const input of Selectors.SETTINGS_FORM_INPUTS) {
-            input.addEventListener('change', async e => await this.save(e));
+            if (input.type === 'checkbox') {
+                input.addEventListener('change', async e => await this.save(e));
+            } else if (input.type === 'text') {
+                input.addEventListener('keyup', debouncedHandleKeyUp);
+            }
         }
     },
     events: function() {

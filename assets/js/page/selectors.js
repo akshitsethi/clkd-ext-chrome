@@ -44,7 +44,7 @@ export const Selectors = {
     SHARE_BUTTON: document.querySelector('.wrapper .share'),
 
     // Settings
-    SETTINGS_FORM_INPUTS: document.querySelectorAll('#settings input[type="checkbox"], #settings input[type="radio"], #settings input[type="color"], #settings input[type="range"]'),
+    SETTINGS_FORM_INPUTS: document.querySelectorAll('#settings input[type="checkbox"], #settings input[type="text"]'),
 
     // Preview
     PREVIEW_FRAME: document.querySelector('.preview iframe')
