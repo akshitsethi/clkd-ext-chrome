@@ -8,6 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./assets/css/page.css" type="text/css">
+	<link rel="stylesheet" href="./assets/css/effects.css" type="text/css">
 </head>
 <body>
 	<header>
@@ -1358,7 +1359,16 @@
 							</div>
 						</div>
 
-						<h4 class="mt-1.5">Font</h4>
+						<h4 class="mt-1.5">Spacing</h4>
+						<div class="range">
+							<input type="range" name="rangeButtonSpacing" min="1" max="32" value="0" step="1">
+							<div class="ticks">
+								<span>Min</span>
+								<span>Max</span>
+							</div>
+						</div>
+
+						<h4 class="mt-2">Font</h4>
 						<div class="font-selector mt-0.5">
 							<div class="font-inner">
 								<div class="grid">
@@ -1815,6 +1825,58 @@
 									</div>
 								</div>
 							</div>
+						</div>
+
+						<h4 class="mt-1.5">Effect <span class="pill">Hover</span></h4>
+						<div class="grid effects mt-0.5">
+							<label class="">
+								<input type="radio" name="radioButtonEffect" value="none">
+								<div class="grid-content">
+									<span>None</span>
+								</div>
+							</label>
+							<label class="bob">
+								<input type="radio" name="radioButtonEffect" value="bob">
+								<div class="grid-content">
+									<span>Bob</span>
+								</div>
+							</label>
+							<label class="hang">
+								<input type="radio" name="radioButtonEffect" value="hang">
+								<div class="grid-content">
+									<span>Hang</span>
+								</div>
+							</label>
+							<label class="grow">
+								<input type="radio" name="radioButtonEffect" value="grow">
+								<div class="grid-content">
+									<span>Grow</span>
+								</div>
+							</label>
+							<label class="rotate">
+								<input type="radio" name="radioButtonEffect" value="rotate">
+								<div class="grid-content">
+									<span>Rotate</span>
+								</div>
+							</label>
+							<label class="wobble">
+								<input type="radio" name="radioButtonEffect" value="wobble">
+								<div class="grid-content">
+									<span>Wobble</span>
+								</div>
+							</label>
+							<label class="pulse">
+								<input type="radio" name="radioButtonEffect" value="pulse">
+								<div class="grid-content">
+									<span>Pulse</span>
+								</div>
+							</label>
+							<label class="skew">
+								<input type="radio" name="radioButtonEffect" value="skew">
+								<div class="grid-content">
+									<span>Skew</span>
+								</div>
+							</label>
 						</div>
 					</div>
 

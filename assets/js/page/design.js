@@ -35,11 +35,13 @@ export const Design = {
             'radioButtonFont',
             'colorButtonBackground',
             'colorButtonText',
+            'rangeButtonSpacing',
             'radioButtonShadow',
             'colorButtonShadow',
             'radioButtonShadowPosition',
             'rangeButtonShadowThickness',
-            'rangeButtonShadowOpacity'
+            'rangeButtonShadowOpacity',
+            'radioButtonEffect'
         ],
         INLINE_OPTIONS: [
             'color',
