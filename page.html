@@ -554,6 +554,17 @@
 							</label>
 						</div>
 
+						<div class="status-selector white-label mt-1.5">
+							<p>Hide CLKD footer <span>Removes the Logo and "Join Now" button from the page footer</span></p>
+
+							<div class="status">
+								<label class="switch">
+									<input type="checkbox" name="statusWhiteLabel">
+									<span class="toggle round"></span>
+								</label>
+							</div>
+						</div>
+
 						<h4 class="mt-1.5">Colors</h4>
 						<div class="flex">
 							<div class="field">
@@ -1295,6 +1306,7 @@
 											<input type="color" name="colorBackdrop">
 										</div>
 									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1980,7 +1992,36 @@
 			</section>
 
 			<section id="settings" class="tab">
+				<form class="settings-form" method="POST">
+					<h3>
+						<span>Sensitive material</span>
+					</h3>
+					<div class="settings-section">
+						<div class="status-selector">
+							<p>Show warning? <span>Display a sensitive content warning before visitors can view your profile.</span></p>
 
+							<div class="status">
+								<label class="switch">
+									<input type="checkbox" name="statusSensitiveWarning">
+									<span class="toggle round"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<h3>
+						<span>SEO</span>
+					</h3>
+					<div class="settings-section">
+						<h4>Meta title</h4>
+						<input type="text" name="metaTitle">
+						<div class="help-text">Example: @YourPageTitle</div>
+
+						<h4 class="mt-1.5">Meta description</h4>
+						<input type="text" name="metaDescription">
+						<p class="help-text">Example: clkd.in - Superchaged links & pages.</p>
+					</div>
+				</form>
 			</section>
 		</div>
 

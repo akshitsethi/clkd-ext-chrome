@@ -11,6 +11,7 @@ export const Design = {
     constants: {
         FIELDS: [
             'radioThumbnailDesign',
+            'statusWhiteLabel',
             'radioProfileFont',
             'colorProfileTitle',
             'colorProfileText',
@@ -123,7 +124,12 @@ export const Design = {
             }
 
             // Set value and save data
-            Page.set('design', e.target.value.trim(), e.target.name);
+            if (e.target.name.includes('status')) {
+                Page.set('design', e.target.checked ? 'on' : 'off', e.target.name);
+            } else {
+                Page.set('design', e.target.value.trim(), e.target.name);
+            }
+
             Page.save();
         } catch (error) {
             console.error(error);
