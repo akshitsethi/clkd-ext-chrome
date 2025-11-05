@@ -9,6 +9,7 @@ export const Selectors = {
     // Content
     ADD_LINK: document.querySelector('#content .add-link'),
     EMBED_BUTTON: document.querySelector('#content .embed-button'),
+    EMBED_CONTAINER: document.querySelector('#content .embed-content'),
     EMBED_OPTIONS: document.querySelector('#content .embed-options'),
     ENTRY_TEMPLATE: document.querySelector('#content #content-entry-template'),
     ACTIONS_TEMPLATE: document.querySelector('#content #content-actions-template'),

@@ -103,8 +103,18 @@ export const Preview = {
             }
         });
     },
+    closeSharePopoverEvent: function() {
+        document.addEventListener('click', e => {
+            e.stopPropagation();
+
+            if (!Selectors.SHARE_BUTTON.contains(e.target) && e.target !== Selectors.SHARE_BUTTON) {
+                Selectors.SHARE_BUTTON.classList.remove('show');
+            }
+        });
+    },
     events: function() {
         this.showSharePopoverEvent();
         this.hideSharePopoverEvent();
+        this.closeSharePopoverEvent();
     }
 };

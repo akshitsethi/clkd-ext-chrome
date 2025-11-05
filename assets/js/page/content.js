@@ -525,6 +525,7 @@ export const Content = {
                 this.updateContentSectionVisibility(true);
 
                 // Hide embed options dropdown
+                Selectors.EMBED_BUTTON.querySelectorAll('img').forEach(img => img.classList.contains('expand') ? img.classList.add('show') : img.classList.remove('show'));
                 Selectors.EMBED_OPTIONS.classList.remove('show');
             } catch (error) {
                 console.error(error);
@@ -546,11 +547,8 @@ export const Content = {
         });
     },
     closeContentModalsEvent: function() {
-        const modals = document.querySelectorAll('#content .secondary [data-inline]');
-        if (!modals.length) return;
-
         document.addEventListener('click', e => {
-            const excludedEl = document.querySelectorAll('.item');
+            const excludedEl = document.querySelectorAll('#content .content-items .item');
             excludedEl.forEach(el => {
                 if (!el.contains(e.target) && e.target !== el) {
                     el.querySelectorAll('[data-inline]').forEach(modal => modal.classList.remove('show'));
@@ -559,11 +557,20 @@ export const Content = {
             });
         });
     },
+    closeEmbedOptionsEvent: function() {
+        document.addEventListener('click', e => {
+            if (!Selectors.EMBED_CONTAINER.contains(e.target) && e.target !== Selectors.EMBED_CONTAINER) {
+                Selectors.EMBED_BUTTON.querySelectorAll('img').forEach(img => img.classList.contains('expand') ? img.classList.add('show') : img.classList.remove('show'));
+                Selectors.EMBED_OPTIONS.classList.remove('show');
+            }
+        });
+    },
     events: function() {
         this.addLinkEvent();
         this.embedButtonEvent();
         this.addEmbedEvent();
         this.dragDropEvent();
         this.closeContentModalsEvent();
+        this.closeEmbedOptionsEvent();
     }
 };
