@@ -87,17 +87,13 @@
 								<img src="./assets/images/page/embed/youtube.png" alt="YouTube" />
 								YouTube
 							</a>
-							<a href="#" data-embed="instagram">
-								<img src="./assets/images/page/embed/instagram.png" alt="Instagram" />
-								Instagram
+							<a href="#" data-embed="vimeo">
+								<img src="./assets/images/page/embed/vimeo.png" alt="Vimeo" />
+								Vimeo
 							</a>
 							<a href="#" data-embed="twitter">
 								<img src="./assets/images/page/embed/twitter.png" alt="X (formerly Twitter)" />
 								X (formerly Twitter)
-							</a>
-							<a href="#" data-embed="facebook">
-								<img src="./assets/images/page/embed/facebook.png" alt="Facebook" />
-								Facebook
 							</a>
 							<a href="#" data-embed="tiktok">
 								<img src="./assets/images/page/embed/tiktok.png" alt="TikTok" />
@@ -106,14 +102,6 @@
 							<a href="#" data-embed="soundcloud">
 								<img src="./assets/images/page/embed/soundcloud.png" alt="SoundCloud" />
 								SoundCloud
-							</a>
-							<a href="#" data-embed="threads">
-								<img src="./assets/images/page/embed/threads.png" alt="Threads" />
-								Threads
-							</a>
-							<a href="#" data-embed="vimeo">
-								<img src="./assets/images/page/embed/vimeo.png" alt="Vimeo" />
-								Vimeo
 							</a>
 							<a href="#" data-embed="googlemaps">
 								<img src="./assets/images/page/embed/googlemaps.png" alt="Google Maps" />
@@ -1352,10 +1340,10 @@
 									<div class="field">
 										<h4>Opacity</h4>
 										<div class="range">
-											<input type="range" name="rangeBackdropOpacity" min="0" max="1" value="0" step="0.01">
+											<input type="range" name="rangeBackdropOpacity" min="0" max="1" value="1" step="0.01">
 											<div class="ticks">
-												<span>Min</span>
-												<span>Max</span>
+												<span>Hidden</span>
+												<span>Visible</span>
 											</div>
 										</div>
 									</div>
@@ -1409,24 +1397,6 @@
 							</label>
 						</div>
 
-						<h4 class="mt-1.5">Corners</h4>
-						<div class="grid mt-0.5">
-							<label>
-								<input type="radio" name="radioButtonCorner" value="sharp">
-								<div class="grid-content">
-									<img src="./assets/images/sharp-corner.png">
-									<span>Sharp</span>
-								</div>
-							</label>
-							<label>
-								<input type="radio" name="radioButtonCorner" value="rounded">
-								<div class="grid-content">
-									<img src="./assets/images/rounded-corner.png">
-									<span>Rounded</span>
-								</div>
-							</label>
-						</div>
-
 						<h4 class="mt-1.5">Colors</h4>
 						<div class="flex">
 							<div class="field">
@@ -1444,12 +1414,27 @@
 							</div>
 						</div>
 
-						<h4 class="mt-1.5">Spacing</h4>
-						<div class="range">
-							<input type="range" name="rangeButtonSpacing" min="1" max="32" value="0" step="1">
-							<div class="ticks">
-								<span>Min</span>
-								<span>Max</span>
+						<div class="flex">
+							<div class="field">
+								<h4 class="mt-1.5">Corners</h4>
+								<div class="range mt-0.5">
+									<input type="range" name="rangeButtonCorner" min="0" max="32" value="0" step="1">
+									<div class="ticks">
+										<span>Straight</span>
+										<span>Curved</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="field">
+								<h4 class="mt-1.5">Spacing</h4>
+								<div class="range mt-0.5">
+									<input type="range" name="rangeButtonSpacing" min="1" max="32" value="0" step="1">
+									<div class="ticks">
+										<span>Min</span>
+										<span>Max</span>
+									</div>
+								</div>
 							</div>
 						</div>
 
@@ -1753,13 +1738,6 @@
 											<span>Dotted</span>
 										</div>
 									</label>
-									<label>
-										<input type="radio" name="radioButtonBorder" value="wavy">
-										<div class="grid-content">
-											<img src="./assets/images/wavy-border.png">
-											<span>Wavy</span>
-										</div>
-									</label>
 								</div>
 
 								<div class="flex">
@@ -1892,21 +1870,27 @@
 									</tr>
 								</table>
 
-								<h4 class="mt-1.5">Thickness</h4>
-								<div class="range">
-									<input type="range" name="rangeButtonShadowThickness" min="1" max="15" value="0" step="1">
-									<div class="ticks">
-										<span>Min</span>
-										<span>Max</span>
+								<div class="flex">
+									<div class="field">
+										<h4 class="mt-1.5">Thickness</h4>
+										<div class="range">
+											<input type="range" name="rangeButtonShadowThickness" min="1" max="15" value="0" step="1">
+											<div class="ticks">
+												<span>Min</span>
+												<span>Max</span>
+											</div>
+										</div>
 									</div>
-								</div>
 
-								<h4 class="mt-2.5">Opacity</h4>
-								<div class="range">
-									<input type="range" name="rangeButtonShadowOpacity" min="0.01" max="1" value="0" step="0.01">
-									<div class="ticks">
-										<span>Min</span>
-										<span>Max</span>
+									<div class="field">
+										<h4 class="mt-2.5">Opacity</h4>
+										<div class="range">
+											<input type="range" name="rangeButtonShadowOpacity" min="0.01" max="1" value="0.50" step="0.01">
+											<div class="ticks">
+												<span>Hidden</span>
+												<span>Visible</span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

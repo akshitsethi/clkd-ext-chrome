@@ -32,7 +32,7 @@ export const Design = {
             'radioSocialPosition',
             'colorSocialIcon',
             'radioButtonFill',
-            'radioButtonCorner',
+            'rangeButtonCorner',
             'radioButtonBorder',
             'rangeButtonBorderThickness',
             'colorButtonBorder',
@@ -53,7 +53,50 @@ export const Design = {
             'pattern',
             'image',
             'video'
+        ],
+        COLOR_GRADIENT_OPTIONS: [
+            'colorBackground',
+            'colorBackgroundGradientOne',
+            'colorBackgroundGradientTwo'
         ]
+    },
+    DEFAULT: {
+        radioThumbnailDesign: 'bubble',
+        statusWhiteLabel: 'off',
+        colorProfileTitle: '#101010',
+        colorProfileText: '#606060',
+        radioProfileFont: 'Inter',
+        radioBackground: 'gradient',
+        colorBackground: '#fafafa',
+        colorBackgroundGradientOne: '#a8edea',
+        colorBackgroundGradientTwo: '#fed6e3',
+        rangeBackgroundGradientAngle: '0',
+        radioBackgroundPattern: 'leaves',
+        imageBackground: {},
+        statusHeroBackground: 'off',
+        colorHeroBackground: '#101010',
+        videoBackground: {},
+        rangeBackdropBlur: '4',
+        rangeBackdropOpacity: '0.25',
+        rangeBackdropNoise: '0',
+        colorBackdrop: '#101010',
+        radioSocialPosition: 'top',
+        colorSocialIcon: '#101010',
+        radioButtonFill: 'solid',
+        colorButtonBackground: '#ffffff',
+        colorButtonText: '#101010',
+        rangeButtonCorner: '32',
+        rangeButtonSpacing: '8',
+        radioButtonFont: 'Inter',
+        radioButtonBorder: 'solid',
+        rangeButtonBorderThickness: '1',
+        colorButtonBorder: '#101010',
+        radioButtonShadow: 'subtle',
+        colorButtonShadow: '#101010',
+        radioButtonShadowPosition: 'down-right',
+        rangeButtonShadowThickness: '6',
+        rangeButtonShadowOpacity: '0.5',
+        radioButtonEffect: 'rotate'
     },
     render: function() {
         for (const [key, value] of Object.entries(Page.get('design'))) {
@@ -86,6 +129,9 @@ export const Design = {
                 selector.value = value;
             }
         }
+
+        // After rendering values, update color and gradient grid items to match respective values
+        this.updateColorAndGradientGridItem();
     },
     renderThumbnail: function(thumbnail) {
         if (!thumbnail || !(thumbnail.hasOwnProperty('url'))) return;
@@ -119,6 +165,29 @@ export const Design = {
             backdropEl.style.display = 'block';
         } else {
             backdropEl.style.display = 'none';
+        }
+    },
+    updateColorAndGradientGridItem: function() {
+        if (Selectors.CUSTOM_COLOR_OPTION) {
+            // Get selected value and update background
+            const backgroundColor = document.querySelector('#design .design-form input[name="colorBackground"]').value ?? this.DEFAULT.colorBackground;
+            Selectors.CUSTOM_COLOR_OPTION.style.background = backgroundColor;
+        }
+
+        if (Selectors.CUSTOM_GRADIENT_OPTION) {
+            const gradientData = {
+                colorBackgroundGradientOne: null,
+                colorBackgroundGradientTwo: null,
+                rangeBackgroundGradientAngle: 0
+            };
+
+            for (const field of Object.keys(gradientData)) {
+                gradientData[field] = document.querySelector(`#design .design-form input[name="${field}"]`).value ?? this.DEFAULT[field];
+            }
+
+            if (gradientData.colorBackgroundGradientOne && gradientData.colorBackgroundGradientTwo) {
+                Selectors.CUSTOM_GRADIENT_OPTION.style.backgroundImage = `linear-gradient(${gradientData.rangeBackgroundGradientAngle}deg, ${gradientData.colorBackgroundGradientOne} 0%, ${gradientData.colorBackgroundGradientTwo} 100%)`;
+            }
         }
     },
     save: async function(e) {
@@ -199,8 +268,11 @@ export const Design = {
                 // Toggle arrows
                 parentEl.querySelectorAll('.arrow').forEach(img => img.classList.toggle('show'));
 
-                // Save data and show notificiation
+                // Save data
                 Page.save();
+
+                // Update gradient grid item and send notification
+                this.updateColorAndGradientGridItem();
                 Notification.success(i18n.GRADIENT_PRESET_APPLIED);
             } catch (error) {
                 console.error(error);
@@ -284,6 +356,9 @@ export const Design = {
                     responseEl.style.display = 'block';
                 } finally {
                     Processing.hide();
+
+                    // Reset file input to accept the same file again
+                    inputEl.value = null;
                 }
             });
         });
@@ -326,7 +401,17 @@ export const Design = {
         if (!Selectors.DESIGN_FORM_INPUTS.length) return;
 
         for (const input of Selectors.DESIGN_FORM_INPUTS) {
-            input.addEventListener('change', async e => await this.save(e));
+            input.addEventListener('change', async e => {
+                await this.save(e);
+
+                // After saving data, update background grid items if the angle is changed
+                input.name === 'rangeBackgroundGradientAngle' && this.updateColorAndGradientGridItem();
+            });
+
+            // Add `input` event for specific color fields
+            if (this.constants.COLOR_GRADIENT_OPTIONS.includes(input.name)) {
+                input.addEventListener('input', e => this.updateColorAndGradientGridItem());
+            }
         }
     },
     events: function() {

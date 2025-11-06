@@ -24,6 +24,8 @@ export const Selectors = {
     DESIGN_PRESET_ITEMS: document.querySelectorAll('#design .presets .preset-item'),
     DESIGN_FILE_SELECTORS: document.querySelectorAll('#design .file-selector-button'),
     DESIGN_BACKGROUND_OPTIONS: document.querySelectorAll('#design .grid.background input[type="radio"]'),
+    CUSTOM_COLOR_OPTION: document.querySelector('#design .grid-content.custom-color'),
+    CUSTOM_GRADIENT_OPTION: document.querySelector('#design .grid-content.custom-gradient'),
 
     // Profile (thumbnail, title, and bio)
     EDIT_PROFILE_IMAGE: document.querySelector('#design .edit-profile-image'),
