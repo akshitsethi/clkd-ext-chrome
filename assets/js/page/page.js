@@ -8,7 +8,7 @@ import { i18n } from "../i18n.js";
 import { Content } from "./content.js";
 import { Design } from "./design.js";
 import { Settings } from "./settings.js";
-import { Preview } from "./preview.js";
+import { Frame } from "./frame.js";
 
 export const Page = {
     constants: {
@@ -127,6 +127,9 @@ export const Page = {
         // Make design screen visible
         document.querySelector(this.constants.HEADER_CLASSNAME).style.display = 'block';
         document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
+
+        // Once set, update iframe to `preview.html` for rendering live changes
+        this.updateIframeSource();
     },
     verifyCredentials: async function() {
         // TODO
@@ -142,6 +145,9 @@ export const Page = {
         // to populate existing data, design and settings
 
         
+    },
+    updateIframeSource: function() {
+        Selectors.PREVIEW_FRAME.src = `preview.html?slug=${this.SLUG}&domain=${this.DOMAIN}`;
     },
     getStoredData: async function() {
         const data = await Store.get(`${this.SLUG}|${this.DOMAIN}`);
@@ -178,7 +184,7 @@ export const Page = {
         }
 
         // Inject details to share popover
-        await Preview.updateShareButton();
+        await Frame.updateShareButton();
     },
     render: function() {
         Content.render();
