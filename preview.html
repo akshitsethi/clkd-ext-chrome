@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preview | Pages by CLKD</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
     <!-- <script async="defer" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
     <style>
 		* {
@@ -20,7 +20,8 @@
             -ms-overflow-style: thin;
             scrollbar-width: thin;
 
-            &.image-background {
+            &.image-background,
+            &.video-background {
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: cover;
@@ -44,6 +45,20 @@
             font-size: 1.125rem;
             line-height: 1.5;
             margin: 0;
+        }
+
+        /* Background */
+        .video-container {
+            position: relative;
+
+            & video {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
 
         /* Content */
@@ -153,7 +168,10 @@
 	</style>
 </head>
 <body>
-	<div class="wrapper">
+    <!-- Video Background -->
+    <div class="video-container"></div>
+
+    <div class="wrapper">
         <!-- Profile -->
         <div class="profile">
             <div class="profile-thumbnail"></div>

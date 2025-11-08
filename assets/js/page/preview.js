@@ -9,8 +9,9 @@ export const Preview = {
         WRAPPER_CLASSNAME: '.wrapper',
         ERROR_SCREEN_CLASSNAME: '.error-screen'
     },
-    SELECTORS: {
-        html: document.querySelector('html')
+    selectors: {
+        HTML: document.querySelector('html'),
+        VIDEO_CONTAINER: document.querySelector('.video-container')
     },
     SLUG: null,
     DOMAIN: null,
@@ -79,7 +80,7 @@ export const Preview = {
             if (!this.DATA.design.hasOwnProperty('colorBackground') || !this.DATA.design.colorBackground) {
                 this.DATA.design.colorBackground = defaultPageOptions.design.colorBackground;
             }
-            this.SELECTORS.html.style.backgroundColor = this.DATA.design.colorBackground;
+            this.selectors.HTML.style.backgroundColor = this.DATA.design.colorBackground;
         } else if (background === 'gradient') {
             const gradientData = {
                 colorBackgroundGradientOne: null,
@@ -90,16 +91,31 @@ export const Preview = {
                 gradientData[field] = this.DATA.design[field] ?? defaultPageOptions.design[field];
             }
 
-            this.SELECTORS.html.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
+            this.selectors.HTML.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
         } else if (background === 'pattern') {
-            
+            this.selectors.HTML.style.backgroundImage = `url(./assets/images/page/patterns/${this.DATA.design.radioBackgroundPattern}.svg)`;
         } else if (background === 'image') {
             if (!this.DATA.design.hasOwnProperty('imageBackground') || !this.DATA.design.imageBackground.hasOwnProperty('slug') || !this.DATA.design.imageBackground.slug) return;
-            this.SELECTORS.html.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
-            this.SELECTORS.html.classList.add('image-background');
+            this.selectors.HTML.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
+            this.selectors.HTML.classList.add('image-background');
         } else if (background === 'video') {
             if (!this.DATA.design.hasOwnProperty('videoBackground') || !this.DATA.design.videoBackground.hasOwnProperty('slug') || !this.DATA.design.videoBackground.slug) return;
-            
+
+            // Empty the existing video (if any)
+            this.selectors.VIDEO_CONTAINER.innerHTML = null;
+
+            // Add `video` element to container
+            const videoEl = document.createElement('video');
+            videoEl.setAttribute('src', `${storageBase}${this.DATA.design.videoBackground.slug}`);
+
+            // Add class to html tag to differentiate the background
+            this.selectors.HTML.classList.add('video-background');
+
+            videoEl.muted = true;
+            videoEl.autoplay = true;
+            videoEl.loop = true;
+
+            this.selectors.VIDEO_CONTAINER.appendChild(videoEl);
         }
     },
     events: function() {
