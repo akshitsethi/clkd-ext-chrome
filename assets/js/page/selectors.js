@@ -43,7 +43,7 @@ export const Selectors = {
     NO_SOCIAL_ICONS_SECTION: document.querySelector('#design .social .no-icons-data'),
 
     // Share
-    SHARE_BUTTON: document.querySelector('.wrapper .share'),
+    SHARE_BUTTON: document.querySelector('.preview .share'),
 
     // Settings
     SETTINGS_FORM_INPUTS: document.querySelectorAll('#settings input[type="checkbox"], #settings input[type="text"]'),
