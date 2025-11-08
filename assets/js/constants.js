@@ -204,6 +204,48 @@ export const planAnalyticsDuration = {
     pro: ['month', '2months']
 };
 
+// Default page options
+export const defaultPageOptions = {
+    design: {
+        radioThumbnailDesign: 'bubble',
+        statusWhiteLabel: 'off',
+        colorProfileTitle: '#101010',
+        colorProfileText: '#606060',
+        radioProfileFont: 'Inter',
+        radioBackground: 'gradient',
+        colorBackground: '#fafafa',
+        colorBackgroundGradientOne: '#a8edea',
+        colorBackgroundGradientTwo: '#fed6e3',
+        rangeBackgroundGradientAngle: '0',
+        radioBackgroundPattern: 'leaves',
+        imageBackground: {},
+        statusHeroBackground: 'off',
+        colorHeroBackground: '#101010',
+        videoBackground: {},
+        rangeBackdropBlur: '4',
+        rangeBackdropOpacity: '0.25',
+        rangeBackdropNoise: '0',
+        colorBackdrop: '#101010',
+        radioSocialPosition: 'top',
+        colorSocialIcon: '#101010',
+        radioButtonFill: 'solid',
+        colorButtonBackground: '#ffffff',
+        colorButtonText: '#101010',
+        rangeButtonCorner: '32',
+        rangeButtonSpacing: '8',
+        radioButtonFont: 'Inter',
+        radioButtonBorder: 'solid',
+        rangeButtonBorderThickness: '1',
+        colorButtonBorder: '#101010',
+        radioButtonShadow: 'subtle',
+        colorButtonShadow: '#101010',
+        radioButtonShadowPosition: 'down-right',
+        rangeButtonShadowThickness: '6',
+        rangeButtonShadowOpacity: '0.5',
+        radioButtonEffect: 'rotate'
+    }
+};
+
 // Social Icons
 export const socialIcons = {
     instagram: {

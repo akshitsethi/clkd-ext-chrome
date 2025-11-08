@@ -2,11 +2,15 @@
 import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
+import { defaultPageOptions, storageBase } from "../constants.js";
 
 export const Preview = {
     constants: {
         WRAPPER_CLASSNAME: '.wrapper',
         ERROR_SCREEN_CLASSNAME: '.error-screen'
+    },
+    SELECTORS: {
+        html: document.querySelector('html')
     },
     SLUG: null,
     DOMAIN: null,
@@ -72,9 +76,30 @@ export const Preview = {
 
         const background = this.DATA.design.radioBackground;
         if (background === 'color') {
-            document.body.style.backgroundColor = this.DATA.design.colorBackground;
+            if (!this.DATA.design.hasOwnProperty('colorBackground') || !this.DATA.design.colorBackground) {
+                this.DATA.design.colorBackground = defaultPageOptions.design.colorBackground;
+            }
+            this.SELECTORS.html.style.backgroundColor = this.DATA.design.colorBackground;
         } else if (background === 'gradient') {
-            document.body.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
+            const gradientData = {
+                colorBackgroundGradientOne: null,
+                colorBackgroundGradientTwo: null,
+                rangeBackgroundGradientAngle: 0
+            };
+            for (const field of Object.keys(gradientData)) {
+                gradientData[field] = this.DATA.design[field] ?? defaultPageOptions.design[field];
+            }
+
+            this.SELECTORS.html.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
+        } else if (background === 'pattern') {
+            
+        } else if (background === 'image') {
+            if (!this.DATA.design.hasOwnProperty('imageBackground') || !this.DATA.design.imageBackground.hasOwnProperty('slug') || !this.DATA.design.imageBackground.slug) return;
+            this.SELECTORS.html.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
+            this.SELECTORS.html.classList.add('image-background');
+        } else if (background === 'video') {
+            if (!this.DATA.design.hasOwnProperty('videoBackground') || !this.DATA.design.videoBackground.hasOwnProperty('slug') || !this.DATA.design.videoBackground.slug) return;
+            
         }
     },
     events: function() {

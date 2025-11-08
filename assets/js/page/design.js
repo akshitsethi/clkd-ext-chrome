@@ -1,5 +1,5 @@
 // page/design.js
-import { storageBase } from "../constants.js";
+import { defaultPageOptions, storageBase } from "../constants.js";
 import { i18n } from "../i18n.js";
 import { Notification } from "../notification.js";
 import { Processing } from "../processing.js";
@@ -59,44 +59,6 @@ export const Design = {
             'colorBackgroundGradientOne',
             'colorBackgroundGradientTwo'
         ]
-    },
-    DEFAULT: {
-        radioThumbnailDesign: 'bubble',
-        statusWhiteLabel: 'off',
-        colorProfileTitle: '#101010',
-        colorProfileText: '#606060',
-        radioProfileFont: 'Inter',
-        radioBackground: 'gradient',
-        colorBackground: '#fafafa',
-        colorBackgroundGradientOne: '#a8edea',
-        colorBackgroundGradientTwo: '#fed6e3',
-        rangeBackgroundGradientAngle: '0',
-        radioBackgroundPattern: 'leaves',
-        imageBackground: {},
-        statusHeroBackground: 'off',
-        colorHeroBackground: '#101010',
-        videoBackground: {},
-        rangeBackdropBlur: '4',
-        rangeBackdropOpacity: '0.25',
-        rangeBackdropNoise: '0',
-        colorBackdrop: '#101010',
-        radioSocialPosition: 'top',
-        colorSocialIcon: '#101010',
-        radioButtonFill: 'solid',
-        colorButtonBackground: '#ffffff',
-        colorButtonText: '#101010',
-        rangeButtonCorner: '32',
-        rangeButtonSpacing: '8',
-        radioButtonFont: 'Inter',
-        radioButtonBorder: 'solid',
-        rangeButtonBorderThickness: '1',
-        colorButtonBorder: '#101010',
-        radioButtonShadow: 'subtle',
-        colorButtonShadow: '#101010',
-        radioButtonShadowPosition: 'down-right',
-        rangeButtonShadowThickness: '6',
-        rangeButtonShadowOpacity: '0.5',
-        radioButtonEffect: 'rotate'
     },
     render: function() {
         for (const [key, value] of Object.entries(Page.get('design'))) {
@@ -170,7 +132,7 @@ export const Design = {
     updateColorAndGradientGridItem: function() {
         if (Selectors.CUSTOM_COLOR_OPTION) {
             // Get selected value and update background
-            const backgroundColor = document.querySelector('#design .design-form input[name="colorBackground"]').value ?? this.DEFAULT.colorBackground;
+            const backgroundColor = document.querySelector('#design .design-form input[name="colorBackground"]').value ?? defaultPageOptions.design.colorBackground;
             Selectors.CUSTOM_COLOR_OPTION.style.background = backgroundColor;
         }
 
@@ -182,7 +144,7 @@ export const Design = {
             };
 
             for (const field of Object.keys(gradientData)) {
-                gradientData[field] = document.querySelector(`#design .design-form input[name="${field}"]`).value ?? this.DEFAULT[field];
+                gradientData[field] = document.querySelector(`#design .design-form input[name="${field}"]`).value ?? defaultPageOptions.design[field];
             }
 
             if (gradientData.colorBackgroundGradientOne && gradientData.colorBackgroundGradientTwo) {
