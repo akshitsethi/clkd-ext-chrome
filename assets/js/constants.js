@@ -4,7 +4,7 @@ export const apiBase = 'http://localhost:8788/api';
 export const storageBase = 'http://localhost:8788/api/file?f=';
 
 // Google API key (for Maps)
-export const googleApiKey = 'AIzaSyDpgniAqmFhYyp_qsZ6U17WXDHYtip6KiM';
+export const googleApiKey = 'test_key';
 
 // Default domain
 export const defaultDomain = 'clkd.in';
