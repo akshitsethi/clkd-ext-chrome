@@ -21,10 +21,14 @@
             scrollbar-width: thin;
 
             &.image-background,
-            &.video-background {
+            &.video-background,
+            &.gradient-background {
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: cover;
+                background-attachment: fixed;
+            }
+            &.pattern-background {
                 background-attachment: fixed;
             }
         }
@@ -64,6 +68,51 @@
         /* Content */
         .wrapper {
             display: none;
+            flex-direction: column;
+            min-height: 100%;
+            justify-content: space-between;
+            position: relative;
+            padding: 1rem;
+            z-index: 1;
+        }
+        .profile {
+            margin-top: 2rem;
+            text-align: center;
+
+            & .profile-thumbnail {
+                & svg {
+                    max-width: 108px;
+                }
+            }
+            & .profile-content {
+                padding: 1rem;
+
+                & h1 {
+                    font-size: 1.375rem;
+                    margin: 0;
+                    overflow: hidden;
+                    text-wrap: nowrap;
+                    text-overflow: ellipsis;
+                }
+                & .bio {
+                    font-size: 1rem;
+                    line-height: 1.5;
+                    margin-top: 0.5rem;
+                }
+            }
+        }
+        .footer {
+            padding: 3.5rem 0;
+            text-align: center;
+
+            & a {
+                background: #ffffff;
+                color: #101010;
+                padding: 1rem;
+                border-radius: 32px;
+                font-weight: 500;
+                box-shadow: 0 0 #0000,0 0 #0000,0px 4px 8px rgba(0,0,0,0.10);
+            }
         }
 
         /* Error */
@@ -172,34 +221,20 @@
     <div class="video-container"></div>
 
     <div class="wrapper">
-        <!-- Profile -->
-        <div class="profile">
-            <div class="profile-thumbnail"></div>
-            <div class="profile-content"></div>
+        <!-- Content -->
+        <div class="content">
+            <!-- Profile (thumbnail, title & bio) -->
+            <div class="profile">
+                <div class="profile-thumbnail"></div>
+                <div class="profile-content"></div>
+            </div>
+
+            <!-- Links Area -->
+            <div class="links"></div>
         </div>
 
-        <!-- Content Area -->
-        <div class="content">
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
-            <br><br><br>
+        <div class="footer">
+            <a href="https://clkd.in/?utm_source=clkd&utm_medium=profile&utm_campaign=footer_cta" target="_blank">Create Your Own Page on CLKD</a>
         </div>
     </div>
 
@@ -210,7 +245,115 @@
         </div>
     </div>
 
-	<!-- Processing (dynamically injected to selectors) -->
+    <template id="content-item-entry">
+        <div class="content-data">
+            <a href="#" target="_blank" rel="noopener"></a>
+        </div>
+    </template>
+
+    <template id="thumbnail-design-bubble">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="bubble-svg-mask">
+                    <path d="M93.6797 5.15479C97.359 2.15401 102.641 2.15401 106.32 5.15479L114.253 11.625C116.75 13.6608 120.074 14.3696 123.183 13.5291L133.039 10.8652C137.616 9.62811 142.432 11.775 144.572 16.0058L149.229 25.2154C150.679 28.0814 153.416 30.0768 156.588 30.5793L166.717 32.184C171.384 32.9234 174.897 36.829 175.139 41.5483L175.672 51.9384C175.836 55.133 177.519 58.0565 180.199 59.8033L188.865 65.452C192.811 68.0247 194.427 73.0033 192.743 77.4035L189.015 87.1465C187.874 90.1271 188.225 93.4731 189.958 96.1526L195.618 104.899C198.175 108.852 197.629 114.053 194.306 117.389L186.976 124.748C184.722 127.011 183.684 130.214 184.184 133.369L185.815 143.668C186.552 148.327 183.933 152.868 179.531 154.564L169.921 158.264C166.93 159.416 164.672 161.931 163.849 165.029L161.188 175.047C159.973 179.623 155.716 182.719 150.989 182.466L140.78 181.92C137.567 181.748 134.468 183.132 132.452 185.639L126.014 193.647C123.04 197.346 117.876 198.445 113.653 196.277L104.567 191.612C101.7 190.141 98.2999 190.141 95.4331 191.612L86.3465 196.277C82.1243 198.445 76.9601 197.346 73.9862 193.647L67.548 185.639C65.5321 183.132 62.433 181.748 59.2203 181.92L49.0111 182.466C44.284 182.719 40.0271 179.623 38.8119 175.047L36.1507 165.029C35.3279 161.931 33.0702 159.416 30.0792 158.264L20.4691 154.564C16.0666 152.868 13.4477 148.327 14.1855 143.668L15.8162 133.369C16.3157 130.214 15.2781 127.011 13.024 124.748L5.69367 117.389C2.37113 114.053 1.82509 108.852 4.38248 104.899L10.0415 96.1526C11.7752 93.4731 12.1257 90.1271 10.9851 87.1465L7.25661 77.4035C5.57276 73.0033 7.18856 68.0247 11.1354 65.452L19.8014 59.8033C22.4812 58.0565 24.1636 55.133 24.3275 51.9384L24.8607 41.5483C25.1029 36.829 28.6155 32.9234 33.2828 32.184L43.4118 30.5793C46.5838 30.0768 49.3214 28.0814 50.7708 25.2154L55.4283 16.0058C57.5679 11.775 62.3844 9.6281 66.9613 10.8652L76.8169 13.5291C79.9264 14.3696 83.2504 13.6608 85.7465 11.625L93.6797 5.15479Z" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#bubble-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="thumbnail-design-fairy">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="fairy-svg-mask">
+                    <path d="M100 173.738C24.3644 236.944 -36.9438 175.636 26.2621 100C-36.9438 24.3644 24.3644 -36.9438 100 26.2621C175.621 -36.9438 236.944 24.3644 173.738 100C236.944 175.578 175.621 236.944 100 173.738Z" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#fairy-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="thumbnail-design-ufo">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="ufo-svg-mask">
+                    <path d="M99.9937 200V184.439C49.0583 184.439 0 150.932 0 100H15.5495C15.5495 49.0678 49.0583 0 99.9937 0V15.5612C150.929 15.5612 200 49.0678 200 100H184.451C184.451 150.932 150.929 200 99.9937 200Z" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#ufo-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="thumbnail-design-blob">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="blob-svg-mask">
+                    <path d="M0 47.4235C0 38.0237 6.53608 29.9057 15.7703 28.1488C36.4827 24.2081 73.3424 18 100 18C126.658 18 163.517 24.2081 184.23 28.1488C193.464 29.9057 200 38.0237 200 47.4235V150.374C200 159.424 193.931 167.333 185.12 169.396C164.683 174.181 127.351 181.934 100 181.934C72.6487 181.934 35.3172 174.181 14.8798 169.396C6.06883 167.333 0 159.424 0 150.374V47.4235Z" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#blob-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="thumbnail-design-square">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="square-svg-mask">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.4046 100.422C8.31777 102.425 0.714259 111.325 0.714259 122L0.714256 178C0.714256 190.15 10.564 200 22.7143 200L78.7143 200C89.6402 200 98.7058 192.035 100.422 181.595C102.425 191.682 111.325 199.286 122 199.286H178C190.15 199.286 200 189.436 200 177.286V121.286C200 110.36 192.035 101.294 181.596 99.578C191.682 97.5746 199.286 88.6752 199.286 78V22C199.286 9.84974 189.436 2.97894e-06 177.286 2.44784e-06L121.286 0C110.36 -4.77585e-07 101.294 7.96461 99.5781 18.4046C97.5747 8.31778 88.6753 0.71428 78 0.71428H22C9.84974 0.71428 0 10.564 0 22.7143V78.7143C0 89.6401 7.96462 98.7058 18.4046 100.422Z" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#square-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="thumbnail-design-star">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="star-svg-mask">
+                    <path d="M89.9318 6.12863C94.1569 -2.04288 105.843 -2.04288 110.068 6.12863L136.973 58.1644C138.051 60.2496 139.75 61.9486 141.836 63.0268L193.871 89.9318C202.043 94.1569 202.043 105.843 193.871 110.068L141.836 136.973C139.75 138.051 138.051 139.75 136.973 141.836L110.068 193.871C105.843 202.043 94.1569 202.043 89.9318 193.871L63.0268 141.836C61.9486 139.75 60.2496 138.051 58.1644 136.973L6.12863 110.068C-2.04288 105.843 -2.04288 94.1569 6.12863 89.9318L58.1644 63.0268C60.2496 61.9486 61.9486 60.2496 63.0268 58.1644L89.9318 6.12863Z" fill="white" />
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#star-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="thumbnail-design-fold">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="fold-svg-mask">
+                    <path d="M0 45.7358L50 33L100 45.7358L150 33L200 45.7358V168L150 155.264L100 168L50 155.264L0 168V45.7358Z" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#fold-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="thumbnail-design-flower">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="flower-svg-mask">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M50 0H0V100C0 155.228 44.7715 200 100 200C155.228 200 200 155.228 200 100V0H150C122.386 0 100 22.3858 100 50C100 22.3858 77.6142 0 50 0Z" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="/assets/images/night.png" mask="url(#flower-svg-mask)"></image>
+        </svg>
+    </template>
+
+    <template id="social-item-entry">
+        <a href="#" class="social--icon" target="_blank">
+            <img src="#" alt="#" />
+        </a>
+    </template>
+
+    <!-- Processing (dynamically injected to selectors) -->
 	<template id="processing">
 		<div class="processing">
 			<div class="processing-content">

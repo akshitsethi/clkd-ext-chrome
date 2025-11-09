@@ -96,9 +96,9 @@ export const Design = {
         this.updateColorAndGradientGridItem();
     },
     renderThumbnail: function(thumbnail) {
-        if (!thumbnail || !(thumbnail.hasOwnProperty('url'))) return;
+        if (!thumbnail || !(thumbnail.hasOwnProperty('slug'))) return;
 
-        Selectors.PROFILE_THUMBNAIL_CONTAINER.setAttribute('src', thumbnail.url);
+        Selectors.PROFILE_THUMBNAIL_CONTAINER.setAttribute('src', `${storageBase}${thumbnail.slug}`);
     },
     applyGradient: function(input) {
         const gradientSettings = JSON.parse(input.getAttribute('data-preset'));

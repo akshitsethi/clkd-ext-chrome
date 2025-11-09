@@ -462,49 +462,307 @@ export const socialIcons = {
 
 // Google fonts
 export const googleFonts = {
-    'Alfa+Slab+One': 'Georgia,Courier,serif',
-    'Anton': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Belanosima': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'BioRhyme': 'Georgia,Courier,serif',
-    'Chango': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Domine': 'Georgia,Courier,serif',
-    'IBM+Plex+Sans': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Kavivanar': 'cursive,sans-serif',
-    'Manrope': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Monofett': '"Courier New",Consolas,Menlo,Monaco,monospace',
-    'Old+Standard+TT': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Oxanium': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Playfair+Display': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Poppins': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Roboto': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Roboto+Slab': 'Georgia,Courier,serif',
-    'Salsa': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Space+Mono': '"Courier New",Consolas,Menlo,Monaco,monospace',
-    'Murecho': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Viaoda+Libre': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Albert+Sans': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Bricolage+Grotesque': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'DM+Sans': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Epilogue': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Inter': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Lato': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'M+PLUS+Rounded+1c': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Red+Hat+Display': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Rubik': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Space+Grotesk': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Syne': 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
-    'Bitter': 'Georgia,Courier,serif',
-    'Caudex': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Corben': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Hahmlet': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'IBM+Plex+Serif': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Lora': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Merriweather': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Noto+Serif': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'PT+Serif': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'Roboto+Serif': 'Garamond,"Hoefler Text","Times New Roman",serif',
-    'IBM+Plex+Mono': 'Consolas,"SF Mono","DejaVu Sans Mono","Courier New",monospace',
-    'Shantell+Sans': 'cursive,sans-serif'
+    'Alfa+Slab+One': {
+        fallback: 'Georgia,Courier,serif',
+        weight: {
+            text: 400,
+            title: 400
+        }
+    },
+    'Anton': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 400
+        }
+    },
+    'Belanosima': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'BioRhyme': {
+        fallback: 'Georgia,Courier,serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Chango': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 400
+        }
+    },
+    'Domine': {
+        fallback: 'Georgia,Courier,serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'IBM+Plex+Sans': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Kavivanar': {
+        fallback: 'cursive,sans-serif',
+        weight: {
+            text: 400,
+            title: 400
+        }
+    },
+    'Manrope': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Monofett': {
+        fallback: '"Courier New",Consolas,Menlo,Monaco,monospace',
+        weight: {
+            text: 400,
+            title: 400
+        }
+    },
+    'Old+Standard+TT': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Oxanium': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Playfair+Display': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Poppins': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Roboto': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Roboto+Slab': {
+        fallback: 'Georgia,Courier,serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Salsa': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 400
+        }
+    },
+    'Space+Mono': {
+        fallback: '"Courier New",Consolas,Menlo,Monaco,monospace',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Murecho': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Viaoda+Libre': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 400,
+            title: 400
+        }
+    },
+    'Albert+Sans': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Bricolage+Grotesque': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'DM+Sans': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Epilogue': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Inter': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Lato': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'M+PLUS+Rounded+1c': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Red+Hat+Display': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Rubik': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Space+Grotesk': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Syne': {
+        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Bitter': {
+        fallback: 'Georgia,Courier,serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Caudex': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Corben': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Hahmlet': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'IBM+Plex+Serif': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Lora': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Merriweather': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Noto+Serif': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'PT+Serif': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 400,
+            title: 700
+        }
+    },
+    'Roboto+Serif': {
+        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'IBM+Plex+Mono': {
+        fallback: 'Consolas,"SF Mono","DejaVu Sans Mono","Courier New",monospace',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    },
+    'Shantell+Sans': {
+        fallback: 'cursive,sans-serif',
+        weight: {
+            text: 300,
+            title: 600
+        }
+    }
 };
 
 // Embed providers

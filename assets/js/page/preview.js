@@ -11,7 +11,8 @@ export const Preview = {
     },
     selectors: {
         HTML: document.querySelector('html'),
-        VIDEO_CONTAINER: document.querySelector('.video-container')
+        VIDEO_CONTAINER: document.querySelector('.video-container'),
+        PROFILE: document.querySelector('.profile'),
     },
     SLUG: null,
     DOMAIN: null,
@@ -40,8 +41,11 @@ export const Preview = {
         // Get data stored previously or fetched recently from the remote server
         await this.getStoredData();
 
+        // Building page content
+        this.addProfileData();
+
         // Make preview visible
-        document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
+        document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'flex';
     },
     setSlugAndDomain: function() {
         const url = new URL(window.location.href);
@@ -72,6 +76,21 @@ export const Preview = {
         // Throw error to stop further execution
         throw new Error(error);
     },
+    addGoogleFontStylesheet: function(fontName) {
+        // Replace spaces with plus signs for the URL
+        const formattedFontName = fontName.replace(/\s/g, '+');
+        const fontUrl = `https://fonts.googleapis.com/css2?family=${formattedFontName}:wght@400;700&display=swap`;
+
+        // Create a new link element
+        const linkEl = document.createElement('link');
+
+        // Set attributes for the link element
+        linkEl.rel = 'stylesheet';
+        linkEl.href = fontUrl;
+
+        // Append the link element to the document's head
+        document.head.appendChild(linkEl);
+    },
     updateBackgroundEvent: function() {
         if (!this.DATA.design.hasOwnProperty('radioBackground') || !this.DATA.design.radioBackground) return;
 
@@ -92,8 +111,10 @@ export const Preview = {
             }
 
             this.selectors.HTML.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
+            this.selectors.HTML.classList.add('gradient-background');
         } else if (background === 'pattern') {
             this.selectors.HTML.style.backgroundImage = `url(./assets/images/page/patterns/${this.DATA.design.radioBackgroundPattern}.svg)`;
+            this.selectors.HTML.classList.add('pattern-background');
         } else if (background === 'image') {
             if (!this.DATA.design.hasOwnProperty('imageBackground') || !this.DATA.design.imageBackground.hasOwnProperty('slug') || !this.DATA.design.imageBackground.slug) return;
             this.selectors.HTML.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
@@ -118,6 +139,59 @@ export const Preview = {
             this.selectors.VIDEO_CONTAINER.appendChild(videoEl);
         }
     },
+    addProfileData: function() {
+        this.addProfileThumbnail();
+        this.addProfileContent();
+    },
+    addProfileThumbnail: function() {
+        if (!this.DATA.design.hasOwnProperty('radioThumbnailDesign') || !this.DATA.design.radioThumbnailDesign) {
+            this.DATA.design.radioThumbnailDesign = defaultPageOptions.design.radioThumbnailDesign;
+        }
+
+        const template = document.getElementById(`thumbnail-design-${this.DATA.design.radioThumbnailDesign}`).content;
+        const content = template.cloneNode(true);
+
+        // Before starting, let's empty out the container
+        const thumbnailEl = this.selectors.PROFILE.querySelector('.profile-thumbnail');
+        thumbnailEl.innerHTML = null;
+
+        // Check if image exists
+        if (this.DATA.design.hasOwnProperty('thumbnail') && this.DATA.design.thumbnail.hasOwnProperty('slug') && this.DATA.design.thumbnail.slug) {
+            content.querySelector('image').setAttribute('xlink:href', `${storageBase}${this.DATA.design.thumbnail.slug}`);
+        }
+
+        // Add thumbnail
+        thumbnailEl.appendChild(content);
+    },
+    addProfileContent: function() {
+        // Parent container
+        // Before proceeding, clear out existing content
+        const contentEl = this.selectors.PROFILE.querySelector('.profile-content');
+        contentEl.innerHTML = null;
+
+        // Start with heading (it'll always exist no matter what)
+        let heading = `@${this.SLUG}`;
+
+        if (this.DATA.design.hasOwnProperty('name') && this.DATA.design.name.length) {
+            heading = this.DATA.design.name;
+        }
+
+        const headingEl = document.createElement('h1');
+        headingEl.appendChild(document.createTextNode(heading));
+        contentEl.appendChild(headingEl);
+
+        // Bio, only added if present
+        if (this.DATA.design.hasOwnProperty('bio') && this.DATA.design.bio && this.DATA.design.bio.length) {
+            const bioEl = document.createElement('p');
+            bioEl.classList.add('bio');
+            bioEl.appendChild(document.createTextNode(this.DATA.design.bio));
+
+            // Append to content container
+            contentEl.appendChild(bioEl);
+        }
+
+        this.selectors.PROFILE.appendChild(contentEl);
+    },
     events: function() {
         this.updateBackgroundEvent();
     },
@@ -135,7 +209,7 @@ export const Preview = {
         } finally {
             setTimeout(() => {
                 Processing.hide();
-            }, 500);
+            }, 300);
         }
     }
 };

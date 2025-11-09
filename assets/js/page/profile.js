@@ -15,12 +15,11 @@ export const Profile = {
         name: 30,
         bio: 160
     },
-    updateImageThumbnail: function(url) {
-        if (!Selectors.PROFILE_THUMBNAIL_CONTAINER || !url) {
+    updateImageThumbnail: function(slug) {
+        if (!Selectors.PROFILE_THUMBNAIL_CONTAINER || !slug) {
             throw new Error(i18n.DEFAULT_ERROR);
         }
-
-        Selectors.PROFILE_THUMBNAIL_CONTAINER.setAttribute('src', url);
+        Selectors.PROFILE_THUMBNAIL_CONTAINER.setAttribute('src', `${storageBase}${slug}`);
     },
     initialiseCropper: function(selector) {
         this.CROPPER = new Cropper(selector, {
@@ -56,10 +55,9 @@ export const Profile = {
                         const file = new File([blob], `${Page.SLUG}-${Page.DOMAIN}.png`, { type: blob.type, lastModified: new Date().getTime() });
 
                         const response = await Upload.postRequest(file, 'file');
-                        const url = `${storageBase}${response.message.slug}`;
                         const imageData = {
                             name: response.message.name,
-                            url
+                            slug: response.message.slug
                         };
 
                         // Save `thumbnail` data
@@ -67,7 +65,7 @@ export const Profile = {
                         Page.save();
 
                         // Finally, update header styles with the newly uploaded image
-                        this.updateImageThumbnail(url);
+                        this.updateImageThumbnail(response.message.slug);
                     } catch (error) {
                         console.error(error);
                         Notification.error(error.message ?? i18n.DEFAULT_ERROR);
