@@ -2,7 +2,7 @@
 import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
-import { defaultPageOptions, storageBase } from "../constants.js";
+import { defaultPageOptions, embedProviders, googleApiKey, storageBase } from "../constants.js";
 import { isURL } from "validator";
 
 export const Preview = {
@@ -147,10 +147,10 @@ export const Preview = {
         }
     },
     addProfileData: function() {
-        this.addProfileThumbnail();
-        this.addProfileContent();
+        this.addThumbnail();
+        this.addTitleAndBio();
     },
-    addProfileThumbnail: function() {
+    addThumbnail: function() {
         if (!this.DATA.design.hasOwnProperty('radioThumbnailDesign') || !this.DATA.design.radioThumbnailDesign) {
             this.DATA.design.radioThumbnailDesign = defaultPageOptions.design.radioThumbnailDesign;
         }
@@ -170,7 +170,7 @@ export const Preview = {
         // Add thumbnail
         thumbnailEl.appendChild(content);
     },
-    addProfileContent: function() {
+    addTitleAndBio: function() {
         // Parent container
         // Before proceeding, clear out existing content
         const contentEl = this.selectors.PROFILE.querySelector('.profile-content');
@@ -221,11 +221,11 @@ export const Preview = {
                 parentEl.setAttribute('id', `${data.type}-${contentId}`);
 
                 // Process different content types
-                content = this.processLink(parentEl, content, data);
-                // if (data.type === 'link') {
-                // } else {
-                //     content = this.processContentType(data.type, contentId, parentEl, content, data);
-                // }
+                if (data.type === 'link') {
+                    content = this.processLink(parentEl, content, data);
+                } else {
+                    content = this.processContentType(data.type, contentId, parentEl, content, data);
+                }
 
                 // Append to content container
                 this.selectors.LINKS_CONTAINER.appendChild(content);
@@ -234,17 +234,74 @@ export const Preview = {
     },
     processLink: function(parentEl, content, data) {
         // Default button class
-        const classes = ['button'];
-
-        // Create HTML classes
-        // for (const [key, value] of Object.entries(this.BUTTON_SETTINGS)) {
-        //     classes.push(`button-${key}-${this.DATA.design[value]}`);
-        // }
-
         const anchorEl = parentEl.querySelector('a');
-        anchorEl.classList.add(...classes);
+        anchorEl.classList.add('button');
         anchorEl.appendChild(document.createTextNode(data.title));
         anchorEl.setAttribute('href', data.url);
+
+        return content;
+    },
+    processContentType: function(provider, id, parentEl, content, data) {
+        if (!provider || !(Object.keys(embedProviders).includes(provider))) return;
+
+        // Remove defaut anchor link
+        content.querySelector('a').remove();
+        content.querySelector('.share').remove();
+
+        // Execute embed specific function
+        return this[provider](id, parentEl, content, data);
+    },
+    youtube: function(id, parentEl, content, data) {
+        
+    },
+    vimeo: function(id, parentEl, content, data) {
+
+    },
+    googlemaps: function(id, parentEl, content, data) {
+        const containerEl = document.createElement('div');
+
+        if (data.hasOwnProperty('url')) {
+            containerEl.classList.add('googlemaps-container', 'oembed');
+
+            // Get data URL
+            const query = data.url.replace(' ', '+');
+            const iframeEl = document.createElement('iframe');
+            iframeEl.setAttribute('src', `https://www.google.com/maps/embed/v1/place?q=${query}&maptype=${data.radioMapType}&zoom=${data.rangeMapZoom}&key=${googleApiKey}`);
+            iframeEl.setAttribute('width', '100%');
+            iframeEl.setAttribute('height', '240');
+            iframeEl.setAttribute('loading', 'lazy');
+            iframeEl.setAttribute('style', 'border:0');
+            iframeEl.allowFullscreen = true;
+
+            containerEl.appendChild(iframeEl);
+        }
+
+        parentEl.appendChild(containerEl);
+        return content;
+    },
+    twitter: function(id, parentEl, content) {
+        return this.embed('twitter', id, parentEl, content);
+    },
+    soundcloud: function(id, parentEl, content) {
+        return this.embed('soundcloud', id, parentEl, content);
+    },
+    tiktok: function(id, parentEl, content) {
+        return this.embed('tiktok', id, parentEl, content);
+    },
+    spotify: function(id, parentEl, content) {
+        return this.embed('spotify', id, parentEl, content);
+    },
+    video: function() {
+
+    },
+    embed: function(provider, id, parentEl, content) {
+        if (this.DATA.providers.hasOwnProperty(id) && this.DATA.providers[id].hasOwnProperty('html')) {
+            const containerEl = document.createElement('div');
+            containerEl.classList.add(`${provider}-container`, 'oembed');
+            containerEl.innerHTML = this.DATA.providers[id].html;
+
+            parentEl.appendChild(containerEl);
+        }
 
         return content;
     },
