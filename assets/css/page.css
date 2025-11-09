@@ -1756,7 +1756,6 @@ header {
                 transform: translateX(-50%);
                 background: #ffffff;
                 border-radius: 32px;
-                border: 1px solid #e0e0e0;
                 box-shadow: 0 0 4px 4px rgba(0,0,0,0.04);
 
                 & h2 {

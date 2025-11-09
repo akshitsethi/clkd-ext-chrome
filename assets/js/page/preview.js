@@ -3,6 +3,7 @@ import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
 import { defaultPageOptions, storageBase } from "../constants.js";
+import { isURL } from "validator";
 
 export const Preview = {
     constants: {
@@ -13,6 +14,8 @@ export const Preview = {
         HTML: document.querySelector('html'),
         VIDEO_CONTAINER: document.querySelector('.video-container'),
         PROFILE: document.querySelector('.profile'),
+        LINK_TEMPLATE: document.querySelector('#link-item-entry'),
+        LINKS_CONTAINER: document.querySelector('.links')
     },
     SLUG: null,
     DOMAIN: null,
@@ -43,6 +46,10 @@ export const Preview = {
 
         // Building page content
         this.addProfileData();
+
+        // Add social & links data
+        this.addSocialData();
+        this.addLinksData();
 
         // Make preview visible
         document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'flex';
@@ -191,6 +198,55 @@ export const Preview = {
         }
 
         this.selectors.PROFILE.appendChild(contentEl);
+    },
+    addSocialData: function() {
+
+    },
+    addLinksData: function() {
+        if (!Object.keys(this.DATA.order).length || !Object.keys(this.DATA.content).length) return;
+
+        for (const [slotId, contentId] of this.DATA['order']) {
+            if (this.DATA.content.hasOwnProperty(contentId)) {
+                const data = this.DATA.content[contentId];
+
+                if (!data.status || data.status === 'off') continue;
+                if (data.type !== 'googlemaps' && (!data.url || !isURL(data.url))) continue;
+                if (data.type === 'link' && (!data.title || !data.title.length)) continue;
+
+                // Add unique identifier to parent `div`
+                const template = this.selectors.LINK_TEMPLATE.content;
+
+                let content = template.cloneNode(true);
+                const parentEl = content.querySelector('.link-data');
+                parentEl.setAttribute('id', `${data.type}-${contentId}`);
+
+                // Process different content types
+                content = this.processLink(parentEl, content, data);
+                // if (data.type === 'link') {
+                // } else {
+                //     content = this.processContentType(data.type, contentId, parentEl, content, data);
+                // }
+
+                // Append to content container
+                this.selectors.LINKS_CONTAINER.appendChild(content);
+            }
+        }
+    },
+    processLink: function(parentEl, content, data) {
+        // Default button class
+        const classes = ['button'];
+
+        // Create HTML classes
+        // for (const [key, value] of Object.entries(this.BUTTON_SETTINGS)) {
+        //     classes.push(`button-${key}-${this.DATA.design[value]}`);
+        // }
+
+        const anchorEl = parentEl.querySelector('a');
+        anchorEl.classList.add(...classes);
+        anchorEl.appendChild(document.createTextNode(data.title));
+        anchorEl.setAttribute('href', data.url);
+
+        return content;
     },
     events: function() {
         this.updateBackgroundEvent();
