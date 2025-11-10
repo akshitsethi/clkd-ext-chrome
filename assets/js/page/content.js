@@ -40,12 +40,10 @@ export const Content = {
             radioSensitive: 'disable'
         },
         youtube: {
-            radioLayout: 'none',
             statusAuthorProfile: 'off',
             statusEmbedTitle: 'off'
         },
         vimeo: {
-            radioLayout: 'none',
             statusAuthorProfile: 'off',
             statusEmbedTitle: 'off'
         },

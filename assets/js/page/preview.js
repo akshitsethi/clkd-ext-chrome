@@ -30,6 +30,10 @@ export const Preview = {
         },
         providers: {}
     },
+    API_URL: {
+        youtube: 'https://www.youtube.com/embed',
+        vimeo: 'https://player.vimeo.com/video'
+    },
     get: function(attribute, id = null, subId = null) {
         if (id !== null || subId !== null) {
             return subId !== null ? this.DATA[attribute][id][subId] : this.DATA[attribute][id];
@@ -252,10 +256,10 @@ export const Preview = {
         return this[provider](id, parentEl, content, data);
     },
     youtube: function(id, parentEl, content, data) {
-        
+        return this.video('youtube', id, parentEl, content, data);
     },
     vimeo: function(id, parentEl, content, data) {
-
+        return this.video('vimeo', id, parentEl, content, data);
     },
     googlemaps: function(id, parentEl, content, data) {
         const containerEl = document.createElement('div');
@@ -291,8 +295,47 @@ export const Preview = {
     spotify: function(id, parentEl, content) {
         return this.embed('spotify', id, parentEl, content);
     },
-    video: function() {
+    video: function(provider, id, parentEl, content, data) {
+        // Check for title and if required, insert it before iframe container
+        if (
+            data.hasOwnProperty('statusEmbedTitle')
+            && data.statusEmbedTitle === 'on'
+            && this.DATA.providers.hasOwnProperty(id)
+            && this.DATA.providers[id].hasOwnProperty('title')
+        ) {
+            const titleEl = document.createElement('p');
+            titleEl.classList.add('title');
+            titleEl.appendChild(document.createTextNode(this.DATA.providers[id].title));
 
+            parentEl.appendChild(titleEl);
+        }
+
+        // iframe
+        const containerEl = document.createElement('div');
+        containerEl.classList.add(`${provider}-container`, 'oembed');
+
+        // Add player specific data
+        // i.e. set content if iframe html exists
+        // else fallback to creating iframe element and adding required values
+        if (this.DATA.providers.hasOwnProperty(id) && this.DATA.providers[id].hasOwnProperty('html')) {
+            containerEl.insertAdjacentHTML('beforeend', this.DATA.providers[id].html);
+        } else if (data.hasOwnProperty('url') && isURL(data.url)) {
+            const url = new URL(data.url);
+            const videoId = provider === 'youtube' ? url.searchParams.get('v') : url.pathname.replace(/^\/|\/$/g, '');
+            if (videoId) {
+                const iframeEl = document.createElement('iframe');
+                iframeEl.setAttribute('src', `${this.API_URL[provider]}/${videoId}?feature=oembed`);
+                iframeEl.setAttribute('frameborder', '0');
+                iframeEl.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share')
+                iframeEl.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+                iframeEl.allowFullscreen = true;
+
+                containerEl.appendChild(iframeEl);
+            }
+        }
+
+        parentEl.appendChild(containerEl);
+        return content;
     },
     embed: function(provider, id, parentEl, content) {
         if (this.DATA.providers.hasOwnProperty(id) && this.DATA.providers[id].hasOwnProperty('html')) {

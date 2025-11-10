@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin" />
     <title>Preview | Pages by CLKD</title>
     <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
     <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
@@ -171,6 +172,19 @@
                     & iframe {
                         border-radius: 32px;
                     }
+                    &.youtube-container,
+                    &.vimeo-container {
+                        position: relative;
+                        padding-bottom: 56.25%;
+
+                        & iframe {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
                 }
             }
         }
@@ -300,20 +314,22 @@
     </header>
 
     <div class="wrapper">
-        <!-- Content -->
-        <div class="content">
-            <!-- Profile (thumbnail, title & bio) -->
-            <div class="profile">
-                <div class="profile-thumbnail"></div>
-                <div class="profile-content"></div>
+        <div class="main">
+            <!-- Content -->
+            <div class="content">
+                <!-- Profile (thumbnail, title & bio) -->
+                <div class="profile">
+                    <div class="profile-thumbnail"></div>
+                    <div class="profile-content"></div>
+                </div>
+
+                <!-- Links Area -->
+                <div class="links"></div>
             </div>
 
-            <!-- Links Area -->
-            <div class="links"></div>
-        </div>
-
-        <div class="footer">
-            <a href="https://clkd.in/?utm_source=clkd&utm_medium=profile&utm_campaign=footer_cta" target="_blank">Create Your Own Page on CLKD</a>
+            <div class="footer">
+                <a href="https://clkd.in/?utm_source=clkd&utm_medium=profile&utm_campaign=footer_cta" target="_blank">Create Your Own Page on CLKD</a>
+            </div>
         </div>
     </div>
 
