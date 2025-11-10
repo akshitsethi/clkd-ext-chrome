@@ -120,12 +120,15 @@ export const Content = {
                 input.setAttribute('name', `${name}-${id}`);
 
                 // Adding event listeners based on input type
-                const type = input.getAttribute('type');
+                const inputType = input.getAttribute('type');
 
                 // Event listeners
-                if (['checkbox', 'radio', 'range'].includes(type)) {
+                if (['checkbox', 'radio', 'range'].includes(inputType)) {
                     input.addEventListener('change', async e => await this.save());
                 } else {
+                    // To update `text` and `url` field values
+                    this.updateInputAsPerContentType(input, name, type);
+
                     input.addEventListener('keyup', debounce(async () => {
                         await this.save(true);
                     }));
@@ -134,6 +137,18 @@ export const Content = {
         }
 
         return content;
+    },
+    updateInputAsPerContentType: function(input, name, type) {
+        if (type === 'link' && (name === 'title')) {
+            input.setAttribute('placeholder', `${input.getAttribute('placeholder')} *`);
+        }
+        if (name === 'url') {
+            if (type === 'googlemaps') {
+                input.setAttribute('placeholder', `Location *`);
+            } else {
+                input.setAttribute('placeholder', `${input.getAttribute('placeholder')} *`);
+            }
+        }
     },
     replaceProviderPlaceholder: function(node, provider) {
         if (provider === 'link' || !node) return;

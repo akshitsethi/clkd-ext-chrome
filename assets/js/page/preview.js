@@ -264,7 +264,15 @@ export const Preview = {
     googlemaps: function(id, parentEl, content, data) {
         const containerEl = document.createElement('div');
 
-        if (data.hasOwnProperty('url')) {
+        if (data.hasOwnProperty('url') && data.url) {
+            if (data.title) {
+                const titleEl = document.createElement('p');
+                titleEl.classList.add('title');
+                titleEl.appendChild(document.createTextNode(data.title));
+
+                parentEl.appendChild(titleEl);
+            }
+
             containerEl.classList.add('googlemaps-container', 'oembed');
 
             // Get data URL
@@ -283,29 +291,40 @@ export const Preview = {
         parentEl.appendChild(containerEl);
         return content;
     },
-    twitter: function(id, parentEl, content) {
-        return this.embed('twitter', id, parentEl, content);
+    twitter: function(id, parentEl, content, data) {
+        return this.embed('twitter', id, parentEl, content, data);
     },
-    soundcloud: function(id, parentEl, content) {
-        return this.embed('soundcloud', id, parentEl, content);
+    soundcloud: function(id, parentEl, content, data) {
+        return this.embed('soundcloud', id, parentEl, content, data);
     },
-    tiktok: function(id, parentEl, content) {
-        return this.embed('tiktok', id, parentEl, content);
+    tiktok: function(id, parentEl, content, data) {
+        return this.embed('tiktok', id, parentEl, content, data);
     },
-    spotify: function(id, parentEl, content) {
-        return this.embed('spotify', id, parentEl, content);
+    spotify: function(id, parentEl, content, data) {
+        return this.embed('spotify', id, parentEl, content, data);
     },
     video: function(provider, id, parentEl, content, data) {
-        // Check for title and if required, insert it before iframe container
+        // Start with an empty title and see if user has provided one
+        let title = null;
+        if (data.title) {
+            title = data.title;
+        }
+
+        // Check if video title is enabled, else show the user defined one
         if (
             data.hasOwnProperty('statusEmbedTitle')
             && data.statusEmbedTitle === 'on'
             && this.DATA.providers.hasOwnProperty(id)
             && this.DATA.providers[id].hasOwnProperty('title')
         ) {
+            title = this.DATA.providers[id].title;
+        }
+
+        // Insert title if it exists
+        if (title) {
             const titleEl = document.createElement('p');
             titleEl.classList.add('title');
-            titleEl.appendChild(document.createTextNode(this.DATA.providers[id].title));
+            titleEl.appendChild(document.createTextNode(title));
 
             parentEl.appendChild(titleEl);
         }
@@ -326,7 +345,7 @@ export const Preview = {
                 const iframeEl = document.createElement('iframe');
                 iframeEl.setAttribute('src', `${this.API_URL[provider]}/${videoId}?feature=oembed`);
                 iframeEl.setAttribute('frameborder', '0');
-                iframeEl.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share')
+                iframeEl.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
                 iframeEl.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
                 iframeEl.allowFullscreen = true;
 
@@ -337,8 +356,16 @@ export const Preview = {
         parentEl.appendChild(containerEl);
         return content;
     },
-    embed: function(provider, id, parentEl, content) {
+    embed: function(provider, id, parentEl, content, data) {
         if (this.DATA.providers.hasOwnProperty(id) && this.DATA.providers[id].hasOwnProperty('html')) {
+            if (data.title) {
+                const titleEl = document.createElement('p');
+                titleEl.classList.add('title');
+                titleEl.appendChild(document.createTextNode(data.title));
+
+                parentEl.appendChild(titleEl);
+            }
+
             const containerEl = document.createElement('div');
             containerEl.classList.add(`${provider}-container`, 'oembed');
             containerEl.innerHTML = this.DATA.providers[id].html;
