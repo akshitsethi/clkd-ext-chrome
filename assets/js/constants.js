@@ -234,8 +234,8 @@ export const defaultPageOptions = {
         radioButtonFill: 'solid',
         colorButtonBackground: '#ffffff',
         colorButtonText: '#101010',
-        rangeButtonCorner: '32',
-        rangeButtonSpacing: '8',
+        rangeButtonCorner: '64',
+        rangeButtonSpacing: '12',
         radioButtonFont: 'Inter',
         radioButtonBorder: 'solid',
         rangeButtonBorderThickness: '1',
@@ -473,14 +473,14 @@ export const googleFonts = {
         }
     },
     'Anton': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 400
         }
     },
     'Belanosima': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 700
@@ -494,7 +494,7 @@ export const googleFonts = {
         }
     },
     'Chango': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 400
@@ -508,7 +508,7 @@ export const googleFonts = {
         }
     },
     'IBM+Plex+Sans': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
@@ -522,49 +522,49 @@ export const googleFonts = {
         }
     },
     'Manrope': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Monofett': {
-        fallback: '"Courier New",Consolas,Menlo,Monaco,monospace',
+        fallback: 'monospace',
         weight: {
             text: 400,
             title: 400
         }
     },
     'Old+Standard+TT': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Oxanium': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Playfair+Display': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Poppins': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Roboto': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
@@ -578,105 +578,105 @@ export const googleFonts = {
         }
     },
     'Salsa': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 400
         }
     },
     'Space+Mono': {
-        fallback: '"Courier New",Consolas,Menlo,Monaco,monospace',
+        fallback: 'monospace',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Murecho': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Viaoda+Libre': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 400
         }
     },
     'Albert+Sans': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Bricolage+Grotesque': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'DM+Sans': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Epilogue': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Inter': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Lato': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'M+PLUS+Rounded+1c': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Red+Hat+Display': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Rubik': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Space+Grotesk': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Syne': {
-        fallback: 'Arial,Calibri,"Segoe UI",Helvetica,sans-serif',
+        fallback: 'sans-serif',
         weight: {
             text: 400,
             title: 700
@@ -690,70 +690,70 @@ export const googleFonts = {
         }
     },
     'Caudex': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Corben': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Hahmlet': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'IBM+Plex+Serif': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Lora': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Merriweather': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'Noto+Serif': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'PT+Serif': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
         }
     },
     'Roboto+Serif': {
-        fallback: 'Garamond,"Hoefler Text","Times New Roman",serif',
+        fallback: 'serif',
         weight: {
             text: 300,
             title: 600
         }
     },
     'IBM+Plex+Mono': {
-        fallback: 'Consolas,"SF Mono","DejaVu Sans Mono","Courier New",monospace',
+        fallback: 'monospace',
         weight: {
             text: 300,
             title: 600

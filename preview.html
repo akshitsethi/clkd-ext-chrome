@@ -8,11 +8,22 @@
     <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
     <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
     <!-- <script async="defer" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+    <link rel="stylesheet" href="./assets/css/effects.css" type="text/css">
     <style>
 		* {
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
             backface-visibility: hidden;
+        }
+        :root {
+            --button-background-color: #ffffff;
+            --button-text-color: #101010;
+            --button-radius: 64px;
+            --button-spacing: 12px;
+            --button-font: Inter,Arial,Calibri,"Segoe UI",Helvetica,sans-serif;
+            --button-border-style: solid;
+            --button-border-width: 1px;
+            --button-border-color: #101010;
         }
         html {
             width: 100%;
@@ -68,19 +79,21 @@
 
         /* Header */
         .header {
+            position: relative;
             padding: 1rem;
             max-width: 540px;
             margin: 0 auto;
+            z-index: 1;
 
             & a {
                 display: inline-block;
                 padding: 0.5rem;
-                background-color: rgba(0,0,0,0.06);
-                border-radius: 100%;
+                background-color: rgba(255,255,255,0.35);
+                border-radius: 8px;
             }
             & img {
                 display: block;
-                max-width: 32px;
+                max-width: 54px;
                 height: auto;
             }
         }
@@ -88,14 +101,19 @@
         /* Content */
         .wrapper {
             display: none;
-            flex-direction: column;
-            min-height: 100%;
-            justify-content: space-between;
-            position: relative;
-            padding: 1rem;
-            max-width: 540px;
-            margin: 0 auto;
+            min-height: calc(100% - 6rem);
             z-index: 1;
+
+            & .main {
+                display: flex;
+                min-height: calc(100vh - 6rem);
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+                padding: 1rem;
+                max-width: 540px;
+                margin: 0 auto;
+            }
         }
         .profile {
             text-align: center;
@@ -126,7 +144,7 @@
             padding: 1rem 0;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: var(--button-spacing);
 
             & .link-data {
                 position: relative;
@@ -134,9 +152,11 @@
                 & a {
                     display: block;
                     font-size: 1rem;
-                    background-color: #ffffff;
+                    font-family: var(--button-font), sans-serif;
+                    background-color: var(--button-background-color);
+                    color: var(--button-text-color);
                     padding: 1rem 1.75rem;
-                    border-radius: 64px;
+                    border-radius: var(--button-radius);
                     font-weight: 500;
                     line-height: 1.375;
                     text-align: center;
@@ -191,6 +211,42 @@
                     font-size: 1rem;
                     font-weight: 500;
                     line-height: 1.45;
+                }
+            }
+
+            /* Variations */
+            &[data-fill="solid"] {
+                --button-background-color: attr(data-background-color type(<color>));
+            }
+            &[data-fill="outline"] {
+                & a {
+                    background: transparent;
+                }
+            }
+
+            &[data-text-color] {
+                --button-text-color: attr(data-text-color type(<color>));
+            }
+            &[data-corner] {
+                --button-radius: attr(data-corner px);
+            }
+            &[data-spacing] {
+                --button-spacing: attr(data-spacing px);
+            }
+            &[data-border-width] {
+                --button-border-width: attr(data-border-width px);
+            }
+            &[data-border-color] {
+                --button-border-color: attr(data-border-color type(<color>));
+            }
+            &[data-font] {
+                --button-font: attr(data-font type(<custom-ident>));
+            }
+            &[data-border] {
+                --button-border-style: attr(data-border type(<custom-ident>));
+
+                & a {
+                    border: var(--button-border-width) var(--button-border-style) var(--button-border-color);
                 }
             }
         }
@@ -315,7 +371,7 @@
 
     <header class="header">
         <a href="https://clkd.in/?utm_source=clkd&utm_medium=profile&utm_campaign=header_cta" target="_blank">
-            <img src="./assets/images/icon.svg" alt="CLKD"/>
+            <img src="./assets/images/domains/clkd.in.svg" alt="CLKD"/>
         </a>
     </header>
 

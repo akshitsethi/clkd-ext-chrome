@@ -2,7 +2,7 @@
 import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
-import { defaultPageOptions, embedProviders, googleApiKey, storageBase } from "../constants.js";
+import { defaultPageOptions, embedProviders, googleApiKey, googleFonts, storageBase } from "../constants.js";
 import { isURL } from "validator";
 
 export const Preview = {
@@ -16,6 +16,23 @@ export const Preview = {
         PROFILE: document.querySelector('.profile'),
         LINK_TEMPLATE: document.querySelector('#link-item-entry'),
         LINKS_CONTAINER: document.querySelector('.links')
+    },
+    BUTTON_FIELDS: {
+        'fill': 'radioButtonFill',
+        'background-color': 'colorButtonBackground',
+        'text-color': 'colorButtonText',
+        'corner': 'rangeButtonCorner',
+        'spacing': 'rangeButtonSpacing',
+        'font': 'radioButtonFont',
+        'border': 'radioButtonBorder',
+        'border-width': 'rangeButtonBorderThickness',
+        'border-color': 'colorButtonBorder',
+        'shadow': 'radioButtonShadow',
+        'shadow-color': 'colorButtonShadow',
+        'shadow-direction': 'radioButtonShadowPosition',
+        'shadow-width': 'rangeButtonShadowThickness',
+        'shadow-opacity': 'rangeButtonShadowOpacity',
+        'effect': 'radioButtonEffect'
     },
     SLUG: null,
     DOMAIN: null,
@@ -56,7 +73,7 @@ export const Preview = {
         this.addLinksData();
 
         // Make preview visible
-        document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'flex';
+        document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
     },
     setSlugAndDomain: function() {
         const url = new URL(window.location.href);
@@ -235,11 +252,16 @@ export const Preview = {
                 this.selectors.LINKS_CONTAINER.appendChild(content);
             }
         }
+
+        // Set data attributes on the parent container
+        for (const [key, value] of Object.entries(this.BUTTON_FIELDS)) {
+            this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, this.get('design', value) ?? defaultPageOptions.design[value]);
+        }
     },
     processLink: function(parentEl, content, data) {
         // Default button class
         const anchorEl = parentEl.querySelector('a');
-        anchorEl.classList.add('button');
+        anchorEl.classList.add('button', this.get('design', 'radioButtonEffect') ?? defaultPageOptions.design.radioButtonEffect);
         anchorEl.appendChild(document.createTextNode(data.title));
         anchorEl.setAttribute('href', data.url);
 
