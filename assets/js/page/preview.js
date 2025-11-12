@@ -140,9 +140,6 @@ export const Preview = {
 
             this.selectors.HTML.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
             this.selectors.HTML.classList.add('gradient-background');
-        } else if (background === 'pattern') {
-            this.selectors.HTML.style.backgroundImage = `url(./assets/images/page/patterns/${this.DATA.design.radioBackgroundPattern}.svg)`;
-            this.selectors.HTML.classList.add('pattern-background');
         } else if (background === 'image') {
             if (!this.DATA.design.hasOwnProperty('imageBackground') || !this.DATA.design.imageBackground.hasOwnProperty('slug') || !this.DATA.design.imageBackground.slug) return;
             this.selectors.HTML.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;

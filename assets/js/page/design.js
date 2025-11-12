@@ -20,7 +20,6 @@ export const Design = {
             'colorBackgroundGradientOne',
             'colorBackgroundGradientTwo',
             'rangeBackgroundGradientAngle',
-            'radioBackgroundPattern',
             'imageBackground',
             'statusHeroBackground',
             'colorHeroBackground',
@@ -49,7 +48,6 @@ export const Design = {
         ],
         INLINE_OPTIONS: [
             'color',
-            'gradient',
             'pattern',
             'image',
             'video'

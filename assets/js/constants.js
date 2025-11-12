@@ -466,7 +466,7 @@ export const socialIcons = {
 // Google fonts
 export const googleFonts = {
     'Alfa+Slab+One': {
-        fallback: 'Georgia,Courier,serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 400
@@ -487,7 +487,7 @@ export const googleFonts = {
         }
     },
     'BioRhyme': {
-        fallback: 'Georgia,Courier,serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
@@ -501,7 +501,7 @@ export const googleFonts = {
         }
     },
     'Domine': {
-        fallback: 'Georgia,Courier,serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
@@ -515,7 +515,7 @@ export const googleFonts = {
         }
     },
     'Kavivanar': {
-        fallback: 'cursive,sans-serif',
+        fallback: 'cursive',
         weight: {
             text: 400,
             title: 400
@@ -571,7 +571,7 @@ export const googleFonts = {
         }
     },
     'Roboto+Slab': {
-        fallback: 'Georgia,Courier,serif',
+        fallback: 'serif',
         weight: {
             text: 300,
             title: 600
@@ -683,7 +683,7 @@ export const googleFonts = {
         }
     },
     'Bitter': {
-        fallback: 'Georgia,Courier,serif',
+        fallback: 'serif',
         weight: {
             text: 400,
             title: 700
@@ -760,7 +760,7 @@ export const googleFonts = {
         }
     },
     'Shantell+Sans': {
-        fallback: 'cursive,sans-serif',
+        fallback: 'cursive',
         weight: {
             text: 300,
             title: 600

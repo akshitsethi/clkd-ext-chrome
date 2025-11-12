@@ -1487,50 +1487,6 @@ header {
                         }
                     }
                 }
-
-                /* Pattern */
-                &.pattern {
-                    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-
-                    & label {
-                        height: 160px;
-                    }
-
-                    & input {
-                        &:checked+div {
-                            border-color: transparent;
-
-                            &:after {
-                                position: absolute;
-                                content: 'Selected';
-                                background: rgba(0, 0, 0, 0.85);
-                                font-size: 0.825rem;
-                                color: #ffffff;
-                                top: 12px;
-                                left: 12px;
-                                padding: 0.625rem;
-                                font-weight: 500;
-                                border-radius: 8px;
-                                line-height: 1;
-                            }
-                        }
-                    }
-
-                    & .grid-content {
-                        height: 100%;
-                        display: flex;
-                        align-items: center;
-
-                        & span {
-                            padding: 0.5rem;
-                            background: rgba(0,0,0,0.85);
-                            color: #ffffff;
-                            font-weight: 500;
-                            margin: 0 auto;
-                            border-radius: 12px;
-                        }
-                    }
-                }
             }
 
             & table {
