@@ -20,7 +20,8 @@
             --button-text-color: #101010;
             --button-radius: 64px;
             --button-spacing: 12px;
-            --button-font: Inter,sans-serif;
+            --button-font: Inter;
+            --button-font-fallback: sans-serif;
             --button-border-style: solid;
             --button-border-width: 1px;
             --button-border-color: #101010;
@@ -38,9 +39,6 @@
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: cover;
-                background-attachment: fixed;
-            }
-            &.pattern-background {
                 background-attachment: fixed;
             }
         }
@@ -152,7 +150,7 @@
                 & a {
                     display: block;
                     font-size: 1rem;
-                    font-family: var(--button-font), sans-serif;
+                    font-family: var(--button-font), var(--button-font-fallback);
                     background-color: var(--button-background-color);
                     color: var(--button-text-color);
                     padding: 1rem 1.75rem;
@@ -241,6 +239,9 @@
             }
             &[data-font] {
                 --button-font: attr(data-font type(<custom-ident>));
+            }
+            &[data-font-fallback] {
+                --button-font-fallback: attr(data-font-fallback type(<custom-ident>));
             }
             &[data-border] {
                 --button-border-style: attr(data-border type(<custom-ident>));

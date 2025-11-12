@@ -32,7 +32,8 @@ export const Preview = {
         'shadow-direction': 'radioButtonShadowPosition',
         'shadow-width': 'rangeButtonShadowThickness',
         'shadow-opacity': 'rangeButtonShadowOpacity',
-        'effect': 'radioButtonEffect'
+        'effect': 'radioButtonEffect',
+        'font-fallback': 'fallback' // Exception for fetching Google font fallback
     },
     SLUG: null,
     DOMAIN: null,
@@ -252,7 +253,14 @@ export const Preview = {
 
         // Set data attributes on the parent container
         for (const [key, value] of Object.entries(this.BUTTON_FIELDS)) {
-            this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, this.get('design', value) ?? defaultPageOptions.design[value]);
+            if (key === 'font-fallback') {
+                const font = this.get('design', 'radioButtonFont') ?? defaultPageOptions.design.radioButtonFont;
+                const fontFallback = googleFonts[font].fallback;
+
+                this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, fontFallback);
+            } else {
+                this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, this.get('design', value) ?? defaultPageOptions.design[value]);
+            }
         }
     },
     processLink: function(parentEl, content, data) {

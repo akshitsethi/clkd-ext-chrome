@@ -220,7 +220,6 @@ export const defaultPageOptions = {
         colorBackgroundGradientOne: '#a8edea',
         colorBackgroundGradientTwo: '#fed6e3',
         rangeBackgroundGradientAngle: '0',
-        radioBackgroundPattern: 'leaves',
         imageBackground: {},
         statusHeroBackground: 'off',
         colorHeroBackground: '#101010',
