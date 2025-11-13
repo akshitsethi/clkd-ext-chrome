@@ -48,7 +48,7 @@ export const Design = {
         ],
         INLINE_OPTIONS: [
             'color',
-            'pattern',
+            'gradient',
             'image',
             'video'
         ],

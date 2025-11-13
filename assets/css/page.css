@@ -535,7 +535,6 @@ header {
 
 /* Primary */
 & .wrapper {
-    height: calc(100% - 86px);
     max-width: 1320px;
     margin: 0 auto;
     display: none;
@@ -555,6 +554,8 @@ header {
 
 
             & .content-actions {
+                position: fixed;
+                bottom: 1.5rem;
                 display: flex;
                 justify-content: space-between;
                 width: 100%;
@@ -568,7 +569,7 @@ header {
                     justify-content: center;
                     font-size: 1rem;
                     font-weight: 600;
-                    padding: 1rem;
+                    padding: 0.75rem;
                     width: 100%;
 
                     & img {
@@ -600,7 +601,7 @@ header {
                     border-radius: 0 32px 32px 0;
 
                     & .embed-button {
-                        padding: 1rem;
+                        padding: 0.75rem;
                         border-radius: 32px;
                         margin-right: 0.25rem;
                         background: #ffffff;
@@ -617,7 +618,7 @@ header {
                     & .embed-options {
                         display: none;
                         position: absolute;
-                        top: 72px;
+                        bottom: 3.75rem;
                         width: 220px;
                         background: #ffffff;
                         padding: 0;
@@ -659,7 +660,7 @@ header {
 
             & .content-items {
                 display: none;
-                padding: 0 0 1rem;
+                margin-bottom: 6rem;
 
                 & .item {
                     & .entry {
@@ -968,13 +969,13 @@ header {
             }
 
             & .no-content-data {
-                height: calc(100% - 60px);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 text-align: center;
                 color: #a8aaa2;
                 font-weight: 500;
+                margin-top: 4rem;
 
                 & img {
                     max-width: 300px;
