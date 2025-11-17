@@ -25,9 +25,6 @@
             --button-border-style: solid;
             --button-border-width: 1px;
             --button-border-color: #101010;
-            --button-shadow-color: #101010;
-            --button-shadow-width: 6px;
-            --button-shadow-opacity: 0.5;
         }
         html {
             width: 100%;
@@ -156,7 +153,7 @@
                     font-family: var(--button-font), var(--button-font-fallback);
                     background-color: var(--button-background-color);
                     color: var(--button-text-color);
-                    padding: 1rem 1.75rem;
+                    padding: 1.125rem 1.75rem;
                     border-radius: var(--button-radius);
                     font-weight: 500;
                     line-height: 1.375;
@@ -224,7 +221,6 @@
                     background: transparent;
                 }
             }
-
             &[data-text-color] {
                 --button-text-color: attr(data-text-color type(<color>));
             }
@@ -245,6 +241,15 @@
             }
             &[data-font-fallback] {
                 --button-font-fallback: attr(data-font-fallback type(<custom-ident>));
+            }
+            &[data-shadow-color] {
+                --button-shadow-color: attr(data-shadow-color type(<color>));
+            }
+            &[data-shadow-thickness] {
+                --button-shadow-width: attr(data-shadow-thickness px);
+            }
+            &[data-shadow-opacity] {
+                --button-shadow-opacity: attr(data-shadow-opacity);
             }
             &[data-border] {
                 --button-border-style: attr(data-border type(<custom-ident>));
@@ -390,7 +395,7 @@
                 </div>
 
                 <!-- Links Area -->
-                <div class="links" data-fill="solid" data-background-color="#433d14" data-text-color="#ffffff" data-corner="64" data-spacing="12" data-font="Chango" data-border="dashed" data-border-width="1" data-border-color="#1d1b1c" data-shadow="none" data-shadow-color="#101010" data-shadow-direction="down-right" data-shadow-width="6" data-shadow-opacity="0.5" data-effect="rotate"></div>
+                <div class="links"></div>
             </div>
 
             <div class="footer">

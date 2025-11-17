@@ -4,6 +4,7 @@ import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
 import { defaultPageOptions, embedProviders, googleApiKey, googleFonts, storageBase } from "../constants.js";
 import { isURL } from "validator";
+import { getShadowCSSValue } from "../helper.js";
 
 export const Preview = {
     constants: {
@@ -51,13 +52,6 @@ export const Preview = {
     API_URL: {
         youtube: 'https://www.youtube.com/embed',
         vimeo: 'https://player.vimeo.com/video'
-    },
-    get: function(attribute, id = null, subId = null) {
-        if (id !== null || subId !== null) {
-            return subId !== null ? this.DATA[attribute][id][subId] : this.DATA[attribute][id];
-        }
-
-        return this.DATA[attribute];
     },
     render: async function() {
         // Set essential constants (slug and domain)
@@ -120,51 +114,6 @@ export const Preview = {
         // Append the link element to the document's head
         document.head.appendChild(linkEl);
     },
-    updateBackgroundEvent: function() {
-        if (!this.DATA.design.hasOwnProperty('radioBackground') || !this.DATA.design.radioBackground) return;
-
-        const background = this.DATA.design.radioBackground;
-        if (background === 'color') {
-            if (!this.DATA.design.hasOwnProperty('colorBackground') || !this.DATA.design.colorBackground) {
-                this.DATA.design.colorBackground = defaultPageOptions.design.colorBackground;
-            }
-            this.selectors.HTML.style.backgroundColor = this.DATA.design.colorBackground;
-        } else if (background === 'gradient') {
-            const gradientData = {
-                colorBackgroundGradientOne: null,
-                colorBackgroundGradientTwo: null,
-                rangeBackgroundGradientAngle: 0
-            };
-            for (const field of Object.keys(gradientData)) {
-                gradientData[field] = this.DATA.design[field] ?? defaultPageOptions.design[field];
-            }
-
-            this.selectors.HTML.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
-            this.selectors.HTML.classList.add('gradient-background');
-        } else if (background === 'image') {
-            if (!this.DATA.design.hasOwnProperty('imageBackground') || !this.DATA.design.imageBackground.hasOwnProperty('slug') || !this.DATA.design.imageBackground.slug) return;
-            this.selectors.HTML.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
-            this.selectors.HTML.classList.add('image-background');
-        } else if (background === 'video') {
-            if (!this.DATA.design.hasOwnProperty('videoBackground') || !this.DATA.design.videoBackground.hasOwnProperty('slug') || !this.DATA.design.videoBackground.slug) return;
-
-            // Empty the existing video (if any)
-            this.selectors.VIDEO_CONTAINER.innerHTML = null;
-
-            // Add `video` element to container
-            const videoEl = document.createElement('video');
-            videoEl.setAttribute('src', `${storageBase}${this.DATA.design.videoBackground.slug}`);
-
-            // Add class to html tag to differentiate the background
-            this.selectors.HTML.classList.add('video-background');
-
-            videoEl.muted = true;
-            videoEl.autoplay = true;
-            videoEl.loop = true;
-
-            this.selectors.VIDEO_CONTAINER.appendChild(videoEl);
-        }
-    },
     addProfileData: function() {
         this.addThumbnail();
         this.addTitleAndBio();
@@ -224,7 +173,7 @@ export const Preview = {
     addLinksData: function() {
         if (!Object.keys(this.DATA.order).length || !Object.keys(this.DATA.content).length) return;
 
-        for (const [slotId, contentId] of this.DATA['order']) {
+        for (const [slotId, contentId] of this.DATA.order) {
             if (this.DATA.content.hasOwnProperty(contentId)) {
                 const data = this.DATA.content[contentId];
 
@@ -254,19 +203,19 @@ export const Preview = {
         // Set data attributes on the parent container
         for (const [key, value] of Object.entries(this.BUTTON_FIELDS)) {
             if (key === 'font-fallback') {
-                const font = this.get('design', 'radioButtonFont') ?? defaultPageOptions.design.radioButtonFont;
+                const font = this.DATA.design.radioButtonFont ?? defaultPageOptions.design.radioButtonFont;
                 const fontFallback = googleFonts[font].fallback;
 
                 this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, fontFallback);
             } else {
-                this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, this.get('design', value) ?? defaultPageOptions.design[value]);
+                this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, this.DATA.design[value] ?? defaultPageOptions.design[value]);
             }
         }
     },
     processLink: function(parentEl, content, data) {
         // Default button class
         const anchorEl = parentEl.querySelector('a');
-        anchorEl.classList.add('button', this.get('design', 'radioButtonEffect') ?? defaultPageOptions.design.radioButtonEffect);
+        anchorEl.classList.add('button', this.DATA.design.radioButtonEffect ?? defaultPageOptions.design.radioButtonEffect);
         anchorEl.appendChild(document.createTextNode(data.title));
         anchorEl.setAttribute('href', data.url);
 
@@ -402,8 +351,81 @@ export const Preview = {
 
         return content;
     },
+    getButtonShadowCSS: function() {
+        if (
+            !this.DATA.design.hasOwnProperty('radioButtonShadow')
+            || !this.DATA.design.radioButtonShadow
+            || this.DATA.design.radioButtonShadow === 'none'
+        ) return [];
+
+        const css = ['.button{'];
+
+        // Default styles
+        const shadow = getShadowCSSValue(this.DATA.design.radioButtonShadow, this.DATA.design.colorButtonShadow, this.DATA.design.radioButtonShadowPosition, this.DATA.design.rangeButtonShadowThickness, this.DATA.design.rangeButtonShadowOpacity)
+
+        css.push(`box-shadow:${shadow};`);
+        css.push('}');
+
+        return css;
+    },
+    updateBackgroundEvent: function() {
+        if (!this.DATA.design.hasOwnProperty('radioBackground') || !this.DATA.design.radioBackground) return;
+
+        const background = this.DATA.design.radioBackground;
+        if (background === 'color') {
+            if (!this.DATA.design.hasOwnProperty('colorBackground') || !this.DATA.design.colorBackground) {
+                this.DATA.design.colorBackground = defaultPageOptions.design.colorBackground;
+            }
+            this.selectors.HTML.style.backgroundColor = this.DATA.design.colorBackground;
+        } else if (background === 'gradient') {
+            const gradientData = {
+                colorBackgroundGradientOne: null,
+                colorBackgroundGradientTwo: null,
+                rangeBackgroundGradientAngle: 0
+            };
+            for (const field of Object.keys(gradientData)) {
+                gradientData[field] = this.DATA.design[field] ?? defaultPageOptions.design[field];
+            }
+
+            this.selectors.HTML.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
+            this.selectors.HTML.classList.add('gradient-background');
+        } else if (background === 'image') {
+            if (!this.DATA.design.hasOwnProperty('imageBackground') || !this.DATA.design.imageBackground.hasOwnProperty('slug') || !this.DATA.design.imageBackground.slug) return;
+            this.selectors.HTML.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
+            this.selectors.HTML.classList.add('image-background');
+        } else if (background === 'video') {
+            if (!this.DATA.design.hasOwnProperty('videoBackground') || !this.DATA.design.videoBackground.hasOwnProperty('slug') || !this.DATA.design.videoBackground.slug) return;
+
+            // Empty the existing video (if any)
+            this.selectors.VIDEO_CONTAINER.innerHTML = null;
+
+            // Add `video` element to container
+            const videoEl = document.createElement('video');
+            videoEl.setAttribute('src', `${storageBase}${this.DATA.design.videoBackground.slug}`);
+
+            // Add class to html tag to differentiate the background
+            this.selectors.HTML.classList.add('video-background');
+
+            videoEl.muted = true;
+            videoEl.autoplay = true;
+            videoEl.loop = true;
+
+            this.selectors.VIDEO_CONTAINER.appendChild(videoEl);
+        }
+    },
+    generateCSS: function() {
+        const css = ['<style>'];
+
+        // Generate CSS for different options
+        css.push(...this.getButtonShadowCSS());
+        css.push('</style>');
+
+        // Once generated, add it to `head` tag
+        document.head.insertAdjacentHTML('beforeend', css.join(''));
+    },
     events: function() {
         this.updateBackgroundEvent();
+        this.generateCSS();
     },
     init: async function() {
         try {

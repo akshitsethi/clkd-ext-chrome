@@ -326,7 +326,7 @@ header {
     background: #f3f3f1;
     padding: 0.925rem 0;
     top: 0;
-    z-index: 2;
+    z-index: 3;
 
     & .container {
         width: 100%;
@@ -995,8 +995,10 @@ header {
                 display: flex;
                 align-items: center;
                 font-size: 1.0625rem;
-                padding: 1rem 1.5rem;
-                border-bottom: 1px solid #f3f3f1;
+                padding: 1.25rem 1.5rem;
+                background: #ffffff;
+                border-radius: 32px;
+                z-index: 2;
 
                 & span {
                     font-weight: 600;

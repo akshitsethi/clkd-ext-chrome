@@ -1,4 +1,5 @@
 // page/page.js
+import stickybits from "stickybits";
 import { Events } from "./events.js";
 import { Selectors } from "./selectors.js";
 import { Store } from "../store.js"
@@ -293,9 +294,15 @@ export const Page = {
             }
         }));
     },
+    stickyHeadingEvent: function() {
+        stickybits('.sticky', {
+            stickyBitStickyOffset: 82
+        });
+    },
     events: function() {
         this.mobileMenuEvent();
         this.tabSwitchEvent();
+        this.stickyHeadingEvent();
     },
     init: async function() {
         try {
