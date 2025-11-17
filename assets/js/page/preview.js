@@ -2,7 +2,7 @@
 import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
-import { defaultPageOptions, embedProviders, googleApiKey, googleFonts, storageBase } from "../constants.js";
+import { embedProviders, googleApiKey, googleFonts, storageBase } from "../constants.js";
 import { isURL } from "validator";
 import { getShadowCSSValue } from "../helper.js";
 
@@ -120,10 +120,6 @@ export const Preview = {
         this.addTitleAndBio();
     },
     addThumbnail: function() {
-        if (!this.DATA.design.hasOwnProperty('radioThumbnailDesign') || !this.DATA.design.radioThumbnailDesign) {
-            this.DATA.design.radioThumbnailDesign = defaultPageOptions.design.radioThumbnailDesign;
-        }
-
         const template = document.getElementById(`thumbnail-design-${this.DATA.design.radioThumbnailDesign}`).content;
         const content = template.cloneNode(true);
 
@@ -200,30 +196,11 @@ export const Preview = {
                 this.selectors.LINKS_CONTAINER.appendChild(content);
             }
         }
-
-        // Set data attributes on the parent container
-        for (const [key, value] of Object.entries(this.BUTTON_FIELDS)) {
-            // Handle font-weight and fallback exceptions
-            if (['font', 'font-weight', 'font-fallback'].includes(key)) {
-                const font = this.DATA.design.radioButtonFont ?? defaultPageOptions.design.radioButtonFont;
-                const fontObj = googleFonts[font];
-
-                if (key === 'font-fallback') {
-                    this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, fontObj.fallback);
-                } else if (key === 'font-weight') {
-                    this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, fontObj.weight.title);
-                } else {
-                    this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, font.replace('+', ' '));
-                }
-            } else {
-                this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, this.DATA.design[value] ?? defaultPageOptions.design[value]);
-            }
-        }
     },
     processLink: function(parentEl, content, data) {
         // Default button class
         const anchorEl = parentEl.querySelector('a');
-        anchorEl.classList.add('button', this.DATA.design.radioButtonEffect ?? defaultPageOptions.design.radioButtonEffect);
+        anchorEl.classList.add('button', this.DATA.design.radioButtonEffect);
         anchorEl.appendChild(document.createTextNode(data.title));
         anchorEl.setAttribute('href', data.url);
 
@@ -359,29 +336,61 @@ export const Preview = {
 
         return content;
     },
-    getFontCSS: function() {
-        return [];
+    getProfileCss: function() {
+        const css = ['.profile-content h1{'];
+
+        // h1 (font and color)
+        const font = googleFonts[this.DATA.design.radioProfileFont];
+        css.push(`font-family:${this.DATA.design.radioProfileFont.replaceAll('+', ' ')},${font.fallback};`);
+        css.push(`font-weight:${font.weight.title};`);
+        css.push(`color:${this.DATA.design.colorProfileTitle};`);
+        css.push('}');
+
+        // Bio
+        css.push('.profile-content .bio{');
+        css.push(`color:${this.DATA.design.colorProfileText};`);
+        css.push('}');
+
+        return css;
     },
-    getButtonShadowCSS: function() {
-        if (
-            !this.DATA.design.hasOwnProperty('radioButtonShadow')
-            || !this.DATA.design.radioButtonShadow
-            || this.DATA.design.radioButtonShadow === 'none'
-        ) return [];
+    getButtonCss: function() {
+        // Container (for button spacing)
+        const css = ['.links{'];
+        css.push(`gap:${this.DATA.design.rangeButtonSpacing}px;`);
+        css.push('}');
 
-        const css = ['.button{'];
+        // Button
+        css.push('.button{');
 
-        // Default styles
-        const shadow = getShadowCSSValue(
-            this.DATA.design.radioButtonShadow,
-            this.DATA.design.colorButtonShadow,
-            this.DATA.design.radioButtonShadowPosition,
-            this.DATA.design.rangeButtonShadowOffset,
-            this.DATA.design.rangeButtonShadowThickness,
-            this.DATA.design.rangeButtonShadowOpacity
-        );
+        // Font attributes
+        const font = googleFonts[this.DATA.design.radioButtonFont];
+        css.push(`font-family:${this.DATA.design.radioButtonFont.replaceAll('+', ' ')},${font.fallback};`);
+        css.push(`font-weight:${font.weight.text};`);
 
-        css.push(`box-shadow:${shadow};`);
+        // Colors (background and text)
+        css.push(`background-color:${this.DATA.design.radioButtonFill === 'solid' ? this.DATA.design.colorButtonBackground : 'transparent'};`);
+        css.push(`color:${this.DATA.design.colorButtonText};`);
+
+        // Border
+        if (this.DATA.design.radioButtonBorder !== 'none') {
+            css.push(`border:${this.DATA.design.rangeButtonBorderThickness}px ${this.DATA.design.radioButtonBorder} ${this.DATA.design.colorButtonBorder};`);
+        }
+
+        // Border radius
+        css.push(`border-radius:${this.DATA.design.rangeButtonCorner}px;`);
+
+        // Box shadow
+        if (this.DATA.design.radioButtonShadow !== 'none') {
+            const shadow = getShadowCSSValue(
+                this.DATA.design.radioButtonShadow,
+                this.DATA.design.colorButtonShadow,
+                this.DATA.design.radioButtonShadowPosition,
+                this.DATA.design.rangeButtonShadowOffset,
+                this.DATA.design.rangeButtonShadowThickness,
+                this.DATA.design.rangeButtonShadowOpacity
+            );
+            css.push(`box-shadow:${shadow};`);
+        }
         css.push('}');
 
         return css;
@@ -410,20 +419,8 @@ export const Preview = {
 
         const background = this.DATA.design.radioBackground;
         if (background === 'color') {
-            if (!this.DATA.design.hasOwnProperty('colorBackground') || !this.DATA.design.colorBackground) {
-                this.DATA.design.colorBackground = defaultPageOptions.design.colorBackground;
-            }
             this.selectors.HTML.style.backgroundColor = this.DATA.design.colorBackground;
         } else if (background === 'gradient') {
-            const gradientData = {
-                colorBackgroundGradientOne: null,
-                colorBackgroundGradientTwo: null,
-                rangeBackgroundGradientAngle: 0
-            };
-            for (const field of Object.keys(gradientData)) {
-                gradientData[field] = this.DATA.design[field] ?? defaultPageOptions.design[field];
-            }
-
             this.selectors.HTML.style.backgroundImage = `linear-gradient(${this.DATA.design.rangeBackgroundGradientAngle}deg, ${this.DATA.design.colorBackgroundGradientOne} 0%, ${this.DATA.design.colorBackgroundGradientTwo} 100%)`;
             this.selectors.HTML.classList.add('gradient-background');
         } else if (background === 'image') {
@@ -451,23 +448,20 @@ export const Preview = {
         }
     },
     generateFontStylesheetEvent: function() {
-        const profileFont = this.DATA.design.radioProfileFont ?? defaultPageOptions.design.radioProfileFont;
-        const buttonFont = this.DATA.design.radioButtonFont ?? defaultPageOptions.design.radioButtonFont;
-
         // Insert profile font
-        document.head.appendChild(this.getFontEl(profileFont));
+        document.head.appendChild(this.getFontEl(this.DATA.design.radioProfileFont));
 
         // Check whether to add a single font or multiple
-        if (profileFont !== buttonFont) {
-            document.head.appendChild(this.getFontEl(buttonFont));
+        if (this.DATA.design.radioProfileFont !== this.DATA.design.radioButtonFont) {
+            document.head.appendChild(this.getFontEl(this.DATA.design.radioButtonFont));
         }
     },
     generateCssEvent: function() {
         const css = ['<style>'];
 
         // Generate CSS for different options
-        css.push(...this.getFontCSS());
-        css.push(...this.getButtonShadowCSS());
+        css.push(...this.getProfileCss());
+        css.push(...this.getButtonCss());
 
         // Add closing tag
         css.push('</style>');

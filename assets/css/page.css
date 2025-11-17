@@ -1271,7 +1271,7 @@ header {
             }
 
             & .design-section {
-                padding: 1.5rem;
+                padding: 1rem 1.5rem 1.5rem;
 
                 & .design-inner-section {
                     border: 1px dashed #e0e0e0;
@@ -1697,6 +1697,8 @@ header {
 
             & .anchor {
                 display: flex;
+                font-size: 0.875rem;
+                font-weight: 500;
                 align-items: center;
                 justify-content: center;
                 background: #ffffff;
@@ -1732,7 +1734,7 @@ header {
                     align-items: center;
                     font-size: 1rem;
                     border-bottom: 1px solid #eeeeee;
-                    padding-bottom: 1rem;
+                    padding-bottom: 0.75rem;
 
                     & a {
                         margin-left: auto;
