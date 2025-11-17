@@ -42,6 +42,7 @@ export const Design = {
             'radioButtonShadow',
             'colorButtonShadow',
             'radioButtonShadowPosition',
+            'rangeButtonShadowOffset',
             'rangeButtonShadowThickness',
             'rangeButtonShadowOpacity',
             'radioButtonEffect'

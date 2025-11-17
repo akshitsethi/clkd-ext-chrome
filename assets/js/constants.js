@@ -242,6 +242,7 @@ export const defaultPageOptions = {
         radioButtonShadow: 'subtle',
         colorButtonShadow: '#101010',
         radioButtonShadowPosition: 'center',
+        rangeButtonShadowOffset: '4',
         rangeButtonShadowThickness: '5',
         rangeButtonShadowOpacity: '0.5',
         radioButtonEffect: 'rotate'

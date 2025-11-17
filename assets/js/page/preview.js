@@ -34,6 +34,7 @@ export const Preview = {
         'shadow-width': 'rangeButtonShadowThickness',
         'shadow-opacity': 'rangeButtonShadowOpacity',
         'effect': 'radioButtonEffect',
+        'font-weight': 'weight', // Exception for button font weight
         'font-fallback': 'fallback' // Exception for fetching Google font fallback
     },
     SLUG: null,
@@ -202,11 +203,18 @@ export const Preview = {
 
         // Set data attributes on the parent container
         for (const [key, value] of Object.entries(this.BUTTON_FIELDS)) {
-            if (key === 'font-fallback') {
+            // Handle font-weight and fallback exceptions
+            if (['font', 'font-weight', 'font-fallback'].includes(key)) {
                 const font = this.DATA.design.radioButtonFont ?? defaultPageOptions.design.radioButtonFont;
-                const fontFallback = googleFonts[font].fallback;
+                const fontObj = googleFonts[font];
 
-                this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, fontFallback);
+                if (key === 'font-fallback') {
+                    this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, fontObj.fallback);
+                } else if (key === 'font-weight') {
+                    this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, fontObj.weight.title);
+                } else {
+                    this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, font.replace('+', ' '));
+                }
             } else {
                 this.selectors.LINKS_CONTAINER.setAttribute(`data-${key}`, this.DATA.design[value] ?? defaultPageOptions.design[value]);
             }
@@ -351,6 +359,9 @@ export const Preview = {
 
         return content;
     },
+    getFontCSS: function() {
+        return [];
+    },
     getButtonShadowCSS: function() {
         if (
             !this.DATA.design.hasOwnProperty('radioButtonShadow')
@@ -361,12 +372,38 @@ export const Preview = {
         const css = ['.button{'];
 
         // Default styles
-        const shadow = getShadowCSSValue(this.DATA.design.radioButtonShadow, this.DATA.design.colorButtonShadow, this.DATA.design.radioButtonShadowPosition, this.DATA.design.rangeButtonShadowThickness, this.DATA.design.rangeButtonShadowOpacity)
+        const shadow = getShadowCSSValue(
+            this.DATA.design.radioButtonShadow,
+            this.DATA.design.colorButtonShadow,
+            this.DATA.design.radioButtonShadowPosition,
+            this.DATA.design.rangeButtonShadowOffset,
+            this.DATA.design.rangeButtonShadowThickness,
+            this.DATA.design.rangeButtonShadowOpacity
+        );
 
         css.push(`box-shadow:${shadow};`);
         css.push('}');
 
         return css;
+    },
+    getFontEl: function(font) {
+        // Validate if font exists
+        if (!googleFonts.hasOwnProperty(font)) return;
+
+        // Check for font weights
+        const fontObj = googleFonts[font];
+
+        // Replace spaces with plus signs for the URL
+        const fontUrl = `https://fonts.googleapis.com/css2?family=${font}:wght@${fontObj.weight.text === fontObj.weight.title ? fontObj.weight.text : `${fontObj.weight.text};${fontObj.weight.title}`}&display=swap`;
+
+        // Create a new link element
+        const linkEl = document.createElement('link');
+
+        // Set attributes for the link element
+        linkEl.rel = 'stylesheet';
+        linkEl.href = fontUrl;
+
+        return linkEl;
     },
     updateBackgroundEvent: function() {
         if (!this.DATA.design.hasOwnProperty('radioBackground') || !this.DATA.design.radioBackground) return;
@@ -413,11 +450,26 @@ export const Preview = {
             this.selectors.VIDEO_CONTAINER.appendChild(videoEl);
         }
     },
-    generateCSS: function() {
+    generateFontStylesheetEvent: function() {
+        const profileFont = this.DATA.design.radioProfileFont ?? defaultPageOptions.design.radioProfileFont;
+        const buttonFont = this.DATA.design.radioButtonFont ?? defaultPageOptions.design.radioButtonFont;
+
+        // Insert profile font
+        document.head.appendChild(this.getFontEl(profileFont));
+
+        // Check whether to add a single font or multiple
+        if (profileFont !== buttonFont) {
+            document.head.appendChild(this.getFontEl(buttonFont));
+        }
+    },
+    generateCssEvent: function() {
         const css = ['<style>'];
 
         // Generate CSS for different options
+        css.push(...this.getFontCSS());
         css.push(...this.getButtonShadowCSS());
+
+        // Add closing tag
         css.push('</style>');
 
         // Once generated, add it to `head` tag
@@ -425,7 +477,8 @@ export const Preview = {
     },
     events: function() {
         this.updateBackgroundEvent();
-        this.generateCSS();
+        this.generateFontStylesheetEvent();
+        this.generateCssEvent();
     },
     init: async function() {
         try {

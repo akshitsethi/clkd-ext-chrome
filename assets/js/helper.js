@@ -88,39 +88,39 @@ export const rgbToHsl = (r, g, b) => {
 };
 
 // Build shadow CSS value from provided inputs
-export const getShadowCSSValue = (type, color, direction, thickness, opacity) => {
+export const getShadowCSSValue = (type, color, direction, offset, thickness, opacity) => {
   // Default for `center` position
   let output = `0 0`;
 
   switch (direction) {
     case 'up':
-      output = `0 -${thickness}px`;
+      output = `0 -${offset}px`;
       break;
     case 'down':
-      output = `0 ${thickness}px`;
+      output = `0 ${offset}px`;
       break;
     case 'left':
-      output = `-${thickness}px 0`;
+      output = `-${offset}px 0`;
       break;
     case 'right':
-      output = `${thickness}px 0`;
+      output = `${offset}px 0`;
       break;
     case 'up-left':
-      output = `-${thickness}px -${thickness}px`;
+      output = `-${offset}px -${offset}px`;
       break;
     case 'up-right':
-      output = `${thickness}px -${thickness}px`;
+      output = `${offset}px -${offset}px`;
       break;
     case 'down-left':
-      output = `-${thickness}px ${thickness}px`;
+      output = `-${offset}px ${offset}px`;
       break;
     case 'down-right':
-      output = `${thickness}px ${thickness}px`;
+      output = `${offset}px ${offset}px`;
       break;
   };
 
   // Now, based on shadow type, add the next two parameters
-  output += type === 'subtle' ? ` ${thickness}px 0` : ` 0 ${thickness}px`;
+  output += type === 'subtle' ? ` ${thickness}px ${thickness/2}px` : ` 0 ${thickness}px`;
 
   // Lastly, add color with opacity
   output += ` rgba(${hexToRgb(color)},${opacity})`;

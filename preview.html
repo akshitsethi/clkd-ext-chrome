@@ -22,6 +22,7 @@
             --button-spacing: 12px;
             --button-font: Inter;
             --button-font-fallback: sans-serif;
+            --button-font-weight: 400;
             --button-border-style: solid;
             --button-border-width: 1px;
             --button-border-color: #101010;
@@ -155,7 +156,7 @@
                     color: var(--button-text-color);
                     padding: 1.125rem 1.75rem;
                     border-radius: var(--button-radius);
-                    font-weight: 500;
+                    font-weight: var(--button-font-weight);
                     line-height: 1.375;
                     text-align: center;
                 }
@@ -237,11 +238,15 @@
                 --button-border-color: attr(data-border-color type(<color>));
             }
             &[data-font] {
-                --button-font: attr(data-font type(<custom-ident>));
+                --button-font: attr(data-font);
             }
             &[data-font-fallback] {
                 --button-font-fallback: attr(data-font-fallback type(<custom-ident>));
             }
+            &[data-font-weight] {
+                --button-font-weight: attr(data-font-weight type(<number>));
+            }
+            &
             &[data-shadow-color] {
                 --button-shadow-color: attr(data-shadow-color type(<color>));
             }
