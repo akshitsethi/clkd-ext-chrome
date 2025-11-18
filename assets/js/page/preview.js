@@ -408,6 +408,11 @@ export const Preview = {
         css.push(`color:${this.DATA.design.colorProfileText};`);
         css.push('}');
 
+        // Extra margin for tackling hero background
+        if (['image','video'].includes(this.DATA.design.radioBackground) && this.DATA.design.statusHeroBackground === 'on') {
+            css.push('.profile{margin-top:6rem;}');
+        }
+
         return css;
     },
     getButtonCss: function() {
