@@ -84,6 +84,22 @@
             filter: url(#noiseFilter);
         }
 
+        /* Hero container */
+        .hero-container {
+            display: none;
+            position: fixed;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 64%;
+            mask: radial-gradient(110.26% 96% at 50% 128%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.01) 64.72%, rgba(0, 0, 0, 0.03) 68.55%, rgba(0, 0, 0, 0.07) 71.65%, rgba(0, 0, 0, 0.12) 74.13%, rgba(0, 0, 0, 0.18) 76.15%, rgba(0, 0, 0, 0.25) 77.82%, rgba(0, 0, 0, 0.33) 79.3%, rgba(0, 0, 0, 0.41) 80.7%, rgba(0, 0, 0, 0.5) 82.18%, rgba(0, 0, 0, 0.59) 83.85%, rgba(0, 0, 0, 0.67) 85.87%, rgba(0, 0, 0, 0.76) 88.35%, rgba(0, 0, 0, 0.85) 91.45%, rgba(0, 0, 0, 0.93) 95.28%, rgb(0, 0, 0) 100%);
+        }
+
         /* Header */
         .header {
             position: relative;
@@ -357,6 +373,9 @@
     <!-- Filter & Noise -->
     <div class="filter"></div>
     <div class="noise"></div>
+
+    <!-- Hero Background -->
+    <div class="hero-container"></div>
 
     <header class="header">
         <a href="https://clkd.in/" class="logo" target="_blank">

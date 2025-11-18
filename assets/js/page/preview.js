@@ -14,6 +14,7 @@ export const Preview = {
     },
     selectors: {
         HTML: document.querySelector('html'),
+        HERO_CONTAINER: document.querySelector('.hero-container'),
         VIDEO_CONTAINER: document.querySelector('.video-container'),
         PROFILE: document.querySelector('.profile'),
         LINK_TEMPLATE: document.querySelector('#link-item-entry'),
@@ -473,13 +474,15 @@ export const Preview = {
         return css;
     },
     getBackdropCss: function() {
+        if (!(['image','video'].includes(this.DATA.design.radioBackground))) return [];
+
         const css = ['.filter{']
         css.push(`background-color:rgba(${hexToRgb(this.DATA.design.colorBackdrop)},${this.DATA.design.rangeBackdropOpacity});`);
         css.push(`backdrop-filter:blur(${this.DATA.design.rangeBackdropBlur}px);`);
         css.push('}');
 
         // Noise
-        if (['image','video'].includes(this.DATA.design.radioBackground) && this.DATA.design.statusBackdropNoise === 'on') {
+        if (this.DATA.design.statusBackdropNoise === 'on') {
             css.push(`.noise{display:block;}`);
         }
 
@@ -518,8 +521,15 @@ export const Preview = {
             this.selectors.HTML.classList.add('gradient-background');
         } else if (background === 'image') {
             if (!this.DATA.design.hasOwnProperty('imageBackground') || !this.DATA.design.imageBackground.hasOwnProperty('slug') || !this.DATA.design.imageBackground.slug) return;
-            this.selectors.HTML.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
-            this.selectors.HTML.classList.add('image-background');
+
+            if (this.DATA.design.statusHeroBackground === 'on') {
+                this.selectors.HTML.style.backgroundColor = this.DATA.design.colorHeroBackground;
+                this.selectors.HERO_CONTAINER.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
+                this.selectors.HERO_CONTAINER.style.display = 'block';
+            } else {
+                this.selectors.HTML.style.backgroundImage = `url(${storageBase}${this.DATA.design.imageBackground.slug})`;
+                this.selectors.HTML.classList.add('image-background');
+            }
         } else if (background === 'video') {
             if (!this.DATA.design.hasOwnProperty('videoBackground') || !this.DATA.design.videoBackground.hasOwnProperty('slug') || !this.DATA.design.videoBackground.slug) return;
 
