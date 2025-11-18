@@ -892,9 +892,74 @@
 									</div>
 								</label>
 							</div>
-							<div class="color-selector mt-0.5">
-								<label for="colorSocialIcon">Color</label>
-								<input type="color" name="colorSocialIcon">
+
+							<h4 class="mt-1.5">Colors</h4>
+							<div class="flex mt-0.5">
+								<div class="field">
+									<div class="color-selector">
+										<label for="colorSocialIconBackground">Background</label>
+										<input type="color" name="colorSocialIconBackground">
+									</div>
+								</div>
+
+								<div class="field">
+									<div class="color-selector">
+										<label for="colorSocialIcon">Icon</label>
+										<input type="color" name="colorSocialIcon">
+									</div>
+								</div>
+							</div>
+
+							<div class="flex mt-2">
+								<div class="field">
+									<div class="status-selector">
+										<p>Transparent Background? <span>Disables background color for icons.</span></p>
+
+										<div class="status">
+											<label class="switch">
+												<input type="checkbox" name="statusSocialTransparentBackground">
+												<span class="toggle round"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="field">
+									<div class="status-selector">
+										<p>Color Icons? <span>Show icons in their original colors.</span></p>
+
+										<div class="status">
+											<label class="switch">
+												<input type="checkbox" name="statusSocialColorIcon">
+												<span class="toggle round"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="flex mt-2">
+								<div class="field">
+									<h4>Size</h4>
+									<div class="range mt-0.5">
+										<input type="range" name="rangeSocialIconSize" min="24" max="38" value="24" step="1">
+										<div class="ticks">
+											<span>Small</span>
+											<span>Large</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="field">
+									<h4>Corners</h4>
+									<div class="range mt-0.5">
+										<input type="range" name="rangeSocialIconCorner" min="0" max="32" value="32" step="1">
+										<div class="ticks">
+											<span>Straight</span>
+											<span>Curved</span>
+										</div>
+									</div>
+								</div>
 							</div>
 
 							<template id="social-modal-template">

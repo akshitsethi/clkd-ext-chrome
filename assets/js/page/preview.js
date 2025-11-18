@@ -458,7 +458,18 @@ export const Preview = {
         return css;
     },
     getSocialCss: function() {
-        const css = [`.social img{filter:${CssFilterConverter.hexToFilter(this.DATA.design.colorSocialIcon).color};}`];
+        const css = ['.social img{'];
+        css.push(`filter:${CssFilterConverter.hexToFilter(this.DATA.design.colorSocialIcon).color};`);
+        css.push(`max-width:${this.DATA.design.rangeSocialIconSize}px!important;`);
+        css.push('}');
+
+        // Background
+        css.push('.social .social-data{');
+        if (this.DATA.design.statusSocialTransparentBackground === 'off') {
+            css.push(`background-color:${this.DATA.design.colorSocialIconBackground};`);
+        }
+        css.push(`border-radius:${this.DATA.design.rangeSocialIconCorner}px;`);
+        css.push('}');
 
         return css;
     },

@@ -296,7 +296,7 @@ export const Page = {
     },
     stickyHeadingEvent: function() {
         stickybits('.sticky', {
-            stickyBitStickyOffset: 82
+            stickyBitStickyOffset: 92
         });
     },
     events: function() {
