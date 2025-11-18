@@ -415,12 +415,14 @@ export const Preview = {
         // h1 (font and color)
         const font = googleFonts[this.DATA.design.radioProfileFont];
         css.push(`font-family:${this.DATA.design.radioProfileFont.replaceAll('+', ' ')},${font.fallback};`);
+        css.push(`font-size:${this.DATA.design.rangeTitleSize}rem;`);
         css.push(`font-weight:${font.weight.title};`);
         css.push(`color:${this.DATA.design.colorProfileTitle};`);
         css.push('}');
 
         // Bio
         css.push('.profile-content .bio{');
+        css.push(`font-size:${this.DATA.design.rangeBioSize}rem;`);
         css.push(`color:${this.DATA.design.colorProfileText};`);
         css.push('}');
 

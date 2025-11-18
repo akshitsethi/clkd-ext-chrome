@@ -15,6 +15,8 @@ export const Design = {
             'radioProfileFont',
             'colorProfileTitle',
             'colorProfileText',
+            'rangeTitleSize',
+            'rangeBioSize',
             'radioBackground',
             'colorBackground',
             'colorBackgroundGradientOne',
