@@ -1,10 +1,11 @@
 // page/preview.js
+import CssFilterConverter from "css-filter-converter";
 import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
-import { embedProviders, googleApiKey, googleFonts, storageBase } from "../constants.js";
+import { embedProviders, googleApiKey, googleFonts, socialIcons, storageBase } from "../constants.js";
 import { isURL } from "validator";
-import { getShadowCSSValue } from "../helper.js";
+import { getShadowCSSValue, hexToRgb } from "../helper.js";
 
 export const Preview = {
     constants: {
@@ -16,7 +17,10 @@ export const Preview = {
         VIDEO_CONTAINER: document.querySelector('.video-container'),
         PROFILE: document.querySelector('.profile'),
         LINK_TEMPLATE: document.querySelector('#link-item-entry'),
-        LINKS_CONTAINER: document.querySelector('.links')
+        LINKS_CONTAINER: document.querySelector('.links'),
+        SOCIAL_TEMPLATE: document.querySelector('#social-item-entry'),
+        HEADER_LOGO: document.querySelector('.header .logo'),
+        FOOTER: document.querySelector('.footer')
     },
     BUTTON_FIELDS: {
         'fill': 'radioButtonFill',
@@ -65,8 +69,8 @@ export const Preview = {
         this.addProfileData();
 
         // Add social & links data
-        this.addSocialData();
         this.addLinksData();
+        this.addSocialData();
 
         // Make preview visible
         document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
@@ -165,7 +169,64 @@ export const Preview = {
         this.selectors.PROFILE.appendChild(contentEl);
     },
     addSocialData: function() {
+        if (!Object.keys(this.DATA.social.order).length || !Object.keys(this.DATA.social.content).length) return;
 
+        const socialEl = document.createElement('div');
+        socialEl.classList.add('social', this.DATA.design.radioSocialPosition);
+
+        // Counter for icons displayed
+        let counter = 0;
+
+        for (const [slotId, contentId] of this.DATA.social.order) {
+            if (!this.DATA.social.content.hasOwnProperty(contentId)) continue;
+
+            const data = this.DATA.social.content[contentId];
+
+            if (!data.status || data.status === 'off') continue;
+            if (!data.url || !isURL(data.url)) continue;
+
+            // Add unique identifier to parent `div`
+            const template = this.selectors.SOCIAL_TEMPLATE.content;
+
+            let content = template.cloneNode(true);
+            const linkEl = content.querySelector('.social-data');
+            linkEl.setAttribute('id', contentId);
+
+            // Set `href` attribute based on network
+            if (data.icon === 'email') {
+                linkEl.setAttribute('href', `mailto:${data.url}`);
+            } else if (data.icon === 'phone') {
+                linkEl.setAttribute('href', `tel:+${data.url}`);
+            } else if (data.icon === 'whatsapp') {
+                linkEl.setAttribute('href', `https://wa.me/${data.url}`);
+            } else if (data.icon === 'threads' || data.icon === 'tiktok') {
+                linkEl.setAttribute('href', data.icon === 'threads' ? `https://www.threads.com/${data.url}`: `https://www.tiktok.com/${data.url}`);
+            } else {
+                linkEl.setAttribute('href', data.url);
+            }
+
+            const icon = linkEl.querySelector('img');
+            icon.setAttribute('src', `./assets/images/social/${data.icon}.svg`);
+            icon.setAttribute('alt', socialIcons[data.icon].name);
+
+            // Append to content container
+            socialEl.appendChild(content);
+
+            ++counter;
+        }
+
+        // Append the social container if there are icons to display
+        if (counter) {
+            // Parent node
+            const parentEl = this.selectors.PROFILE.parentNode;
+    
+            // Append based on selected position
+            if (this.DATA.design.radioSocialPosition === 'top') {
+                parentEl.insertBefore(socialEl, this.selectors.PROFILE.nextSibling);
+            } else {
+                parentEl.insertBefore(socialEl, this.selectors.LINKS_CONTAINER.nextSibling);
+            }
+        }
     },
     addLinksData: function() {
         if (!Object.keys(this.DATA.order).length || !Object.keys(this.DATA.content).length) return;
@@ -395,6 +456,27 @@ export const Preview = {
 
         return css;
     },
+    getSocialCss: function() {
+        const css = [`.social img{filter:${CssFilterConverter.hexToFilter(this.DATA.design.colorSocialIcon).color};}`];
+
+        return css;
+    },
+    getBackdropCss: function() {
+        const css = ['.filter{']
+        css.push(`background-color:rgba(${hexToRgb(this.DATA.design.colorBackdrop)},${this.DATA.design.rangeBackdropOpacity});`);
+        css.push(`backdrop-filter:blur(${this.DATA.design.rangeBackdropBlur}px);`);
+        css.push('}');
+
+        // Noise
+        if (['image','video'].includes(this.DATA.design.radioBackground) && this.DATA.design.statusBackdropNoise === 'on') {
+            css.push(`.noise{display:block;}`);
+        }
+
+        return css;
+    },
+    getHeroCss: function() {
+        return [];
+    },
     getFontEl: function(font) {
         // Validate if font exists
         if (!googleFonts.hasOwnProperty(font)) return;
@@ -462,6 +544,9 @@ export const Preview = {
         // Generate CSS for different options
         css.push(...this.getProfileCss());
         css.push(...this.getButtonCss());
+        css.push(...this.getSocialCss());
+        css.push(...this.getBackdropCss());
+        css.push(...this.getHeroCss());
 
         // Add closing tag
         css.push('</style>');
@@ -469,10 +554,17 @@ export const Preview = {
         // Once generated, add it to `head` tag
         document.head.insertAdjacentHTML('beforeend', css.join(''));
     },
+    whiteLabelEvent: function() {
+        if (!this.DATA.design.statusWhiteLabel || this.DATA.design.statusWhiteLabel === 'off') {
+            this.selectors.HEADER_LOGO.style.display = 'inline-block';
+            this.selectors.FOOTER.style.display = 'block';
+        }
+    },
     events: function() {
         this.updateBackgroundEvent();
         this.generateFontStylesheetEvent();
         this.generateCssEvent();
+        this.whiteLabelEvent();
     },
     init: async function() {
         try {

@@ -26,7 +26,7 @@ export const Design = {
             'videoBackground',
             'rangeBackdropBlur',
             'rangeBackdropOpacity',
-            'rangeBackdropNoise',
+            'statusBackdropNoise',
             'colorBackdrop',
             'radioSocialPosition',
             'colorSocialIcon',

@@ -25,6 +25,7 @@
 		"canvas-confetti": "^1.9.3",
 		"chart.js": "^4.5.0",
 		"cropperjs": "^1.6.2",
+		"css-filter-converter": "^1.0.110",
 		"datatables.net": "^2.3.4",
 		"motion": "^12.23.24",
 		"qrcode": "^1.5.4",

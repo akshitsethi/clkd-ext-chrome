@@ -226,7 +226,7 @@ export const defaultPageOptions = {
         videoBackground: {},
         rangeBackdropBlur: '4',
         rangeBackdropOpacity: '0.25',
-        rangeBackdropNoise: '0',
+        statusBackdropNoise: 'off',
         colorBackdrop: '#101010',
         radioSocialPosition: 'top',
         colorSocialIcon: '#101010',
