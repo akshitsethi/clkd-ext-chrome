@@ -23,25 +23,6 @@ export const Preview = {
         HEADER_LOGO: document.querySelector('.header .logo'),
         FOOTER: document.querySelector('.footer')
     },
-    BUTTON_FIELDS: {
-        'fill': 'radioButtonFill',
-        'background-color': 'colorButtonBackground',
-        'text-color': 'colorButtonText',
-        'corner': 'rangeButtonCorner',
-        'spacing': 'rangeButtonSpacing',
-        'font': 'radioButtonFont',
-        'border': 'radioButtonBorder',
-        'border-width': 'rangeButtonBorderThickness',
-        'border-color': 'colorButtonBorder',
-        'shadow': 'radioButtonShadow',
-        'shadow-color': 'colorButtonShadow',
-        'shadow-direction': 'radioButtonShadowPosition',
-        'shadow-width': 'rangeButtonShadowThickness',
-        'shadow-opacity': 'rangeButtonShadowOpacity',
-        'effect': 'radioButtonEffect',
-        'font-weight': 'weight', // Exception for button font weight
-        'font-fallback': 'fallback' // Exception for fetching Google font fallback
-    },
     SLUG: null,
     DOMAIN: null,
     DATA: {
@@ -423,6 +404,7 @@ export const Preview = {
         // Bio
         css.push('.profile-content .bio{');
         css.push(`font-size:${this.DATA.design.rangeBioSize}rem;`);
+        css.push(`line-height:${this.DATA.design.rangeBioSize >= 1.125 ? 1.35 : 1.4};`);
         css.push(`color:${this.DATA.design.colorProfileText};`);
         css.push('}');
 
@@ -549,6 +531,12 @@ export const Preview = {
             videoEl.autoplay = true;
             videoEl.loop = true;
 
+            if (this.DATA.design.statusHeroBackground === 'on') {
+                this.selectors.HTML.style.backgroundColor = this.DATA.design.colorHeroBackground;
+                this.selectors.VIDEO_CONTAINER.classList.add('hero');
+            }
+
+            // Append to container
             this.selectors.VIDEO_CONTAINER.appendChild(videoEl);
         }
     },
