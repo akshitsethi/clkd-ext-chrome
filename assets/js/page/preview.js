@@ -65,6 +65,9 @@ export const Preview = {
         // Get data stored previously or fetched recently from the remote server
         await this.getStoredData();
 
+        // Update domain
+        this.updateDomain();
+
         // Building page content
         this.addProfileData();
 
@@ -94,6 +97,14 @@ export const Preview = {
         if (data && data.hasOwnProperty(`${this.SLUG}|${this.DOMAIN}`)) {
             this.DATA = data[`${this.SLUG}|${this.DOMAIN}`];
         }
+    },
+    updateDomain: function() {
+        this.selectors.HEADER_LOGO.setAttribute('src', `https://${this.DOMAIN}/`);
+
+        // Update logo img
+        const img = this.selectors.HEADER_LOGO.querySelector('img');
+        img.setAttribute('src', `./assets/images/domains/${this.DOMAIN}.svg`);
+        img.setAttribute('alt', this.DOMAIN);
     },
     showErrorScreen(error) {
         document.querySelector(this.constants.ERROR_SCREEN_CLASSNAME).style.display = 'flex';
