@@ -403,6 +403,10 @@ export const Preview = {
     getProfileCss: function() {
         const pageFont = googleFonts[this.DATA.design.radioPageFont];
         const css = [`body{font-family:${this.DATA.design.radioPageFont.replaceAll('+', ' ')},${pageFont.fallback};}`];
+        css.push('body p{');
+        css.push(`font-size:${this.DATA.design.rangeTextSize}rem;`);
+        css.push(`color:${this.DATA.design.colorPageText};`);
+        css.push('}');
 
         // h1 (font and color)
         const profileFont = googleFonts[this.DATA.design.radioProfileFont];
