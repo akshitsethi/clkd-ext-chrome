@@ -198,8 +198,11 @@ export const Preview = {
                 linkEl.setAttribute('href', data.url);
             }
 
+            // Decide icon URL based on selected color setting
+            const iconUrl = this.DATA.design.statusSocialColorIcon === 'on' ? `./assets/images/social/color/${data.icon}.svg` : `./assets/images/social/${data.icon}.svg`;
+
             const icon = linkEl.querySelector('img');
-            icon.setAttribute('src', `./assets/images/social/${data.icon}.svg`);
+            icon.setAttribute('src', iconUrl);
             icon.setAttribute('alt', socialIcons[data.icon].name);
 
             // Append to content container
