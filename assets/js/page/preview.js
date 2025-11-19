@@ -3,8 +3,11 @@ import CssFilterConverter from "css-filter-converter";
 import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
+import { Notification } from "../notification.js";
 import { embedProviders, googleApiKey, googleFonts, socialIcons, storageBase } from "../constants.js";
 import { isURL } from "validator";
+import { QR } from "../qr.js";
+import { Common } from "../common.js";
 import { getShadowCSSValue, hexToRgb } from "../helper.js";
 
 export const Preview = {
@@ -21,7 +24,8 @@ export const Preview = {
         LINKS_CONTAINER: document.querySelector('.links'),
         SOCIAL_TEMPLATE: document.querySelector('#social-item-entry'),
         HEADER_LOGO: document.querySelector('.header .logo'),
-        FOOTER: document.querySelector('.footer')
+        FOOTER: document.querySelector('.footer'),
+        SHARE_BUTTON: document.querySelector('.share')
     },
     SLUG: null,
     DOMAIN: null,
@@ -56,6 +60,9 @@ export const Preview = {
         // Add social & links data
         this.addLinksData();
         this.addSocialData();
+
+        // Update share button
+        await this.updateShareButton();
 
         // Make preview visible
         document.querySelector(this.constants.WRAPPER_CLASSNAME).style.display = 'block';
@@ -595,11 +602,119 @@ export const Preview = {
             this.selectors.FOOTER.style.display = 'block';
         }
     },
+    updateShareButton: async function() {
+        if (!this.selectors.SHARE_BUTTON) return;
+
+        // 1. Add link to anchor tag
+        const linkEl = this.selectors.SHARE_BUTTON.querySelectorAll('.share-link');
+        linkEl.forEach(el => el.innerText = `${this.DOMAIN}/${this.SLUG}`);
+
+        // 2. Generate QR code
+        const qrEl = this.selectors.SHARE_BUTTON.querySelector('.qr-code');
+        const qrcode = await QR.generate(`https://${this.DOMAIN}/${this.SLUG}?scan=1`);
+
+        const imgEl = document.createElement('img');
+        imgEl.setAttribute('src', qrcode);
+        qrEl.appendChild(imgEl);
+
+        // 3. Download QR code
+        const downloadEl = this.selectors.SHARE_BUTTON.querySelector('.download a');
+        downloadEl.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                chrome.downloads.download({
+                    url: qrcode,
+                    filename: `${this.SLUG}.png`
+                });
+            } catch (error) {
+                console.error(error);
+                Notification.error(i18n.DOWNLOAD_ERROR);
+            }
+        });
+
+        // 4. Add link along with copy button
+        const copyEl = this.selectors.SHARE_BUTTON.querySelector('.copy');
+        copyEl.setAttribute('data-text', `https://${this.DOMAIN}/${this.SLUG}`);
+        copyEl.addEventListener('click', e => {
+            e.preventDefault();
+            Common.copyText(e.target);
+        });
+
+        // 5. Update social links
+        const links = this.selectors.SHARE_BUTTON.querySelectorAll('.share-social a');
+        if (links.length) {
+            links.forEach(link => link.addEventListener('click', e => {
+                e.preventDefault();
+
+                let target = e.target;
+                if (target.nodeName !== 'A') {
+                    target = e.target.parentElement;
+                }
+
+                // Get href attribute and replace tje
+                const url = target.getAttribute('href').replace('{PAGE_URL}', `${this.DOMAIN}/${this.SLUG}`);
+
+                // Open new tab
+                chrome.tabs.create({ url });
+            }));
+        }
+    },
+    showSharePopoverEvent: function() {
+        if (!this.selectors.SHARE_BUTTON) return;
+
+        this.selectors.SHARE_BUTTON.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                const target = e.target.closest('.share');
+                target.classList.add('show');
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+    },
+    hideSharePopoverEvent: function() {
+        if (!this.selectors.SHARE_BUTTON) return;
+
+        const closeEl = this.selectors.SHARE_BUTTON.querySelector('.close');
+        if (!closeEl) return;
+
+        closeEl.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            try {
+                const parentEl = e.target.closest('.share');
+                if (!parentEl) {
+                    throw new Error(i18n.SELECTOR_NOT_FOUND);
+                }
+
+                parentEl.classList.remove('show');
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+    },
+    closeSharePopoverEvent: function() {
+        document.addEventListener('click', e => {
+            e.stopPropagation();
+
+            if (!this.selectors.SHARE_BUTTON.contains(e.target) && e.target !== this.selectors.SHARE_BUTTON) {
+                this.selectors.SHARE_BUTTON.classList.remove('show');
+            }
+        });
+    },
     events: function() {
         this.updateBackgroundEvent();
         this.generateFontStylesheetEvent();
         this.generateCssEvent();
         this.whiteLabelEvent();
+        this.showSharePopoverEvent();
+        this.hideSharePopoverEvent();
+        this.closeSharePopoverEvent();
     },
     init: async function() {
         try {

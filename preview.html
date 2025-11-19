@@ -117,6 +117,8 @@
             padding: 1rem;
             max-width: 540px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
             z-index: 1;
 
             & .logo {
@@ -124,11 +126,123 @@
                 padding: 0.5rem;
                 background-color: rgba(255,255,255,0.35);
                 border-radius: 8px;
+
+                & img {
+                    display: block;
+                    max-width: 54px;
+                    height: auto;
+                }
             }
-            & img {
-                display: block;
-                max-width: 54px;
-                height: auto;
+            & .share {
+                position: relative;
+                margin-left: auto;
+
+                & .anchor {
+                    display: block;
+                    padding: 0.5rem;
+                    background-color: rgba(255,255,255,0.35);
+                    border-radius: 64px;
+
+                    & .icon {
+                        display: block;
+                        max-width: 24px;
+                    }
+                }
+                & .share-popover {
+                    display: none;
+                    position: absolute;
+                    width: auto;
+                    width: 300px;
+                    padding: 1rem;
+                    top: 3.5rem;
+                    right: 0;
+                    background: #ffffff;
+                    border-radius: 32px;
+                    box-shadow: 0 0 14px 6px rgba(0,0,0,0.04);
+
+                    & h2 {
+                        display: flex;
+                        align-items: center;
+                        font-size: 1rem;
+                        border-bottom: 1px solid #eeeeee;
+                        padding-bottom: 0.75rem;
+                        margin: 0;
+
+                        & a {
+                            margin-left: auto;
+                        }
+                        & img {
+                            max-width: 22px;
+                        }
+                    }
+                    & .qr-code {
+                        margin: 1rem 0;
+
+                        & img {
+                            display: block;
+                            max-width: 100%;
+                            margin: 0 auto;
+                        }
+                    }
+                    & .download {
+                        margin-bottom: 1.5rem;
+                        text-align: center;
+
+                        & a {
+                            background-color: #fd868c;
+                            background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
+                            padding: 0.35rem;
+                            border-radius: 8px;
+                            color: #ffffff;
+                            font-weight: 500;
+                        }
+                    }
+                    & .link {
+                        display: flex;
+                        align-items: center;
+                        padding: 0.75rem;
+                        font-size: 0.875rem;
+                        border: 1px solid #eeeeee;
+                        font-weight: 500;
+                        border-radius: 12px;
+
+                        & .copy {
+                            margin-left: auto;
+                            padding: 0.5rem;
+                            border-radius: 8px;
+                            background: #f1f1f1;
+                            color: #101010;
+                        }
+                    }
+                    & .share-social {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 1.25rem 0.25rem 0.25rem;
+
+                        & a {
+                            padding: 0.125rem;
+                            border-radius: 8px;
+
+                            &:hover {
+                                background: #f1f1f1;
+                            }
+                            & img {
+                                max-width: 28px;
+                            }
+                        }
+                    }
+
+                    @media (max-width: 540px) {
+                        width: calc(100vw - 2rem);
+                    }
+                }
+
+                &.show {
+                    & .share-popover {
+                        display: block;
+                    }
+                }
             }
         }
 
@@ -185,31 +299,6 @@
                     line-height: 1.375;
                     padding: 1.125rem 1.75rem;
                     text-align: center;
-                }
-                & .share {
-                    position: absolute;
-                    background: transparent;
-                    width: 1.5rem;
-                    height: 1.5rem;
-                    border: 0;
-                    top: 50%;
-                    right: 0.25rem;
-                    border-radius: 64px;
-                    transform: translateY(-50%);
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-
-                    &:hover {
-                        background-color: #f1f1f1;
-                    }
-                    & svg {
-                        display: block;
-                        height: 10px;
-                        width: auto;
-                        fill: #101010;
-                    }
                 }
                 & .oembed {
                     border-radius: 32px;
@@ -396,6 +485,54 @@
         <a href="https://clkd.in/" class="logo" target="_blank">
             <img src="./assets/images/domains/clkd.in.svg" alt="CLKD"/>
         </a>
+
+        <div class="share">
+            <a href="#" class="anchor">
+                <img src="./assets/images/share.png" class="icon" alt="Share"/>
+            </a>
+
+            <div class="share-popover">
+                <h2 class="title">
+                    Share
+                    <a href="#" class="close">
+                        <img src="./assets/images/close.svg" alt="Close"/>
+                    </a>
+                </h2>
+
+                <div class="qr-code"></div>
+                <div class="download">
+                    <a href="#">Download</a>
+                </div>
+
+                <div class="link">
+                    <span class="share-link"></span>
+                    <a href="#" class="copy">Copy</a>
+                </div>
+                <div class="share-social">
+                    <a href="snapchat://creativeKitWeb/camera/1?attachmentUrl=https://{PAGE_URL}" target="_blank">
+                        <img src="./assets/images/page/share/snapchat.png" alt="Snapchat">
+                    </a>
+                    <a href="https://www.facebook.com/sharer.php?u=https://{PAGE_URL}?utm_source=clkd_profile_share" target="_blank">
+                        <img src="./assets/images/page/share/facebook.png" alt="Facebook">
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://{PAGE_URL}?utm_source=clkd_profile_share" target="_blank">
+                        <img src="./assets/images/page/share/linkedin.png" alt="Linkedin">
+                    </a>
+                    <a href="https://x.com/intent/tweet?text=Check out this page! https://{PAGE_URL}?utm_source=clkd_profile_share" target="_blank">
+                        <img src="./assets/images/page/share/twitter.png" alt="X">
+                    </a>
+                    <a href="https://wa.me/?text=Check out this page! https://{PAGE_URL}?utm_source=clkd_profile_share" target="_blank">
+                        <img src="./assets/images/page/share/whatsapp.png" alt="WhatsApp">
+                    </a>
+                    <a href="https://www.messenger.com/new" target="_blank">
+                        <img src="./assets/images/page/share/messenger.png" alt="Messenger">
+                    </a>
+                    <a href="mailto:?subject=Check out my bio page!&body=Check out this page! https://{PAGE_URL}?utm_source=clkd_profile_share" target="_blank">
+                        <img src="./assets/images/page/share/email.png" alt="Email">
+                    </a>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="wrapper">
@@ -428,8 +565,6 @@
     <template id="link-item-entry">
         <div class="link-data">
             <a href="#" target="_blank" rel="noopener"></a>
-
-            <button type="button" class="share"><svg width="3" height="11" viewBox="0 0 3 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="fill-[currentColor]" d="M1.33333 10.6667C0.966667 10.6667 0.652778 10.5361 0.391667 10.275C0.130556 10.0139 0 9.7 0 9.33333C0 8.96667 0.130556 8.65278 0.391667 8.39167C0.652778 8.13056 0.966667 8 1.33333 8C1.7 8 2.01389 8.13056 2.275 8.39167C2.53611 8.65278 2.66667 8.96667 2.66667 9.33333C2.66667 9.7 2.53611 10.0139 2.275 10.275C2.01389 10.5361 1.7 10.6667 1.33333 10.6667ZM1.33333 6.66667C0.966667 6.66667 0.652778 6.53611 0.391667 6.275C0.130556 6.01389 0 5.7 0 5.33333C0 4.96667 0.130556 4.65278 0.391667 4.39167C0.652778 4.13056 0.966667 4 1.33333 4C1.7 4 2.01389 4.13056 2.275 4.39167C2.53611 4.65278 2.66667 4.96667 2.66667 5.33333C2.66667 5.7 2.53611 6.01389 2.275 6.275C2.01389 6.53611 1.7 6.66667 1.33333 6.66667ZM1.33333 2.66667C0.966667 2.66667 0.652778 2.53611 0.391667 2.275C0.130556 2.01389 0 1.7 0 1.33333C0 0.966667 0.130556 0.652778 0.391667 0.391667C0.652778 0.130556 0.966667 0 1.33333 0C1.7 0 2.01389 0.130556 2.275 0.391667C2.53611 0.652778 2.66667 0.966667 2.66667 1.33333C2.66667 1.7 2.53611 2.01389 2.275 2.275C2.01389 2.53611 1.7 2.66667 1.33333 2.66667Z"></path></svg></button>
         </div>
     </template>
 
