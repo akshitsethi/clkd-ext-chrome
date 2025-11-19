@@ -9,52 +9,6 @@ import { Selectors } from "./selectors.js";
 
 export const Design = {
     constants: {
-        FIELDS: [
-            'radioThumbnailDesign',
-            'statusWhiteLabel',
-            'radioProfileFont',
-            'colorProfileTitle',
-            'colorProfileText',
-            'rangeTitleSize',
-            'rangeBioSize',
-            'radioBackground',
-            'colorBackground',
-            'colorBackgroundGradientOne',
-            'colorBackgroundGradientTwo',
-            'rangeBackgroundGradientAngle',
-            'imageBackground',
-            'statusHeroBackground',
-            'colorHeroBackground',
-            'videoBackground',
-            'rangeBackdropBlur',
-            'rangeBackdropOpacity',
-            'statusBackdropNoise',
-            'colorBackdrop',
-            'radioSocialPosition',
-            'colorSocialIconBackground',
-            'colorSocialIcon',
-            'statusSocialTransparentBackground',
-            'statusSocialColorIcon',
-            'rangeSocialIconSize',
-            'rangeSocialIconCorner',
-            'rangeSocialIconSpacing',
-            'radioButtonFill',
-            'rangeButtonCorner',
-            'radioButtonBorder',
-            'rangeButtonBorderThickness',
-            'colorButtonBorder',
-            'radioButtonFont',
-            'colorButtonBackground',
-            'colorButtonText',
-            'rangeButtonSpacing',
-            'radioButtonShadow',
-            'colorButtonShadow',
-            'radioButtonShadowPosition',
-            'rangeButtonShadowOffset',
-            'rangeButtonShadowThickness',
-            'rangeButtonShadowOpacity',
-            'radioButtonEffect'
-        ],
         INLINE_OPTIONS: [
             'color',
             'gradient',
@@ -161,7 +115,7 @@ export const Design = {
     },
     save: async function(e) {
         try {
-            if (!this.constants.FIELDS.includes(e.target.name)) {
+            if (!Object.keys(defaultPageOptions.design).includes(e.target.name)) {
                 throw new Error(i18n.MALFORMED_REQUEST);
             }
 

@@ -401,13 +401,15 @@ export const Preview = {
         return content;
     },
     getProfileCss: function() {
-        const css = ['.profile-content h1{'];
+        const pageFont = googleFonts[this.DATA.design.radioPageFont];
+        const css = [`body{font-family:${this.DATA.design.radioPageFont.replaceAll('+', ' ')},${pageFont.fallback};}`];
 
         // h1 (font and color)
-        const font = googleFonts[this.DATA.design.radioProfileFont];
-        css.push(`font-family:${this.DATA.design.radioProfileFont.replaceAll('+', ' ')},${font.fallback};`);
+        const profileFont = googleFonts[this.DATA.design.radioProfileFont];
+        css.push('.profile-content h1{');
+        css.push(`font-family:${this.DATA.design.radioProfileFont.replaceAll('+', ' ')},${profileFont.fallback};`);
         css.push(`font-size:${this.DATA.design.rangeTitleSize}rem;`);
-        css.push(`font-weight:${font.weight.title};`);
+        css.push(`font-weight:${profileFont.weight.title};`);
         css.push(`color:${this.DATA.design.colorProfileTitle};`);
         css.push('}');
 
@@ -437,6 +439,7 @@ export const Preview = {
         // Font attributes
         const font = googleFonts[this.DATA.design.radioButtonFont];
         css.push(`font-family:${this.DATA.design.radioButtonFont.replaceAll('+', ' ')},${font.fallback};`);
+        css.push(`font-size:${this.DATA.design.rangeButtonSize}rem;`);
         css.push(`font-weight:${font.weight.text};`);
 
         // Colors (background and text)
@@ -572,11 +575,18 @@ export const Preview = {
         }
     },
     generateFontStylesheetEvent: function() {
-        // Insert profile font
-        document.head.appendChild(this.getFontEl(this.DATA.design.radioProfileFont));
+        // Insert page font
+        document.head.appendChild(this.getFontEl(this.DATA.design.radioPageFont));
+
+        if (this.DATA.design.radioProfileFont !== this.DATA.design.radioPageFont) {
+            document.head.appendChild(this.getFontEl(this.DATA.design.radioProfileFont));
+        }
 
         // Check whether to add a single font or multiple
-        if (this.DATA.design.radioProfileFont !== this.DATA.design.radioButtonFont) {
+        if (
+            this.DATA.design.radioButtonFont !== this.DATA.design.radioPageFont
+            && this.DATA.design.radioButtonFont !== this.DATA.design.radioProfileFont
+        ) {
             document.head.appendChild(this.getFontEl(this.DATA.design.radioButtonFont));
         }
     },
