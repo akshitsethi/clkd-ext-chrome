@@ -237,6 +237,7 @@ export const defaultPageOptions = {
         statusSocialColorIcon: 'on',
         rangeSocialIconSize: '24',
         rangeSocialIconCorner: '32',
+        rangeSocialIconSpacing: '8',
         radioButtonFill: 'solid',
         colorButtonBackground: '#ffffff',
         colorButtonText: '#101010',

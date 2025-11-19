@@ -459,7 +459,9 @@ export const Preview = {
     },
     getSocialCss: function() {
         const css = ['.social img{'];
-        css.push(`filter:${CssFilterConverter.hexToFilter(this.DATA.design.colorSocialIcon).color};`);
+        if (this.DATA.design.statusSocialColorIcon === 'off') {
+            css.push(`filter:${CssFilterConverter.hexToFilter(this.DATA.design.colorSocialIcon).color};`);
+        }
         css.push(`max-width:${this.DATA.design.rangeSocialIconSize}px!important;`);
         css.push('}');
 
@@ -470,6 +472,9 @@ export const Preview = {
         }
         css.push(`border-radius:${this.DATA.design.rangeSocialIconCorner}px;`);
         css.push('}');
+
+        // Spacing
+        css.push(`.social{gap:8px ${this.DATA.design.rangeSocialIconSpacing}px;}`);
 
         return css;
     },

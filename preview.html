@@ -244,19 +244,20 @@
         .social {
             max-width: 540px;
             margin: 0.75rem auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
 
             &.bottom {
                 margin-top: 1.25rem;
             }
             & a {
-                display: block;
-                width: auto;
-                height: auto;
+                padding: 0.5rem;
 
                 & img {
                     display: block;
+                    width: 100%;
                     max-width: 24px;
                     margin: 0 auto;
                 }

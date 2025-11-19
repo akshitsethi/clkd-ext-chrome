@@ -37,6 +37,7 @@ export const Design = {
             'statusSocialColorIcon',
             'rangeSocialIconSize',
             'rangeSocialIconCorner',
+            'rangeSocialIconSpacing',
             'radioButtonFill',
             'rangeButtonCorner',
             'radioButtonBorder',
