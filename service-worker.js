@@ -16,3 +16,32 @@
 chrome.sidePanel
 	.setPanelBehavior({ openPanelOnActionClick: true })
 	.catch((error) => console.error(error));
+
+// Workaround for YouTube embeds
+const iframeHosts = [
+	'youtube.com',
+];
+chrome.runtime.onInstalled.addListener(() => {
+	const RULE = {
+		id: 1,
+		condition: {
+			initiatorDomains: [chrome.runtime.id],
+			requestDomains: iframeHosts,
+			resourceTypes: ['sub_frame'],
+		},
+		action: {
+			type: 'modifyHeaders',
+			requestHeaders: [
+				{
+					header: 'Referer',
+					operation: 'set',
+					value: chrome.runtime.id
+				},
+			],
+		},
+	};
+	chrome.declarativeNetRequest.updateDynamicRules({
+		removeRuleIds: [RULE.id],
+		addRules: [RULE],
+	});
+});

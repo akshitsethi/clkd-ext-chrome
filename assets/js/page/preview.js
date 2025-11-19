@@ -275,7 +275,6 @@ export const Preview = {
 
         // Remove defaut anchor link
         content.querySelector('a').remove();
-        content.querySelector('.share').remove();
 
         // Execute embed specific function
         return this[provider](id, parentEl, content, data);
