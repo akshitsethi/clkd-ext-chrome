@@ -34,6 +34,7 @@ export const i18n = {
     SOCIAL_ICON_EXISTS: 'Social channel has already been added.',
 	SOCIAL_ICONS_UPDATED: 'Social channels have been updated.',
     GRADIENT_PRESET_APPLIED: 'Gradient preset has been applied.',
+    PAGE_PUBLISHED: 'Data saved successfully and updated page has been published.',
 
     // Analytics
     NO_DATA_ERROR: 'Unable to find analytics data.',

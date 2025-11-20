@@ -40,11 +40,9 @@ export const Content = {
             radioSensitive: 'disable'
         },
         youtube: {
-            statusAuthorProfile: 'off',
             statusEmbedTitle: 'off'
         },
         vimeo: {
-            statusAuthorProfile: 'off',
             statusEmbedTitle: 'off'
         },
         googlemaps: {

@@ -1,4 +1,5 @@
 // page/page.js
+import confetti from "canvas-confetti";
 import stickybits from "stickybits";
 import { Events } from "./events.js";
 import { Selectors } from "./selectors.js";
@@ -10,7 +11,7 @@ import { Content } from "./content.js";
 import { Design } from "./design.js";
 import { Settings } from "./settings.js";
 import { Frame } from "./frame.js";
-import { apiBase, defaultPageOptions } from "../constants.js";
+import { apiBase, blankPageData, defaultPageOptions } from "../constants.js";
 import { getCurrentTab } from "../helper.js";
 
 export const Page = {
@@ -93,7 +94,7 @@ export const Page = {
         );
 
         // Store updated data object
-        await Store.set(data);
+        await Store.set(data, 'session');
 
         // After data is saved, update preview to reflect changes
         this.preview();
@@ -169,8 +170,9 @@ export const Page = {
             // Get JSON data
             const response = await request.json();
 
-            // Check for `message` property in the response returned from API
-            if (request.status !== 200) {
+            // If the status is not 200, throw error
+            // Added exception for 404 error as we will be using default data in case JSON file is not found in R2
+            if (request.status !== 200 && request.status !== 404) {
                 throw new Error(response.message);
             }
 
@@ -178,7 +180,8 @@ export const Page = {
             const data = {};
 
             // Add data with unique identifier
-            data[`${this.SLUG}|${this.DOMAIN}`] = JSON.stringify(response);
+            // In case of a 404 error (which means JSON file does not exist on R2), we start with empty object
+            data[`${this.SLUG}|${this.DOMAIN}`] = JSON.stringify(request.status === 404 ? blankPageData : response);
 
             // Store fetched data
             await Store.set(data, 'session');
@@ -351,11 +354,95 @@ export const Page = {
             chrome.sidePanel.open({ tabId: tab.id });
         }));
     },
+    publishEvent: function() {
+        if (!Selectors.SAVE_PAGE_BUTTON) return;
+
+        Selectors.SAVE_PAGE_BUTTON.addEventListener('click', async e => {
+            e.preventDefault();
+
+            try {
+                Processing.show();
+
+                // Data to be pushed to server
+                const json = {
+                    order: Array.from(this.get('order').entries()),
+                    content: this.get('content'),
+                    design: this.get('design'),
+                    settings: this.get('settings'),
+                    social: {
+                        order: Array.from(this.get('social', 'order').entries()),
+                        content: this.get('social', 'content')
+                    },
+                    providers: this.get('providers')
+                };
+
+                const request = await fetch(`${apiBase}/json`, {
+                    method: 'POST',
+                    async: true,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    contentType: 'json',
+                    body: JSON.stringify({
+                        user_id: Store.USER.ID,
+                        token: Store.USER.token,
+                        json,
+                        slug: this.SLUG,
+                        domain: this.DOMAIN
+                    })
+                });
+
+                // Get JSON data
+                const response = await request.json();
+
+                // If the status is not 200, throw error
+                if (request.status !== 200) {
+                    throw new Error(response.message);
+                }
+
+                // TODO (once the counter is implemented)
+                // Since changes have been published, reset unsaved changes counter
+
+
+                // Also, add a little confetti effect with success notification
+                Notification.success(i18n.PAGE_PUBLISHED);
+
+                // Confetti
+                var end = Date.now() + (1 * 1000);
+                (function celebrate() {
+                    confetti({
+                        particleCount: 4,
+                        angle: 60,
+                        spread: 45,
+                        origin: { x: 0 }
+                    });
+                    confetti({
+                        particleCount: 4,
+                        angle: 120,
+                        spread: 45,
+                        origin: { x: 1 }
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(celebrate);
+                    }
+                }());
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            } finally {
+                setTimeout(() => {
+                    Processing.hide();
+                }, 800);
+            }
+        });
+    },
     events: function() {
         this.mobileMenuEvent();
         this.tabSwitchEvent();
         this.stickyHeadingEvent();
         this.openSidePanelEvent();
+        this.publishEvent();
     },
     init: async function() {
         try {

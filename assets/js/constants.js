@@ -207,6 +207,20 @@ export const planAnalyticsDuration = {
     pro: ['month', '2months']
 };
 
+// Blank page data
+// This will also be used when generating initial page data in the backend
+export const blankPageData = {
+    order: [],
+    content: {},
+    design: {},
+    settings: {},
+    social: {
+        order: [],
+        content: {}
+    },
+    providers: {}
+};
+
 // Default page options
 export const defaultPageOptions = {
     design: {

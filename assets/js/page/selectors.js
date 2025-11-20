@@ -5,6 +5,7 @@ export const Selectors = {
     SECTIONS: document.querySelectorAll('.tab'),
     MOBILE_MENU_BUTTON: document.querySelector('.mobile-menu'),
     HEADER_PAGE_INFO: document.querySelector('.header-cta .info'),
+    SAVE_PAGE_BUTTON: document.querySelector('.header-cta .save'),
 
     // Content
     ADD_LINK: document.querySelector('#content .add-link'),
