@@ -4,7 +4,7 @@ import { Processing } from "../processing.js";
 import { Store } from "../store.js";
 import { i18n } from "../i18n.js";
 import { Notification } from "../notification.js";
-import { embedProviders, googleApiKey, googleFonts, socialIcons, storageBase } from "../constants.js";
+import { defaultPageOptions, embedProviders, googleApiKey, googleFonts, socialIcons, storageBase } from "../constants.js";
 import { isURL } from "validator";
 import { QR } from "../qr.js";
 import { Common } from "../common.js";
@@ -51,6 +51,9 @@ export const Preview = {
         // Get data stored previously or fetched recently from the remote server
         await this.getStoredData();
 
+        // Before moving forward, validate data
+        this.validateData();
+
         // Update domain
         this.updateDomain();
 
@@ -80,12 +83,17 @@ export const Preview = {
         document.title = document.title.replace('Preview for {slug}', `${this.SLUG} at ${this.DOMAIN}`);
     },
     getStoredData: async function() {
-        const data = await Store.get(`${this.SLUG}|${this.DOMAIN}`);
+        const data = await Store.get(`${this.SLUG}|${this.DOMAIN}`, 'session');
 
         // If the data does not exist, the default value will be used
         if (data && data.hasOwnProperty(`${this.SLUG}|${this.DOMAIN}`)) {
-            this.DATA = data[`${this.SLUG}|${this.DOMAIN}`];
+            this.DATA = JSON.parse(data[`${this.SLUG}|${this.DOMAIN}`]);
         }
+    },
+    validateData: function() {
+        // For validating data, we simply need to merge the design object with default page options
+        // This ensures that we have all the required settings
+        this.DATA.design = {...defaultPageOptions.design, ...this.DATA.design};
     },
     updateDomain: function() {
         this.selectors.HEADER_LOGO.setAttribute('src', `https://${this.DOMAIN}/`);

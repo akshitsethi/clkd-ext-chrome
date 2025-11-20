@@ -287,6 +287,8 @@ export const Design = {
         });
     },
     showUploadedMedia: function(data, type) {
+        if (!data || !(data.hasOwnProperty('slug'))) return;
+
         const previewEl = document.querySelector(`#design .grid-content.custom-${type}`);
         if (!previewEl) {
             throw new Error(i18n.SELECTOR_NOT_FOUND);

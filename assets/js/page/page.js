@@ -10,7 +10,7 @@ import { Content } from "./content.js";
 import { Design } from "./design.js";
 import { Settings } from "./settings.js";
 import { Frame } from "./frame.js";
-import { apiBase } from "../constants.js";
+import { apiBase, defaultPageOptions } from "../constants.js";
 import { getCurrentTab } from "../helper.js";
 
 export const Page = {
@@ -78,17 +78,19 @@ export const Page = {
         const data = {};
 
         // Add data with unique identifier
-        data[`${this.SLUG}|${this.DOMAIN}`] = {
-            order: Array.from(this.get('order').entries()),
-            content: this.get('content'),
-            design: this.get('design'),
-            settings: this.get('settings'),
-            social: {
-                order: Array.from(this.get('social', 'order').entries()),
-                content: this.get('social', 'content')
-            },
-            providers: this.get('providers')
-        }
+        data[`${this.SLUG}|${this.DOMAIN}`] = JSON.stringify(
+            {
+                order: Array.from(this.get('order').entries()),
+                content: this.get('content'),
+                design: this.get('design'),
+                settings: this.get('settings'),
+                social: {
+                    order: Array.from(this.get('social', 'order').entries()),
+                    content: this.get('social', 'content')
+                },
+                providers: this.get('providers')
+            }
+        );
 
         // Store updated data object
         await Store.set(data);
@@ -151,31 +153,35 @@ export const Page = {
             // Show processing to prevent accidental clicks
             Processing.show(document.body);
 
-            const request = await fetch(`${apiBase}/json`, {
-                method: 'POST',
+            const request = await fetch(`${apiBase}/json?slug=${this.SLUG}&domain=${this.DOMAIN}`, {
+                method: 'GET',
                 async: true,
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 contentType: 'json',
-                body: JSON.stringify({
+                headers: {
                     user_id: Store.USER.ID,
-                    token: Store.USER.token,
-                    domain: this.DOMAIN,
-                    slug: this.SLUG
-                })
+                    token: Store.USER.token
+                }
             });
 
             // Get JSON data
             const response = await request.json();
 
             // Check for `message` property in the response returned from API
-            if (!response.hasOwnProperty('message')) {
-                throw new Error(i18n.API_INVALID_RESPONSE);
-            }
             if (request.status !== 200) {
                 throw new Error(response.message);
             }
+
+            // Start with an empty object
+            const data = {};
+
+            // Add data with unique identifier
+            data[`${this.SLUG}|${this.DOMAIN}`] = JSON.stringify(response);
+
+            // Store fetched data
+            await Store.set(data, 'session');
         } catch (error) {
             console.error(error);
 
@@ -190,11 +196,11 @@ export const Page = {
         Selectors.PREVIEW_FRAME.src = `preview.html?slug=${this.SLUG}&domain=${this.DOMAIN}`;
     },
     getStoredData: async function() {
-        const data = await Store.get(`${this.SLUG}|${this.DOMAIN}`);
+        const data = await Store.get(`${this.SLUG}|${this.DOMAIN}`, 'session');
 
         // If the data does not exist, the default value will be used
         if (data && data.hasOwnProperty(`${this.SLUG}|${this.DOMAIN}`)) {
-            this.DATA = data[`${this.SLUG}|${this.DOMAIN}`];
+            this.DATA = JSON.parse(data[`${this.SLUG}|${this.DOMAIN}`]);
         }
 
         // Convert arrays back to `Map` object
@@ -206,12 +212,9 @@ export const Page = {
         }
     },
     validateData: function() {
-        // The validation of data here needs to be done to make sure that all the required keys are
-        // present in the DATA object
-
-        // Also, make sure that the version number matches with the actual encoding of the object
-        // Basically, base64 value retrieved from database matches the base64 value of the object
-        console.log(this.DATA);
+        // For validating data, we simply need to merge the design object with default page options
+        // This ensures that we have all the required settings
+        this.DATA.design = {...defaultPageOptions.design, ...this.DATA.design};
     },
     injectSlugDomainDetails: async function() {
         // Inject domain & slug to the header info section
