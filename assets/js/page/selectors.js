@@ -49,5 +49,8 @@ export const Selectors = {
     SETTINGS_FORM_INPUTS: document.querySelectorAll('#settings input[type="checkbox"], #settings input[type="text"]'),
 
     // Preview
-    PREVIEW_FRAME: document.querySelector('.preview iframe')
+    PREVIEW_FRAME: document.querySelector('.preview iframe'),
+
+    // Errors
+    SIDEPANEL_LINKS: document.querySelectorAll('.open-sidepanel')
 };

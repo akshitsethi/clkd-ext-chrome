@@ -10,6 +10,8 @@ import { Content } from "./content.js";
 import { Design } from "./design.js";
 import { Settings } from "./settings.js";
 import { Frame } from "./frame.js";
+import { apiBase } from "../constants.js";
+import { getCurrentTab } from "../helper.js";
 
 export const Page = {
     constants: {
@@ -107,8 +109,7 @@ export const Page = {
         await Store.init();
 
         // Verify credentials and fetch data from server (if required)
-        await this.verifyCredentials();
-        await this.fetchData();
+        await this.authAndPermissions();
 
         // Get data stored previously or fetched recently from the remote server
         await this.getStoredData();
@@ -132,20 +133,58 @@ export const Page = {
         // Once set, update iframe to `preview.html` for rendering live changes
         this.updateIframeSource();
     },
+    authAndPermissions: async function() {
+        await this.verifyCredentials();
+        await this.fetchData();
+    },
     verifyCredentials: async function() {
-        // TODO
         // Verify existing user credentials
         // and also ensure that the user has the right to edit this particular page
-
-        // So, basically if there is existing data present and the version number is correct
-        // allow the user to continue editing without need for verifying remotely
+        if (!Store.USER.ID || !Store.USER.token) {
+            this.showErrorScreen('unauthenticated', i18n.NO_CREDENTIALS_ERROR);
+        }
     },
     fetchData: async function() {
-        // TODO
         // Fetch data from the `json` endpoint and verify it so that it can be used
         // to populate existing data, design and settings
+        try {
+            // Show processing to prevent accidental clicks
+            Processing.show(document.body);
 
-        
+            const request = await fetch(`${apiBase}/json`, {
+                method: 'POST',
+                async: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                contentType: 'json',
+                body: JSON.stringify({
+                    user_id: Store.USER.ID,
+                    token: Store.USER.token,
+                    domain: this.DOMAIN,
+                    slug: this.SLUG
+                })
+            });
+
+            // Get JSON data
+            const response = await request.json();
+
+            // Check for `message` property in the response returned from API
+            if (!response.hasOwnProperty('message')) {
+                throw new Error(i18n.API_INVALID_RESPONSE);
+            }
+            if (request.status !== 200) {
+                throw new Error(response.message);
+            }
+        } catch (error) {
+            console.error(error);
+
+            // Show unauthenticated error
+            this.showErrorScreen('unauthenticated', error.message ?? i18n.DEFAULT_ERROR);
+            Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+        } finally {
+            Processing.hide();
+        }
     },
     updateIframeSource: function() {
         Selectors.PREVIEW_FRAME.src = `preview.html?slug=${this.SLUG}&domain=${this.DOMAIN}`;
@@ -193,7 +232,7 @@ export const Page = {
         Settings.render();
     },
     showErrorScreen(type, error) {
-        document.querySelector(this.constants.SCREEN[type]).style.display = 'flex';
+        document.querySelector(this.constants.SCREEN[type]).style.display = 'block';
 
         // Replace title
         document.title = document.title.replace('{slug}', 'Error');
@@ -299,20 +338,33 @@ export const Page = {
             stickyBitStickyOffset: 92
         });
     },
+    openSidePanelEvent: function() {
+        if (!Selectors.SIDEPANEL_LINKS.length) return;
+
+        Selectors.SIDEPANEL_LINKS.forEach(link => link.addEventListener('click', async e => {
+            e.preventDefault();
+
+            const tab = await getCurrentTab();
+            chrome.sidePanel.open({ tabId: tab.id });
+        }));
+    },
     events: function() {
         this.mobileMenuEvent();
         this.tabSwitchEvent();
         this.stickyHeadingEvent();
+        this.openSidePanelEvent();
     },
     init: async function() {
         try {
             Processing.show();
 
+            // Basic events
+            this.events();
+
             // Update DOM
             await this.updateDOM();
 
             // Initialise events (for different sections)
-            this.events();
             Events.init();
         } catch (error) {
             console.error(error);

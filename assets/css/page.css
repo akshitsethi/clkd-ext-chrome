@@ -2100,7 +2100,8 @@ header {
 }
 
 /* Error */
-.error-screen {
+.error-screen,
+.unauthenticated-screen {
     display: none;
     align-items: center;
     height: 100%;
@@ -2110,8 +2111,12 @@ header {
     & img {
         display: block;
         width: 100%;
-        max-width: 380px;
+        max-width: 300px;
         margin: 0 auto;
+    }
+
+    & a {
+        text-decoration: underline;
     }
 
     & p {
@@ -2127,16 +2132,12 @@ header {
 
     & ul {
         margin: 0;
-        padding: 0;
+        padding: 0 0 2rem;
 
         & li {
             list-style-type: none;
             font-size: 0.938rem;
             margin: 0.25rem 0;
-
-            & a {
-                text-decoration: underline;
-            }
         }
     }
 
