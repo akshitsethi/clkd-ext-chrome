@@ -98,6 +98,8 @@ export const Page = {
 
         // After data is saved, update preview to reflect changes
         this.preview();
+
+        console.log(this.DATA);
     },
     preview: function() {
         if (!Selectors.PREVIEW_FRAME) return;
