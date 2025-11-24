@@ -19,7 +19,7 @@ export const Content = {
             'status'
         ],
         ACTIONS: {
-            link: ['sensitive', 'thumbnail', 'layout'],
+            link: [],
             youtube: ['video-settings'],
             instagram: [],
             twitter: [],
