@@ -8,7 +8,6 @@ import { debounce } from "../helper.js";
 export const Settings = {
     constants: {
         FIELDS: [
-            'statusSensitiveWarning',
             'metaTitle',
             'metaDescription'
         ]

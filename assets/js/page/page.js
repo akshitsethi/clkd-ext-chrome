@@ -359,9 +359,9 @@ export const Page = {
         }));
     },
     publishEvent: function() {
-        if (!Selectors.SAVE_PAGE_BUTTON) return;
+        if (!Selectors.SAVE_BUTTON) return;
 
-        Selectors.SAVE_PAGE_BUTTON.addEventListener('click', async e => {
+        Selectors.SAVE_BUTTON.addEventListener('click', async e => {
             e.preventDefault();
 
             try {
@@ -440,6 +440,22 @@ export const Page = {
             }
         });
     },
+    previewEvent: function() {
+        if (!Selectors.PREVIEW_BUTTON || !Selectors.PREVIEW_CONTAINER) return;
+
+        Selectors.PREVIEW_BUTTON.addEventListener('click', e => {
+            e.preventDefault();
+
+            try {
+                Selectors.PREVIEW_CONTAINER.classList.toggle('js-trigger');
+
+                e.target.innerText === 'Preview' ? e.target.innerText = 'Close' : e.target.innerText = 'Preview';
+            } catch (error) {
+                console.error(error);
+                Notification.error(error.message ?? i18n.DEFAULT_ERROR);
+            }
+        });
+    },
     unsavedChangesAlertEvent: function() {
         window.addEventListener('beforeunload', e => {
             if (!this.UNSAVED_CHANGES) return;
@@ -458,6 +474,7 @@ export const Page = {
         this.stickyHeadingEvent();
         this.openSidePanelEvent();
         this.publishEvent();
+        this.previewEvent();
         this.unsavedChangesAlertEvent();
     },
     init: async function() {

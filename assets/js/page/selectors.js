@@ -5,7 +5,8 @@ export const Selectors = {
     SECTIONS: document.querySelectorAll('.tab'),
     MOBILE_MENU_BUTTON: document.querySelector('.mobile-menu'),
     HEADER_PAGE_INFO: document.querySelector('.header-cta .info'),
-    SAVE_PAGE_BUTTON: document.querySelector('.header-cta .save'),
+    SAVE_BUTTON: document.querySelector('.header-cta .save'),
+    PREVIEW_BUTTON: document.querySelector('.header-cta .preview'),
 
     // Content
     ADD_LINK: document.querySelector('#content .add-link'),
@@ -50,6 +51,7 @@ export const Selectors = {
     SETTINGS_FORM_INPUTS: document.querySelectorAll('#settings input[type="checkbox"], #settings input[type="text"]'),
 
     // Preview
+    PREVIEW_CONTAINER: document.querySelector('.wrapper .preview'),
     PREVIEW_FRAME: document.querySelector('.preview iframe'),
 
     // Errors

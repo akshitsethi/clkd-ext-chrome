@@ -1831,6 +1831,25 @@ header {
                 }
             }
         }
+
+        &.js-trigger {
+            position: fixed;
+            display: block;
+            max-width: 420px;
+            left: auto;
+            right: 0;
+            height: 100%;
+            z-index: 10;
+
+            & .phone {
+                max-width: 420px;
+                max-height: 80%;
+                margin-bottom: 1rem;
+            }
+            & .share {
+                display: none;
+            }
+        }
     }
 
     @media (max-width: 1440px) {
