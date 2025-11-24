@@ -10,6 +10,7 @@ export const i18n = {
     MALFORMED_REQUEST: 'Invalid request. Please check the source and try again.',
     MISSING_DETAILS_ERROR: 'Required data is missing.',
     NO_CREDENTIALS_ERROR: 'User credentials not found. Please authenticate to continue.',
+    UNSAVED_CHANGES_MESSAGE: 'You have unsaved changes. Would you like to publish them before leaving?',
 
     // Links
     URL_DOMAIN_ERROR: 'Missing details. Please provide a valid URL and domain.',

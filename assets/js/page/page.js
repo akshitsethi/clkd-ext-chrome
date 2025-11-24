@@ -26,6 +26,7 @@ export const Page = {
     },
     SLUG: null,
     DOMAIN: null,
+    UNSAVED_CHANGES: false,
     DATA: {
         order: new Map(),
         content: {},
@@ -96,10 +97,11 @@ export const Page = {
         // Store updated data object
         await Store.set(data, 'session');
 
+        // Whenever data is saved, we set the `UNSAVED_CHANGES` attribute to true
+        this.UNSAVED_CHANGES = true;
+
         // After data is saved, update preview to reflect changes
         this.preview();
-
-        console.log(this.DATA);
     },
     preview: function() {
         if (!Selectors.PREVIEW_FRAME) return;
@@ -402,9 +404,8 @@ export const Page = {
                     throw new Error(response.message);
                 }
 
-                // TODO (once the counter is implemented)
-                // Since changes have been published, reset unsaved changes counter
-
+                // Since changes have been published, reset `UNSAVED_CHANGES` attribute
+                this.UNSAVED_CHANGES = false;
 
                 // Also, add a little confetti effect with success notification
                 Notification.success(i18n.PAGE_PUBLISHED);
@@ -439,12 +440,25 @@ export const Page = {
             }
         });
     },
+    unsavedChangesAlertEvent: function() {
+        window.addEventListener('beforeunload', e => {
+            if (!this.UNSAVED_CHANGES) return;
+
+            // Recommended
+            e.preventDefault();
+
+            // Included for legacy support, e.g. Chrome/Edge < 119
+            e.returnValue = i18n.UNSAVED_CHANGES_MESSAGE;
+            return i18n.UNSAVED_CHANGES_MESSAGE;
+        });
+    },
     events: function() {
         this.mobileMenuEvent();
         this.tabSwitchEvent();
         this.stickyHeadingEvent();
         this.openSidePanelEvent();
         this.publishEvent();
+        this.unsavedChangesAlertEvent();
     },
     init: async function() {
         try {
