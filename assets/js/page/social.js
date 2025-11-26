@@ -235,10 +235,6 @@ export const Social = {
 
         // Add item on screen
         parent.append(content);
-
-        // TODO
-        // Remove once testing is over
-        console.log(Page.DATA);
     },
     generateItemStructure: function(id, slotId, network) {
         const template = Selectors.SOCIAL_ENTRY_TEMPLATE.content;

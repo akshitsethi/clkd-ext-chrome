@@ -302,10 +302,6 @@ export const Content = {
 
         // Add item on screen
         Selectors.ITEMS_CONTAINER.prepend(content);
-
-        // TODO
-        // Remove once testing is over
-        console.log(Page.DATA);
     },
     setItemDataToObject: function(id, slotId, type) {
         // Prepend item to map
@@ -461,7 +457,6 @@ export const Content = {
         // Get provider data
         const data = Page.get('providers', id);
         if (data && data.hasOwnProperty('url') && data.url === value) {
-            console.log('Skipped processing oEmbed');
             return;
         }
 
