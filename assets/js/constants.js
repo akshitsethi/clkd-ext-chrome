@@ -4,13 +4,13 @@ export const apiBase = 'http://localhost:8788/api';
 export const storageBase = 'http://localhost:8788/api/file?f=';
 
 // Google API key (for Maps)
-export const googleApiKey = 'test_key';
+export const googleApiKey = 'test';
 
 // Default domain
 export const defaultDomain = 'clkd.in';
 
 // List of available domains
-export const domains = ['clkd.in', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk'];
+export const domains = ['clkd.in', 'clkd.me', 'clk.gg', 'pgx.es', 'cd.lk', 'xx.lk'];
 
 // Allowed file formats
 export const allowedFormats = {
@@ -195,7 +195,7 @@ export const urlValidationOptions = {
 
 // User plan domains
 export const planDomains = {
-    registered: ['clkd.in'],
+    registered: ['clkd.in', 'clkd.me'],
     basic: ['clk.gg', 'pgx.es'],
     pro: ['cd.lk', 'xx.lk']
 };
@@ -229,7 +229,7 @@ export const defaultPageOptions = {
         radioProfileFont: 'Inter',
         radioPageFont: 'Inter',
         colorProfileTitle: '#101010',
-        colorProfileText: '#606060',
+        colorProfileText: '#404040',
         colorPageText: '#606060',
         rangeTitleSize: '1.25',
         rangeBioSize: '1',
@@ -265,12 +265,12 @@ export const defaultPageOptions = {
         radioButtonBorder: 'solid',
         rangeButtonBorderThickness: '1',
         colorButtonBorder: '#101010',
-        radioButtonShadow: 'subtle',
+        radioButtonShadow: 'hard',
         colorButtonShadow: '#101010',
-        radioButtonShadowPosition: 'center',
-        rangeButtonShadowOffset: '4',
-        rangeButtonShadowThickness: '5',
-        rangeButtonShadowOpacity: '0.5',
+        radioButtonShadowPosition: 'down-right',
+        rangeButtonShadowOffset: '6',
+        rangeButtonShadowThickness: '0',
+        rangeButtonShadowOpacity: '1',
         radioButtonEffect: 'rotate'
     }
 };
