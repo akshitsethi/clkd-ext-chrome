@@ -362,11 +362,12 @@ export const Settings = {
 
                 // Revert change if user is on a free plan
                 if (!Store.USER.is_premium) {
-                    if (newValue !== this.DEFAULT.default_domain) {
+                    if (!planDomains.registered.includes(newValue)) {
                         planDomains.basic.includes(newValue) ? Limits.upgradeModal(newValue, i18n.BASIC_DOMAIN_NOT_AVAILABLE) : Limits.upgradeModal(newValue, i18n.PRO_DOMAIN_NOT_AVAILABLE);
 
                         // Switch back to previous value
                         e.target.value = oldValue;
+                        return;
                     }
                 } else {
                     if (planDomains.pro.includes(newValue) && Store.USER.subscription.plan === 'basic') {
@@ -374,8 +375,12 @@ export const Settings = {
 
                         // Switch back to previous value
                         e.target.value = oldValue;
+                        return;
                     }
                 }
+
+                // If we have reached over here, we should set the oldValue to the new one
+                e.target.setAttribute('data-previous', newValue);
             } catch (error) {
                 console.error(error);
                 Notification.error(error.message ?? i18n.DEFAULT_ERROR);
