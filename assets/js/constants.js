@@ -225,6 +225,7 @@ export const blankPageData = {
 export const defaultPageOptions = {
     design: {
         radioThumbnailDesign: 'bubble',
+        rangeImageSize: '8',
         statusWhiteLabel: 'off',
         radioProfileFont: 'Inter',
         radioPageFont: 'Inter',

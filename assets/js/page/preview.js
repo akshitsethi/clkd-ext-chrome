@@ -415,6 +415,9 @@ export const Preview = {
         css.push(`color:${this.DATA.design.colorPageText};`);
         css.push('}');
 
+        // Image size
+        css.push(`.profile-thumbnail svg{max-width:${this.DATA.design.rangeImageSize}rem;}`);
+
         // h1 (font and color)
         const profileFont = googleFonts[this.DATA.design.radioProfileFont];
         css.push('.profile-content h1{');
