@@ -291,7 +291,7 @@
             & .link-data {
                 position: relative;
 
-                & a {
+                & > a {
                     display: block;
                     padding: 1.125rem 1.75rem;
                     text-align: center;
@@ -313,6 +313,29 @@
                             left: 0;
                             width: 100%;
                             height: 100%;
+                        }
+                    }
+                    &.twitter-container {
+                        & blockquote.twitter-tweet {
+                            background: #ffffff;
+                            border-radius: 32px;
+                            padding: 1rem;
+                            border: 0;
+                            margin: 0;
+                        }
+
+                        & blockquote.twitter-tweet p {
+                            margin-bottom: 0.5rem
+                        }
+
+                        & blockquote.twitter-tweet a {
+                            display: inline-block;
+                            padding: 0.25rem 0;
+                        }
+
+                        & blockquote.twitter-tweet a:hover,
+                        & blockquote.twitter-tweet a:focus {
+                            text-decoration: underline;
                         }
                     }
                 }
@@ -559,6 +582,18 @@
         <div class="link-data">
             <a href="#" target="_blank" rel="noopener"></a>
         </div>
+    </template>
+
+    <template id="thumbnail-design-circle">
+        <svg width="100%" height="100%" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <mask id="circle-svg-mask">
+                    <circle cx="50%" cy="50%" r="50%" fill="white"/>
+                </mask>
+            </defs>
+
+            <image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="./assets/images/night.png" mask="url(#circle-svg-mask)"></image>
+        </svg>
     </template>
 
     <template id="thumbnail-design-bubble">

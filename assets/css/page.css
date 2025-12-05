@@ -618,7 +618,7 @@ header {
                     & .embed-options {
                         display: none;
                         position: absolute;
-                        bottom: 3.75rem;
+                        bottom: 4.25rem;
                         width: 220px;
                         background: #ffffff;
                         padding: 0;
@@ -1405,7 +1405,7 @@ header {
 
                 /* Headers */
                 &.headers {
-                    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
                     gap: 0;
 
                     & label {
