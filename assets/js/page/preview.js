@@ -259,9 +259,13 @@ export const Preview = {
 
                 // Process different content types
                 if (data.type === 'link') {
-                    content = this.processLink(parentEl, content, data);
+                    this.processLink(parentEl, data);
+
+                    if (data.radioSensitive === 'enable') {
+                        this.addOptionStructure('sensitive', parentEl);
+                    }
                 } else {
-                    content = this.processContentType(data.type, contentId, parentEl, content, data);
+                    this.processContentType(data.type, contentId, parentEl, content, data);
                 }
 
                 // Append to content container
@@ -269,14 +273,19 @@ export const Preview = {
             }
         }
     },
-    processLink: function(parentEl, content, data) {
+    addOptionStructure: function(option, parent) {
+        const template = document.querySelector(`#${option}-option-entry`).content;
+        const content = template.cloneNode(true);
+
+        parent.appendChild(content);
+    },
+    processLink: function(parentEl, data) {
         // Default button class
         const anchorEl = parentEl.querySelector('a');
         anchorEl.classList.add('button', this.DATA.design.radioButtonEffect);
         anchorEl.appendChild(document.createTextNode(data.title));
         anchorEl.setAttribute('href', data.url);
-
-        return content;
+        anchorEl.setAttribute('data-sensitive', data.radioSensitive); 
     },
     processContentType: function(provider, id, parentEl, content, data) {
         if (!provider || !(Object.keys(embedProviders).includes(provider))) return;
@@ -321,19 +330,18 @@ export const Preview = {
         }
 
         parentEl.appendChild(containerEl);
-        return content;
     },
     twitter: function(id, parentEl, content, data) {
-        return this.embed('twitter', id, parentEl, content, data);
+        this.embed('twitter', id, parentEl, content, data);
     },
     soundcloud: function(id, parentEl, content, data) {
-        return this.embed('soundcloud', id, parentEl, content, data);
+        this.embed('soundcloud', id, parentEl, content, data);
     },
     tiktok: function(id, parentEl, content, data) {
-        return this.embed('tiktok', id, parentEl, content, data);
+        this.embed('tiktok', id, parentEl, content, data);
     },
     spotify: function(id, parentEl, content, data) {
-        return this.embed('spotify', id, parentEl, content, data);
+        this.embed('spotify', id, parentEl, content, data);
     },
     video: function(provider, id, parentEl, content, data) {
         // Start with an empty title and see if user has provided one
@@ -386,7 +394,6 @@ export const Preview = {
         }
 
         parentEl.appendChild(containerEl);
-        return content;
     },
     embed: function(provider, id, parentEl, content, data) {
         if (this.DATA.providers.hasOwnProperty(id) && this.DATA.providers[id].hasOwnProperty('html')) {
@@ -404,8 +411,6 @@ export const Preview = {
 
             parentEl.appendChild(containerEl);
         }
-
-        return content;
     },
     getProfileCss: function() {
         const pageFont = googleFonts[this.DATA.design.radioPageFont];
