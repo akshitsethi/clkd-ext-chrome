@@ -1454,7 +1454,7 @@ header {
                             &:after {
                                 position: absolute;
                                 content: 'Selected';
-                                background: rgba(0, 0, 0, 0.5);
+                                background: rgba(0, 0, 0, 0.25);
                                 font-size: 0.825rem;
                                 color: #ffffff;
                                 top: 12px;
@@ -1470,8 +1470,7 @@ header {
                     & .grid-content {
                         height: 100%;
                         display: flex;
-                        flex-direction: column;
-                        justify-content: center;
+                        align-items: center;
                         border-radius: 12px;
 
                         &.custom-image,
@@ -1484,6 +1483,14 @@ header {
                         & p {
                             font-weight: 500;
                             font-size: 1rem;
+                            margin: 0 auto;
+
+                            & span {
+                                width: auto;
+                                background: rgba(0,0,0,0.25);
+                                padding: 0.5rem;
+                                border-radius: 12px;
+                            }
                         }
 
                         & img {

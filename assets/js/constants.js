@@ -880,6 +880,7 @@ export const language = {
     "en-CA": "English (Canada)",
     "en-CB": "English (Caribbean)",
     "en-GB": "English (United Kingdom)",
+    "en-IN": "English (India)",
     "en-IE": "English (Ireland)",
     "en-JM": "English (Jamaica)",
     "en-NZ": "English (New Zealand)",
