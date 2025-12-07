@@ -2124,6 +2124,52 @@ header {
     }
 }
 
+/* Trigger (Upgrade) */
+.upgrade-trigger {
+    position: fixed;
+    bottom: 1rem;
+    visibility: hidden;
+    width: 92%;
+    left: 4%;
+    z-index: 11;
+
+    & .upgrade-close {
+        position: absolute;
+        right: 0.25rem;
+        top: -1.75rem;
+        background: #ffffff;
+        padding: 0.25rem;
+        border-radius: 6px;
+
+        & img {
+            max-width: 16px;
+        }
+    }
+    & .upgrade-content {
+        padding: 1rem;
+        background: #ffffff;
+        border: 1px solid #f0f0f0;
+        border-radius: 12px;
+        box-shadow: 0 0 14px 1px rgba(0,0,0,0.08);
+
+        & h2 {
+            margin-bottom: 1rem;
+
+            &:before {
+                background-color: rgba(56, 182, 255, 0.225);
+            }
+        }
+        & p {
+            margin-bottom: 0.75rem;
+        }
+    }
+
+    @media (min-width: 480px) {
+        width: 480px;
+        left: calc((100% - 480px) / 2);
+    }
+}
+
 /* Error */
 .error-screen,
 .unauthenticated-screen {

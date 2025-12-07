@@ -19,7 +19,7 @@ export const Content = {
             'status'
         ],
         ACTIONS: {
-            link: [],
+            link: ['sensitive'],
             youtube: ['video-settings'],
             instagram: [],
             twitter: [],
@@ -294,6 +294,9 @@ export const Content = {
         // Update object containing page data
         this.setItemDataToObject(ID, ID, type);
 
+        // Populate existing content
+        this.populateItemContent(ID, content, this.getItemData(type));
+
         // Update local storage
         Page.save();
 
@@ -303,6 +306,15 @@ export const Content = {
         // Add item on screen
         Selectors.ITEMS_CONTAINER.prepend(content);
     },
+    getItemData: function(type) {
+        return {
+            type,
+            title: null,
+            url: null,
+            status: 'on',
+            ...this.CONTENT_DATA[type]
+        };
+    },
     setItemDataToObject: function(id, slotId, type) {
         // Prepend item to map
         Page.set('order', new Map([...new Map().set(slotId, id), ...Page.get('order')]));
@@ -310,13 +322,7 @@ export const Content = {
         // Add empty object to `content` attribute for holding content box data
         Page.set(
             'content',
-            {
-                type,
-                title: null,
-                url: null,
-                status: 'off',
-                ...this.CONTENT_DATA[type]
-            },
+            this.getItemData(type),
             id
         );
 
