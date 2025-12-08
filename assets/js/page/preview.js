@@ -516,7 +516,6 @@ export const Preview = {
 
         // For sensitive option enabled, specify color of lock icon same as button text color
         css.push(`&[data-sensitive="enable"]:after{background-color:${this.DATA.design.colorButtonText};}`);
-
         css.push('}');
 
         return css;
