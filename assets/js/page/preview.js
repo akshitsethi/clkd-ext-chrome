@@ -260,10 +260,6 @@ export const Preview = {
                 // Process different content types
                 if (data.type === 'link') {
                     this.processLink(parentEl, data);
-
-                    if (data.radioSensitive === 'enable') {
-                        this.addOptionStructure('sensitive', parentEl);
-                    }
                 } else {
                     this.processContentType(data.type, contentId, parentEl, content, data);
                 }
@@ -284,8 +280,40 @@ export const Preview = {
         const anchorEl = parentEl.querySelector('a');
         anchorEl.classList.add('button', this.DATA.design.radioButtonEffect);
         anchorEl.appendChild(document.createTextNode(data.title));
-        anchorEl.setAttribute('href', data.url);
-        anchorEl.setAttribute('data-sensitive', data.radioSensitive); 
+
+        // Sensitive option
+        if (data.radioSensitive === 'disable') {
+            anchorEl.setAttribute('href', data.url);
+        } else {
+            // Add structure for inline dialog
+            this.addOptionStructure('sensitive', parentEl);
+
+            anchorEl.removeAttribute('target');
+            anchorEl.setAttribute('data-sensitive', data.radioSensitive);
+
+            // Confirmation dialog
+            const confirmEl = parentEl.querySelector('.sensitive');
+
+            // Update url attribute
+            const acceptEl = parentEl.querySelector('.accept');
+            acceptEl.setAttribute('href', data.url);
+
+            // Add event listeners
+            acceptEl.addEventListener('click', e => {
+                confirmEl.classList.remove('show');
+                return true;
+            });
+
+            anchorEl.addEventListener('click', e => {
+                e.preventDefault();
+
+                try {
+                    confirmEl.classList.toggle('show');
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+        }
     },
     processContentType: function(provider, id, parentEl, content, data) {
         if (!provider || !(Object.keys(embedProviders).includes(provider))) return;
@@ -485,6 +513,10 @@ export const Preview = {
             );
             css.push(`box-shadow:${shadow};`);
         }
+
+        // For sensitive option enabled, specify color of lock icon same as button text color
+        css.push(`&[data-sensitive="enable"]:after{background-color:${this.DATA.design.colorButtonText};}`);
+
         css.push('}');
 
         return css;
